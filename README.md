@@ -10,7 +10,7 @@
 
 ## 👻 Member
 
-<table>
+<table align="center">
   <tr>
     <td align="center" width="120px">
       <a href="https://github.com/yongsuson" target="_blank">
