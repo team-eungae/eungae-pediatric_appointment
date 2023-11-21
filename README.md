@@ -1,5 +1,5 @@
 <div align="center">
-<img width="200px" src="https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/3138b540-4eaf-4d21-891b-ba054295b51f" alt="응애 이동하기"/>
+<img width="200px" src="https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/8479297f-3dcf-414e-9c02-cb5e92216c56" alt="응애 이동하기"/>
 </a>
 
 # 응애
@@ -76,6 +76,11 @@
   </tr>
 </table>
 
+<br/>
+## 🏆 Ground Rules
+
+<img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/f917b168-a3f2-4aff-9eb8-61bb55b189ce'  alt="CI/CD"/>
+
 <!-- ## 🗨️ About TeamByTeam
 
 대학생의 학기를 빛내주는 동시에 그 과정을 힘들게 만드는 것, 바로 '팀플'입니다. 서로 다른 팀과 팀원들, 그리고 다양한 프로젝트 일정으로 복잡해지는 팀플 생활... 이러한 불편함을 겪으신 적 있으신가요? 협업이 요구되며, 다양한 일정과 자료를 관리하고 의사소통을 원활히 이뤄내는 것은 쉽지 않죠.  
@@ -122,8 +127,6 @@
 
 ## 🪄 CI/CD
 
-<img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/79f30380-86d9-4cf1-b801-c19b3c866a88'  alt="CI/CD"/>
+<img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/79f30380-86d9-4cf1-b801-c19b3c866a88'  alt="CI/CD"/> --!>
 
-## 🏆 Ground Rules
 
-<img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/f917b168-a3f2-4aff-9eb8-61bb55b189ce'  alt="CI/CD"/> --!>
