@@ -77,6 +77,7 @@
 </table>
 
 <br/>
+
 ## 🏆 Ground Rules
 
 <img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/f917b168-a3f2-4aff-9eb8-61bb55b189ce'  alt="CI/CD"/>
