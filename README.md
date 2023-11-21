@@ -81,7 +81,7 @@
 ## 🏆 Ground Rules
 
 <div align="center">
-<img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/f917b168-a3f2-4aff-9eb8-61bb55b189ce'  alt="CI/CD"/>
+<img width="600px" src='https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/16e56466-17b1-4ca5-8dcb-0c7f09cd9b91'  alt="CI/CD"/>
 </div>
 
 <!-- ## 🗨️ About TeamByTeam
