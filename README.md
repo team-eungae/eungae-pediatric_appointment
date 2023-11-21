@@ -14,7 +14,7 @@
   <tr>
     <td align="center" width="120px">
       <a href="https://github.com/yongsuson" target="_blank">
-        <img src="https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/7614b228-680d-4553-b38c-6e8f0193dbf9" alt="손용수 프로필" />
+        <img src="https://github.com/yongsuson/eungae-pediatric_appointment/assets/120021021/7614b228-680d-4553-b38c-6e8f0193dbf9" alt="손용수 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
