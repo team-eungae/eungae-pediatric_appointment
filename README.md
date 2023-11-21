@@ -45,31 +45,31 @@
   </tr>
   <tr>
     <td align="center">
-      <a href="https://github.com/hafnium1923" target="_blank">
+      <a href="https://github.com/yongsuson" target="_blank">
         손용수
       </a>
     </td>
      <td align="center">
-      <a href="https://github.com/wzrabbit" target="_blank">
+      <a href="https://github.com/jun9898" target="_blank">
        전병준
       </a>
     </td> 
      <td align="center">
-      <a href="https://github.com/suyoungj" target="_blank">
+      <a href="https://github.com/ghktndyd" target="_blank">
        김수용
       </a>
        <td align="center">
-      <a href="https://github.com/pilyang" target="_blank">
+      <a href="https://github.com/jihye525" target="_blank">
         홍지혜
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/the9kim" target="_blank">
+      <a href="https://github.com/ooojin000" target="_blank">
        김우진
       </a>
     </td> 
      <td align="center">
-      <a href="https://github.com/sh111-coder" target="_blank">
+      <a href="https://github.com/seanlee0923" target="_blank">
        이신의
       </a>
      </td>
