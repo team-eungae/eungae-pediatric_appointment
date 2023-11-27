@@ -1,0 +1,248 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+}
+
+p {
+    margin-bottom: 0;
+}
+
+main {
+    min-height: calc(100vh - 3.5rem - 8rem);
+    margin-top: 3.5rem;
+}
+
+.backdrop {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.main-header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #ffffff;
+    padding: 0.8rem 1rem;
+    z-index: 10;
+    margin: 0;
+    box-shadow: 0px 0px 0px 2px #ECEFF2;
+}
+
+.main-header>div {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.toggle-button {
+    width: 3rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding-top: 0;
+    padding-bottom: 0;
+    vertical-align: middle;
+}
+
+.toggle-button:focus {
+    outline: none;
+}
+
+.toggle-button__bar {
+    width: 80%;
+    height: 0.2rem;
+    background: #333;
+    display: block;
+    margin: 0.3rem 0;
+    border-radius: 8px;
+}
+
+
+.main-header__brand {
+    text-decoration: none;
+    font-weight: bold;
+    height: 2.5rem;
+    /* width: 20px; */
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.main-header__brand img {
+    height: 100%;
+    /* width: 100%; */
+}
+
+.profile-button {
+    color: #333;
+    vertical-align: middle;
+    background-color: #ffffff;
+    border: none;
+}
+
+.main-nav {
+    display: none;
+}
+
+.main-nav__items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.main-nav__item {
+    display: inline-block;
+    margin: 0 1rem;
+}
+
+.main-nav__item a,
+.mobile-nav__item a {
+    text-decoration: none;
+    color: #142C47;
+    font-weight: bold;
+    padding: 0.2rem 0;
+}
+
+.main-nav__item a:hover,
+.main-nav__item a:active {
+    color: 142C47;
+    border-bottom: 5px solid #142C47;
+}
+
+@media (min-width: 40rem) {
+    .toggle-button {
+        display: none;
+    }
+
+    .main-nav {
+        display: inline-block;
+        text-align: right;
+        width: calc(100% - 44px);
+        vertical-align: middle;
+    }
+}
+
+.mobile-nav-bottom {
+    background: #F1F3F5;
+    z-index: 10;
+}
+
+.mobile-nav-bottom__item p {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.main-footer {
+    background: black;
+    padding: 2rem;
+    margin-top: 3rem;
+}
+
+.main-footer__links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.main-footer__link {
+    display: block;
+    margin: 1rem 0;
+}
+
+.main-footer__link a {
+    color: white;
+    text-decoration: none;
+}
+
+.main-footer__link a:hover,
+.main-footer__link a:active {
+    color: #ccc;
+}
+
+.mobile-nav {
+    transform: translateX(-100%);
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    left: 0;
+    background: white;
+    width: 80%;
+    height: 100vh;
+    transition: transform 300ms ease-out;
+}
+
+.mobile-nav.open {
+    display: block;
+    opacity: 1;
+    /* 토글 시 투명도를 1로 설정하여 나타나도록 함 */
+    transform: translateX(0);
+    /* 토글 시 오른쪽으로 이동하여 나타나도록 함 */
+}
+
+.mobile-nav__items {
+    width: 90%;
+    height: 100%;
+    list-style: none;
+    margin: 10% auto;
+    padding: 0;
+    text-align: center;
+}
+
+.mobile-nav__item {
+    margin: 1rem 0;
+}
+
+.mobile-nav__item a {
+    font-size: 1.5rem;
+}
+
+/* .button {
+    background: #0e4f1f;
+    color: white;
+    font: inherit;
+    border: 1.5px solid #0e4f1f;
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button:hover,
+.button:active {
+    background: white;
+    color: #0e4f1f;
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button[disabled] {
+    cursor: not-allowed;
+    border: #a1a1a1;
+    background: #ccc;
+    color: #a1a1a1;
+} */
+
+.open {
+    display: block !important;
+}
+
+@media (min-width: 40rem) {
+    .main-footer__link {
+        display: inline-block;
+        margin: 0 1rem;
+    }
+}
