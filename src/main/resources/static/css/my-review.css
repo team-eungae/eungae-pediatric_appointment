@@ -1,0 +1,38 @@
+main {
+    margin-top: 6rem;
+}
+.review-title {
+    margin-left: 5%;
+    margin-right: 5%;
+    font-weight: 700;
+}
+.review {
+    margin: 1% 5% 3% 5%;
+}
+#hospitalname {
+    font-weight: bold;
+}
+#review-write-date {
+    font-size: small;
+}
+.review-delete-button {
+    float: right;
+    border-radius: 20px;
+    font-size: small;
+    border: none;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+.review-update-button {
+    float: right;
+    border-radius: 20px;
+    font-size: small;
+    border: none;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+#review-star {
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+}
