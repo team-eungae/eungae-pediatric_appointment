@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="main-header">
+    <div class="backdrop"></div>
+    <header class="main-header row">
+        <div class="col-4 align-self-center">
+            <button class="toggle-button float-left">
+                <span class="toggle-button__bar"></span>
+                <span class="toggle-button__bar"></span>
+                <span class="toggle-button__bar"></span>
+            </button>
+        </div>
+        <div class="col-4 text-center align-self-center">
+            <a href="index.html" class="main-header__brand">
+                <img src="img/logo1-2.png" alt="EUNGAE LOGO">
+            </a>
+        </div>
+        <div class="col-4 align-self-center">
+            <button class="profile-button float-right" onclick="location.href='sign-up/sign-up.html'">
+                <i class="fa-solid fa-user fa-xl"></i>
+            </button>
+        </div>
+        <nav class="main-nav">
+            <ul class="main-nav__items">
+                <li class="main-nav__item">
+                    <a href="/">내 주변 병원 찾기</a>
+                </li>
+                <li class="main-nav__item">
+                    <a href="/">커뮤니티</a>
+                </li>
+                <li class="main-nav__item">
+                    <a href="/">공지사항</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="mobile-nav">
+        <ul class="mobile-nav__items">
+            <li class="mobile-nav__item">
+                <a href="/">내 주변 병원 찾기</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">커뮤니티</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">공지사항</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">이용약관</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
