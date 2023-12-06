@@ -11,7 +11,7 @@
     <script src="https://kit.fontawesome.com/38adf5dcd0.js" crossorigin="anonymous"></script>
     <script src="../static/js/jquery-3.7.1.min.js"></script>
     <script src="../static/js/medical-records.js"></script>
-    <title>EUNGAE</title>
+    <title>내 진료내역 - 응애 | 소아과 예약</title>
 </head>
 
 <body>
@@ -70,91 +70,169 @@
             <hr/>
         </div>
         <div class="medical-records-body">
-            <div class="card">
+            <div class="card" onclick="showhDetails(1)">
                 <div class="myrecords">
                     <div class="hospital-name">
-                        플레이데이터
+                        삼성에스마디정형외과의원
                     </div>
+                    <hr/>
                     <table>
                         <tr>
                             <td>
-                                환자 - 으으으
+                                환자 - 김환자
                             </td>
                             <td class="middle-line"> | </td>
                             <td>
-                                의사 - 아아아
+                                의사 - 김의사
                             </td>
                             <td class="middle-line"> | </td>
                             <td class="treatment-date">
                                 1234.56.78
                             </td>
                     </table>
-                    <div class="row">
-                        <div class="col">
-                            <button class="record-detail-button" onclick="showDetails()">상세보기</button>
-                        </div>
-                        <div class="col">
-                            <button class="record-save-button" onclick="saveDetails()">내역저장</button>
-                        </div>
-                    </div>
+                </div>
+                <div class="records-detail" id="detail1" style="display: none;">
+                    <hr/>
+                    <table>
+                        <tr>
+                            <th>병원명</th>
+                            <td>삼성에스마디정형외과의원</td>
+                        </tr>
+                        <tr>
+                            <th>환자명</th>
+                            <td>김환자</td>
+                        </tr>
+                        <tr>
+                            <th>의사명</th>
+                            <td>김의사</td>
+                        </tr>
+                        <tr>
+                            <th>진료과목</th>
+                            <td>소아과</td>
+                        </tr>
+                        <tr>
+                            <th>진료상세</th>
+                            <td>초진</td>
+                        </tr>
+                        <tr>
+                            <th>진료시간</th>
+                            <td>1234.56.78 16:11</td>
+                        </tr>
+                        <tr>
+                            <th>진료금</th>
+                            <td>6300원</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" onclick="showhDetails(2)">
                 <div class="myrecords">
                     <div class="hospital-name">
-                        네이버
+                        삼성에스마디정형외과의원
                     </div>
+                    <hr/>
                     <table>
                         <tr>
                             <td>
-                                환자 - 카카오
+                                환자 - 김환자
                             </td>
                             <td class="middle-line"> | </td>
                             <td>
-                                의사 - 당근마켓
+                                의사 - 김의사
                             </td>
                             <td class="middle-line"> | </td>
                             <td class="treatment-date">
                                 1234.56.78
                             </td>
                     </table>
-                    <div class="row">
-                        <div class="col">
-                            <button class="record-detail-button" onclick="showDetails()">상세보기</button>
-                        </div>
-                        <div class="col">
-                            <button class="record-save-button" onclick="saveDetails()">내역저장</button>
-                        </div>
-                    </div>
+                </div>
+                <div class="records-detail" id="detail2" style="display: none;">
+                    <hr/>
+                    <table>
+                        <tr>
+                            <th>병원명</th>
+                            <td>삼성에스마디정형외과의원</td>
+                        </tr>
+                        <tr>
+                            <th>환자명</th>
+                            <td>김환자</td>
+                        </tr>
+                        <tr>
+                            <th>의사명</th>
+                            <td>김의사</td>
+                        </tr>
+                        <tr>
+                            <th>진료과목</th>
+                            <td>소아과</td>
+                        </tr>
+                        <tr>
+                            <th>진료상세</th>
+                            <td>초진</td>
+                        </tr>
+                        <tr>
+                            <th>진료시간</th>
+                            <td>1234.56.78 16:11</td>
+                        </tr>
+                        <tr>
+                            <th>진료금</th>
+                            <td>6300원</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div class="card">
+            <div class="card" onclick="showhDetails(3)">
                 <div class="myrecords">
                     <div class="hospital-name">
-                        배달의민족
+                        삼성에스마디정형외과의원
                     </div>
+                    <hr/>
                     <table>
                         <tr>
                             <td>
-                                환자 - 토스
+                                환자 - 김환자
                             </td>
                             <td class="middle-line"> | </td>
                             <td>
-                                의사 - 라인
+                                의사 - 김의사
                             </td>
                             <td class="middle-line"> | </td>
                             <td class="treatment-date">
                                 1234.56.78
                             </td>
                     </table>
-                    <div class="row">
-                        <div class="col">
-                            <button class="record-detail-button" onclick="showDetails()">상세보기</button>
-                        </div>
-                        <div class="col">
-                            <button class="record-save-button" onclick="saveDetails()">내역저장</button>
-                        </div>
-                    </div>
+                </div>
+                <div class="records-detail" id="detail3" style="display: none;">
+                    <hr/>
+                    <table>
+                        <tr>
+                            <th>병원명</th>
+                            <td>삼성에스마디정형외과의원</td>
+                        </tr>
+                        <tr>
+                            <th>환자명</th>
+                            <td>김환자</td>
+                        </tr>
+                        <tr>
+                            <th>의사명</th>
+                            <td>김의사</td>
+                        </tr>
+                        <tr>
+                            <th>진료과목</th>
+                            <td>소아과</td>
+                        </tr>
+                        <tr>
+                            <th>진료상세</th>
+                            <td>초진</td>
+                        </tr>
+                        <tr>
+                            <th>진료시간</th>
+                            <td>1234.56.78 16:11</td>
+                        </tr>
+                        <tr>
+                            <th>진료금</th>
+                            <td>6300원</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
