@@ -80,7 +80,7 @@
     width: 22vw;
     height: 6vh;
 
-    background-color: #99B7D9;
+    background-color: #326EB3;
     color: white;
     z-index: 10;
 
@@ -88,7 +88,6 @@
 
     font-weight: bold;
 
-    box-shadow: 1px 1px 3px 1px #dadce0 inset;
 }
 
 .post-bottom {
