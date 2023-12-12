@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{/fragments/header :: header}"></div>
+    <title>예약 - 응애 | 예약 페이지</title>
+    <link rel="stylesheet" href="css/appointment.css">
+</head>
+<body>
+  <div th:replace="~{/fragments/mainHeader :: main-header}"></div>
+  <main>
+      <div class="form-wrapper">
+      <form method="" action="">
+          <fieldset class="appointment-hospital">
+              <div class="hospital-info">
+                  <img class="hospital-img" src="img/logo1.png">
+                  <div class="detail-info">
+                      <p><strong>병준병준병원</strong></p>
+                      <p>진료 가능</p>
+                      <p>구로구 구로동</p>
+                  </div>
+                  <div class="appointment-date-view" id="appointment-date-view"></div>
+              </div>
+          </fieldset>
+          <hr/>
+              <div class="appointment-info">
+                  <ul class="appointment-info-detail">
+                      <li class="on">
+                          <button class="dropdown-button"><i class="fa-solid fa-calendar appointment-icon"></i><strong>예약 날짜</strong></button>
+                          <div id="menu1" class="content">
+                              <input type="date" id="date" class="appointment-date">
+                          </div>
+                      </li>
+                      <li>
+                          <button class="dropdown-button"><i class="fa-solid fa-clock appointment-icon"></i><strong>예약 시간</strong></button>
+                          <div id="menu2" class="content">
+                              <fieldset class="appointment-info1">
+                                  <div id="time-list">
+                                  </div>
+                              </fieldset>
+                          </div>
+                      </li>
+                      <li>
+                          <button class="dropdown-button"><i class="fa-solid fa-user-doctor appointment-icon"></i><strong>진료 의사</strong></button>
+                          <div id="menu3" class="content">
+                              <div class="appointment-doctor-wrapper">
+                                  <img src="img/doctor.jpeg" class="doctor-img">
+                                  <label class="appointment-doctor">
+                                      <input type="radio" name="appointment-doctor" value="강동원">
+                                      <span>강동원</span>
+                                  </label>
+                              </div>
+                              <div class="appointment-doctor-wrapper">
+                                  <img src="img/doctor.jpeg" class="doctor-img">
+                                  <label class="appointment-doctor">
+                                      <input type="radio" name="appointment-doctor" value="류준열">
+                                      <span>류준열</span>
+                                  </label>
+                              </div>
+
+                          </div>
+                      </li>
+                      <li>
+                          <button class="dropdown-button"><i class="fa-solid fa-child appointment-icon"></i><strong>진료자</strong></button>
+                          <div  id="menu4" class="content">
+                              <label class="appointment-children">
+                                  <input type="radio" name="appointment-children" value="전콜라">
+                                  <span>전콜라</span>
+                              </label>
+
+                              <label class="appointment-children">
+                                  <input type="radio" name="appointment-children" value="전리액트">
+                                  <span>전리액트</span>
+                              </label>
+                          </div>
+                      </li>
+                      <li>
+                          <button class="dropdown-button"><i class="fa-solid fa-clipboard appointment-icon"></i><strong>증상</strong></button>
+                          <div id="menu5" class="content">
+                              <textarea class="appointment-symptom" name="appointment-symptom" placeholder="증상을 간단히 입력해주세요."></textarea>
+                          </div>
+                      </li>
+                  </ul>
+                  <div class="btn-wrapper">
+                      <button type="button" class="btn-submit"><strong>예약 접수</strong></button>
+                  </div>
+              </div>
+      </form>
+      </div>
+  </main>
+  <div th:replace="~{/fragments/bottomNavbar :: bottomNavbar}"></div>
+  <script src="js/appointment.js"></script>
+  <script src="js/shared.js"></script>
+</body>
+</html>
