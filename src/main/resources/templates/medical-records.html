@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/css/shared.css">
+    <link rel="stylesheet" href="../static/css/medical-records.css">
+    <link rel="icon" type="image/x-icon" href="../static/img/favicon-96x96.png">
+    <script src="https://kit.fontawesome.com/38adf5dcd0.js" crossorigin="anonymous"></script>
+    <script src="../static/js/jquery-3.7.1.min.js"></script>
+    <script src="../static/js/medical-records.js"></script>
+    <title>내 진료내역 - 응애 | 소아과 예약</title>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <header class="main-header row">
+        <div class="col-4 align-self-center">
+            <button class="toggle-button float-left">
+                <span class="toggle-button__bar"></span>
+                <span class="toggle-button__bar"></span>
+                <span class="toggle-button__bar"></span>
+            </button>
+        </div>
+        <div class="col-4 text-center align-self-center">
+            <a href="index.html" class="main-header__brand">
+                <img src="../static/img/logo1-2.png" alt="EUNGAE LOGO">
+            </a>
+        </div>
+        <div class="col-4 align-self-center">
+            <button class="profile-button float-right">
+                <i class="fa-solid fa-user fa-xl"></i>
+            </button>
+        </div>
+        <nav class="main-nav">
+            <ul class="main-nav__items">
+                <li class="main-nav__item">
+                    <a href="/">내 주변 병원 찾기</a>
+                </li>
+                <li class="main-nav__item">
+                    <a href="/">커뮤니티</a>
+                </li>
+                <li class="main-nav__item">
+                    <a href="/">공지사항</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="mobile-nav">
+        <ul class="mobile-nav__items">
+            <li class="mobile-nav__item">
+                <a href="/">내 주변 병원 찾기</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">커뮤니티</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">공지사항</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">이용약관</a>
+            </li>
+        </ul>
+    </nav>
+    <main>
+        <div class="medical-records-header">
+            <p>진료내역</p>
+            <hr/>
+        </div>
+        <div class="medical-records-body">
+            <div class="card" onclick="showhDetails(1)">
+                <div class="myrecords">
+                    <div class="hospital-name">
+                        삼성에스마디정형외과의원
+                    </div>
+                    <hr/>
+                    <table>
+                        <tr>
+                            <td>
+                                환자 - 김환자
+                            </td>
+                            <td class="middle-line"> | </td>
+                            <td>
+                                의사 - 김의사
+                            </td>
+                            <td class="middle-line"> | </td>
+                            <td class="treatment-date">
+                                1234.56.78
+                            </td>
+                    </table>
+                </div>
+                <div class="records-detail" id="detail1" style="display: none;">
+                    <hr/>
+                    <table>
+                        <tr>
+                            <th>병원명</th>
+                            <td>삼성에스마디정형외과의원</td>
+                        </tr>
+                        <tr>
+                            <th>환자명</th>
+                            <td>김환자</td>
+                        </tr>
+                        <tr>
+                            <th>의사명</th>
+                            <td>김의사</td>
+                        </tr>
+                        <tr>
+                            <th>진료과목</th>
+                            <td>소아과</td>
+                        </tr>
+                        <tr>
+                            <th>진료상세</th>
+                            <td>초진</td>
+                        </tr>
+                        <tr>
+                            <th>진료시간</th>
+                            <td>1234.56.78 16:11</td>
+                        </tr>
+                        <tr>
+                            <th>진료금</th>
+                            <td>6300원</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card" onclick="showhDetails(2)">
+                <div class="myrecords">
+                    <div class="hospital-name">
+                        삼성에스마디정형외과의원
+                    </div>
+                    <hr/>
+                    <table>
+                        <tr>
+                            <td>
+                                환자 - 김환자
+                            </td>
+                            <td class="middle-line"> | </td>
+                            <td>
+                                의사 - 김의사
+                            </td>
+                            <td class="middle-line"> | </td>
+                            <td class="treatment-date">
+                                1234.56.78
+                            </td>
+                    </table>
+                </div>
+                <div class="records-detail" id="detail2" style="display: none;">
+                    <hr/>
+                    <table>
+                        <tr>
+                            <th>병원명</th>
+                            <td>삼성에스마디정형외과의원</td>
+                        </tr>
+                        <tr>
+                            <th>환자명</th>
+                            <td>김환자</td>
+                        </tr>
+                        <tr>
+                            <th>의사명</th>
+                            <td>김의사</td>
+                        </tr>
+                        <tr>
+                            <th>진료과목</th>
+                            <td>소아과</td>
+                        </tr>
+                        <tr>
+                            <th>진료상세</th>
+                            <td>초진</td>
+                        </tr>
+                        <tr>
+                            <th>진료시간</th>
+                            <td>1234.56.78 16:11</td>
+                        </tr>
+                        <tr>
+                            <th>진료금</th>
+                            <td>6300원</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="card" onclick="showhDetails(3)">
+                <div class="myrecords">
+                    <div class="hospital-name">
+                        삼성에스마디정형외과의원
+                    </div>
+                    <hr/>
+                    <table>
+                        <tr>
+                            <td>
+                                환자 - 김환자
+                            </td>
+                            <td class="middle-line"> | </td>
+                            <td>
+                                의사 - 김의사
+                            </td>
+                            <td class="middle-line"> | </td>
+                            <td class="treatment-date">
+                                1234.56.78
+                            </td>
+                    </table>
+                </div>
+                <div class="records-detail" id="detail3" style="display: none;">
+                    <hr/>
+                    <table>
+                        <tr>
+                            <th>병원명</th>
+                            <td>삼성에스마디정형외과의원</td>
+                        </tr>
+                        <tr>
+                            <th>환자명</th>
+                            <td>김환자</td>
+                        </tr>
+                        <tr>
+                            <th>의사명</th>
+                            <td>김의사</td>
+                        </tr>
+                        <tr>
+                            <th>진료과목</th>
+                            <td>소아과</td>
+                        </tr>
+                        <tr>
+                            <th>진료상세</th>
+                            <td>초진</td>
+                        </tr>
+                        <tr>
+                            <th>진료시간</th>
+                            <td>1234.56.78 16:11</td>
+                        </tr>
+                        <tr>
+                            <th>진료금</th>
+                            <td>6300원</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="container-fluid fixed-bottom text-center mobile-nav-bottom">
+        <div class="row mobile-nav-bottom__items">
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-star fa-lg">
+                </i>
+                <p>단골병원</p>
+            </a>
+
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-stethoscope fa-lg">
+                </i>
+                <p>진료내역</p>
+            </a>
+
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-house fa-lg"></i>
+                <p>홈</p>
+            </a>
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-comments fa-lg"></i>
+                <p>커뮤니티</p>
+            </a>
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-ellipsis fa-lg"></i>
+                <p>더보기</p>
+            </a>
+        </div>
+    </div>
+    <script src="../static/js/shared.js"></script>
+</body>
+</html>
