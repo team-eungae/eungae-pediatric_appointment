@@ -1,0 +1,20 @@
+main {
+    margin-top: 6rem;
+}
+#hospital-image {
+    width: 7rem;
+    height: 7rem;
+    margin-right: 5%;
+}
+.hospital-info {
+    display: flex;
+    margin: 1% 5% 3% 5%;
+}
+#hospitalname {
+    font-weight: bold;
+}
+.regular-hospital-title {
+    margin-left: 5%;
+    margin-right: 5%;
+    font-weight: 700;
+}

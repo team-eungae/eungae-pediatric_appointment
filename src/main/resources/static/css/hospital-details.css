@@ -1,0 +1,180 @@
+.bbung {
+    margin-top: 35%;
+}
+
+main{
+    background-color: #E2E2E2;
+}
+.hospital-informations {
+    background-color: white;
+}
+
+.hospital-images {
+    margin-top: 20%;
+    text-align: center;
+}
+
+.hospital-images img {
+    border-bottom-left-radius: 10vw;
+    border-bottom-right-radius: 10vw;
+    border-top-right-radius: 10vw;
+    border-top-left-radius: 10vw;
+
+    object-fit: fill;
+
+    width: 90vw;
+    height: 24vh;
+}
+
+.hospital-informations-common {
+    margin-left: 6vw;
+    margin-right: 6vw;
+    margin-top: 2vh;
+    margin-bottom: vh;
+    padding-bottom: 2vh;
+}
+
+.hospital-informations-address i{
+    padding-right: 3vw;
+}
+.hospital-informations-phone i{
+    padding-right: 3vw;
+}
+
+.clinic-hours {
+    background-color: white;
+    padding: 5%;
+    margin-top: 1vw;
+}
+
+.clinic-hours-header {
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 2%;
+}
+
+.clinic-hours-body #today{
+    width: 100%;
+}
+
+.clinic-hours-body #day{
+    font-size: 4vw;
+    font-weight: bold;
+}
+
+.clinic-hours-body #time{
+    font-size: 4vw;
+}
+
+.clinic-hours-body #lunch-time{
+    font-size: 3vw;
+    color: gray;
+}
+
+.clinic-hours-body #schedule {
+    width: 100%;
+    text-align: center;
+    background-color: #99B7D9;
+    margin-top: 3%;
+    border-radius: 5vw;
+    padding: 30%;
+}
+
+.clinic-hours-button {
+    border-radius: 1vh;
+    background-color: #99B7D9;
+    border: 2px #326EB3 solid;
+}
+
+
+.hospital-address {
+    background-color: white;
+    margin-top: 1vw;
+}
+
+.hospital-address-header {
+    font-size: large;
+    font-weight: bold;
+    margin-left: 6vw;
+    margin-right: 6vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+.hospital-address-body {
+    margin-left: 6vw;
+    margin-right: 6vw;
+    padding-bottom: 1vh;
+}
+
+.hospital-address-body i{
+    padding-right: 3vw;
+}
+
+.hospital-address-text {
+    padding-bottom: 1vh;
+}
+
+.hospital-address-body #map{
+    width: 88vw;
+    height: 30vh;
+    border-radius: 5vw;
+}
+
+.hospital-doctor {
+    margin-top: 1vw;
+    background-color: white;
+    padding-bottom: 2vh;
+}
+
+.hospital-doctor-header {
+    margin-left: 6vw;
+    margin-right: 6vw;
+    font-size: large;
+    font-weight: bold;
+}
+
+.hospital-doctor-body {
+    margin-left: 6vw;
+    margin-right: 6vw;
+}
+
+.hospital-doctor-body .card{
+    border-radius: 3vw;
+    margin-top: 2vh;
+}
+
+
+.hospital-doctor-body .doctor-name{
+    width: 30vw;
+    text-align: center;
+}
+
+
+.doctor-image {
+    text-align: left;
+    width: 20vw;
+}
+
+.doctor-image img {
+    text-align: center;
+    width: 20vw;
+    height: 8vh;
+    border-radius: 3vw;
+}
+
+.reservation-button-place {
+    margin-top: 1vh;
+    background-color: white;
+    float: right;
+}
+
+.reservation-button-place button{
+    margin-left: 6vw;
+    margin-right: 10vw;
+    border-radius: 1vh;
+    border: #326EB3 2px solid;
+    background-color: #99B7D9;
+    width: 40vw;
+    height: 5vh;
+}

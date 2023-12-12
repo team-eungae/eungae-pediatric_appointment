@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/shared.css">
+    <link rel="stylesheet" href="sign-up.css">
+    <link rel="icon" type="image/x-icon" href="../img/favicon-96x96.png">
+    <script src="https://kit.fontawesome.com/38adf5dcd0.js" crossorigin="anonymous"></script>
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <title>회원가입 - 응애 | 소아과 예약</title>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <header class="main-header row">
+        <div class="col-4 align-self-center">
+            <button class="toggle-button float-left">
+                <span class="toggle-button__bar"></span>
+                <span class="toggle-button__bar"></span>
+                <span class="toggle-button__bar"></span>
+            </button>
+        </div>
+        <div class="col-4 text-center align-self-center">
+            <a href="../index.html" class="main-header__brand">
+                <img src="../img/logo1-2.png" alt="EUNGAE LOGO">
+            </a>
+        </div>
+        <div class="col-4 align-self-center">
+            <button class="profile-button float-right" onclick="location.href='sign-up.html'">
+                <i class="fa-solid fa-user fa-xl"></i>
+            </button>
+        </div>
+        <nav class="main-nav">
+            <ul class="main-nav__items">
+                <li class="main-nav__item">
+                    <a href="/">내 주변 병원 찾기</a>
+                </li>
+                <li class="main-nav__item">
+                    <a href="/">커뮤니티</a>
+                </li>
+                <li class="main-nav__item">
+                    <a href="/">공지사항</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="mobile-nav">
+        <ul class="mobile-nav__items">
+            <li class="mobile-nav__item">
+                <a href="/">내 주변 병원 찾기</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">커뮤니티</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">공지사항</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">이용약관</a>
+            </li>
+        </ul>
+    </nav>
+    <main class="sign-up-page">
+        <h2 class="sign-up-title">회원가입</h2>
+        <div class="sign-up-social">
+            <span class="sign-up-social__title">간편 회원가입</span>
+            <button class="sign-up-social__button">
+                <img class="sign-up-social__image" src="../img/kakao_login.png" alt="카카오로그인">
+            </button>
+        </div>
+
+        <form action="index.html" class="sign-up-form">
+            <label for="name">이름</label>
+            <input type="text" id="name" placeholder="보호자의 성함을 기입해주세요." required>
+
+            <label for="phone-number">전화번호</label>
+            <input type="text" id="phone-number" placeholder="숫자만 입력해주세요. ex) 01012345678" required>
+
+            <label for="email">이메일</label>
+            <input type="email" id="email" placeholder="example@eungae.com" required>
+
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" placeholder="특수문자를 1개 이상 포함해주세요." required>
+
+            <label for="password-check">비밀번호 확인</label>
+            <input type="password" id="password-check" placeholder="비밀번호를 한 번 더 입력해주세요." required>
+
+            <div id="wrap">
+                <img src="https://t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                    style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
+                    alt="접기 버튼">
+            </div>
+
+            <label for="zip-code">우편번호</label>
+            <div class="zip-code-container">
+                <input type="text" id="zip-code-input" placeholder="우편번호" required>
+                <input type="button" class="zip-code-find__button" onclick="execDaumPostcode()" value="우편번호 찾기">
+            </div>
+            <div class="address-container">
+                <input type="text" id="address" placeholder="주소" required>
+                <input type="text" id="address-detail" placeholder="상세주소">
+            </div>
+
+            <button type="submit" class="button">가입하기</button>
+        </form>
+    </main>
+    <div class="container-fluid fixed-bottom text-center mobile-nav-bottom">
+        <div class="row mobile-nav-bottom__items">
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-star fa-lg">
+                </i>
+                <p>단골병원</p>
+            </a>
+
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-stethoscope fa-lg">
+                </i>
+                <p>진료내역</p>
+            </a>
+
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-house fa-lg"></i>
+                <p>홈</p>
+            </a>
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-comments fa-lg"></i>
+                <p>커뮤니티</p>
+            </a>
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-ellipsis fa-lg"></i>
+                <p>더보기</p>
+            </a>
+        </div>
+    </div>
+    <script src="./sign-up.js"></script>
+    <script src="../js/shared.js"></script>
+</body>
+
+</html>
