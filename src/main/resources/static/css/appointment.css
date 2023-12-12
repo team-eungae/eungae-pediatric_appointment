@@ -1,0 +1,232 @@
+.form-wrapper{
+    color: #333;
+    font-size: 18px;
+}
+.appointment-hospital{
+    width: 95%;
+    margin-top: 1.8rem;
+    margin-left: 5%;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    /*border: 2px #99B7D9 solid;*/
+    border-radius: 30px;
+    text-align: center;
+}
+.appointment-info{
+    width: 95%;
+    height: auto;
+    margin-top: 2rem;
+    margin-left: 0.7rem;
+    margin-bottom: 5rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 10px;
+    /*border: 2px #99B7D9 solid;*/
+    border-radius: 30px;
+    text-align: center;
+
+}
+.hospital-img{
+    width: 10vh;
+
+}
+.hospital-info{
+    display: flex;
+    width: 85vw;
+    height: 10vh;
+}
+.detail-info{
+    width: 50vw;
+    padding-top: 0.5rem;
+    text-align: start;
+}
+.appointment-date-view{
+    width: 20vh;
+    padding-top: 2rem;
+    padding-left: 2.5rem;
+}
+#time-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap:0.5rem;
+    margin-left: 0.3rem;
+}
+
+hr {
+    border: 0;
+    height: 7px;
+    background-color: #ecf1f6c9;
+}
+
+.appointment-date{
+    width: 21rem;
+    height: 3rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.appointment-doctor-wrapper{
+    width: 10rem;
+    margin-left: 10px;
+}
+
+.appointment-doctor input[type="radio"] {
+    display: none;
+}
+
+.appointment-doctor input[type="radio"] + span {
+    width: 10rem;
+    height: 2.5rem;
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 0.5rem;
+    margin-right: 5px;
+}
+
+.appointment-doctor input[type="radio"]:checked + span {
+    background-color: #326EB3;
+    color: #ffffff;
+}
+.doctor-img{
+    width: 35vw;
+    border-radius: 70px;
+}
+
+.appointment-children input[type="radio"] {
+    display: none;
+}
+
+.appointment-children input[type="radio"] + span {
+    width: 10rem;
+    height: 2.5rem;
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-right: 5px;
+}
+
+.appointment-children input[type="radio"]:checked + span {
+    background-color: #326EB3;
+    color: #ffffff;
+}
+
+.appointment-time input[type="radio"] {
+    display: none;
+}
+
+.appointment-time input[type="radio"] + span {
+    display: inline-block;
+    width: 19vw;
+    height: 2.5rem;
+    margin-right: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.appointment-time input[type="radio"]:checked + span {
+    background-color: #326EB3;
+    color: #ffffff;
+}
+.appointment-symptom{
+    margin-top: 1rem;
+    width: 100%;
+    height: 10rem;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    resize: none;
+}
+.appointment-icon{
+    margin-right: 10px;
+}
+.btn-submit{
+    margin-top: 20px;
+    font-family: ‘Noto Sans KR’, sans-serif;
+    font-size: 18px;
+    display: inline-block;
+    background-color: #ffffff;
+    color: #333;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    padding: 0.375rem 0.75rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.btn-submit:hover {
+    color: #fff;
+    background-color: #326EB3;
+    border-color: #326EB3;
+}
+
+.form-wrapper{
+    height: auto;
+    overflow-y: scroll;
+}
+.appointment-info-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    max-width: 500px;
+    width: 100%;
+    list-style: none;
+}
+
+li {
+    .dropdown-button {
+        display: block;
+        padding: 15px;
+        width: 100%;
+        color: #333;
+        background-color: #ffffff;
+        border: 0;
+        cursor: pointer;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .content {
+        display: none;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        background-color: #fff;
+        /*border-top: 1px solid #ddd;*/
+        text-align: center;
+    }
+
+    &.on {
+        .button {
+            background-color: #fff;
+            font-weight: bold;
+        }
+
+        .content {
+            display: block;
+            margin-top: 5px;
+        }
+        #menu3{
+            display: flex;
+        }
+    }
+
+}
