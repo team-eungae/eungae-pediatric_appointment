@@ -15,4 +15,10 @@ public class HomeController {
     public String map(){
         return "map";
     }
+    @GetMapping("/appointment")
+    public String appointment(){
+        return "appointment";
+    }
+
+
 }
