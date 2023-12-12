@@ -1,0 +1,94 @@
+main {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+a:active,
+a:hover,
+a:visited {
+    text-decoration: none;
+    /* color: inherit; */
+}
+
+.my-page-title {
+    text-align: left;
+    padding: 0 1.5rem;
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 1.8rem;
+    vertical-align: middle;
+}
+
+
+.my-page__parent {
+    margin-bottom: 2rem;
+}
+
+.my-page-content {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.my-page-sub__title {
+    font-size: 1.1rem;
+    text-align: center;
+    box-sizing: border-box;
+    display: inline-block;
+    color: #808080;
+    vertical-align: middle;
+}
+
+
+.my-page__input {
+    padding-left: 0.8rem;
+}
+
+.my-page__input>input {
+    border: solid 1px #ccc;
+    width: 100%;
+    border-radius: 6px;
+    display: inline-block;
+    height: 3rem;
+    padding-left: 0.5rem;
+}
+
+.my-page__button-top {
+    border-top: 1px solid #ccc;
+}
+
+.my-page__buttons {
+    position: relative;
+}
+
+.my-page__button {
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+    height: 3.5rem;
+    padding-left: 2rem;
+    color: #333;
+}
+
+.my-page__button__icon {
+    color: #5b5959;
+    margin-right: 0.6rem;
+}
+
+.my-page-withdrawal__button {
+    color: #959595;
+    display: block;
+    margin-right: 1rem;
+    text-align: right;
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    font-weight: 200;
+}
+
+.zip-code-container>.zip-code-find__button {
+    width: 30%;
+    align-items: center;
+    padding: 0 0.5rem;
+    margin-left: 0.5rem;
+
+}

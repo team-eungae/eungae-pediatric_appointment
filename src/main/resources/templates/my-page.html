@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="../../../../../eungae-front/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../../eungae-front/css/shared.css">
+    <link rel="stylesheet" href="my-page.css">
+    <link rel="icon" type="image/x-icon" href="../../../../../eungae-front/img/favicon-96x96.png">
+    <script src="https://kit.fontawesome.com/38adf5dcd0.js" crossorigin="anonymous"></script>
+    <script src="../../../../../eungae-front/js/jquery-3.7.1.min.js"></script>
+    <title>내 정보 - 응애 | 소아과 예약</title>
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <header class="main-header row">
+        <div class="col-4 align-self-center">
+            <button class="toggle-button float-left">
+                <span class="toggle-button__bar"></span>
+                <span class="toggle-button__bar"></span>
+                <span class="toggle-button__bar"></span>
+            </button>
+        </div>
+        <div class="col-4 text-center align-self-center">
+            <a href="../../../../../eungae-front/index.html" class="main-header__brand">
+                <img src="../../../../../eungae-front/img/logo1-2.png" alt="EUNGAE LOGO">
+            </a>
+        </div>
+        <div class="col-4 align-self-center">
+            <button class="profile-button float-right">
+                <i class="fa-solid fa-user fa-xl"></i>
+            </button>
+        </div>
+        <nav class="main-nav">
+            <ul class="main-nav__items">
+                <li class="main-nav__item">
+                    <a href="/">내 주변 병원 찾기</a>
+                </li>
+                <li class="main-nav__item">
+                    <a href="/">커뮤니티</a>
+                </li>
+                <li class="main-nav__item">
+                    <a href="/">공지사항</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <nav class="mobile-nav">
+        <ul class="mobile-nav__items">
+            <li class="mobile-nav__item">
+                <a href="/">내 주변 병원 찾기</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">커뮤니티</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">공지사항</a>
+            </li>
+            <li class="mobile-nav__item">
+                <a href="/">이용약관</a>
+            </li>
+        </ul>
+    </nav>
+    <main class="my-page">
+        <h2 class="my-page-title">내 정보</h2>
+        <div class="my-page__parent">
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">이름</div>
+                <div class="my-page__input col">
+                    <input type="text" id="name" value="김수용">
+                </div>
+            </div>
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">핸드폰</div>
+                <div class="my-page__input col">
+                    <input type="text" id="phone_number" value="010-1234-5678">
+                </div>
+            </div>
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">이메일</div>
+                <div class="my-page__input col">
+                    <input type="text" id="email" value="example@eungae.com">
+                </div>
+            </div>
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">주소</div>
+                <div class="my-page__input col">
+                    <input type="text" id="address" value="서울 용산구 독서당로 111, 301호">
+                </div>
+            </div>
+        </div>
+        <div class="my-page__buttons">
+            <a class="my-page__button my-page__button-top col " href="#"><i
+                    class="fa-solid fa-gear my-page__button__icon"></i>내 정보 수정</a>
+            <a class="my-page__button col" href="../../../../../eungae-front/my-children/my-children.html"><i
+                    class="fa-solid fa-children my-page__button__icon"></i>자녀 관리</a>
+            <a class="my-page__button col" href="#"><i class="fa-solid fa-pen-to-square my-page__button__icon"></i>리뷰 관리</a>
+            <a class="my-page__button col" href="#"><i class="fa-solid fa-calendar-check my-page__button__icon"></i>예약 관리</a>
+            <a class="my-page__button col" href="#"><i class="fa-solid fa-right-from-bracket my-page__button__icon"></i>로그아웃</a>
+            <a class="my-page-withdrawal__button" href="#">회원 탈퇴</a>
+        </div>
+    </main>
+    <div class="container-fluid fixed-bottom text-center mobile-nav-bottom">
+        <div class="row mobile-nav-bottom__items">
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-star fa-lg">
+                </i>
+                <p>단골병원</p>
+            </a>
+
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-stethoscope fa-lg">
+                </i>
+                <p>진료내역</p>
+            </a>
+
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-house fa-lg"></i>
+                <p>홈</p>
+            </a>
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-comments fa-lg"></i>
+                <p>커뮤니티</p>
+            </a>
+            <a class="nav-link text-dark mobile-nav-bottom__item col" href="#">
+                <i class="fa-solid fa-ellipsis fa-lg"></i>
+                <p>더보기</p>
+            </a>
+        </div>
+    </div>
+    <script src="../../../../../eungae-front/js/shared.js"></script>
+</body>
+
+</html>
