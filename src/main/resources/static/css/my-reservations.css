@@ -1,0 +1,58 @@
+.my-reservaions-header {
+    margin-top: 10vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.my-reservaions-body {
+    margin-top: 3vh;
+    margin-left: 4vw;
+    margin-right: 4vw;
+    margin-bottom: 30%;
+}
+
+.my-reservations {
+    border: 1vw dashed #99B7D9;
+    border-radius: 5vw;
+    margin-bottom: 5vh;
+}
+
+.hospital-name {
+    margin: 5vw;
+    font-size: 1.2rem;
+    font-weight: 550;
+}
+
+.hospital-name hr {
+    background-color: #326EB3;
+    height:2px;
+}
+
+.button-place {
+    text-align: center;
+    margin-bottom: 2vh;
+}
+
+.hospital-details {
+    background-color: #99B7D9;
+    border: 0;
+    border-radius: 3vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    margin-right: 20vw;
+}
+
+.reservation-cancel {
+    background-color: #326EB3;
+    border: 0;
+    border-radius: 3vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    color: white;
+}
