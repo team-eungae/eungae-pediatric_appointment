@@ -1,0 +1,79 @@
+.outer-container {
+    height: 100%;
+}
+.hospital-page-main-title-container {
+    flex: 1;
+    flex-direction: row;
+    margin: 10px;
+    padding: 20px;
+    display: flex; /* 플렉스 컨테이너로 설정 */
+}
+.hospital-page-main-profile {
+    flex-direction: column;
+    margin: 20px;
+    justify-content: center;
+    align-content: center;
+    display: flex; /* 플렉스 컨테이너로 설정 */
+}
+.hospital-page-main-title {
+    margin: 15px;
+    flex-direction: column;
+    display: flex; /* 플렉스 컨테이너로 설정 */
+}
+.hospital-page-main-container {
+    flex: 1;
+    flex-direction: column;
+    margin-left: 140px;
+    margin-right: 140px;
+    padding: 20px;
+    border-radius: 30px;
+    border: 2px solid #99B7D9;
+    display: flex; /* 플렉스 컨테이너로 설정 */
+}
+.hospital-page-main-info-container {
+    /*구별용 컬러*/
+    /*background-color: #1c7430;*/
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid #99B7D9;
+    border-radius: 15px;
+    flex: 1;
+    flex-direction: column;
+    display: flex; /* 플렉스 컨테이너로 설정 */
+}
+.hospital-page-main-info-detail {
+    /*구별용 컬러*/
+    /*background-color: #1c7430;*/
+    margin: 5px;
+    padding: 5px;
+    /*border: 2px solid #99B7D9;*/
+    background-color: #D9D9D9;
+    border-radius: 15px;
+    flex: 1;
+    flex-direction: row;
+    display: flex; /* 플렉스 컨테이너로 설정 */
+}
+.hospital-page-main-info {
+    /*구별용 컬러*/
+    background-color: pink;
+}
+.hospital-page-container-name-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.hospital-page-container-name {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: #326EB3;
+    margin-top: -30px;
+    width: 200px;
+    border-radius: 20px;
+}
+.hospital-page-text {
+    color: #FFFFFF;
+}
+.hr-full-width {
+     width: 100%;
+ }
