@@ -79,12 +79,15 @@
 
 ## ⚙️ Infra
 
+<div align="center">
 <img width="600px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/cf783667-18fe-49d4-a585-6c4be5c9f23a'  alt="Infra"/>
+</div>
 
 ## 🛠️ Skills
 
+<div align="center">
 <img width="500px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/4578bc51-942b-4a38-990c-842e738a2153'  alt="Skills"/>
-
+</div>
 
 ## 🏆 Ground Rules
 
