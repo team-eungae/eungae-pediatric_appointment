@@ -77,7 +77,17 @@
   </tr>
 </table>
 
-<br/>
+## ⚙️ Infra
+
+<div align="center">
+<img width="600px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/cf783667-18fe-49d4-a585-6c4be5c9f23a'  alt="Infra"/>
+</div>
+
+## 🛠️ Skills
+
+<div align="center">
+<img width="600px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/4578bc51-942b-4a38-990c-842e738a2153'  alt="Skills"/>
+</div>
 
 ## 🏆 Ground Rules
 
@@ -85,21 +95,13 @@
 <img width="600px" src='https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/16e56466-17b1-4ca5-8dcb-0c7f09cd9b91'  alt="CI/CD"/>
 </div>
 
-[//]: # (## 🛠️ Skills)
 
 [//]: # ()
-[//]: # (<img width="500px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/cade7c34-977d-413c-bd37-e5796060c0bf'  alt="Skills"/>)
 
-[//]: # ()
-[//]: # (## ⚙️ Infra)
-
-[//]: # ()
-[//]: # (<img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/05794e0c-651a-4fc2-a535-fe8312493d9f'  alt="Infra"/>)
-
-[//]: # ()
 [//]: # (## 🪄 CI/CD)
 
 [//]: # ()
+
 [//]: # (<img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/79f30380-86d9-4cf1-b801-c19b3c866a88'  alt="CI/CD"/>)
 
 
