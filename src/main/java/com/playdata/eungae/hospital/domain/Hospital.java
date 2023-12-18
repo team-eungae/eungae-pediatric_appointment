@@ -38,9 +38,11 @@ public class Hospital {
 	private HospitalSchedule hospitalSchedule;
 */
 
+/*
 	@OneToMany(fetch = FetchType.LAZY)
 	@JoinColumn(name = "doctor_seq")
 	private List<Doctor> doctor = new ArrayList<>();
+*/
 
 	private String password;
 	private String name;
