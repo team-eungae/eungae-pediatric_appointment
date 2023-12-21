@@ -3,37 +3,45 @@ package com.playdata.eungae.doctor.domain;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
+import com.playdata.eungae.base.BaseEntity;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicInsert
+@Table(name = "doctor")
 @Entity
-public class Doctor {
+public class Doctor extends BaseEntity {
 
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Id
-	@GeneratedValue
 	private Long doctorSeq;
 
+	@Column(nullable = false)
 	private String name;
-	private String status;
-	private Long treatmentPossible;
-	private String profileImage;
-/*
-    메타데이터로 처리하죵
-    방법은 다같이 알아봐영
-    private LocalDateTime createAt;
-    private LocalDateTime modifiedAt;
-*/
 
+	@ColumnDefault("'1'")
+	private String status;
+
+	@ColumnDefault("'3'")
+	private Long treatmentPossible;
+
+	private String profileImage;
 }
