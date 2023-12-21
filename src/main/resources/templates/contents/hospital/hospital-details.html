@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/hospital-details.css">
+    <title>병원 상세 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main  layout:fragment="content">
+    <div class="hospital-informations">
+        <div class="hospital-images">
+            <img src="https://cdn.sayun.studio/boottent/files/assets/encore/photo/photo_454290aa-2867-4b44-97b2-1d7251b040bc.jpg">
+        </div>
+        <div class="hospital-informations-common">
+            <h3>플레이데이터</h3>
+            <hr/>
+            <div>
+                <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i><span>서울 금천구 가산디지털1로 25</span></div>
+                <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i><span>02-0000-0000</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="clinic-hours">
+        <div class="clinic-hours-header">
+            진료시간
+        </div>
+        <div class="clinic-hours-body">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <table id="today">
+                            <th>
+                            <td id="day">월요일</td>
+                            <td id="time">09:00 - 18:00</td>
+                            <td id="lunch-time">(점심 13:00 - 14:00)</td>
+                            <td id="timeShowBtn"><button class="clinic-hours-button" onclick="onShowBtn()"><i class="fas fa-arrow-down"></i></button></td>
+                            </th>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <table id="schedule" style="display: none;">
+                <tr>
+                    <td id="day">월요일</td>
+                    <td id="time">09:00 - 18:00</td>
+                    <td id="lunch-time">(점심 13:00 - 14:00)</td>
+                </tr>
+                <tr>
+                    <td id="day">화요일</td>
+                    <td id="time">09:00 - 18:00</td>
+                    <td id="lunch-time">(점심 13:00 - 14:00)</td>
+                </tr>
+                <tr>
+                    <td id="day">수요일</td>
+                    <td id="time">09:00 - 18:00</td>
+                    <td id="lunch-time">(점심 13:00 - 14:00)</td>
+                </tr>
+                <tr>
+                    <td id="day">목요일</td>
+                    <td id="time">09:00 - 18:00</td>
+                    <td id="lunch-time">(점심 13:00 - 14:00)</td>
+                </tr>
+                <tr>
+                    <td id="day">금요일</td>
+                    <td id="time">09:00 - 18:00</td>
+                    <td id="lunch-time">(점심 13:00 - 14:00)</td>
+                </tr>
+                <tr>
+                    <td id="day">토요일</td>
+                    <td id="time">09:00 - 18:00</td>
+                    <td id="lunch-time">(점심 13:00 - 14:00)</td>
+                </tr>
+                <tr>
+                    <td id="day">일요일</td>
+                    <td id="time">09:00 - 18:00</td>
+                    <td id="lunch-time">(점심 13:00 - 14:00)</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="hospital-address">
+        <div class="hospital-address-header">
+            위치
+        </div>
+        <div class="hospital-address-body">
+            <div id="hospital-address">
+                <div class="hospital-address-text"><i class="far fa-map"></i><span>서울 금천구 가산디지털1로 25</span></div>
+            </div>
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="hospital-doctor">
+        <div class="hospital-doctor-header">
+            의사
+        </div>
+        <div class="hospital-doctor-body">
+            <div class="card">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="doctor-image">
+                                <img src="https://t1.daumcdn.net/cfile/tistory/99E72B4D5C41BD5727">
+                            </div>
+                        </td>
+                        <td class="doctor-name">
+                            <p>비모</p>
+                        </td>
+                        <td>
+                            <!-- <button>
+                                약력보기
+                            </button> -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="card">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="doctor-image">
+                                <img src="https://post-phinf.pstatic.net/MjAyMDEyMTdfMTQz/MDAxNjA4MTk2MTAwODY3.QjNHvtYqACnS7--uS1q2EzVjaKZ-8UbvmG3rDdfug0kg.7iWwVgUyT-LMWdg7YSU-NtuMbd0kbD0S1eMoxjT2pQkg.PNG/21.png?type=w800_q75">
+                            </div>
+                        </td>
+                        <td class="doctor-name">
+                            <P>보노보노</P>
+                        </td>
+                        <td>
+                            <!-- <button>
+                                약력보기
+                            </button> -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div>
+
+    </div>
+    <div class="reservation-button-place">
+        <button><a th:href="@{hospital/appointments}">예약하기</a></button>
+    </div>
+    <div class="bbung">
+
+    </div>
+</main>
+<div layout:fragment="custom_js">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=399f802c931e5e59db319cc955db0246"></script>
+    <script src="/js/hospital-details.js"></script>
+</div>
+</body>
+</html>

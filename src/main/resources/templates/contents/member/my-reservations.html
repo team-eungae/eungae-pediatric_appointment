@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/my-reservations.css">
+    <title>내 예약 확인 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main layout:fragment="content">
+    <div class="my-reservaions-header">
+        내 예약
+        <hr/>
+    </div>
+    <div class="my-reservaions-body">
+        <div class="my-reservations">
+            <div class="hospital-name">
+                삼성에스마디정형외과의원
+                <hr/>
+            </div>
+            <ul>
+                <li>환자명 - ㅁㅁㅁ</li>
+                <li>예약일 - 2011.11.11</li>
+                <li>예약시간 - 12:30</li>
+                <li>진료과 - 소아과</li>
+                <li>의사명 - 으이사</li>
+            </ul>
+            <div class="button-place">
+                <a th:href="@{/hospital}" class="hospital-details">
+                    병원보기
+                </a>
+                <button class="reservation-cancel">
+                    예약취소
+                </button>
+            </div>
+        </div>
+        <div class="my-reservations">
+            <div class="hospital-name">
+                탑플러스안과의원
+                <hr/>
+            </div>
+            <ul>
+                <li>환자명 - ㄱㄱㄱ</li>
+                <li>예약일 - 2011.11.11</li>
+                <li>예약시간 - 14:30</li>
+                <li>진료과 - 소아과</li>
+                <li>의사명 - 김안과</li>
+            </ul>
+            <div class="button-place">
+                <a th:href="@{/hospital}" class="hospital-details">
+                    병원보기
+                </a>
+                <button class="reservation-cancel">
+                    예약취소
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>

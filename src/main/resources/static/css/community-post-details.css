@@ -53,7 +53,7 @@ ul {
     margin-top: 2vh;
 }
 
-li {
+.post-writer-items{
     display: inline;
     margin-right: 3vw;
 }
