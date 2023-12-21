@@ -16,22 +16,22 @@
             </button>
         </div>
         <div class="col-4 text-center align-self-center">
-            <a href="index.html" class="main-header__brand">
-                <img src="img/logo1-2.png" alt="EUNGAE LOGO">
+            <a th:href="@{/}" class="main-header__brand">
+                <img src="/img/logo1-2.png" alt="EUNGAE LOGO">
             </a>
         </div>
         <div class="col-4 align-self-center">
-            <button class="profile-button float-right" onclick="location.href='sign-up/sign-up.html'">
+            <button class="profile-button float-right" onclick="location.href='/signup'">
                 <i class="fa-solid fa-user fa-xl"></i>
             </button>
         </div>
         <nav class="main-nav">
             <ul class="main-nav__items">
                 <li class="main-nav__item">
-                    <a href="/">내 주변 병원 찾기</a>
+                    <a th:href="@{/map}">내 주변 병원 찾기</a>
                 </li>
                 <li class="main-nav__item">
-                    <a href="/">커뮤니티</a>
+                    <a th:href="@{/article}">커뮤니티</a>
                 </li>
                 <li class="main-nav__item">
                     <a href="/">공지사항</a>
@@ -42,10 +42,10 @@
     <nav class="mobile-nav">
         <ul class="mobile-nav__items">
             <li class="mobile-nav__item">
-                <a href="/">내 주변 병원 찾기</a>
+                <a th:href="@{/map}">내 주변 병원 찾기</a>
             </li>
             <li class="mobile-nav__item">
-                <a href="/">커뮤니티</a>
+                <a th:href="@{/article}">커뮤니티</a>
             </li>
             <li class="mobile-nav__item">
                 <a href="/">공지사항</a>

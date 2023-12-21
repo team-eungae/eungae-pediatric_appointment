@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/my-page.css">
+    <title>내 정보 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main class="my-page" layout:fragment="content">
+    <h2 class="my-page-title">내 정보</h2>
+    <div class="my-page__parent">
+        <div class="my-page-content">
+            <div class="my-page-sub__title col-3">이름</div>
+            <div class="my-page__input col">
+                <input type="text" id="name" value="김수용">
+            </div>
+        </div>
+        <div class="my-page-content">
+            <div class="my-page-sub__title col-3">핸드폰</div>
+            <div class="my-page__input col">
+                <input type="text" id="phone_number" value="010-1234-5678">
+            </div>
+        </div>
+        <div class="my-page-content">
+            <div class="my-page-sub__title col-3">이메일</div>
+            <div class="my-page__input col">
+                <input type="text" id="email" value="example@eungae.com">
+            </div>
+        </div>
+        <div class="my-page-content">
+            <div class="my-page-sub__title col-3">주소</div>
+            <div class="my-page__input col">
+                <input type="text" id="address" value="서울 용산구 독서당로 111, 301호">
+            </div>
+        </div>
+    </div>
+    <div class="my-page__buttons">
+        <a class="my-page__button my-page__button-top col" th:href="@{/}"><i
+                class="fa-solid fa-gear my-page__button__icon"></i>내 정보 수정</a>
+        <a class="my-page__button col" th:href="@{/}"><i
+                class="fa-solid fa-children my-page__button__icon"></i>자녀 관리</a>
+        <a class="my-page__button col" th:href="@{/my/reviews}"><i class="fa-solid fa-pen-to-square my-page__button__icon"></i>리뷰 관리</a>
+        <a class="my-page__button col" th:href="@{/my/reservations}"><i class="fa-solid fa-calendar-check my-page__button__icon"></i>예약
+            관리</a>
+        <a class="my-page__button col" th:href="@{/}"><i class="fa-solid fa-right-from-bracket my-page__button__icon"></i>로그아웃</a>
+        <a class="my-page-withdrawal__button" th:href="@{/}">회원 탈퇴</a>
+    </div>
+</main>
+</body>
+</html>
