@@ -1,4 +1,4 @@
-package com.playdata.eungae.hospital.domain.repository;
+package com.playdata.eungae.hospital.domain;
 
 import com.playdata.eungae.base.BaseEntity;
 
