@@ -1,25 +1,17 @@
-package com.playdata.eungae.appointment.domain.repository;
+package com.playdata.eungae.appointment.domain;
 
-import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.Parent;
 
 import com.playdata.eungae.base.BaseEntity;
-import com.playdata.eungae.doctor.domain.Doctor;
 
-import ch.qos.logback.core.joran.action.AppenderRefAction;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 

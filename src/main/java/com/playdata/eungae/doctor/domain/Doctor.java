@@ -1,5 +1,5 @@
 
-package com.playdata.eungae.hospital.domain;
+package com.playdata.eungae.doctor.domain;
 
 import java.time.LocalDate;
 
@@ -21,7 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @Entity
 public class Doctor {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	private Long doctorSeq;
 
 	private String name;

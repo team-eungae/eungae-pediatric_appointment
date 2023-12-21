@@ -1,4 +1,4 @@
-package com.playdata.eungae.doctor.application;
+package com.playdata.eungae.doctor.domain;
 
 import java.time.LocalDateTime;
 

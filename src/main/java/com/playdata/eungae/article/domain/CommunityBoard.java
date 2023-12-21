@@ -1,4 +1,4 @@
-package com.playdata.eungae.community.domain;
+package com.playdata.eungae.article.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
