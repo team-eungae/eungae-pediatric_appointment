@@ -2,7 +2,6 @@ package com.playdata.eungae;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class HomeController {
@@ -11,14 +10,17 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/signup")
+    public String signUp(){
+        return "contents/member/sign-up";
+    }
+
     @GetMapping("/map")
     public String map(){
-        return "map";
+        return "contents/hospital/map";
     }
-    @GetMapping("/appointment")
-    public String appointment(){
-        return "appointment";
-    }
+
+
 
 
 }
