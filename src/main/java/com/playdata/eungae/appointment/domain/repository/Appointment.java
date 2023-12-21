@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Parent;
 
 import com.playdata.eungae.base.BaseEntity;
@@ -22,6 +23,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 
+@DynamicInsert
 @Getter
 @Table(name = "appointment")
 @Entity
@@ -52,7 +54,7 @@ public class Appointment extends BaseEntity {
 	@Column(nullable = false)
 	private String appointmentMinute;
 
-	@ColumnDefault("0")
+	@ColumnDefault("''0")
 	private String status;
 
 	@Column
