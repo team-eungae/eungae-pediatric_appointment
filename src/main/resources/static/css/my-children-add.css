@@ -1,0 +1,152 @@
+.my-children-add-page {
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
+}
+
+.my-children-add-title {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.children-add-guide-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 8px;
+    margin: 0.3rem;
+    height: 3rem;
+    color: #333;
+}
+
+.children-add-guide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.children-add-guide__icon {
+    color: #326EB3;
+    font-size: 1.4rem;
+    vertical-align: middle;
+    border-radius: 50%;
+    margin-left: 0.7rem;
+    margin-right: 0.5rem;
+}
+
+.children-add-guide__text {
+    vertical-align: middle;
+}
+
+.children-add-form-text {
+    font-size: 1rem;
+    margin-top: 2rem;
+    vertical-align: middle;
+    text-align: center;
+    color: #777;
+}
+
+.children-add-form-container {
+    padding: 1.5rem;
+    margin: 0.5rem;
+    border: #ccc 1px solid;
+    border-radius: 6px;
+}
+
+.children-add-form-container input {
+    width: 100%;
+    height: 3rem;
+    padding-left: 0.8rem;
+    margin: 0 0 1rem 0;
+    border-radius: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+
+input[type=checkbox] {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 0;
+    margin-bottom: 0.2rem;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+}
+
+.image-container {
+    text-align: center;
+}
+
+.children-add-form__img {
+    position: relative;
+    display: inline-block;
+
+}
+
+.image-preview {
+    max-width: 130px;
+    max-height: 130px;
+
+}
+
+.camera-icon {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    color: #ffffff;
+    background-color: #333;
+    border-radius: 50%;
+    padding: 5px;
+    cursor: pointer;
+}
+
+#preview {
+    width: 130px;
+    height: 130px;
+    border: #ccc 1px solid;
+    border-radius: 30%;
+}
+
+.children-add-form-container-button {
+    background: #326EB3;
+    color: white;
+    border: none;
+    width: 100%;
+    font-size: 15px;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.collapsible {
+    margin-top: 1rem;
+    width: 100%;
+    color: #333;
+    background-color: #fff;
+    border: #ccc 1px solid;
+    border-radius: 6px;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+}
+
+.content {
+    overflow: hidden;
+    background-color: #F5F5F5;
+    border-radius: 6px;
+    max-height: 0;
+    transition: max-height 0.1s ease-out;
+}
+
+.content li {
+    padding: 0.5rem;
+}
+
+.content__list {
+    padding: 0rem;
+    margin: 0;
+}
+
+.active+.content {
+    max-height: 500px;
+}
