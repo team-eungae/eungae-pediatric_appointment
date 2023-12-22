@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/hospital")
 public class AppointmentViewController {
+
 	@GetMapping("/appointments")
-	public String appointment(){
+	public String appointment() {
 		return "contents/appointment/appointment";
 	}
 
