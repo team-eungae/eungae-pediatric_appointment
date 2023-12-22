@@ -27,7 +27,7 @@ public class DoctorClosed extends BaseEntity {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Id
-	private Long hospitalClosedSeq;
+	private Long doctorClosedSeq;
 
 	@OneToOne
 	@JoinColumn(name = "hospital_seq")
