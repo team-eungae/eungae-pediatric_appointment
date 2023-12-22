@@ -9,27 +9,30 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class HomeController {
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
+	@GetMapping("/")
+	public String index() {
+		return "index";
+	}
 
-    @GetMapping("/signup")
-    public String signUp(){
-        return "contents/member/sign-up";
-    }
+	@GetMapping("/signup")
+	public String signUp() {
+		return "contents/member/sign-up";
+	}
 
-    @GetMapping("/map")
-    public String findHospital(){
-        return "contents/hospital/find-hospital";
-    }
+	@GetMapping("/login")
+	public String loginView() {
+		return "contents/member/login";
+	}
 
-    @GetMapping("/map/search")
-    public String searchHospital(String keyword){
-        log.info(keyword);
-        return "contents/hospital/search-hospital";
-    }
+	@GetMapping("/map")
+	public String findHospital() {
+		return "contents/hospital/find-hospital";
+	}
 
-
+	@GetMapping("/map/search")
+	public String searchHospital(String keyword) {
+		log.info(keyword);
+		return "contents/hospital/search-hospital";
+	}
 
 }

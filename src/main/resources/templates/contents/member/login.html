@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="/css/login.css">
+    <title>회원가입 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main class="login-page" layout:fragment="content">
+    <h2 class="login-title">로그인</h2>
+    <div class="login-social">
+        <span class="login-social__title">내 주변 소아과를 가장 빠르게 예약하는 방법</span>
+        <button class="login-social__button">
+            <img class="login-social__image" src="../img/kakao_login.png" alt="카카오로그인">
+        </button>
+    </div>
+
+    <form action="index.html" class="login-form">
+        <label for="email">이메일</label>
+        <input type="email" id="email" placeholder="" required>
+
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" placeholder="********" required>
+
+        <button type="submit" class="button">로그인 하기</button>
+    </form>
+    <div class="login-help-container">
+<!--        <div class="login-help-container__items">-->
+<!--            <a class="login-help-container__item" href="#">아이디 찾기</a>-->
+<!--            <a class="login-help-container__item" href="#">비밀번호 찾기</a>-->
+<!--        </div>-->
+        <div class="login-help-container__items">
+            <div class="login-help-container__item"> 회원이 아니신가요? <a href="#">회원가입</a>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
