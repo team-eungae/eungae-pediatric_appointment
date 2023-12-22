@@ -67,3 +67,95 @@ function execDaumPostcode() {
     // iframe을 넣은 element를 보이게 한다.
     element_wrap.style.display = 'block';
 }
+
+
+
+// 비밀번호 유효성 검사
+var myInput = document.getElementById("password");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+// 비밀번호 입력 칸 클릭 시 조건문 div 보여줌
+myInput.onfocus = function() {
+  document.getElementById("message").style.display = "block";
+}
+
+// 비밀번호 입력 칸이 아닌 곳을 클릭 시 조건문 사라지게 함
+myInput.onblur = function() {
+  document.getElementById("message").style.display = "none";
+}
+
+// 비밀번호 입력을 시작하면 유효성 검사 시작
+myInput.onkeyup = function() {
+  // 영문 소문자 검사
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+}
+
+  // 영문 대문자 검사
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+  // 숫자 검사
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+
+  // 비밀번호 길이 검사
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+
+// 비밀번호 정보 가져오기
+// 1. 비밀번호 입력창 정보 가져오기
+let elInputPassword = document.querySelector('#password'); // input#password
+// 2. 비밀번호 확인 입력창 정보 가져오기
+let elInputPasswordCheck = document.querySelector('#password-check'); // input#password-retype
+// 3. 실패 메시지 정보 가져오기 (비밀번호 불일치)
+let elMismatchMessage = document.querySelector('.mismatch-message'); // div.mismatch-message.hide
+
+//비밀번호와 비밀번호 확인이 일치할 경우 true, 아니면 false를 리턴한다.
+function isMatch (password1, password2) {
+  return password1 === password2;
+}
+
+elInputPasswordCheck.onkeyup = function () {
+
+  // console.log(elInputPasswordRetype.value);
+  if (elInputPasswordCheck.value.length !== 0) {
+    if(isMatch(elInputPassword.value, elInputPasswordCheck.value)) {
+      elMismatchMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+    }
+    else {
+      elMismatchMessage.classList.remove('hide'); // 실패 메시지가 보여야 함
+    }
+  }
+  else {
+    elMismatchMessage.classList.add('hide'); // 실패 메시지가 가려져야 함
+  }
+};
+//조건이 부적합할 경우 : .classList.remove('hide')로 hide 클래스를 삭제하여 화면에 표시한다.
+//조건이 적합할 경우 : .classList.add('hide')로 hide 클래스를 추가하여 화면에서 가린다.

@@ -105,3 +105,47 @@ main {
         grid-column: span 2;
     }
 }
+
+/* 비밀번호 입력 칸 클릭시 보이는 유효성 검사 박스 */
+#message {
+  display:none;
+  color: #000;
+  position: relative;
+  padding: 10px;
+}
+
+#message p {
+  padding: 5px 35px;
+  font-size: 15px;
+}
+
+/* 조건에 일치 시 CSS */
+.valid {
+  color: #326EB3;
+}
+
+.valid:before {
+  position: relative;
+  left: -30px;
+  content: "\2714";
+}
+
+/* 조건 불일치 시 CSS */
+.invalid {
+  color: red;
+}
+
+.invalid:before {
+  position: relative;
+  left: -30px;
+  content: "\2716";
+}
+
+/* 비밀번호 불일치 시 보이는 메시지 */
+.hide {
+    display: none;
+}
+.mismatch-message {
+    color: red;
+    margin-bottom: 15px;
+}
