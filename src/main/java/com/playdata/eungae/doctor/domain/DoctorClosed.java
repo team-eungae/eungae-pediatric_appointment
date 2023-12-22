@@ -3,7 +3,6 @@ package com.playdata.eungae.doctor.domain;
 import java.time.LocalDateTime;
 
 import com.playdata.eungae.base.BaseEntity;
-import com.playdata.eungae.hospital.domain.Hospital;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -30,8 +29,8 @@ public class DoctorClosed extends BaseEntity {
 	private Long doctorClosedSeq;
 
 	@OneToOne
-	@JoinColumn(name = "hospital_seq")
-	private Hospital hospital;
+	@JoinColumn(name = "doctor_seq")
+	private Doctor doctor;
 
 	@Column(nullable = false)
 	private LocalDateTime closedDay;
