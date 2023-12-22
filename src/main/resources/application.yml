@@ -1,1 +1,34 @@
+server:
+  port: 8090
 
+spring:
+  application:
+    name: eungae
+  sql:
+    init:
+      encoding: UTF-8
+      mode: always
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@127.0.0.1:1521:xe
+    username: eungae
+    password: eungae
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      #ddl-auto: none
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        sql: debug
+        type:
+          descriptor:
+            sql: trace
