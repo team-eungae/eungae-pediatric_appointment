@@ -3,15 +3,20 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mobile_layout}">
 <th:block layout:fragment="custom_header">
-    <link rel="stylesheet" href="/css/regular-hospital.css" />
-    <title>내 단골 소아과 - 응애 | 소아과 예약</title>
+    <link rel="stylesheet" href="/css/search-hospital.css" />
+    <title>병원 검색 - 응애 | 소아과 예약</title>
 </th:block>
 <body>
 <main layout:fragment="content">
-    <div class="regular-hospital-title-box">
-        <h4 class="regular-hospital-title">내 단골 소아과</h4>
-    </div>
-    <hr class="regular-hospital-title-hr" />
+    <form class="search-form">
+        <div class="search-container">
+            <input type="text" placeholder="찾고 싶은 병원을 검색하세요." class="search-input">
+            <button type="submit" class="search-button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </form>
+    <hr class="hr" />
     <div class="hospital-info">
         <img class="hospital-image" src="/img/hospital.jpeg" />
         <div>

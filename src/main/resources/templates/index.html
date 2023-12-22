@@ -8,9 +8,9 @@
 </th:block>
 <body>
 <main  layout:fragment="content">
-    <form class="search-form">
+    <form class="search-form" th:method="get" th:action="@{/map/search}">
         <div class="search-container">
-            <input type="text" placeholder="찾고 싶은 병원을 검색하세요." class="search-input">
+            <input type="text" placeholder="찾고 싶은 병원을 검색하세요." class="search-input" name="keyword">
             <button type="submit" class="search-button">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
@@ -27,5 +27,8 @@
         </button>
     </div>
 </main>
+<script>
+
+</script>
 </body>
 </html>

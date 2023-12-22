@@ -2,8 +2,12 @@ package com.playdata.eungae;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
+@Slf4j
 public class HomeController {
     @GetMapping("/")
     public String index() {
@@ -16,10 +20,15 @@ public class HomeController {
     }
 
     @GetMapping("/map")
-    public String map(){
-        return "contents/hospital/map";
+    public String findHospital(){
+        return "contents/hospital/find-hospital";
     }
 
+    @GetMapping("/map/search")
+    public String searchHospital(String keyword){
+        log.info(keyword);
+        return "contents/hospital/search-hospital";
+    }
 
 
 
