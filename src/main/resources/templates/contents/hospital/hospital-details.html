@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/mobile_layout}">
+      layout:decorate="~{layouts/hospital_layout}">
 <th:block layout:fragment="custom_header">
     <link rel="stylesheet" href="/css/hospital-details.css">
     <title>병원 상세 - 응애 | 소아과 예약</title>
@@ -138,13 +138,74 @@
     <div>
 
     </div>
-    <div class="reservation-button-place">
-        <button><a th:href="@{hospital/appointments}">예약하기</a></button>
+    <div class="hospital-review">
+        <div class="hospital-review-header">
+            리뷰
+            <div> (13)</div>
+        </div>
+        <div class="hospital-review-item">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <div class="hospital-review-content">
+                            <div class="review-content-header">
+                            <div class="review-writer">김*진</div>
+                            <div class="review-date">11월 29일</div>
+                            </div>
+                            <div class="review-rate">⭐⭐⭐⭐⭐</div>
+                            <div class="review-content">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hospital-review-item">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <div class="hospital-review-content">
+                            <div class="review-content-header">
+                                <div class="review-writer">김*진</div>
+                                <div class="review-date">11월 29일</div>
+                            </div>
+                            <div class="review-rate">⭐⭐⭐⭐⭐</div>
+                            <div class="review-content">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hospital-review-item">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <div class="hospital-review-content">
+                            <div class="review-content-header">
+                                <div class="review-writer">김*진</div>
+                                <div class="review-date">11월 29일</div>
+                            </div>
+                            <div class="review-rate">⭐⭐⭐⭐⭐</div>
+                            <div class="review-content">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <div class="bbung">
 
     </div>
+
 </main>
+
+
+
 <div layout:fragment="custom_js">
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=399f802c931e5e59db319cc955db0246"></script>
     <script src="/js/hospital-details.js"></script>
