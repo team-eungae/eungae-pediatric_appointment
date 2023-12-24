@@ -1,9 +1,9 @@
 .bbung {
-    margin-top: 35%;
+    margin-top: 15%;
 }
 
 main{
-    background-color: #E2E2E2;
+    background-color: #ecf1f6c9;
 }
 .hospital-informations {
     background-color: white;
@@ -30,7 +30,6 @@ main{
     margin-left: 6vw;
     margin-right: 6vw;
     margin-top: 2vh;
-    margin-bottom: vh;
     padding-bottom: 2vh;
 }
 
@@ -43,8 +42,8 @@ main{
 
 .clinic-hours {
     background-color: white;
-    padding: 5%;
-    margin-top: 1vw;
+    padding: 3% 5%;
+    margin-top: 1vh;
 }
 
 .clinic-hours-header {
@@ -68,13 +67,12 @@ main{
 
 .clinic-hours-body #lunch-time{
     font-size: 3vw;
-    color: gray;
+    color: rgb(128, 128, 128);
 }
 
 .clinic-hours-body #schedule {
     width: 100%;
     text-align: center;
-    background-color: #99B7D9;
     margin-top: 3%;
     border-radius: 5vw;
     padding: 30%;
@@ -82,14 +80,14 @@ main{
 
 .clinic-hours-button {
     border-radius: 1vh;
-    background-color: #99B7D9;
-    border: 2px #326EB3 solid;
+    background-color: #ffffff;
+    border: 2px #ffffff solid;
 }
 
 
 .hospital-address {
     background-color: white;
-    margin-top: 1vw;
+    margin-top: 1vh;
 }
 
 .hospital-address-header {
@@ -97,8 +95,8 @@ main{
     font-weight: bold;
     margin-left: 6vw;
     margin-right: 6vw;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
 }
 
 .hospital-address-body {
@@ -122,16 +120,18 @@ main{
 }
 
 .hospital-doctor {
-    margin-top: 1vw;
+    margin-top: 1vh;
     background-color: white;
     padding-bottom: 2vh;
 }
 
 .hospital-doctor-header {
-    margin-left: 6vw;
-    margin-right: 6vw;
     font-size: large;
     font-weight: bold;
+    margin-left: 6vw;
+    margin-right: 6vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
 }
 
 .hospital-doctor-body {
@@ -141,7 +141,7 @@ main{
 
 .hospital-doctor-body .card{
     border-radius: 3vw;
-    margin-top: 2vh;
+    margin-bottom: 2vh;
 }
 
 
@@ -163,6 +163,60 @@ main{
     border-radius: 3vw;
 }
 
+.hospital-doctor {
+    margin-top: 1vh;
+    background-color: white;
+    padding-bottom: 2vh;
+}
+/*리뷰*/
+.hospital-review {
+    margin-top: 1vh;
+    background-color: white;
+    padding-bottom: 2vh;
+}
+
+.hospital-review-header {
+    font-size: large;
+    font-weight: bold;
+    margin-left: 6vw;
+    margin-right: 6vw;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    display: flex;
+}
+
+.hospital-review-item {
+    margin-left: 6vw;
+    margin-right: 6vw;
+}
+
+.hospital-review-item .card{
+    border-radius: 3vw;
+    margin-bottom: 2vh;
+}
+
+
+.review-content-header{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.review-date{
+    position: relative;
+    right: 0;
+    padding-right: 20px;
+    font-size: 3vw;
+    color: rgb(128, 128, 128);
+}
+/*.review-content{*/
+/*    overflow:hidden;*/
+/*    text-overflow:ellipsis;*/
+/*    white-space:nowrap;*/
+/*}*/
+
+/************************/
+
 .reservation-button-place {
     margin-top: 1vh;
     background-color: white;
@@ -171,10 +225,17 @@ main{
 
 .reservation-button-place button{
     margin-left: 6vw;
-    margin-right: 10vw;
+    margin-right: 3vw;
     border-radius: 1vh;
     border: #326EB3 2px solid;
-    background-color: #99B7D9;
-    width: 40vw;
+    background-color: #326EB3;
+    color: #ffffff;
+    width: 35vw;
     height: 5vh;
+}
+.mobile-nav-bottom {
+    background: #ffffff;!important;
+    z-index: 10;!important;
+    box-shadow: 0px 0px 0px 2px #ECEFF2; !important;
+    height: 7vh; !important;
 }
