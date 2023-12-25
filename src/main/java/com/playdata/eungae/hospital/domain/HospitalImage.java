@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@Table(name = "hospital")
+@Table(name = "hospital_image")
 @Entity
 public class HospitalImage extends BaseEntity {
 
