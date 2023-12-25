@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+  <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  <link rel="stylesheet" href="/css/sign-up.css">
+  <title>회원가입 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main class="my-page-form">
+  <h2 class="my-page-title">내 정보 수정</h2>
+
+  <div class="my-page__parent">
+    <div class="my-page-content">
+      <div class="my-page-sub__title col-3">이름</div>
+      <div class="my-page__input col">
+        <input type="text" id="name" value="김수용">
+      </div>
+    </div>
+    <div class="my-page-content">
+      <div class="my-page-sub__title col-3">핸드폰</div>
+      <div class="my-page__input col">
+        <input type="text" id="phone_number" value="010-1234-5678">
+      </div>
+    </div>
+    <div class="my-page-content">
+      <div class="my-page-sub__title col-3">이메일</div>
+      <div class="my-page__input col">
+        <input type="text" id="email" value="example@eungae.com">
+      </div>
+    </div>
+    <div class="my-page-content">
+      <div class="my-page-sub__title col-3">우편번호</div>
+      <div class="zip-code-container">
+        <div class="my-page__input col">
+          <input type="text" id="zip-code" value="11033">
+          <input type="button" id="zip-code-find__button" class="zip-code-find__button"
+                 onclick="sample6_execDaumPostcode()" value=" 찾기">
+        </div>
+      </div>
+    </div>
+    <div class="my-page-content">
+      <div class="my-page-sub__title col-3">주소</div>
+      <div class="my-page__input col">
+        <input type="text" id="address" value="서울 용산구 독서당로 111">
+      </div>
+    </div>
+    <div class="my-page-content">
+      <div class="my-page-sub__title col-3">상세주소</div>
+      <div class="my-page__input col">
+        <input type="text" id="address-detail" value="301호">
+      </div>
+    </div>
+    <div class="my-page-content">
+      <button type="submit" class="my-page-content save">저장하기</button>
+    </div>
+  </div>
+</main>
+<div layout:fragment="custom_js">
+  <script src="/js/my-page-form.js"></script>
+</div>
+</body>
+</html>
