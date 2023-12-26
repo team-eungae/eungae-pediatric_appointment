@@ -42,8 +42,38 @@
         <a class="my-page__button col" th:href="@{/my/reservations}"><i class="fa-solid fa-calendar-check my-page__button__icon"></i>예약
             관리</a>
         <a class="my-page__button col" th:href="@{/}"><i class="fa-solid fa-right-from-bracket my-page__button__icon"></i>로그아웃</a>
-        <a class="my-page-withdrawal__button" th:href="@{/}">회원 탈퇴</a>
+<!--        <a class="my-page-withdrawal__button" th:href="@{/}">회원 탈퇴</a>-->
+        <div class="wrap">
+            <section>
+                <a type="button" class="my-page-withdrawal__button" id="confirm">회원 탈퇴</a>
+            </section>
+
+            <!-- confirm 모달을 쓸 페이지에 추가 start-->
+            <section class="modal modal-section type-confirm">
+                <div class="enroll_box">
+                    <p class="menu_msg"></p>
+                </div>
+                <div class="enroll_btn">
+                    <button class="btn withdrawal btn_ok">탈퇴</button>
+                    <button class="btn gray_btn modal_close">취소</button>
+                </div>
+            </section>
+            <!-- confirm 모달을 쓸 페이지에 추가 end-->
+            <!-- alert 모달을 쓸 페이지에 추가 start-->
+            <section class="modal modal-section type-alert">
+                <div class="enroll_box">
+                    <p class="menu_msg"></p>
+                </div>
+                <div class="enroll_btn">
+                    <button class="btn pink_btn modal_close">확인</button>
+                </div>
+            </section>
+            <!-- alert 모달을 쓸 페이지에 추가 end-->
+        </div>
     </div>
 </main>
+<div layout:fragment="custom_js">
+    <script src="/js/my-page.js"></script>
+</div>
 </body>
 </html>
