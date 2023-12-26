@@ -14,9 +14,8 @@ public class MemberViewController {
 		return "contents/member/medical-records";
 	}
 
-
 	@GetMapping("/records/1")
-	public String medicalRecordsDetails(){
+	public String medicalRecordsDetails() {
 		return "contents/member/medical-records-details";
 	}
 
@@ -48,5 +47,10 @@ public class MemberViewController {
 	@GetMapping("/children/form")
 	public String addMyChildren() {
 		return "contents/member/my-children-add";
+	}
+
+	@GetMapping("/profile/form")
+	public String updateProfile() {
+		return "contents/member/my-page-form";
 	}
 }
