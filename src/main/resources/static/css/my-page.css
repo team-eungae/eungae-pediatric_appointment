@@ -92,3 +92,79 @@ a:visited {
     margin-left: 0.5rem;
 
 }
+
+* {
+    padding: 0;
+    margin: 0;
+}
+body, html {
+    height: 100%;
+}
+.modal .btn{
+    cursor: pointer;
+    border: 1px solid #999999;
+    text-align: center;
+    border-radius: 5px;
+    outline: none;
+    font-weight: 500;
+}
+.dimLayer{
+    display: block;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    left: 0;
+    top: 0px;
+    margin: 0;p
+    adding: 0;
+    z-index: 9998;
+}
+.modal{
+    width: 350px;
+    height: 320px;
+    border-radius: 10px;
+    padding: 83px 24px;
+    box-sizing: border-box;
+    text-align: center;
+}
+.modal-section{
+    background: #ffffff;
+    box-sizing: border-box;
+    display: none;position: absolute;
+    top: 20%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    display: none;z-index: 9999;
+}
+.menu_msg{
+    font-size: 21px;
+    font-weight: 500;
+}
+.enroll_box p{
+    padding-bottom: 56px;
+}
+.gray_btn {
+    width: 90px;
+    background: #ffffff;
+    color: #999999;
+    height: 36px;
+    line-height: 36px;
+    transition: 0.5s;
+    font-size: 17px;
+    padding: 0rem;
+}
+.withdrawal {
+    width: 90px;
+    background: #326EB3;
+    color: #fff;
+    height: 36px;
+    line-height: 36px;
+    transition: 0.5s;
+    font-size: 17px;
+    border: none;
+    padding: 0rem;
+}
