@@ -1,0 +1,60 @@
+.review-write-header {
+    margin-left: 5vw;
+    margin-right: 5vw;
+    margin-top: 10vh;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.review-write-header hr{
+    background:#326EB3;
+    height:2px;
+}
+
+.review-write-body {
+    margin-left: 5vw;
+    margin-right: 5vw;
+}
+
+#title {
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+    border: 0;
+    margin-bottom: 1vh;
+    margin-top: 2vh;
+}
+
+#content {
+    width: 100%;
+    height: 44vw;
+    border: 0;
+    resize: none;
+    margin-bottom: 2vh;
+}
+
+label {
+    margin-top: 1vh;
+    border:0;
+    background-color: #326EB3;
+    color: #fff;
+    border-radius: 3vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+}
+
+#post-image {
+    display: none;
+}
+
+.write-button {
+    background-color: #142C47;
+    border-radius: 3vw;
+    border: 0;
+    color: white;
+    width: 20vw;
+    height: 4vh;
+    margin-left: 68vw;
+}
