@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/review-write.css">
+    <title>리뷰 작성 - 응애 | 소아과 예약</title>
+</th:block>
+<main  layout:fragment="content">
+        <div class="review-write-header">
+            리뷰 작성하기
+            <hr/>
+        </div>
+        <div class="review-write-body">
+            <form>
+                <input type="submit" class="write-button">
+                <input type="text" id="title" placeholder="제목을 입력해주세요">
+                <textarea id ="content" placeholder="내용을 입력해주세요"></textarea>
+                <hr/>
+            </form>
+<!--            <imp id="preview"></imp>-->
+        </div>
+    </main>
+</html>
