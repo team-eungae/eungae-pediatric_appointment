@@ -1,0 +1,101 @@
+main {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+a:active,
+a:hover,
+a:visited {
+    text-decoration: none;
+    /* color: inherit; */
+}
+
+#zip-code {
+    width: 68%;
+}
+
+.my-page-title {
+    text-align: center;
+    padding: 0 1.5rem;
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 1.8rem;
+    vertical-align: middle;
+}
+
+.my-page__parent {
+    margin-bottom: 2rem;
+}
+
+.my-page-content {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.my-page-sub__title {
+    font-size: 1.1rem;
+    text-align: center;
+    box-sizing: border-box;
+    display: inline-block;
+    color: #808080;
+    vertical-align: middle;
+}
+
+.my-page__input {
+    padding-left: 0.8rem;
+}
+
+.my-page__input > input {
+    border: solid 1px #ccc;
+    width: 100%;
+    border-radius: 6px;
+    display: inline-block;
+    height: 3rem;
+    padding-left: 0.5rem;
+}
+
+.save {
+    background: #326EB3;
+    color: white;
+    border: none;
+    width: 60%;
+    font-size: 18px;
+    padding: 0.5rem;
+    border-radius: 11px;
+    display: inline-block;
+}
+
+.zip-code-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.zip-code-container > #zip-code-input {
+    width: 67%;
+}
+
+#zip-code-find__button {
+    width: 30%;
+    align-items: center;
+    display: inline-block;
+}
+
+@media (min-width: 40rem) {
+    .sign-up-form {
+        margin: auto;
+        width: 30rem;
+        grid-template-columns: 10rem auto;
+        grid-row-gap: 1rem;
+        grid-column-gap: 0.5rem;
+    }
+
+    .sign-up-form [id="title"] {
+        grid-column: span 2;
+    }
+
+    .sign-up-form__checkbox {
+        grid-column: span 2;
+    }
+}

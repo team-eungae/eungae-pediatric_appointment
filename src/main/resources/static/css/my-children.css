@@ -1,0 +1,60 @@
+main {
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+}
+
+.my-children-title {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 1.8rem;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.children-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 0.5rem;
+    height: 10rem;
+    vertical-align: middle;
+}
+
+.children-container__last {
+    flex-direction: column;
+    color: #333;
+    background-color: #f6f6f7;
+}
+
+.children-closed-btn {
+    margin: 0.5rem;
+    border: none;
+    padding: 4px;
+    background-color: inherit;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.children-image {
+    width: 130px;
+    height: 130px;
+    border-radius: 30%;
+    margin: 0.8rem;
+}
+
+.children-image-text {
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.badge-girl {
+    color: #ffc7fa;
+    font-size: 1.5rem;
+}
+
+.badge-boy {
+    color: #4db4fe;
+    font-size: 1.5rem;
+}

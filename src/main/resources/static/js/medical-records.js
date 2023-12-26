@@ -1,10 +1,11 @@
 const showhDetails = (id) =>{
     id="detail"+id;
-    if(document.getElementById(id).style.display==='none'){
-        showDetails(id);
-    }else{
-        hideDetails(id);
-    }
+//    if(document.getElementById(id).style.display==='none'){
+//        showDetails(id);
+//    }else{
+//        hideDetails(id);
+//    }
+    location.href=""
 }
 
 function hideDetails(id)  {

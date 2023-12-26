@@ -1,0 +1,108 @@
+main {
+    padding-top: 2rem;
+    padding-bottom: 3.5rem;
+}
+
+.login-title {
+    text-align: center;
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 1rem;
+    vertical-align: middle;
+}
+
+.login-social {
+    text-align: center;
+}
+
+#wrap {
+    display: none;
+    border: 1px solid;
+    width: 100%;
+    height: 300px;
+    margin: 5px 0;
+    position: relative "
+
+}
+
+.login-social__title {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 1.8rem;
+}
+
+.login-social__button {
+    border: none;
+    background: none;
+}
+
+.login-social__image {
+    border: none;
+}
+
+.login-form {
+    padding: 1.5rem;
+}
+
+.login-form label {
+    font-size: 14px;
+    color: #333;
+}
+
+.login-form input {
+    display: block;
+    width: 100%;
+    height: 3rem;
+    padding-left: 0.8rem;
+    margin: 0 0 1rem 0;
+    border-radius: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+}
+
+.login-help-container {
+    text-align: center;
+}
+
+.login-help-container__items {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.login-help-container__item {
+    display: block;
+    text-align: center;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+
+.login-form button {
+    background: #326EB3;
+    color: white;
+    border: none;
+    width: 100%;
+    font-size: 15px;
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+@media (min-width: 40rem) {
+    .login-form {
+        margin: auto;
+        width: 30rem;
+        grid-template-columns: 10rem auto;
+        grid-row-gap: 1rem;
+        grid-column-gap: 0.5rem;
+    }
+
+    .login-form [id="title"] {
+        grid-column: span 2;
+    }
+
+    .login-form__checkbox {
+        grid-column: span 2;
+    }
+}

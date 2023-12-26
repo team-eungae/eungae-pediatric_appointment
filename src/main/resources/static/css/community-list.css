@@ -19,6 +19,7 @@
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 1vh;
+    color: #333; !important;
 }
 
 .community-post .row .col-9 {

@@ -39,8 +39,8 @@ var basicPositions = [
 
 
 // 마커 이미지의 이미지 주소입니다
-var imageSrc = "img/eungaemarker.png";
-var basicImageSrc = "img/basic4.png";
+var imageSrc = "/img/eungaemarker.png";
+var basicImageSrc = "/img/basic4.png";
 
 
 //응애 서비스를 이용하지 않는 병원 마커 생성 - 먼저 생성해야 뒤로 가려짐
@@ -102,12 +102,12 @@ function addMarker(position, markerImage) {
             '        </div>' +
             '        <div class="body">' +
             '            <div class="img">' +
-            '                <img src="img/logo1.png" width="73" height="70">' +
+            '                <img src="/img/logo1.png" width="73" height="70">' +
             '           </div>' +
             '            <div class="desc">' +
             '                <div class="ellipsis">'+'서울특별시 구로구 독산동'+'</div>' +
             '                <div class="jibun ellipsis">진료 가능 시간</div>' +
-            '                <div><a href="/map" target="_blank" class="link">예약</a></div>' +
+            '                <div><a href="/hospital" target="_blank" class="link">예약</a></div>' +
             '            </div>' +
             '        </div>' +
             '    </div>' +
@@ -152,7 +152,7 @@ function addBasicMarker(position, markerImage) {
             '        </div>' +
             '        <div class="body">' +
             '            <div class="img">' +
-            '                <img src="img/logo1.png" width="73" height="70">' +
+            '                <img src="/img/logo1.png" width="73" height="70">' +
             '           </div>' +
             '            <div class="desc">' +
             '                <div class="ellipsis">'+'서울특별시 구로구 독산동'+'</div>' +

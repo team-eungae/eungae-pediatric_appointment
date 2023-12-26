@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="/css/sign-up.css">
+    <title>회원가입 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main class="sign-up-page" layout:fragment="content">
+    <h2 class="sign-up-title">회원가입</h2>
+    <div class="sign-up-social">
+        <span class="sign-up-social__title">간편 회원가입</span>
+        <button class="sign-up-social__button">
+            <img class="sign-up-social__image" src="/img/kakao_login.png" alt="카카오로그인">
+        </button>
+    </div>
+
+    <form action="../../index.html" class="sign-up-form">
+        <label for="name">이름</label>
+        <input type="text" id="name" placeholder="보호자의 성함을 기입해주세요." required>
+
+        <label for="phone-number">전화번호</label>
+        <input type="text" id="phone-number" placeholder="숫자만 입력해주세요. ex) 01012345678" required>
+
+        <label for="email">이메일</label>
+        <input type="email" id="email" placeholder="example@eungae.com" required>
+
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="특수문자를 1개 이상 포함해주세요." required>
+
+        <div id="message">
+            <p id="letter" class="invalid">소문자 1개 이상</p>
+            <p id="capital" class="invalid">대문자 1개 이상</p>
+            <p id="number" class="invalid">숫자 1개 이상</p>
+            <p id="length" class="invalid">최소 8자리 이상</p>
+        </div>
+
+        <label for="password-check">비밀번호 확인</label>
+        <input type="password" id="password-check" placeholder="비밀번호를 한 번 더 입력해주세요." required>
+        <div class="mismatch-message hide">비밀번호가 일치하지 않습니다</div>
+
+        <div id="wrap">
+            <img src="https://t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                 style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
+                 alt="접기 버튼">
+        </div>
+
+        <label for="zip-code-input">우편번호</label>
+        <div class="zip-code-container">
+            <input type="text" id="zip-code-input" placeholder="우편번호" required>
+            <input type="button" class="zip-code-find__button" onclick="execDaumPostcode()" value="우편번호 찾기">
+        </div>
+        <div class="address-container">
+            <input type="text" id="address" placeholder="주소" required>
+            <input type="text" id="address-detail" placeholder="상세주소">
+        </div>
+
+        <button type="submit" class="button">가입하기</button>
+    </form>
+</main>
+<div layout:fragment="custom_js">
+    <script src="/js/sign-up.js"></script>
+</div>
+</body>
+</html>

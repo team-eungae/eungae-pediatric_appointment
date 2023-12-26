@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/search-hospital.css" />
+    <title>병원 검색 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main layout:fragment="content">
+    <form class="search-form">
+        <div class="search-container">
+            <input type="text" placeholder="찾고 싶은 병원을 검색하세요." class="search-input">
+            <button type="submit" class="search-button">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </form>
+    <hr class="hr" />
+    <div class="hospital-info">
+        <img class="hospital-image" src="/img/hospital.jpeg" />
+        <div>
+            <a th:href="@{/hospital}" class="hospital-name">아이원병원</a>
+            <p class="location">480m • 광명 소하동</p>
+            <p class="closed">진료 중 • 22:00에 진료 종료</p>
+            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+        </div>
+    </div>
+    <hr />
+    <div class="hospital-info">
+        <img class="hospital-image" src="/img/hospital.jpeg" />
+        <div>
+            <a th:href="@{/hospital}" class="hospital-name">아이원병원</a>
+            <p class="location">480m • 광명 소하동</p>
+            <p class="closed">진료 중 • 22:00에 진료 종료</p>
+            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+        </div>
+    </div>
+    <hr />
+    <div class="hospital-info">
+        <img class="hospital-image" src="/img/hospital.jpeg" />
+        <div>
+            <a  th:href="@{/hospital}" class="hospital-name">아이원병원</a>
+            <p class="location">480m • 광명 소하동</p>
+            <p class="closed">진료 중 • 22:00에 진료 종료</p>
+            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+        </div>
+    </div>
+</main>
+<div layout:fragment="custom_js">
+</div>
+</body>
+</html>

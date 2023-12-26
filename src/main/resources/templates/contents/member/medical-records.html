@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/medical-records.css">
+    <title>내 진료내역 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main  layout:fragment="content">
+    <div class="medical-records-header">
+        <p>진료내역</p>
+        <hr/>
+    </div>
+    <div class="medical-records-body">
+        <div class="card" th:onclick="|location.href='@{/my/records/1}'|">
+            <div class="myrecords">
+                <div class="hospital-name">
+                    삼성에스마디정형외과의원
+                </div>
+                <hr/>
+                <table>
+                    <tr>
+                        <td>
+                            환자 - 김환자
+                        </td>
+                        <td class="middle-line"> | </td>
+                        <td>
+                            의사 - 김의사
+                        </td>
+                        <td class="middle-line"> | </td>
+                        <td class="treatment-date">
+                            1234.56.78
+                        </td>
+                </table>
+            </div>
+            <div class="records-detail" id="detail1" style="display: none;">
+                <hr/>
+                <table>
+                    <tr>
+                        <th>병원명</th>
+                        <td>삼성에스마디정형외과의원</td>
+                    </tr>
+                    <tr>
+                        <th>환자명</th>
+                        <td>김환자</td>
+                    </tr>
+                    <tr>
+                        <th>의사명</th>
+                        <td>김의사</td>
+                    </tr>
+                    <tr>
+                        <th>진료과목</th>
+                        <td>소아과</td>
+                    </tr>
+                    <tr>
+                        <th>진료상세</th>
+                        <td>초진</td>
+                    </tr>
+                    <tr>
+                        <th>진료시간</th>
+                        <td>1234.56.78 16:11</td>
+                    </tr>
+                    <tr>
+                        <th>진료금</th>
+                        <td>6300원</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card" onclick="showhDetails(2)">
+            <div class="myrecords">
+                <div class="hospital-name">
+                    삼성에스마디정형외과의원
+                </div>
+                <hr/>
+                <table>
+                    <tr>
+                        <td>
+                            환자 - 김환자
+                        </td>
+                        <td class="middle-line"> | </td>
+                        <td>
+                            의사 - 김의사
+                        </td>
+                        <td class="middle-line"> | </td>
+                        <td class="treatment-date">
+                            1234.56.78
+                        </td>
+                </table>
+            </div>
+            <div class="records-detail" id="detail2" style="display: none;">
+                <hr/>
+                <table>
+                    <tr>
+                        <th>병원명</th>
+                        <td>삼성에스마디정형외과의원</td>
+                    </tr>
+                    <tr>
+                        <th>환자명</th>
+                        <td>김환자</td>
+                    </tr>
+                    <tr>
+                        <th>의사명</th>
+                        <td>김의사</td>
+                    </tr>
+                    <tr>
+                        <th>진료과목</th>
+                        <td>소아과</td>
+                    </tr>
+                    <tr>
+                        <th>진료상세</th>
+                        <td>초진</td>
+                    </tr>
+                    <tr>
+                        <th>진료시간</th>
+                        <td>1234.56.78 16:11</td>
+                    </tr>
+                    <tr>
+                        <th>진료금</th>
+                        <td>6300원</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card" onclick="showhDetails(3)">
+            <div class="myrecords">
+                <div class="hospital-name">
+                    삼성에스마디정형외과의원
+                </div>
+                <hr/>
+                <table>
+                    <tr>
+                        <td>
+                            환자 - 김환자
+                        </td>
+                        <td class="middle-line"> | </td>
+                        <td>
+                            의사 - 김의사
+                        </td>
+                        <td class="middle-line"> | </td>
+                        <td class="treatment-date">
+                            1234.56.78
+                        </td>
+                </table>
+            </div>
+            <div class="records-detail" id="detail3" style="display: none;">
+                <hr/>
+                <table>
+                    <tr>
+                        <th>병원명</th>
+                        <td>삼성에스마디정형외과의원</td>
+                    </tr>
+                    <tr>
+                        <th>환자명</th>
+                        <td>김환자</td>
+                    </tr>
+                    <tr>
+                        <th>의사명</th>
+                        <td>김의사</td>
+                    </tr>
+                    <tr>
+                        <th>진료과목</th>
+                        <td>소아과</td>
+                    </tr>
+                    <tr>
+                        <th>진료상세</th>
+                        <td>초진</td>
+                    </tr>
+                    <tr>
+                        <th>진료시간</th>
+                        <td>1234.56.78 16:11</td>
+                    </tr>
+                    <tr>
+                        <th>진료금</th>
+                        <td>6300원</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+<div layout:fragment="custom_js">
+    <script src="/js/medical-records.js"></script>
+</div>
+</body>
+</html>

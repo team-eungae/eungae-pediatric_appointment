@@ -116,7 +116,7 @@ main {
 
 .main-nav__item a:hover,
 .main-nav__item a:active {
-    color: 142C47;
+    color: #142C47;
     border-bottom: 5px solid #142C47;
 }
 
@@ -134,8 +134,9 @@ main {
 }
 
 .mobile-nav-bottom {
-    background: #F1F3F5;
+    background: #ffffff;
     z-index: 10;
+    box-shadow: 0px 0px 0px 2px #ECEFF2;
 }
 
 .mobile-nav-bottom__item p {
@@ -245,4 +246,13 @@ main {
         display: inline-block;
         margin: 0 1rem;
     }
+}
+
+a:link{
+    text-decoration: none;
+    color: inherit;
+}
+a:visited {
+    text-decoration: none;
+    color: inherit;
 }

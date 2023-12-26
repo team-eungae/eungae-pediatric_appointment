@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/community-write.css">
+    <title>글쓰기 - 응애 | 소아과 예약</title>
+</th:block>
+<main  layout:fragment="content">
+        <div class="post-write-header">
+            글쓰기
+            <hr/>
+        </div>
+        <div class="post-write-body">
+            <form>
+                <input type="submit" class="write-button">
+                <input type="text" id="title" placeholder="제목을 입력해주세요">
+                <textarea id ="content" placeholder="내용을 입력해주세요"></textarea>
+                <hr/>
+                <label for="post-image"><i class="far fa-image"></i>  이미지 추가</label>
+                <!-- Todo : 모바일 환경에서도 이미지만 추가할 수 있는지 테스트 필요 -->
+                <input type="file" id="post-image" multiple>
+                <p>
+                    <span id="filename"></span>
+                </p>
+            </form>
+<!--            <imp id="preview"></imp>-->
+        </div>
+    </main>
+</html>

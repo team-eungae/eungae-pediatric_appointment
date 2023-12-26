@@ -4,64 +4,75 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.*;
+import org.hibernate.annotations.ColumnDefault;
 
-import org.hibernate.annotations.CreationTimestamp;
+import com.playdata.eungae.base.BaseEntity;
+import com.playdata.eungae.doctor.domain.Doctor;
 
-import jakarta.persistence.Embedded;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
-@Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
+@Table(name = "hospital")
 @Entity
-public class Hospital {
+public class Hospital extends BaseEntity {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long hospitalSeq;
 
-/*
-	hospital schedule 과의 연관관계 주인입니다
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(
-	private HospitalSchedule hospitalSchedule;
-*/
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hospital")
+	private List<HospitalSchedule> hospitalSchedule = new ArrayList<>();
 
-/*
-	@OneToMany(fetch = FetchType.LAZY)
-	@JoinColumn(name = "doctor_seq")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hospital")
 	private List<Doctor> doctor = new ArrayList<>();
-*/
 
+	@Column(nullable = false)
 	private String password;
+
+	@Column(nullable = false)
 	private String name;
-	// clob 타입을 String으로 처리할지 고민해봐야 할 것 같습니다
+
+	@Column(length = 255)
 	private String notice;
-	// 어떤 컬럼인가요?
-	private Long deposit;
-	// 연락처?
+
+	@ColumnDefault("3000")
+	private int deposit;
+
+	@Column(nullable = false)
 	private String contact;
+
+	@Column(nullable = false)
 	private String address;
+
+	@Column(nullable = false)
 	private String addressDetail;
+
+	@Column(nullable = false)
 	private Long lunchTime;
+
+	@Column(nullable = false)
 	private Long lunchEndTime;
+
+	@Column(nullable = false)
 	private String businessRegistration;
 
 	// 메타데이터로 처리하죵
 	// 방법은 다같이 알아봐영
 	private LocalDateTime createAt;
 	private LocalDateTime modifiedAt;
-
 
 }

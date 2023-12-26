@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+	<link rel="stylesheet" href="/css/map.css">
+	<title>주변 병원 찾기 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main  layout:fragment="content">
+	<form class="search-form"  onsubmit="">
+		<div class="search-container">
+			<input type="text" placeholder="찾고 싶은 병원을 검색하세요." id="keyword" class="search-input">
+			<button type="submit" class="search-button">
+				<i class="fa-solid fa-magnifying-glass"></i>
+			</button>
+		</div>
+	</form>
+
+	<div class="map_wrap">
+		<div id="map" style="width:100vw;height:90vh;position:relative;overflow:hidden;"></div>
+	</div>
+</main>
+<div layout:fragment="custom_js">
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=399f802c931e5e59db319cc955db0246&libraries=services"></script>
+	<script src="/js/map.js"></script>
+</div>
+</body>
+</html>
