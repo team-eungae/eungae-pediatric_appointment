@@ -3,6 +3,7 @@ package com.playdata.eungae.appointment.domain;
 import com.playdata.eungae.base.BaseEntity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -24,7 +25,7 @@ public class AppointmentDocument extends BaseEntity {
 	@GeneratedValue
 	private Long appointmentDocumentSeq;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "appointment_seq")
 	private Appointment appointment;
 
