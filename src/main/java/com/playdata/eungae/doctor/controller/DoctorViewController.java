@@ -1,4 +1,4 @@
-package com.playdata.eungae.doctor.presentation;
+package com.playdata.eungae.doctor.controller;
 
 import org.springframework.stereotype.Controller;
 

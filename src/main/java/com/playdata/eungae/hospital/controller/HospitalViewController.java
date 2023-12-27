@@ -1,4 +1,4 @@
-package com.playdata.eungae.hospital.presentation;
+package com.playdata.eungae.hospital.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

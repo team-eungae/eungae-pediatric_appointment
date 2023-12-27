@@ -1,4 +1,4 @@
-package com.playdata.eungae.article.presentation;
+package com.playdata.eungae.article.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
