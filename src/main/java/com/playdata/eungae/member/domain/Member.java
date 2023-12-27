@@ -1,5 +1,7 @@
 package com.playdata.eungae.member.domain;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.playdata.eungae.base.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -25,7 +27,7 @@ public class Member extends BaseEntity {
 	private Long memberSeq;
 
 	@Column(nullable = false, unique = true)
-	private String memberId;
+	private String email;
 
 	@Column(nullable = false, length = 30)
 	private String password;
@@ -51,4 +53,8 @@ public class Member extends BaseEntity {
 	private Integer xCoordinate;
 
 	private Integer yCoordinate;
+	
+	//0이면 일반 로그인 1이면 카카오 로그인
+	@ColumnDefault("'0'") 
+	private String kakaoCheck;
 }
