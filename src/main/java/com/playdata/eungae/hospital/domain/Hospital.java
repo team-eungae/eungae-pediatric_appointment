@@ -34,10 +34,10 @@ public class Hospital extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long hospitalSeq;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hospital")
+	@OneToMany(mappedBy = "hospital")
 	private List<HospitalSchedule> hospitalSchedule = new ArrayList<>();
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "hospital")
+	@OneToMany(mappedBy = "hospital")
 	private List<Doctor> doctor = new ArrayList<>();
 
 	@Column(nullable = false)

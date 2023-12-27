@@ -6,6 +6,7 @@ import com.playdata.eungae.member.domain.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,11 +29,11 @@ public class Review extends BaseEntity {
 	@Id
 	private Long reviewSeq;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hospital_seq")
 	private Hospital hospital;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_seq")
 	private Member member;
 

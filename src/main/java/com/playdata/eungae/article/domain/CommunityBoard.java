@@ -4,6 +4,7 @@ import com.playdata.eungae.member.domain.Member;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -24,7 +25,7 @@ public class CommunityBoard {
 	@GeneratedValue
 	private Long communityBoard;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_seq")
 	private Member member;
 

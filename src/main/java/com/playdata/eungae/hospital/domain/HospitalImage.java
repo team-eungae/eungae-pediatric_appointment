@@ -4,6 +4,7 @@ import com.playdata.eungae.base.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,7 +27,7 @@ public class HospitalImage extends BaseEntity {
 	@Id
 	private Long hospitalImageSeq;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "hospital_seq")
 	private Hospital hospital;
 
