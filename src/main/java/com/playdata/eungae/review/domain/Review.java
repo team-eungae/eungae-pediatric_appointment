@@ -2,6 +2,7 @@ package com.playdata.eungae.review.domain;
 
 import javax.security.auth.login.LoginException;
 
+import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.member.domain.Member;
@@ -15,12 +16,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,6 +41,9 @@ public class Review extends BaseEntity {
 	@JoinColumn(name = "hospital_seq")
 	private Hospital hospital;
 
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "review")
+	private Appointment appointment;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_seq")
 	private Member member;
@@ -48,13 +54,17 @@ public class Review extends BaseEntity {
 	@Column(nullable = false)
 	private String content;
 
-	public static Review from (RequestReviewFormDto dto) {
+	// @Setter setter를 엔티티에 사용하지 않고 원하는 컬럼만 변경할 수 있는 방법 생각해보기
+	// 리뷰 삭제 유무를 표시하는 컬럼
+
+	public static Review from (RequestReviewFormDto dto, Member member, Appointment appointment) {
 		if (dto.getMember_seq() == null) {
+			// exception 과 handler 작성하기
 			// throw new LoginException("로그인을 해야 리뷰를 작성할 수 있습니다");
 		}
 		return Review.builder()
-			// .hospital(/* dto에 hospital_seq로 병원 조회해서 엔티티 집어넣기 */ dto.getHospital_seq())
-			// .member(dto.getMember_seq())
+			.member(member)
+			.hospital(appointment.getHospital())
 			.starRating(dto.getStarRating())
 			.content(dto.getContent())
 			.build();

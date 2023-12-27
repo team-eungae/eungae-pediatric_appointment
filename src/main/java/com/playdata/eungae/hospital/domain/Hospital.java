@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.doctor.domain.Doctor;
 
@@ -36,6 +37,9 @@ public class Hospital extends BaseEntity {
 
 	@OneToMany(mappedBy = "hospital")
 	private List<HospitalSchedule> hospitalSchedule = new ArrayList<>();
+
+	@OneToMany(mappedBy = "hospital")
+	private List<Appointment> appointments = new ArrayList<>();
 
 	@OneToMany(mappedBy = "hospital")
 	private List<Doctor> doctor = new ArrayList<>();
