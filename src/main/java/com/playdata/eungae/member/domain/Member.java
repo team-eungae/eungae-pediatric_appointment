@@ -51,4 +51,6 @@ public class Member extends BaseEntity {
 	private Integer xCoordinate;
 
 	private Integer yCoordinate;
+
+	private boolean withdrawalStatus;
 }
