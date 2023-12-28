@@ -2,6 +2,8 @@ package com.playdata.eungae.review.controller;
 
 import java.security.Principal;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +18,6 @@ import com.playdata.eungae.review.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
 
-@ControllerAdvice
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/my/records")
@@ -25,9 +26,11 @@ public class ReviewApiController {
 	private final ReviewService reviewService;
 
 	@PostMapping("/{appointment_seq}/reviews")
-	public void createReview(@PathVariable Long appointment_seq, Principal principal, @RequestBody RequestReviewFormDto dto) {
-		Review reviewEntity = Review.from(dto);
-		reviewService.createReview(reviewEntity);
+	public ResponseEntity<?> createReview(@PathVariable("appointment_seq") long appointmentSeq, @RequestBody RequestReviewFormDto requestReviewFormDto) {
+		//
+		// Review reviewEntity = Review.from(requestReviewFormDto);
+		// reviewService.createReview(reviewEntity);
+		return ResponseEntity.ok(HttpStatus.OK);
 	}
 
 

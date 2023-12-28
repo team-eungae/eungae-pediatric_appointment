@@ -1,7 +1,5 @@
 package com.playdata.eungae.review.domain;
 
-import javax.security.auth.login.LoginException;
-
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.hospital.domain.Hospital;
@@ -23,7 +21,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -58,7 +55,7 @@ public class Review extends BaseEntity {
 	// 리뷰 삭제 유무를 표시하는 컬럼
 
 	public static Review from (RequestReviewFormDto dto, Member member, Appointment appointment) {
-		if (dto.getMember_seq() == null) {
+		if (dto.getMemberSeq() == null) {
 			// exception 과 handler 작성하기
 			// throw new LoginException("로그인을 해야 리뷰를 작성할 수 있습니다");
 		}
