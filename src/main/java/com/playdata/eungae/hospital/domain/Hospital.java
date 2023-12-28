@@ -70,6 +70,12 @@ public class Hospital extends BaseEntity {
 	@Column(nullable = false)
 	private String businessRegistration;
 
+	@Column(nullable = false)
+	private double latitude;
+
+	@Column(nullable = false)
+	private double longitude;
+
 	// 메타데이터로 처리하죵
 	// 방법은 다같이 알아봐영
 	private LocalDateTime createAt;
