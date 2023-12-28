@@ -63,7 +63,7 @@ public class Review extends BaseEntity {
 			// throw new LoginException("로그인을 해야 리뷰를 작성할 수 있습니다");
 		}
 		return Review.builder()
-			.member(member)
+			.member(appointment.getMember())
 			.hospital(appointment.getHospital())
 			.starRating(dto.getStarRating())
 			.content(dto.getContent())

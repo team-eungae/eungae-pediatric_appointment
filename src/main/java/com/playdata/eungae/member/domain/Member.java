@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "member")
 @Entity
+@Builder
 public class Member extends BaseEntity {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
