@@ -62,10 +62,10 @@ public class Hospital extends BaseEntity {
 	private String addressDetail;
 
 	@Column(nullable = false)
-	private long lunchTime;
+	private String lunchStartTime;
 
 	@Column(nullable = false)
-	private long lunchEndTime;
+	private String lunchEndTime;
 
 	@Column(nullable = false)
 	private String businessRegistration;
