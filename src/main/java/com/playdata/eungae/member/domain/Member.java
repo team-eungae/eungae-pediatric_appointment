@@ -10,11 +10,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Getter
 @Table(name = "member")
 @Entity
@@ -24,8 +26,8 @@ public class Member extends BaseEntity {
 	@Id
 	private Long memberSeq;
 
-	@Column(nullable = false, unique = true)
-	private String memberId;
+	@Column(nullable = false, unique = true, updatable = false)
+	private String email;
 
 	@Column(nullable = false, length = 30)
 	private String password;
