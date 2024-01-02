@@ -1,6 +1,6 @@
 package com.playdata.eungae.member.domain;
 
-import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import com.playdata.eungae.base.BaseEntity;
 
@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -56,5 +57,6 @@ public class Member extends BaseEntity {
 	
 	//0이면 일반 로그인 1이면 카카오 로그인
 	@Column(columnDefinition = "varchar(1) default '0'")
-	private String kakaoCheck;
+	private boolean kakaoCheck;
+
 }
