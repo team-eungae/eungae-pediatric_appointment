@@ -10,6 +10,7 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.doctor.domain.Doctor;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -21,6 +22,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -29,6 +31,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "hospital")
 @Entity
+@Builder
 public class Hospital extends BaseEntity {
 
 	@Id
@@ -38,7 +41,7 @@ public class Hospital extends BaseEntity {
 	@OneToMany(mappedBy = "hospital")
 	private List<HospitalSchedule> hospitalSchedule = new ArrayList<>();
 
-	@OneToMany(mappedBy = "hospital")
+	@OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
 	private List<Appointment> appointments = new ArrayList<>();
 
 	@OneToMany(mappedBy = "hospital")
@@ -73,10 +76,5 @@ public class Hospital extends BaseEntity {
 
 	@Column(nullable = false)
 	private String businessRegistration;
-
-	// 메타데이터로 처리하죵
-	// 방법은 다같이 알아봐영
-	private LocalDateTime createAt;
-	private LocalDateTime modifiedAt;
 
 }
