@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @Getter
 @Table(name = "member")
 @Entity
@@ -29,7 +30,7 @@ public class Member extends BaseEntity {
 	@Id
 	private Long memberSeq;
 
-	@Column(nullable = false, unique = true)
+	@Column(nullable = false, unique = true, updatable = false)
 	private String email;
 
 	@Column(nullable = false, length = 30)
@@ -60,5 +61,4 @@ public class Member extends BaseEntity {
 	//0이면 일반 로그인 1이면 카카오 로그인
 	@Column(columnDefinition = "varchar(1) default '0'")
 	private boolean kakaoCheck;
-
 }
