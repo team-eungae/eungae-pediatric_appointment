@@ -45,3 +45,31 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
+
+function submitUpdateRequest() {
+            var newUsername = $("#newUsername").val();
+            var newEmail = $("#newEmail").val();
+            var memberId = $("#memberId").val();
+
+            // Ajax 요청
+            $.ajax({
+                type: "PATCH",
+                url: "/my/profile",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    newName: newName,
+                    newPhoneNumber: newPhoneNumber,
+                    newAddress: newAddress,
+                    newAddressDetail: newAddressDetail,
+                    newZipcode: newZipcode
+                }),
+                success: function(response) {
+                    console.log("회원 정보 업데이트 성공:", response);
+                    // 성공 시 필요한 처리 수행
+                },
+                error: function(error) {
+                    console.error("회원 정보 업데이트 실패:", error);
+                    // 실패 시 필요한 처리 수행
+                }
+            });
+        }
