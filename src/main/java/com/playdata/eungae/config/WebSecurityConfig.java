@@ -12,18 +12,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.playdata.eungae.member.service.MemberService;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
 
-	private final UserDetailsService userDetailsService;
+	private final MemberService memberService;
 
 	// 시큐리티 비활성화
 	@Bean
 	public WebSecurityCustomizer configure() {
 		return (web) -> web.ignoring()
+			.requestMatchers(toH2Console())
 			.requestMatchers("/static/**");
 	}
 
