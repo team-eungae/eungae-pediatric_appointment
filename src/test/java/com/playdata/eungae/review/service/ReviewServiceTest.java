@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.swing.text.html.parser.Entity;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,7 +33,8 @@ class ReviewServiceTest {
 	EntityManager em;
 
 	@Test
-	public void 리뷰_등록시_성공적으로_DB에_리뷰가_저장되는지_테스트() throws Exception {
+	@DisplayName("리뷰_등록시_성공적으로_DB에_리뷰가_저장되는지_테스트")
+	public void createReviewTest() throws Exception {
 	    //given;
 		Member member = Member.builder()
 			.address("독산")
