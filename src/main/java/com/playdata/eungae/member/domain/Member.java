@@ -1,14 +1,22 @@
 package com.playdata.eungae.member.domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.hibernate.annotations.DynamicInsert;
 
 import com.playdata.eungae.base.BaseEntity;
+import com.playdata.eungae.hospital.domain.Hospital;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -23,12 +31,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "member")
 @Entity
-@Builder
 public class Member extends BaseEntity {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Id
 	private Long memberSeq;
+
+	@OneToMany
+	@JoinColumn(name = "hospital_seq")
+	private List<Hospital> hospitals = new ArrayList<>();
 
 	@Column(nullable = false, unique = true, updatable = false)
 	private String email;
@@ -61,4 +72,8 @@ public class Member extends BaseEntity {
 	//0이면 일반 로그인 1이면 카카오 로그인
 	@Column(columnDefinition = "varchar(1) default '0'")
 	private boolean kakaoCheck;
+
+	public void setHospitals(Hospital... hospitals) {
+		this.hospitals.addAll(Arrays.asList(hospitals));
+	}
 }
