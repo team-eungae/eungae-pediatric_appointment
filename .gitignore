@@ -200,7 +200,7 @@ $RECYCLE.BIN/
 *.lnk
 
 ### Gradle ###
-.gradle
+#.gradle
 **/build/
 !src/**/build/
 
