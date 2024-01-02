@@ -1,5 +1,7 @@
 package com.playdata.eungae.member.domain;
 
+import org.hibernate.annotations.DynamicInsert;
+
 import com.playdata.eungae.base.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -13,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@DynamicInsert
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -25,7 +28,7 @@ public class Member extends BaseEntity {
 	private Long memberSeq;
 
 	@Column(nullable = false, unique = true)
-	private String memberId;
+	private String email;
 
 	@Column(nullable = false, length = 30)
 	private String password;
@@ -51,4 +54,9 @@ public class Member extends BaseEntity {
 	private Integer xCoordinate;
 
 	private Integer yCoordinate;
+	
+	//0이면 일반 로그인 1이면 카카오 로그인
+	@Column(columnDefinition = "varchar(1) default '0'")
+	private boolean kakaoCheck;
+
 }
