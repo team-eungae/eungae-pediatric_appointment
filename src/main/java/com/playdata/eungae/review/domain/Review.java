@@ -30,8 +30,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Review extends BaseEntity {
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long reviewSeq;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -51,7 +51,7 @@ public class Review extends BaseEntity {
 	@Column(nullable = false)
 	private String content;
 
-	// @Setter setter를 엔티티에 사용하지 않고 원하는 컬럼만 변경할 수 있는 방법 생각해보기
-	// 리뷰 삭제 유무를 표시하는 컬럼
-
+	public void remove() {
+		// 리뷰의 deleteYN 값을 변경해줘야 한다
+	}
 }

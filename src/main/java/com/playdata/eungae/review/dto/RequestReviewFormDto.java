@@ -4,6 +4,7 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.review.domain.Review;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
@@ -11,8 +12,9 @@ public class RequestReviewFormDto {
 
 	private Long hospitalSeq;
 	private Long memberSeq;
-	// null이 발생하지 않아 원시값으로 정의
+	// null이 발생하지 않는 값을 원시값으로 정의하는것이 아닌 Bean Validation으로 검증할 필요가 있는지
 	private int starRating;
+	@NotBlank
 	private String content;
 
 	public static Review toEntity(RequestReviewFormDto dto, Member member, Appointment appointment) {
