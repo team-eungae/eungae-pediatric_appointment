@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "member")
 @Entity
-@Builder
 public class Member extends BaseEntity {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
