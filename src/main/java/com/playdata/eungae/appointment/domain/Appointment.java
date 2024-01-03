@@ -1,6 +1,6 @@
 package com.playdata.eungae.appointment.domain;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -62,7 +62,7 @@ public class Appointment extends BaseEntity {
 	private Review review;
 
 	@Column(nullable = false)
-	private Date appointmentDate;
+	private LocalDateTime appointmentDate;
 
 	@Column(nullable = false)
 	private String appointmentHour;
