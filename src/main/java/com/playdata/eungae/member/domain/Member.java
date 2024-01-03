@@ -23,7 +23,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "member")
 @Entity
-@Builder
 public class Member extends BaseEntity {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -58,7 +57,7 @@ public class Member extends BaseEntity {
 
 	private Integer yCoordinate;
 	
-	//0이면 일반 로그인 1이면 카카오 로그인
-	@Column(columnDefinition = "varchar(1) default '0'")
+	@Column(columnDefinition = "varchar(5) default '0'")
 	private boolean kakaoCheck;
+
 }
