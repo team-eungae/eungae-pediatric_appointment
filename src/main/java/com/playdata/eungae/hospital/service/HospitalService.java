@@ -14,12 +14,13 @@ import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 @Service
 public class HospitalService{
 	private final HospitalRepository hospitalRepository;
 	private final HospitalScheduleRepository hospitalScheduleRepository;
 
-	@Transactional(readOnly = true)
+	@Transactional
 	public void saveHospital(HospitalRegisterRequestDto dto) {
 		Hospital entity = HospitalRegisterRequestDto.toEntity(dto);
 		hospitalRepository.save(entity);
