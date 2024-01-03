@@ -3,6 +3,7 @@ package com.playdata.eungae.member.domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.hibernate.annotations.DynamicInsert;
 
@@ -36,11 +37,11 @@ public class Member extends BaseEntity {
 	@Id
 	private Long memberSeq;
 
-	// 페이징 처리를 위해 List -> Page로 리펙토링 필요함
-	// 즐겨찾기 병원 목록
+	// 다시한번 곰곰히 생각해보니 Hospital이 Member에 완전히 종속적이지 않아 side effect를 일으킬것같아
+	// Cascade 옵션을 제거했습니다.
 	@Builder.Default
-	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
-	private List<Hospital> hospitals = new ArrayList<>();
+	@OneToMany(mappedBy = "member")
+	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
 
 	@Column(nullable = false, unique = true, updatable = false)
 	private String email;
@@ -74,13 +75,4 @@ public class Member extends BaseEntity {
 	@Column(columnDefinition = "varchar(1) default '0'")
 	private boolean kakaoCheck;
 
-	public void setHospitals(Hospital... hospitals) {
-		this.hospitals.addAll(List.of(hospitals));
-		Arrays.stream(hospitals).forEach((hospital -> hospital.setMember(this)));
-	}
-
-	public void remove(Hospital hospital) {
-		this.hospitals.remove(hospital);
-		hospital.setMember(null);
-	}
 }

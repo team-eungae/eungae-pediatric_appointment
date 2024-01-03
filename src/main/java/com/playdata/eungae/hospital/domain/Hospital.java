@@ -9,6 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.doctor.domain.Doctor;
+import com.playdata.eungae.member.domain.FavoritesHospital;
 import com.playdata.eungae.member.domain.Member;
 
 import jakarta.persistence.CascadeType;
@@ -46,9 +47,9 @@ public class Hospital extends BaseEntity {
 	private List<HospitalSchedule> hospitalSchedule = new ArrayList<>();
 
 	@Setter
-	@ManyToOne
-	@JoinColumn(name = "member_seq")
-	private Member member;
+	@OneToMany(mappedBy = "hospital")
+	@Builder.Default
+	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
 
 	@OneToMany(mappedBy = "hospital")
 	private List<Appointment> appointments = new ArrayList<>();
