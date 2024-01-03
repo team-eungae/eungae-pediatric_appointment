@@ -14,10 +14,6 @@ public class MemberApiController {
 
 	private final MemberService memberService;
 
-	@PostMapping("/signup")
-	public String singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
-		memberService.singUp(signUpMemberRequestDto);
-		return "redirect:/login";
-	}
+
 
 }
