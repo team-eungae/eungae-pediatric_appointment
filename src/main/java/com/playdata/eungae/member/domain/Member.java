@@ -3,19 +3,18 @@ package com.playdata.eungae.member.domain;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.hibernate.annotations.DynamicInsert;
 
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.hospital.domain.Hospital;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -38,8 +37,9 @@ public class Member extends BaseEntity {
 	private Long memberSeq;
 
 	// 페이징 처리를 위해 List -> Page로 리펙토링 필요함
-	@OneToMany
-	@JoinColumn(name = "hospital_seq")
+	// 즐겨찾기 병원 목록
+	@Builder.Default
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
 	private List<Hospital> hospitals = new ArrayList<>();
 
 	@Column(nullable = false, unique = true, updatable = false)
@@ -75,10 +75,12 @@ public class Member extends BaseEntity {
 	private boolean kakaoCheck;
 
 	public void setHospitals(Hospital... hospitals) {
-		this.hospitals.addAll(Arrays.asList(hospitals));
+		this.hospitals.addAll(List.of(hospitals));
+		Arrays.stream(hospitals).forEach((hospital -> hospital.setMember(this)));
 	}
 
 	public void remove(Hospital hospital) {
 		this.hospitals.remove(hospital);
+		hospital.setMember(null);
 	}
 }

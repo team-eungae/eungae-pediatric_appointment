@@ -24,6 +24,7 @@ public class MemberService {
 	 * 회원가입
 	 * @return 회원가입에 성공한 유저의 식별자
 	 */
+	@Transactional
 	public Member singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
 		return memberRepository.save(SignUpMemberRequestDto.toEntity(signUpMemberRequestDto));
 	}
@@ -34,8 +35,7 @@ public class MemberService {
 		result.member().setHospitals(result.hospital());
 	}
 
-
-
+	@Transactional
 	public void removeFavorites(RequestFavoriesDto requestFavoriesDto) {
 		Result result = getMemberAndHospital(requestFavoriesDto);
 		result.member().remove(result.hospital());
@@ -46,8 +46,7 @@ public class MemberService {
 			.orElseThrow(() -> new IllegalStateException("회원 정보를 찾을 수 없습니다."));
 		Hospital hospital = hospitalRepository.findById(requestFavoriesDto.getHospitalSeq())
 			.orElseThrow(() -> new IllegalStateException("병원 정보를 찾을 수 없습니다."));
-		Result result = new Result(member, hospital);
-		return result;
+		return new Result(member, hospital);
 	}
 
 	// https://scshim.tistory.com/372 record에 대한 설명

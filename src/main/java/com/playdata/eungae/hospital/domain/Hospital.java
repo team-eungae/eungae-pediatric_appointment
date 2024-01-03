@@ -9,6 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.doctor.domain.Doctor;
+import com.playdata.eungae.member.domain.Member;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,6 +19,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -25,6 +27,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,6 +44,11 @@ public class Hospital extends BaseEntity {
 
 	@OneToMany(mappedBy = "hospital")
 	private List<HospitalSchedule> hospitalSchedule = new ArrayList<>();
+
+	@Setter
+	@ManyToOne
+	@JoinColumn(name = "member_seq")
+	private Member member;
 
 	@OneToMany(mappedBy = "hospital")
 	private List<Appointment> appointments = new ArrayList<>();
