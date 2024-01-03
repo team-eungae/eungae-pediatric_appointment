@@ -29,7 +29,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/my")
-@RequiredArgsConstructor
 @Slf4j
 public class MemberViewController {
 

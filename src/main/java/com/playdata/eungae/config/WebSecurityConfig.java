@@ -1,7 +1,5 @@
 package com.playdata.eungae.config;
 
-import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.*;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -46,6 +44,9 @@ public class WebSecurityConfig {
 			.authorizeHttpRequests(authorizationRequests -> authorizationRequests
 				.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 				.requestMatchers(new MvcRequestMatcher(introspector, "/")).permitAll()
+				.requestMatchers(new MvcRequestMatcher(introspector, "/login")).permitAll()
+				.requestMatchers(new MvcRequestMatcher(introspector, "/signup")).permitAll()
+				.requestMatchers(new MvcRequestMatcher(introspector, "/map")).permitAll()
 				.anyRequest().authenticated())
 			.formLogin(login -> login
 				.loginPage("/login")
