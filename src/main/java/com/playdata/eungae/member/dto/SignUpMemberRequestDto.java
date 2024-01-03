@@ -1,7 +1,6 @@
 package com.playdata.eungae.member.dto;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.playdata.eungae.member.domain.Member;
 
@@ -29,14 +28,20 @@ public class SignUpMemberRequestDto {
 	@NotBlank(message = "생년월일은 필수 입력 값입니다.")
 	private String birthDate;
 
+	@NotBlank(message = "주소 필수 입력 값입니다.")
 	private String address;
+
+	@NotBlank(message = "상세주소 필수 입력 값입니다.")
 	private String addressDetail;
+
+	@NotBlank(message = "우편번호 필수 입력 값입니다.")
 	private String zipCode;
 
-	public static Member toEntity(SignUpMemberRequestDto signUpMemberRequestDto, PasswordEncoder passwordEncoder) {
+	public static Member toEntity(SignUpMemberRequestDto signUpMemberRequestDto) {
+
 		return Member.builder()
 			.email(signUpMemberRequestDto.getEmail())
-			.password(passwordEncoder.encode(signUpMemberRequestDto.getPassword()))
+			.password(signUpMemberRequestDto.getPassword())
 			.name(signUpMemberRequestDto.getName())
 			.phoneNumber(signUpMemberRequestDto.getPhoneNumber())
 			.birthDate(signUpMemberRequestDto.getBirthDate())

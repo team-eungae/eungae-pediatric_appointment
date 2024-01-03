@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
 import com.playdata.eungae.member.service.MemberService;
 
@@ -21,8 +22,8 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/my")
 public class MemberViewController {
 
-	private final PasswordEncoder encoder;
 	private final MemberService memberService;
+	private final PasswordEncoder passwordEncoder;
 
 	@GetMapping("/records")
 	public String medicalRecordList() {
@@ -80,7 +81,8 @@ public class MemberViewController {
 		}
 
 		try {
-			memberService.signUp(signUpMemberRequestDto, encoder);
+			Member member = SignUpMemberRequestDto.toEntity(signUpMemberRequestDto);
+			memberService.signUp(member);
 		} catch (IllegalStateException e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "contents/member/login";

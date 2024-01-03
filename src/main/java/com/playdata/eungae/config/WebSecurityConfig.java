@@ -4,18 +4,23 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.playdata.eungae.member.service.MemberService;
 
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 
+@EnableWebSecurity
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
@@ -24,42 +29,35 @@ public class WebSecurityConfig {
 
 	// 시큐리티 비활성화
 	@Bean
-	public WebSecurityCustomizer configure() {
-		return (web) -> web.ignoring()
-			.requestMatchers(toH2Console())
-			.requestMatchers("/static/**");
+	public WebSecurityCustomizer webSecurityCustomizer() {
+		return (web) -> web.ignoring().
+			requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+			.requestMatchers(new AntPathRequestMatcher("/img/**"))
+			.requestMatchers(new AntPathRequestMatcher("/css/**"))
+			.requestMatchers(new AntPathRequestMatcher("/js/**"))
+			.requestMatchers(new AntPathRequestMatcher("/img/**"))
+			.requestMatchers(new AntPathRequestMatcher("/lib/**"));
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-		return httpSecurity
-			.authorizeHttpRequests()
-			.requestMatchers("/", "/login", "/signup", "/map", "/notice").permitAll()
-			.anyRequest().authenticated()
-			.and()
-			.formLogin()
-			.loginPage("/login")
-			.defaultSuccessUrl("/")
-			.and()
-			.logout()
-			.logoutSuccessUrl("/")
-			.invalidateHttpSession(true)
-			.and()
-			.build();
+	public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws
+		Exception {
+		http.csrf(AbstractHttpConfigurer::disable)
+			.authorizeHttpRequests(authorizationRequests -> authorizationRequests
+				.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+				.requestMatchers(new MvcRequestMatcher(introspector, "/")).permitAll()
+				.anyRequest().authenticated())
+			.formLogin(login -> login
+				.loginPage("/login")
+				.defaultSuccessUrl("/"))
+			.logout(logout -> logout
+				.logoutUrl("/logout")
+				.logoutSuccessUrl("/"));
+		return http.build();
 	}
 
 	@Bean
-	public AuthenticationManager authenticationManager(HttpSecurity httpSecurity,
-		BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailsService userDetailsService) throws Exception {
-		return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)
-			.userDetailsService(userDetailsService)
-			.passwordEncoder(bCryptPasswordEncoder)
-			.and()
-			.build();
-	}
-
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+	public PasswordEncoder bCryptPasswordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 }

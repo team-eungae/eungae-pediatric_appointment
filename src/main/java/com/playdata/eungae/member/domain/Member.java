@@ -1,10 +1,8 @@
 package com.playdata.eungae.member.domain;
 
 import org.hibernate.annotations.DynamicInsert;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.playdata.eungae.base.BaseEntity;
-import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,7 +10,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,7 +57,7 @@ public class Member extends BaseEntity {
 
 	private Integer yCoordinate;
 	
-	@Column(columnDefinition = "varchar(1) default '0'")
+	@Column(columnDefinition = "varchar(5) default '0'")
 	private boolean kakaoCheck;
 
 }
