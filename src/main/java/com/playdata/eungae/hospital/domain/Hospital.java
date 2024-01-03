@@ -1,6 +1,5 @@
 package com.playdata.eungae.hospital.domain;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,39 +12,43 @@ import com.playdata.eungae.doctor.domain.Doctor;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 @Table(name = "hospital")
 @Entity
-@Builder
 public class Hospital extends BaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long hospitalSeq;
 
+	@Setter
+	@OneToOne
+	@JoinColumn(name = "hospital_schedule_seq")
+	private HospitalSchedule hospitalSchedule;
+
 	@OneToMany(mappedBy = "hospital")
-	private List<HospitalSchedule> hospitalSchedule = new ArrayList<>();
+	@Builder.Default
+	private List<Doctor> doctorList = new ArrayList<>();
 
 	@OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
 	private List<Appointment> appointments = new ArrayList<>();
-
-	@OneToMany(mappedBy = "hospital")
-	private List<Doctor> doctor = new ArrayList<>();
 
 	@Column(nullable = false)
 	private String password;
@@ -69,12 +72,45 @@ public class Hospital extends BaseEntity {
 	private String addressDetail;
 
 	@Column(nullable = false)
-	private Long lunchTime;
-
-	@Column(nullable = false)
-	private Long lunchEndTime;
-
-	@Column(nullable = false)
 	private String businessRegistration;
 
+	@Column(nullable = false)
+	private double xCoordinate;
+
+	@Column(nullable = false)
+	private double yCoordinate;
+
+	public static Hospital buildHospital(HospitalSchedule hospitalSchedule, String password,
+		String name,
+		String notice,
+		int deposit, String contact, String address, String addressDetail, String businessRegistration,
+		double xCoordinate,
+		double yCoordinate) {
+
+		// 빌더로 객체 생성 후 리턴
+		Hospital hospital = Hospital.builder()
+			.password(password)
+			.name(name)
+			.notice(notice)
+			.contact(contact)
+			.deposit(deposit)
+			.address(address)
+			.addressDetail(addressDetail)
+			.businessRegistration(businessRegistration)
+			.xCoordinate(xCoordinate)
+			.yCoordinate(yCoordinate)
+			.hospitalSchedule(hospitalSchedule)
+			.build();
+
+		// 연관관계 편의 메서드
+		hospitalSchedule.setHospital(hospital);
+
+		return hospital;
+
+	}
+
+	//연관관계 편의 메소드
+	public void addDoctor(Doctor doctor) {
+		this.doctorList.add(doctor);
+	}
 }

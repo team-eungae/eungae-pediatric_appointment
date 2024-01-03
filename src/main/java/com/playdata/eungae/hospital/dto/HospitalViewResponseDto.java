@@ -26,21 +26,6 @@ public class HospitalViewResponseDto {
 	private double xCoordinate;
 	private double yCoordinate;
 
-	public static Hospital toEntity(HospitalViewResponseDto dto) {
-		return Hospital.builder()
-			.password(dto.getPassword())
-			.name(dto.getName())
-			.notice(dto.getNotice())
-			.deposit(dto.getDeposit())
-			.contact(dto.getContact())
-			.address(dto.getAddress())
-			.addressDetail(dto.getAddressDetail())
-			.businessRegistration(dto.getBusinessRegistration())
-			.xCoordinate(dto.getXCoordinate())
-			.yCoordinate(dto.getYCoordinate())
-			.build();
-	}
-
 
 	public static HospitalViewResponseDto toDto(Hospital entity) {
 		return HospitalViewResponseDto.builder()

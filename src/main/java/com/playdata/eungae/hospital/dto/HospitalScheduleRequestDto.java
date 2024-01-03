@@ -41,7 +41,7 @@ public class HospitalScheduleRequestDto {
 
 	private String sunClose;
 
-	public static HospitalSchedule toEntity(HospitalScheduleRequestDto dto){
+	public static HospitalSchedule toEntity(HospitalScheduleRequestDto dto) {
 		return HospitalSchedule.builder()
 			.lunchHour(dto.getLunchHour())
 			.lunchEndHour(dto.getLunchEndHour())

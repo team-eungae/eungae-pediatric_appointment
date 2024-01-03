@@ -9,11 +9,11 @@ import lombok.Data;
 @Builder
 public class HospitalRegisterRequestDto {
 	private HospitalScheduleRequestDto scheduleRequestDto;
- 	private String password;
+	private String password;
 	private String name;
 	private String notice;
-	private int deposit; //예약금
-	private String contact; //연락처
+	private int deposit;
+	private String contact;
 	private String address;
 	private String addressDetail;
 	private String businessRegistration;
