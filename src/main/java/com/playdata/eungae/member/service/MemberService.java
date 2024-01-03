@@ -3,8 +3,6 @@ package com.playdata.eungae.member.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.classmate.MemberResolver;
-import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.repository.HospitalRepository;
 import com.playdata.eungae.member.domain.Member;
@@ -14,9 +12,9 @@ import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
+@Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-@Service
 public class MemberService {
 
 	private final MemberRepository memberRepository;
@@ -32,10 +30,27 @@ public class MemberService {
 
 	@Transactional
 	public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
+		Result result = getMemberAndHospital(requestFavoriesDto);
+		result.member().setHospitals(result.hospital());
+	}
+
+
+
+	public void removeFavorites(RequestFavoriesDto requestFavoriesDto) {
+		Result result = getMemberAndHospital(requestFavoriesDto);
+		result.member().remove(result.hospital());
+	}
+
+	private Result getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
 		Member member = memberRepository.findById(requestFavoriesDto.getMemberSeq())
-			.orElseThrow(/* 발생할 Exception 생각해보기 */);
+			.orElseThrow(() -> new IllegalStateException("회원 정보를 찾을 수 없습니다."));
 		Hospital hospital = hospitalRepository.findById(requestFavoriesDto.getHospitalSeq())
-			.orElseThrow(/* 발생할 Exception 생각해보기 */);
-		member.setHospitals(hospital);
+			.orElseThrow(() -> new IllegalStateException("병원 정보를 찾을 수 없습니다."));
+		Result result = new Result(member, hospital);
+		return result;
+	}
+
+	// https://scshim.tistory.com/372 record에 대한 설명
+	private record Result(Member member, Hospital hospital) {
 	}
 }

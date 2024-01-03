@@ -35,13 +35,14 @@ import lombok.NoArgsConstructor;
 public class Hospital extends BaseEntity {
 
 	@Id
+	@Column(name = "hospital_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long hospitalSeq;
 
 	@OneToMany(mappedBy = "hospital")
 	private List<HospitalSchedule> hospitalSchedule = new ArrayList<>();
 
-	@OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "hospital")
 	private List<Appointment> appointments = new ArrayList<>();
 
 	@OneToMany(mappedBy = "hospital")

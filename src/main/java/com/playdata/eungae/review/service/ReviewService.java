@@ -29,7 +29,7 @@ public class ReviewService {
 	@Transactional
 	public void removeReview(long reviewSeq) {
 		Review review = reviewRepository.findById(reviewSeq)
-			.orElseThrow(() -> new NullPointerException("리뷰를 찾을 수 없습니다. Exception을 만들어서 처리해보자"));
+			.orElseThrow(() -> new IllegalStateException("리뷰를 찾을 수 없습니다."));
 		// 리뷰의 논리적 삭제 컬럼을 Y로 바꿔주는 로직을 짜야한다
 		review.remove();
 	}

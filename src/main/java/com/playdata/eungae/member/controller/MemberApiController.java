@@ -1,35 +1,35 @@
 package com.playdata.eungae.member.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.playdata.eungae.member.dto.RequestFavoriesDto;
-import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
 import com.playdata.eungae.member.service.MemberService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class MemberApiController {
 
 	private final MemberService memberService;
 
-	@PostMapping("/signup")
-	public String singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
-		memberService.singUp(signUpMemberRequestDto);
-		return "redirect:/login";
+	@PostMapping("/api/my/hospital")
+	@ResponseStatus(HttpStatus.OK)
+	public String appendFavorites(@Valid RequestFavoriesDto requestFavoriesDto) {
+		memberService.appendFavorites(requestFavoriesDto);
+		return "즐겨찾기 추가 성공";
 	}
 
-	@ResponseBody
-	@PostMapping("/api/my/hospital")
-	public ResponseEntity<?> appendFavorites(@Valid RequestFavoriesDto requestFavoriesDto) {
-		memberService.appendFavorites(requestFavoriesDto);
-		return new ResponseEntity<String>("즐겨찾기 추가 성공", HttpStatus.OK);
+	@PatchMapping("/api/my/hospital")
+	@ResponseStatus(HttpStatus.OK)
+	public String removeFavorites(@Valid RequestFavoriesDto requestFavoriesDto) {
+		memberService.removeFavorites(requestFavoriesDto);
+		return "즐겨찾기 삭제 성공";
 	}
 
 }

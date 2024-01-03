@@ -41,7 +41,7 @@ class ReviewServiceTest {
 			.name("전병준")
 			.addressDetail("플레이데이터")
 			.birthDate("9/24")
-			.memberId("testId@gmail.com")
+			.email("testId@gmail.com")
 			.password("testpassword")
 			.phoneNumber("01011112222")
 			.zipCode("112233")

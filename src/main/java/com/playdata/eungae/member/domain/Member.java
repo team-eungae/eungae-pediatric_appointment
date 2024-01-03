@@ -37,6 +37,7 @@ public class Member extends BaseEntity {
 	@Id
 	private Long memberSeq;
 
+	// 페이징 처리를 위해 List -> Page로 리펙토링 필요함
 	@OneToMany
 	@JoinColumn(name = "hospital_seq")
 	private List<Hospital> hospitals = new ArrayList<>();
@@ -75,5 +76,9 @@ public class Member extends BaseEntity {
 
 	public void setHospitals(Hospital... hospitals) {
 		this.hospitals.addAll(Arrays.asList(hospitals));
+	}
+
+	public void remove(Hospital hospital) {
+		this.hospitals.remove(hospital);
 	}
 }
