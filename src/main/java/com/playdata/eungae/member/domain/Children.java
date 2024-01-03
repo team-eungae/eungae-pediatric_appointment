@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "children")
 @Entity
-@Builder
 public class Children extends BaseEntity {
 
 	@Id
