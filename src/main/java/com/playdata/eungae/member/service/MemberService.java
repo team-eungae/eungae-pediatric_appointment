@@ -1,5 +1,9 @@
 package com.playdata.eungae.member.service;
 
+import com.playdata.eungae.member.dto.MemberFindResponseDto;
+import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
+import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,8 +18,10 @@ import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Slf4j
 @Service
 public class MemberService implements UserDetailsService {
 
@@ -27,6 +33,35 @@ public class MemberService implements UserDetailsService {
 		return memberRepository.save(member);
 	}
 
+	@Transactional
+	public MemberUpdateResponseDto updateMember(MemberUpdateRequestDto updateRequestDto) {
+		Member member = memberRepository.findByEmail(updateRequestDto.getEmail()).orElseThrow(null);
+
+		// updateMemberDetails 메서드 호출
+		member.updateMemberDetails(updateRequestDto);
+
+		Member updatedMember = memberRepository.save(member);
+		return MemberUpdateResponseDto.toDto(updatedMember);
+	}
+
+	public MemberFindResponseDto findById(Long memberSeq){
+		Optional<Member> optionalMember = memberRepository.findById(memberSeq);
+		if(optionalMember.isPresent()) {
+			return MemberFindResponseDto.toDto(optionalMember.get());
+		} else {
+			return null;
+		}
+	}
+
+	public MemberUpdateResponseDto updateFindById(Long memberSeq){
+		Optional<Member> optionalMember = memberRepository.findById(memberSeq);
+		if(optionalMember.isPresent()) {
+			return MemberUpdateResponseDto.toDto(optionalMember.get());
+		} else {
+			return null;
+		}
+	}
+  
 	private void validateDuplicateMemberEmail(Member member) {
 		Member findMemberEmail = memberRepository.findByEmail(member.getEmail());
 		if (findMemberEmail != null) {
@@ -48,5 +83,4 @@ public class MemberService implements UserDetailsService {
 			.password(member.getPassword())
 			.build();
 	}
-
 }

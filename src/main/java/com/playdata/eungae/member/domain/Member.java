@@ -1,5 +1,6 @@
 package com.playdata.eungae.member.domain;
 
+import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.playdata.eungae.base.BaseEntity;
@@ -60,4 +61,11 @@ public class Member extends BaseEntity {
 	@Column(columnDefinition = "varchar(5) default '0'")
 	private boolean kakaoCheck;
 
+	public void updateMemberDetails(MemberUpdateRequestDto updateRequestDto){
+		this.name = updateRequestDto.getName();
+		this.phoneNumber = updateRequestDto.getPhoneNumber();
+		this.address = updateRequestDto.getAddress();
+		this.addressDetail = updateRequestDto.getAddressDetail();
+		this.zipCode = updateRequestDto.getZipCode();
+	}
 }
