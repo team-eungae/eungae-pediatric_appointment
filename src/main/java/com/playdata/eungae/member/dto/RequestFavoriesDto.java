@@ -13,6 +13,6 @@ public class RequestFavoriesDto {
 	@NotNull
 	private Long memberSeq;
 	@NotNull
-	private Long HospitalSeq;
+	private Long hospitalSeq;
 
 }
