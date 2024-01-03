@@ -58,7 +58,7 @@ public class Appointment extends BaseEntity {
 	private Hospital hospital;
 
 	@JoinColumn(name = "review_seq")
-	@OneToOne(fetch = FetchType.LAZY /*orphanRemoval = true appointment를 삭제하면 review도 삭제하도록 설정할것인지*/)
+	@OneToOne(fetch = FetchType.LAZY)
 	private Review review;
 
 	@Column(nullable = false)

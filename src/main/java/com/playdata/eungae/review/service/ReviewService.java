@@ -10,7 +10,6 @@ import com.playdata.eungae.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ReviewService {
 
