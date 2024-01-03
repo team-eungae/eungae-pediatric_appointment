@@ -19,7 +19,7 @@ public class HospitalService{
 	private final HospitalRepository hospitalRepository;
 	private final HospitalScheduleRepository hospitalScheduleRepository;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public void saveHospital(HospitalRegisterRequestDto dto) {
 		Hospital entity = HospitalRegisterRequestDto.toEntity(dto);
 		hospitalRepository.save(entity);
