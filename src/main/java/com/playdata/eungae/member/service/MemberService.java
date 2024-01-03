@@ -37,7 +37,7 @@ public class MemberService {
 	@Transactional
 	public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
 		Result result = getMemberAndHospital(requestFavoriesDto);
-		FavoritesHospital favoritesHospital = FavoritesHospital.set(result.member, result.hospital);
+		FavoritesHospital favoritesHospital = settingRelation(result.member, result.hospital);
 
 		// Cascade 옵션을 사용하는 것보다 Repository를 모두 호출하는것이 안전하다고 판단되어 해당 방법을 채택했습니다.
 		favoritesHospitalRepository.save(favoritesHospital);
@@ -48,7 +48,7 @@ public class MemberService {
 	@Transactional
 	public void removeFavorites(RequestFavoriesDto requestFavoriesDto) {
 		Result result = getMemberAndHospital(requestFavoriesDto);
-		FavoritesHospital favoritesHospital = FavoritesHospital.removeFavoritesHospital(result.member, result.hospital);
+		FavoritesHospital favoritesHospital = removeFavoritesHospital(result.member, result.hospital);
 
 		// Cascade 옵션을 사용하는 것보다 Repository를 모두 호출하는것이 안전하다고 판단되어 해당 방법을 채택했습니다.
 		memberRepository.save(result.member);
@@ -65,6 +65,32 @@ public class MemberService {
 			.orElseThrow(() -> new IllegalStateException("Item Not Found"));
 
 		return new Result(member, hospital);
+	}
+
+	// 연관관계 편의 메서드
+	private static FavoritesHospital settingRelation(Member member, Hospital hospital) {
+		FavoritesHospital favoritesHospital = FavoritesHospital.builder()
+			.member(member)
+			.hospital(hospital)
+			.build();
+		member.getFavoritesHospitals().add(favoritesHospital);
+		hospital.getFavoritesHospitals().add(favoritesHospital);
+		return favoritesHospital;
+	}
+
+	// ManyToMany를 삭제하기 위한 연관관계 정리 메서드
+	private static FavoritesHospital removeFavoritesHospital(Member member, Hospital hospital) {
+		FavoritesHospital favoritesHospital = member.getFavoritesHospitals()
+			.stream()
+			.filter((entity) -> entity.getHospital()
+				.equals(hospital))
+			.findFirst()
+			.orElseThrow(() -> new IllegalStateException("Item Not Found"));
+		favoritesHospital.setMember(null);
+		favoritesHospital.setHospital(null);
+		member.getFavoritesHospitals().remove(favoritesHospital);
+		hospital.getFavoritesHospitals().remove(favoritesHospital);
+		return favoritesHospital;
 	}
 
 	// https://scshim.tistory.com/372 record에 대한 설명

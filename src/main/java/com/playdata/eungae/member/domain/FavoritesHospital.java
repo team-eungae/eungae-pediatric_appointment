@@ -43,28 +43,4 @@ public class FavoritesHospital {
 	@JoinColumn(name = "hospital_seq")
 	private Hospital hospital;
 
-	// 연관관계 편의 메서드
-	public static FavoritesHospital set(Member member, Hospital hospital) {
-		FavoritesHospital favoritesHospital = FavoritesHospital.builder()
-			.member(member)
-			.hospital(hospital)
-			.build();
-		member.getFavoritesHospitals().add(favoritesHospital);
-		hospital.getFavoritesHospitals().add(favoritesHospital);
-		return favoritesHospital;
-	}
-
-	public static FavoritesHospital removeFavoritesHospital(Member member, Hospital hospital) {
-		List<FavoritesHospital> favoritesHospitals = member.getFavoritesHospitals();
-		FavoritesHospital favoritesHospital = favoritesHospitals.stream()
-			.filter((entity) -> entity.getHospital()
-				.equals(hospital))
-			.findFirst()
-			.orElseThrow(() -> new IllegalStateException("Item Not Found"));
-		favoritesHospital.setMember(null);
-		favoritesHospital.setHospital(null);
-		member.getFavoritesHospitals().remove(favoritesHospital);
-		hospital.getFavoritesHospitals().remove(favoritesHospital);
-		return favoritesHospital;
-	}
 }
