@@ -27,15 +27,17 @@ public class MemberApiController {
 	private final MemberService memberService;
 
 	@PostMapping("/hospital")
-	public ResponseEntity appendFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
+	@ResponseStatus(HttpStatus.CREATED)
+	public String appendFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
 		memberService.appendFavorites(requestFavoriesDto);
-		return ResponseEntity.ok(HttpStatus.CREATED);
+		return "Favorites have been successfully appended";
 	}
 
 	@PatchMapping("/hospital")
-	public ResponseEntity removeFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public String removeFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
 		memberService.removeFavorites(requestFavoriesDto);
-		return ResponseEntity.ok(HttpStatus.ACCEPTED);
+		return "Favorites have been successfully deleted";
 	}
 
 }
