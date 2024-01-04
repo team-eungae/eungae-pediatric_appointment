@@ -1,7 +1,9 @@
 package com.playdata.eungae.hospital.service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +29,11 @@ public class HospitalService{
 	}
 
 
+	@Transactional(readOnly = true)
+	public HospitalViewResponseDto findHospitalById(Long hospitalSeq) {
+		Hospital hospital = hospitalRepository.findById(hospitalSeq)
+			.orElseThrow(() -> new NoSuchElementException("Hospital not found"));
 
-
+		return HospitalViewResponseDto.toDto(hospital);
+	}
 }

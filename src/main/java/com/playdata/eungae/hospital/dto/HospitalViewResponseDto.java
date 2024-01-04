@@ -2,7 +2,7 @@ package com.playdata.eungae.hospital.dto;
 
 import java.util.List;
 
-import com.playdata.eungae.doctor.domain.DoctorViewResponseDto;
+import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
 import com.playdata.eungae.hospital.domain.Hospital;
 
 import lombok.Builder;
@@ -26,9 +26,9 @@ public class HospitalViewResponseDto {
 	private double xCoordinate;
 	private double yCoordinate;
 
-
 	public static HospitalViewResponseDto toDto(Hospital entity) {
 		return HospitalViewResponseDto.builder()
+      .hospitalSchedule(HospitalScheduleViewResponseDto.toDto(entity.getHospitalSchedule()))
 			.password(entity.getPassword())
 			.name(entity.getName())
 			.notice(entity.getNotice())

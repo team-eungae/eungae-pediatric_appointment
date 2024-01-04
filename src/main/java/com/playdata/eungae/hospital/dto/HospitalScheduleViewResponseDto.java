@@ -41,25 +41,29 @@ public class HospitalScheduleViewResponseDto {
 
 	private String sunClose;
 
-	public static HospitalScheduleViewResponseDto toDto(HospitalSchedule hospitalSchedule) {
+	public static HospitalScheduleViewResponseDto toDto(HospitalSchedule hospitalSchedule){
 		return HospitalScheduleViewResponseDto.builder()
-			.lunchHour(hospitalSchedule.getLunchHour())
-			.lunchEndHour(hospitalSchedule.getLunchEndHour())
-			.monOpen(hospitalSchedule.getMonOpen())
-			.monClose(hospitalSchedule.getMonClose())
-			.tueOpen(hospitalSchedule.getTueOpen())
-			.tueClose(hospitalSchedule.getTueClose())
-			.wedOpen(hospitalSchedule.getWedOpen())
-			.wedClose(hospitalSchedule.getWedClose())
-			.thuOpen(hospitalSchedule.getThuOpen())
-			.thuClose(hospitalSchedule.getThuClose())
-			.friOpen(hospitalSchedule.getFriOpen())
-			.friClose(hospitalSchedule.getFriClose())
-			.satOpen(hospitalSchedule.getSatOpen())
-			.satClose(hospitalSchedule.getSatClose())
-			.sunOpen(hospitalSchedule.getSunOpen())
-			.sunClose(hospitalSchedule.getSunClose())
+			.lunchHour(formatHour(hospitalSchedule.getLunchHour()))
+			.lunchEndHour(formatHour(hospitalSchedule.getLunchEndHour()))
+			.monOpen(formatHour(hospitalSchedule.getMonOpen()))
+			.monClose(formatHour(hospitalSchedule.getMonClose()))
+			.tueOpen(formatHour(hospitalSchedule.getTueOpen()))
+			.tueClose(formatHour(hospitalSchedule.getTueClose()))
+			.wedOpen(formatHour(hospitalSchedule.getWedOpen()))
+			.wedClose(formatHour(hospitalSchedule.getWedClose()))
+			.thuOpen(formatHour(hospitalSchedule.getThuOpen()))
+			.thuClose(formatHour(hospitalSchedule.getThuClose()))
+			.friOpen(formatHour(hospitalSchedule.getFriOpen()))
+			.friClose(formatHour(hospitalSchedule.getFriClose()))
+			.satOpen(formatHour(hospitalSchedule.getSatOpen()))
+			.satClose(formatHour(hospitalSchedule.getSatClose()))
+			.sunOpen(formatHour(hospitalSchedule.getSunOpen()))
+			.sunClose(formatHour(hospitalSchedule.getSunClose()))
 			.build();
+
 	}
 
+	private static String formatHour(String data){
+		return data.substring(0,2)+":"+data.substring(2);
+	}
 }

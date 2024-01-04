@@ -6,5 +6,5 @@ import com.playdata.eungae.hospital.domain.Hospital;
 
 @Repository
 public interface HospitalRepository extends JpaRepository<Hospital, Long> {
-
+  
 }
