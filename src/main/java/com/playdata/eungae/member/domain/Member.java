@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.playdata.eungae.base.BaseEntity;
@@ -37,8 +37,6 @@ public class Member extends BaseEntity {
 	@Id
 	private Long memberSeq;
 
-	// 다시한번 곰곰히 생각해보니 Hospital이 Member에 완전히 종속적이지 않아 side effect를 일으킬것같아
-	// Cascade 옵션을 제거했습니다.
 	@Builder.Default
 	@OneToMany(mappedBy = "member")
 	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
@@ -71,8 +69,14 @@ public class Member extends BaseEntity {
 
 	private Integer yCoordinate;
 	
-	//0이면 일반 로그인 1이면 카카오 로그인
-	@Column(columnDefinition = "varchar(1) default '0'")
+	@Column(columnDefinition = "varchar(5) default '0'")
 	private boolean kakaoCheck;
 
+	public void updateMemberDetails(MemberUpdateRequestDto updateRequestDto){
+		this.name = updateRequestDto.getName();
+		this.phoneNumber = updateRequestDto.getPhoneNumber();
+		this.address = updateRequestDto.getAddress();
+		this.addressDetail = updateRequestDto.getAddressDetail();
+		this.zipCode = updateRequestDto.getZipCode();
+	}
 }

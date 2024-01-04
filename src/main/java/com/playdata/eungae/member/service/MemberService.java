@@ -1,5 +1,11 @@
 package com.playdata.eungae.member.service;
 
+import java.util.Optional;
+
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -7,39 +13,34 @@ import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.repository.HospitalRepository;
 import com.playdata.eungae.member.domain.FavoritesHospital;
 import com.playdata.eungae.member.domain.Member;
+
 import com.playdata.eungae.member.dto.RequestFavoriesDto;
 import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
 import com.playdata.eungae.member.repository.FavoritesHospitalRepository;
+
+import com.playdata.eungae.member.dto.MemberFindResponseDto;
+import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
+import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+
 import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+@RequiredArgsConstructor
 @Slf4j
 @Service
-@RequiredArgsConstructor
-// @Transactional(readOnly = true)
-public class MemberService {
+public class MemberService implements UserDetailsService {
 
 	private final MemberRepository memberRepository;
 	private final HospitalRepository hospitalRepository;
 	private final FavoritesHospitalRepository favoritesHospitalRepository;
-
-	/**
-	 * 회원가입
-	 * @return 회원가입에 성공한 유저의 식별자
-	 */
-	@Transactional
-	public Member singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
-		return memberRepository.save(SignUpMemberRequestDto.toEntity(signUpMemberRequestDto));
-	}
 
 	@Transactional
 	public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
 		Result result = getMemberAndHospital(requestFavoriesDto);
 		FavoritesHospital favoritesHospital = settingRelation(result.member, result.hospital);
 
-		// Cascade 옵션을 사용하는 것보다 Repository를 모두 호출하는것이 안전하다고 판단되어 해당 방법을 채택했습니다.
 		favoritesHospitalRepository.save(favoritesHospital);
 		hospitalRepository.save(result.hospital);
 		memberRepository.save(result.member);
@@ -50,13 +51,61 @@ public class MemberService {
 		Result result = getMemberAndHospital(requestFavoriesDto);
 		FavoritesHospital favoritesHospital = removeFavoritesHospital(result.member, result.hospital);
 
-		// Cascade 옵션을 사용하는 것보다 Repository를 모두 호출하는것이 안전하다고 판단되어 해당 방법을 채택했습니다.
 		memberRepository.save(result.member);
 		hospitalRepository.save(result.hospital);
 		favoritesHospitalRepository.delete(favoritesHospital);
 	}
 
-	private Result getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
+	@Transactional
+	public Member signUp(Member member) {
+		validateDuplicateMemberEmail(member);
+		return memberRepository.save(member);
+	}
+
+	@Transactional
+	public MemberUpdateResponseDto updateMember(MemberUpdateRequestDto updateRequestDto) {
+		Member member = memberRepository.findByEmail(updateRequestDto.getEmail()).orElseThrow(null);
+
+		member.updateMemberDetails(updateRequestDto);
+
+		Member updatedMember = memberRepository.save(member);
+		return MemberUpdateResponseDto.toDto(updatedMember);
+	}
+
+	public MemberFindResponseDto findById(Long memberSeq) {
+		Optional<Member> optionalMember = memberRepository.findById(memberSeq);
+		return optionalMember.map(MemberFindResponseDto::toDto).orElse(null);
+	}
+
+	public MemberUpdateResponseDto updateFindById(Long memberSeq) {
+		Optional<Member> optionalMember = memberRepository.findById(memberSeq);
+		return optionalMember.map(MemberUpdateResponseDto::toDto).orElse(null);
+	}
+
+	@Transactional(readonly = "true")
+	private void validateDuplicateMemberEmail(Member member) {
+		Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
+		if (findMemberEmail.isPresent()) {
+			throw new IllegalStateException("이미 있는 이메일입니다.");
+		}
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+		Optional<Member> member = memberRepository.findByEmail(email);
+
+		if (member.isEmpty()) {
+			throw new UsernameNotFoundException(email);
+		}
+
+		return User.builder()
+			.username(String.valueOf(member.get().getMemberSeq()))
+			.password(member.get().getPassword())
+			.build();
+	}
+  
+  private Result getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
 
 		Member member = memberRepository.findById(requestFavoriesDto.getMemberSeq())
 			.orElseThrow(() -> new IllegalStateException("Item Not Found"));
@@ -93,8 +142,5 @@ public class MemberService {
 		return favoritesHospital;
 	}
 
-	// https://scshim.tistory.com/372 record에 대한 설명
-	// record가 가변객체로 생성되는 문제를 해결할 수 있는 방법에 대해 생각해봐야 할 것 같습니다.
-	private record Result(Member member, Hospital hospital) {
-	}
+	private record Result(Member member, Hospital hospital) {}
 }

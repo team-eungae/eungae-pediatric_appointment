@@ -12,17 +12,25 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.hospital.domain.Hospital;
-import com.playdata.eungae.member.domain.Member;
+
 import com.playdata.eungae.member.dto.RequestFavoriesDto;
-import com.playdata.eungae.member.repository.MemberRepository;
+
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
+
+import com.playdata.eungae.member.domain.Member;
+import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
+import com.playdata.eungae.member.repository.MemberRepository;
 
 @Transactional
 @SpringBootTest
@@ -36,6 +44,7 @@ class MemberServiceTest {
 
 	@Autowired
 	MemberRepository memberRepository;
+
 
 	@Test
 	@Rollback(value = false)
@@ -123,5 +132,47 @@ class MemberServiceTest {
 		Assertions.assertThat((long)member2.getHospitals().size()).isEqualTo(1);
 
 
+	}
+
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
+	// @BeforeEach
+	public void createMember() {
+		SignUpMemberRequestDto dto = new SignUpMemberRequestDto();
+		dto.setName("김수용");
+		dto.setEmail("test@gmail.com");
+		dto.setAddress("경기도 안양시 만안구");
+		dto.setAddressDetail("소곡로 26번길");
+		dto.setZipCode("11033");
+		dto.setBirthDate("19991213");
+		dto.setPhoneNumber("01032626945");
+		Member member1 = SignUpMemberRequestDto.toEntity(dto);
+
+		memberService.signUp(member1);
+	}
+
+	@Rollback(value = false)
+	@DisplayName("signUp: 회원가입을 성공한다.")
+	@Test
+	public void signUp() throws Exception {
+		//Given
+		SignUpMemberRequestDto dto = new SignUpMemberRequestDto();
+		dto.setName("김수용");
+		dto.setEmail("test@gmail.com");
+		dto.setPassword("12345");
+		dto.setAddress("경기도 안양시 만안구");
+		dto.setAddressDetail("소곡로 26번길");
+		dto.setZipCode("11033");
+		dto.setBirthDate("19991213");
+		dto.setPhoneNumber("01032626945");
+		Member member = SignUpMemberRequestDto.toEntity(dto);
+
+		//When
+		memberService.signUp(member);
+
+		//Then
+		assertThat(dto.getName()).isEqualTo(member.getName());
+		System.out.println(member.getPassword());
 	}
 }
