@@ -19,7 +19,8 @@ public class DoctorService {
 
 	public List<DoctorViewResponseDto> findDoctorsByHospitalId(Long hospitalSeq){
 		
-		List<Doctor> doctorList = doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq);
+		List<Doctor> doctorList = doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq)
+			.orElseThrow(() -> new NoSuchElementException("Doctor not found"));
 		
 		return doctorList.stream()
 			.map(DoctorViewResponseDto::toDto)

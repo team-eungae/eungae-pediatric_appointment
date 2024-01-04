@@ -10,5 +10,5 @@ import com.playdata.eungae.doctor.domain.Doctor;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-	public List<Doctor> findAllByHospitalHospitalSeq(Long hospitalSeq);
+	public Optional<List<Doctor>> findAllByHospitalHospitalSeq(Long hospitalSeq);
 }

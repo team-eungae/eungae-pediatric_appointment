@@ -40,11 +40,11 @@ public class Doctor extends BaseEntity {
 	@Column(nullable = false)
 	private String name;
 
-	@ColumnDefault("'1'")
+	@ColumnDefault("1")
 	private String status;
 
 	@Column(nullable = false)
-	@ColumnDefault("'3'")
+	@ColumnDefault("3")
 	private int treatmentPossible;
 
 	private String profileImage;
