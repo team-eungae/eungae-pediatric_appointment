@@ -44,10 +44,10 @@ function execDaumPostcode() {
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('zip-code-input').value = data.zonecode;
+            document.getElementById('zipCode').value = data.zonecode;
             document.getElementById("address").value = addr;
             // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("address-detail").focus();
+            document.getElementById("addressDetail").focus();
 
             // iframe을 넣은 element를 안보이게 한다.
             // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
@@ -159,3 +159,10 @@ elInputPasswordCheck.onkeyup = function () {
 };
 //조건이 부적합할 경우 : .classList.remove('hide')로 hide 클래스를 삭제하여 화면에 표시한다.
 //조건이 적합할 경우 : .classList.add('hide')로 hide 클래스를 추가하여 화면에서 가린다.
+
+// $(document).ready(function () {
+//     var errorMessage = [[${errorMessage}]];
+//     if (errorMessage != null) {
+//         alert(errorMessage);
+//     }
+// })

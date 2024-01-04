@@ -1,15 +1,22 @@
 package com.playdata.eungae.member.domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.playdata.eungae.base.BaseEntity;
+import com.playdata.eungae.hospital.domain.Hospital;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -30,10 +37,14 @@ public class Member extends BaseEntity {
 	@Id
 	private Long memberSeq;
 
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
+	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
+
 	@Column(nullable = false, unique = true, updatable = false)
 	private String email;
 
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false)
 	private String password;
 
 	@Column(nullable = false, length = 20)

@@ -111,5 +111,4 @@ class ReviewServiceTest {
 			.note("test")
 			.build();
 	}
-
 }
