@@ -7,6 +7,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.playdata.eungae.appointment.domain.Appointment;
+import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.review.domain.Review;
 import com.playdata.eungae.review.dto.RequestReviewFormDto;
 import com.playdata.eungae.review.dto.ResponseReviewDto;
@@ -19,16 +21,19 @@ import lombok.RequiredArgsConstructor;
 public class ReviewService {
 
 	private final ReviewRepository reviewRepository;
-	private int PAGE_SIZE = 20;
+	private final AppointmentRepository appointmentRepository;
+	private final int PAGE_SIZE = 20;
 
 	@Transactional
 	public void createReview(long appointmentSeq, RequestReviewFormDto requestReviewFormDto) {
-		// appointmentSeq로 appointment Entity 조회
-		// 최적화를 위해 appointment Entity는 Hospital Entity도 Fetch join으로 같이 가져와야 한다.
 
-		// 조회된 appointmentSeq 엔티티를 RequestReviewFormDto.toEntity에 같이 넘겨 Review Entity 생성
+		Appointment appointment = appointmentRepository.findByIdWhitHospital(appointmentSeq)
+			.orElseThrow(() -> new IllegalStateException("Item not found"));
 
-		// reviewRepository.save(ReviewEntity); 로 DB에 저장
+		Review review = RequestReviewFormDto.toEntity(requestReviewFormDto, appointment);
+
+		Review reviewEntity = reviewRepository.save(review);
+		appointment.setReview_seq(reviewEntity.getReviewSeq()); ;
 	}
 
 	@Transactional

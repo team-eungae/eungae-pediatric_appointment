@@ -82,7 +82,6 @@ public class MemberService implements UserDetailsService {
 		return optionalMember.map(MemberUpdateResponseDto::toDto).orElse(null);
 	}
 
-	@Transactional(readonly = "true")
 	private void validateDuplicateMemberEmail(Member member) {
 		Optional<Member> findMemberByEmail = memberRepository.findByEmail(member.getEmail());
 		if (findMemberByEmail.isPresent()) {

@@ -10,16 +10,15 @@ import lombok.Data;
 @Data
 public class RequestReviewFormDto {
 
-	private Long hospitalSeq;
-	private Long memberSeq;
 	// null이 발생하지 않는 값을 원시값으로 정의하는것이 아닌 Bean Validation으로 검증할 필요가 있는지
 	private int starRating;
 	@NotBlank
 	private String content;
 
-	public static Review toEntity(RequestReviewFormDto dto, Member member, Appointment appointment) {
+	public static Review toEntity(RequestReviewFormDto dto, Appointment appointment) {
 		return Review.builder()
 			.member(appointment.getMember())
+			.appointment(appointment)
 			.hospital(appointment.getHospital())
 			.starRating(dto.getStarRating())
 			.content(dto.getContent())
