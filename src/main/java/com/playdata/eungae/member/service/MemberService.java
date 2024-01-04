@@ -82,7 +82,6 @@ public class MemberService implements UserDetailsService {
 		return optionalMember.map(MemberUpdateResponseDto::toDto).orElse(null);
 	}
 
-	@Transactional(readonly = "true")
 	private void validateDuplicateMemberEmail(Member member) {
 		Optional<Member> findMemberByEmail = memberRepository.findByEmail(member.getEmail());
 		if (findMemberByEmail.isPresent()) {
@@ -100,7 +99,7 @@ public class MemberService implements UserDetailsService {
 		}
 
 		return User.builder()
-			.username(String.valueOf(member.get().getMemberSeq()))
+			.username(member.get().getEmail())
 			.password(member.get().getPassword())
 			.build();
 	}

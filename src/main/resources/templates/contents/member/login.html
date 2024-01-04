@@ -17,22 +17,20 @@
         </button>
     </div>
 
-    <form action="index.html" class="login-form">
+    <form role="form" method="post" action="/login-proc" class="login-form">
         <label for="email">이메일</label>
-        <input type="email" id="email" placeholder="" required>
+        <input type="email" name="email" id="email" placeholder="example@eungae.com" required>
 
         <label for="password">비밀번호</label>
-        <input type="password" id="password" placeholder="********" required>
+        <input type="password" name="password" id="password" placeholder="********" required>
+
+        <p type="hidden" th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
 
         <button type="submit" class="button">로그인 하기</button>
     </form>
     <div class="login-help-container">
-<!--        <div class="login-help-container__items">-->
-<!--            <a class="login-help-container__item" href="#">아이디 찾기</a>-->
-<!--            <a class="login-help-container__item" href="#">비밀번호 찾기</a>-->
-<!--        </div>-->
         <div class="login-help-container__items">
-            <div class="login-help-container__item"> 회원이 아니신가요? <a href="#">회원가입</a>
+            <div class="login-help-container__item"> 회원이 아니신가요? <a href="/signup">회원가입</a>
             </div>
         </div>
     </div>

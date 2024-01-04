@@ -1,5 +1,6 @@
 package com.playdata.eungae.member.service;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ class MemberServiceTest {
 	@Autowired
 	MemberRepository memberRepository;
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
 
 	@Test
 	@Rollback(value = false)
@@ -120,7 +123,7 @@ class MemberServiceTest {
 
 		Member member2 = memberRepository.findById(1L)
 			.orElseThrow(() -> new IllegalStateException("멤버를 찾을 수 없음"));
-		Assertions.assertThat((long)member2.getHospitals().size()).isEqualTo(2);
+		assertThat((long)member2.getHospitals().size()).isEqualTo(2);
 
 		memberService.removeFavorites(requestFavoriesDto);
 
@@ -128,13 +131,10 @@ class MemberServiceTest {
 			.orElseThrow(() -> new IllegalStateException("멤버를 찾을 수 없음"));
 
 		//then
-		Assertions.assertThat((long)member2.getHospitals().size()).isEqualTo(1);
+		assertThat((long)member2.getHospitals().size()).isEqualTo(1);
 
 
 	}
-
-	@Autowired
-	PasswordEncoder passwordEncoder;
 
 	// @BeforeEach
 	public Member createMember() {
