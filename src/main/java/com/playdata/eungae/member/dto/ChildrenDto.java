@@ -1,5 +1,6 @@
 package com.playdata.eungae.member.dto;
 
+import org.springframework.web.multipart.MultipartFile;
 import com.playdata.eungae.member.domain.Children;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,21 +20,19 @@ public class ChildrenDto {
 	private String profileImage;
 	private String photoPath;
 	private String etcInfo;
-	private byte[] photoContent;
+	private MultipartFile photoContent;
 
-	public static ChildrenDto from(Children children) {
+	public static ChildrenDto from(Children entity) {
 		ChildrenDto dto = ChildrenDto.builder()
-			.childrenSeq(children.getChildrenSeq())
-			.memberSeq(children.getMemberSeq())
-			.name(children.getName())
-			.birthDate(children.getBirthDate())
-			.gender(children.getGender())
-			.profileImage(children.getProfileImage())
-			.photoPath(children.getPhotoPath())
-			.etcInfo(children.getEtcInfo())
-			.photoContent(children.getPhotoContent()) // 원본 바이너리 데이터
+			.childrenSeq(entity.getChildrenSeq())
+			.memberSeq(entity.getMemberSeq())
+			.name(entity.getName())
+			.birthDate(entity.getBirthDate())
+			.gender(entity.getGender())
+			.profileImage(entity.getProfileImage())
+			.photoPath(entity.getPhotoPath())
+			.etcInfo(entity.getEtcInfo())
 			.build();
-
 		return dto;
 	}
 }
