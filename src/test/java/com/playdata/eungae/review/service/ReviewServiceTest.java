@@ -1,5 +1,9 @@
 package com.playdata.eungae.review.service;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.assertj.core.api.Assertions;
@@ -62,7 +66,7 @@ class ReviewServiceTest {
 		Appointment appointment = Appointment.builder()
 			.member(member)
 			.hospital(hospital)
-			.appointmentDate(new Date())
+			.appointmentDate(LocalDateTime.now())
 			.appointmentHour("10")
 			.appointmentMinute("30")
 			.status("1")

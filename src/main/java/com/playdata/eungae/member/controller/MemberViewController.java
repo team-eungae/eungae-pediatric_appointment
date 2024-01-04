@@ -1,31 +1,18 @@
 package com.playdata.eungae.member.controller;
 
-import com.playdata.eungae.member.domain.Member;
-import com.playdata.eungae.member.dto.MemberFindResponseDto;
-import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
-import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
-import com.playdata.eungae.member.service.MemberService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.playdata.eungae.member.domain.Member;
-import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
+import com.playdata.eungae.member.dto.MemberFindResponseDto;
 import com.playdata.eungae.member.service.MemberService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
 @Controller
@@ -77,32 +64,5 @@ public class MemberViewController {
 	@GetMapping("/children/form")
 	public String addMyChildren() {
 		return "contents/member/my-children-add";
-	}
-
-	@PostMapping("/signup")
-	public String singUp(
-		@Valid SignUpMemberRequestDto signUpMemberRequestDto,
-		BindingResult bindingResult,
-		Model model) {
-
-		if (bindingResult.hasErrors()) {
-			return "contents/member/login";
-		}
-
-		try {
-			Member member = SignUpMemberRequestDto.toEntity(signUpMemberRequestDto);
-			memberService.signUp(member);
-		} catch (IllegalStateException e) {
-			model.addAttribute("errorMessage", e.getMessage());
-			return "contents/member/login";
-		}
-
-		return "redirect:/login";
-	}
-
-	@PostMapping("/signup")
-	public String singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
-		memberService.singUp(signUpMemberRequestDto);
-		return "redirect:/login";
 	}
 }

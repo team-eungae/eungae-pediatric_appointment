@@ -25,7 +25,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 
 import com.playdata.eungae.member.domain.Member;
@@ -138,7 +137,7 @@ class MemberServiceTest {
 	PasswordEncoder passwordEncoder;
 
 	// @BeforeEach
-	public void createMember() {
+	public Member createMember() {
 		SignUpMemberRequestDto dto = new SignUpMemberRequestDto();
 		dto.setName("김수용");
 		dto.setEmail("test@gmail.com");
@@ -147,9 +146,9 @@ class MemberServiceTest {
 		dto.setZipCode("11033");
 		dto.setBirthDate("19991213");
 		dto.setPhoneNumber("01032626945");
-		Member member1 = SignUpMemberRequestDto.toEntity(dto);
+		Member member1 = SignUpMemberRequestDto.toEntity(dto, passwordEncoder);
 
-		memberService.signUp(member1);
+		return memberService.savedMember(member1);
 	}
 
 	@Rollback(value = false)
@@ -166,13 +165,38 @@ class MemberServiceTest {
 		dto.setZipCode("11033");
 		dto.setBirthDate("19991213");
 		dto.setPhoneNumber("01032626945");
-		Member member = SignUpMemberRequestDto.toEntity(dto);
+		Member member = SignUpMemberRequestDto.toEntity(dto, passwordEncoder);
 
 		//When
-		memberService.signUp(member);
+		memberService.savedMember(member);
 
 		//Then
 		assertThat(dto.getName()).isEqualTo(member.getName());
 		System.out.println(member.getPassword());
+	}
+
+	@DisplayName("duplicateSignUp: 중복 회원가입은 예외를 발생시키며 가입되면 안된다.")
+	@Test
+	public void duplicateSignUp() throws Exception {
+		//Given
+		SignUpMemberRequestDto dto = new SignUpMemberRequestDto();
+		dto.setName("김철수");
+		dto.setEmail("test@gmail.com");
+		dto.setPassword("12345");
+		dto.setAddress("경기도 안양시 만안구");
+		dto.setAddressDetail("소곡로 26번길");
+		dto.setZipCode("11033");
+		dto.setBirthDate("19991213");
+		dto.setPhoneNumber("01032314233");
+		Member member = SignUpMemberRequestDto.toEntity(dto, passwordEncoder);
+		Member member2 = SignUpMemberRequestDto.toEntity(dto, passwordEncoder);
+		memberService.savedMember(member2);
+		//When
+		IllegalStateException e = assertThrows(IllegalStateException.class, () -> {
+			memberService.savedMember(member);
+		});
+
+		//Then
+		assertEquals("이미 가입된 이메일입니다.", e.getMessage());
 	}
 }
