@@ -85,26 +85,4 @@ public class HospitalSchedule extends BaseEntity {
 		hospital.setHospitalSchedule(this);
 	}
 
-	public HospitalSchedule(String lunchHour, String lunchEndHour, String monOpen, String monClose, String tueOpen,
-		String tueClose, String wedOpen, String wedClose, String thuOpen, String thuClose, String friOpen,
-		String friClose,
-		String satOpen, String satClose, String sunOpen, String sunClose) {
-		this.lunchHour = lunchHour;
-		this.lunchEndHour = lunchEndHour;
-		this.monOpen = monOpen;
-		this.monClose = monClose;
-		this.tueOpen = tueOpen;
-		this.tueClose = tueClose;
-		this.wedOpen = wedOpen;
-		this.wedClose = wedClose;
-		this.thuOpen = thuOpen;
-		this.thuClose = thuClose;
-		this.friOpen = friOpen;
-		this.friClose = friClose;
-		this.satOpen = satOpen;
-		this.satClose = satClose;
-		this.sunOpen = sunOpen;
-		this.sunClose = sunClose;
-	}
-
 }

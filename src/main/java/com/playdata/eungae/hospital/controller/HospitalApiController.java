@@ -22,7 +22,7 @@ public class HospitalApiController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public String createHospital(@RequestBody HospitalRegisterRequestDto hospitalRegisterRequestDto) {
 		hospitalService.saveHospital(hospitalRegisterRequestDto);
-		return "병원 가입이 완료되었습니다.";
+		return "hospital created successfully";
 	}
 
 }
