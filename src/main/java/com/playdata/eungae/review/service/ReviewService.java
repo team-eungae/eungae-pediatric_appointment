@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class ReviewService {
 
 	private final ReviewRepository reviewRepository;
-	private int PAGE_SIZE = 2;
+	private int PAGE_SIZE = 20;
 
 	@Transactional
 	public void createReview(long appointmentSeq, RequestReviewFormDto requestReviewFormDto) {
