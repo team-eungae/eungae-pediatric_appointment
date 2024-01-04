@@ -6,6 +6,7 @@ import com.playdata.eungae.member.domain.Member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+
 import lombok.Data;
 
 @Data
@@ -38,7 +39,6 @@ public class SignUpMemberRequestDto {
 	private String zipCode;
 
 	public static Member toEntity(SignUpMemberRequestDto signUpMemberRequestDto) {
-
 		return Member.builder()
 			.email(signUpMemberRequestDto.getEmail())
 			.password(signUpMemberRequestDto.getPassword())

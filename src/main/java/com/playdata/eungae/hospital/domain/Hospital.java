@@ -8,6 +8,8 @@ import org.hibernate.annotations.ColumnDefault;
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.doctor.domain.Doctor;
+import com.playdata.eungae.member.domain.FavoritesHospital;
+import com.playdata.eungae.member.domain.Member;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,6 +18,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -35,6 +38,7 @@ import lombok.Setter;
 public class Hospital extends BaseEntity {
 
 	@Id
+	@Column(name = "hospital_seq")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long hospitalSeq;
 
@@ -47,7 +51,12 @@ public class Hospital extends BaseEntity {
 	@Builder.Default
 	private List<Doctor> doctorList = new ArrayList<>();
 
-	@OneToMany(mappedBy = "hospital", cascade = CascadeType.ALL)
+	@Setter
+	@OneToMany(mappedBy = "hospital")
+	@Builder.Default
+	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
+
+	@OneToMany(mappedBy = "hospital")
 	private List<Appointment> appointments = new ArrayList<>();
 
 	@Column(nullable = false)
