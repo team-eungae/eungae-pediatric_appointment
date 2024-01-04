@@ -26,7 +26,7 @@ public class MemberService implements UserDetailsService {
 	private final MemberRepository memberRepository;
 
 	@Transactional
-	public Member signUp(Member member) {
+	public Member savedMember(Member member) {
 		validateDuplicateMemberEmail(member);
 		return memberRepository.save(member);
 	}
@@ -52,9 +52,9 @@ public class MemberService implements UserDetailsService {
 	}
 
 	private void validateDuplicateMemberEmail(Member member) {
-		Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
-		if (findMemberEmail.isPresent()) {
-			throw new IllegalStateException("이미 있는 이메일입니다.");
+		Optional<Member> findMemberByEmail = memberRepository.findByEmail(member.getEmail());
+		if (findMemberByEmail.isPresent()) {
+			throw new IllegalStateException("이미 가입된 이메일입니다.");
 		}
 	}
 
