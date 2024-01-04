@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class ReviewService {
 
 	private final ReviewRepository reviewRepository;
-	private int PAGE_SIZE = 20;
+	private int PAGE_SIZE = 2;
 
 	@Transactional
 	public void createReview(long appointmentSeq, RequestReviewFormDto requestReviewFormDto) {
@@ -40,12 +40,12 @@ public class ReviewService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<ResponseReviewDto> findReviews(int page) {
+	public Page<ResponseReviewDto> findReviews(int page, Long hospitalSeq) {
 		Pageable pageConfig = PageRequest.of(
 			/*정렬 기준을 정할 수 있도록 리펙토링 필요함*/
 			page, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt")
 		);
-		return reviewRepository.findAllWithMember(pageConfig)
+		return reviewRepository.findAllWithMember(pageConfig, hospitalSeq)
 			.map(ResponseReviewDto::toDto);
 	}
 }

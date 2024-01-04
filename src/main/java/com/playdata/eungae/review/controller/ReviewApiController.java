@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -26,12 +27,12 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/my/records")
+@RequestMapping("/api")
 public class ReviewApiController {
 
 	private final ReviewService reviewService;
 
-	@PostMapping("/{appointment_seq}/reviews")
+	@PostMapping("/my/records/{appointment_seq}/reviews")
 	@ResponseStatus(HttpStatus.CREATED)
 	public String createReview(
 		@Valid @PathVariable("appointment_seq") long appointmentSeq,
@@ -41,18 +42,20 @@ public class ReviewApiController {
 		return "success";
 	}
 
-	@PatchMapping("/reviews/{review_seq}")
+	@PatchMapping("/my/records/reviews/{review_seq}")
 	@ResponseStatus(HttpStatus.OK)
 	public String createReview(@PathVariable("review_seq") long reviewSeq) {
 		reviewService.removeReview(reviewSeq);
 		return "success";
 	}
 
-	@PostMapping("/reviews/{review_page}")
+	@GetMapping("/reviews")
 	@ResponseStatus(HttpStatus.OK)
-	public Page<ResponseReviewDto> findReviews(@PathVariable("review_page") int reviewPage) {
+	public Page<ResponseReviewDto> findReviews(
+		@RequestParam int reviewPage,
+		@RequestParam Long hospitalSeq) {
 		// Result VO 적용시키기
-		return reviewService.findReviews(reviewPage);
+		return reviewService.findReviews(reviewPage, hospitalSeq);
 	}
 
 }

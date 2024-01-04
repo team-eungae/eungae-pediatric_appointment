@@ -38,7 +38,8 @@ public class Review extends BaseEntity {
 	@JoinColumn(name = "hospital_seq")
 	private Hospital hospital;
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "review")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "appiontment_seq")
 	private Appointment appointment;
 
 	@ManyToOne(fetch = FetchType.LAZY)
