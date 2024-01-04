@@ -18,8 +18,12 @@ public class DoctorService {
 	private final DoctorRepository doctorRepository;
 
 	public List<DoctorViewResponseDto> findDoctorsByHospitalId(Long hospitalSeq){
+		
 		List<Doctor> doctorList = doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq);
-		return doctorList.stream().map(DoctorViewResponseDto::toDto).collect(Collectors.toList());
+		
+		return doctorList.stream()
+			.map(DoctorViewResponseDto::toDto)
+			.collect(Collectors.toList());
 	}
 
 }
