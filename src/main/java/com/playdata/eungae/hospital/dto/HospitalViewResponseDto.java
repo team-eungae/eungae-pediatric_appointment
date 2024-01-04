@@ -28,7 +28,7 @@ public class HospitalViewResponseDto {
 
 	public static HospitalViewResponseDto toDto(Hospital entity) {
 		return HospitalViewResponseDto.builder()
-			.hospitalSchedule(HospitalScheduleViewResponseDto.toDto(entity.getHospitalSchedule()))
+      .hospitalSchedule(HospitalScheduleViewResponseDto.toDto(entity.getHospitalSchedule()))
 			.password(entity.getPassword())
 			.name(entity.getName())
 			.notice(entity.getNotice())

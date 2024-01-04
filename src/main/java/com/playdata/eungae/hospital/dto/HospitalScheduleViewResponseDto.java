@@ -66,6 +66,4 @@ public class HospitalScheduleViewResponseDto {
 	private static String formatHour(String data){
 		return data.substring(0,2)+":"+data.substring(2);
 	}
-
-
 }

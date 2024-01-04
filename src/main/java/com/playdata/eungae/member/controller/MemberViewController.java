@@ -1,12 +1,40 @@
 package com.playdata.eungae.member.controller;
 
+import com.playdata.eungae.member.domain.Member;
+import com.playdata.eungae.member.dto.MemberFindResponseDto;
+import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
+import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+import com.playdata.eungae.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.playdata.eungae.member.domain.Member;
+import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
+import com.playdata.eungae.member.service.MemberService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/my")
+@Slf4j
 public class MemberViewController {
+
+	private final MemberService memberService;
+	private final PasswordEncoder passwordEncoder;
 
 	@GetMapping("/records")
 	public String medicalRecordList() {
@@ -18,20 +46,23 @@ public class MemberViewController {
 		return "contents/member/medical-records-details";
 	}
 
-	@GetMapping("/profile")
-	public String myPage() {
-		return "contents/member/my-page";
-	}
+    @GetMapping("/profile/{memberSeq}")
+    public String myPage(@PathVariable Long memberSeq, Model model) {
+        MemberFindResponseDto memberFindResponseDto = memberService.findById(memberSeq);
+        model.addAttribute("member", memberFindResponseDto);
+        return "contents/member/my-page";
+    }
 
-	@GetMapping("/appointments")
-	public String myReservationList() {
-		return "contents/member/my-reservations";
-	}
+    @GetMapping("/profile/form/{memberSeq}")
+    public String updateProfile(@PathVariable Long memberSeq, Model model) {
+        model.addAttribute("member", memberService.updateFindById(memberSeq));
+        return "contents/member/my-page-form";
+    }
 
-	@GetMapping("/reviews")
-	public String myReviews() {
-		return "contents/member/my-review";
-	}
+    @GetMapping("/appointments")
+    public String myReservationList() {
+        return "contents/member/my-reservations";
+    }
 
 	@GetMapping("/hospitals")
 	public String regularHospitals() {
@@ -48,8 +79,30 @@ public class MemberViewController {
 		return "contents/member/my-children-add";
 	}
 
-	@GetMapping("/profile/form")
-	public String updateProfile() {
-		return "contents/member/my-page-form";
+	@PostMapping("/signup")
+	public String singUp(
+		@Valid SignUpMemberRequestDto signUpMemberRequestDto,
+		BindingResult bindingResult,
+		Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return "contents/member/login";
+		}
+
+		try {
+			Member member = SignUpMemberRequestDto.toEntity(signUpMemberRequestDto);
+			memberService.signUp(member);
+		} catch (IllegalStateException e) {
+			model.addAttribute("errorMessage", e.getMessage());
+			return "contents/member/login";
+		}
+
+		return "redirect:/login";
+	}
+
+	@PostMapping("/signup")
+	public String singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
+		memberService.singUp(signUpMemberRequestDto);
+		return "redirect:/login";
 	}
 }

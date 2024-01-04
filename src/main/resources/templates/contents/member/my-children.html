@@ -9,32 +9,33 @@
 <body>
 <main class="my-children-page" layout:fragment="content">
     <h2 class="my-children-title">자녀 관리</h2>
-    <div class="children-container">
-        <img src="/img/default-children-2.png" class="children-image" alt="자녀">
+    <div th:each="child : ${childrenList}" class="children-container">
+        <img th:src="${child.photoPath != null ? ('/img/' + child.photoPath) : '/img/default-children-2.png'}"
+             class="children-image" alt="자녀 사진">
         <div class="card-body children-image-text">
-            <h5 class="card-title">
-                하해려 <i class="fa-solid fa-child-dress badge-girl"></i>
-            </h5>
-            <p class="card-text">2021년 05월 03일</p>
+            <h5 class="card-title" th:text="${child.name}">자녀 이름</h5>
+            <i th:if="${child.gender == 'Female'}" class="fa-solid fa-child-dress badge-girl"></i>
+            <i th:if="${child.gender == 'Male'}" class="fa-solid fa-child badge-boy"></i>
+            <p class="card-text" th:text="${child.birthDate}">생년월일</p>
         </div>
-        <button class="children-closed-btn btn-sm align-self-start"><i class="fa-solid fa-gear"></i></button>
+        <!--삭제 -->
+        <button class="children-closed-btn btn-sm align-self-start" onclick="showDeleteButton(this)">
+            <i class="fa-solid fa-gear"></i>
+        </button>
+        <form th:action="@{/children/{id}(id=${child.childrenSeq})}" method="post" style="display:none;">
+            <input type="hidden" name="_method" value="delete" />
+            <button type="submit" class="btn btn-danger">삭제</button>
+        </form>
     </div>
-    <div class="children-container">
-        <img src="/img/default-children-2.png" class="children-image" alt="자녀">
-        <div class="card-body children-image-text">
-            <h5 class="card-title">
-                하해성 <i class="fa-solid fa-child badge-boy"></i>
-            </h5>
-            <p class="card-text">2017년 10월 11일</p>
-        </div>
-        <button class="children-closed-btn btn-sm align-self-start"><i class="fa-solid fa-gear"></i></button>
-    </div>
+
+    <!--자녀 추가 버튼-->
     <div class="children-container children-container__last">
         <h3><i class="fa-solid fa-circle-plus"></i></h3>
         <a th:href="@{/my/children/form}">
             <div class="children-image-text">만 18세 이하의 자녀만 등록할 수 있습니다.</div>
         </a>
     </div>
+    <script src="/js/my-children.js"></script>
 </main>
 </body>
 </html>

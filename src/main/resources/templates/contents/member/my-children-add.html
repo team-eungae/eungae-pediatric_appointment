@@ -21,12 +21,11 @@
     <h2 class="children-add-form-text">진료 받을 자녀의 정보를 입력해주세요.</h2>
 
     <div class="children-add-form-container">
-        <form action="#" class="children-add-form">
+        <form action="/children/add" method="post" enctype="multipart/form-data" class="children-add-form">
             <div class="image-container">
-
                 <div class="children-add-form__img">
                     <div class="image-preview" onclick="selectImage()">
-                        <input type="file" id="file-input" style="display: none;" onchange="previewImage(event)">
+                        <input type="file" id="file-input" name="photo" style="display: none;" onchange="previewImage(event)">
                         <img id="preview" src="/img/default-children-2.png" alt="자녀사진">
                     </div>
                     <i class="fas fa-camera camera-icon"></i>
@@ -34,9 +33,15 @@
             </div>
             <div class=" form-fields">
                 <label for="name">이름</label>
-                <input type="text" id="name" placeholder="자녀의 이름을 기입해주세요." required>
-                <label for="name">생년월일</label>
-                <input type="text" id="birthday" placeholder="숫자만 입력해주세요. ex) 20180302" required>
+                <input type="text" id="name" name="name" placeholder="자녀의 이름을 기입해주세요." required>
+                <label for="birthday">생년월일</label>
+                <input type="text" id="birthday" name="birthDate" placeholder="숫자만 입력해주세요. ex) 20180302" required>
+                <label for="gender">성별</label>
+                <select id="gender" name="gender" required>
+                    <option value="">성별을 선택해주세요</option>
+                    <option value="Male">남자</option>
+                    <option value="Female">여자</option>
+                </select>
                 <button type="submit" class="children-add-form-container-button">등록하기</button>
                 <button type="button" class="collapsible"><input type="checkbox">자녀 대리 접수 동의</button>
                 <div class="content">
