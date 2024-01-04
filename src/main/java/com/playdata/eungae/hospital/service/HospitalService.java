@@ -31,13 +31,9 @@ public class HospitalService{
 
 	@Transactional(readOnly = true)
 	public HospitalViewResponseDto findHospitalById(Long hospitalSeq) {
-		Hospital hospital = hospitalRepository.findById(hospitalSeq).orElseThrow(() -> new NoSuchElementException("Hospital not found"));
+		Hospital hospital = hospitalRepository.findById(hospitalSeq)
+			.orElseThrow(() -> new NoSuchElementException("Hospital not found"));
 
 		return HospitalViewResponseDto.toDto(hospital);
 	}
-
-
-
-
-
 }
