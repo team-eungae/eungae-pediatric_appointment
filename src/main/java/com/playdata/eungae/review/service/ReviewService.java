@@ -28,7 +28,7 @@ public class ReviewService {
 	public void createReview(long appointmentSeq, RequestReviewFormDto requestReviewFormDto) {
 
 		Appointment appointment = appointmentRepository.findByIdWhitHospital(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException("Item not found"));
+			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"));
 
 		Review review = RequestReviewFormDto.toEntity(requestReviewFormDto, appointment);
 
@@ -39,7 +39,7 @@ public class ReviewService {
 	@Transactional
 	public void removeReview(long reviewSeq) {
 		Review review = reviewRepository.findById(reviewSeq)
-			.orElseThrow(() -> new IllegalStateException("Item not found"));
+			.orElseThrow(() -> new IllegalStateException("Can not found Review Entity"));
 		// 리뷰의 논리적 삭제 컬럼을 Y로 바꿔주는 로직을 짜야한다
 		review.remove();
 	}

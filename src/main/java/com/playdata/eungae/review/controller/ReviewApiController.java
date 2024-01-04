@@ -33,29 +33,26 @@ public class ReviewApiController {
 	private final ReviewService reviewService;
 
 	@PostMapping("/my/records/{appointment_seq}/reviews")
-	@ResponseStatus(HttpStatus.CREATED)
-	public String createReview(
+	public ResponseEntity createReview(
 		@Valid @PathVariable("appointment_seq") long appointmentSeq,
 		@Valid @RequestBody RequestReviewFormDto requestReviewFormDto)
 	{
 		reviewService.createReview(appointmentSeq, requestReviewFormDto);
-		return "success";
+		return ResponseEntity.ok(HttpStatus.CREATED);
 	}
 
 	@PatchMapping("/my/records/reviews/{review_seq}")
-	@ResponseStatus(HttpStatus.OK)
-	public String createReview(@PathVariable("review_seq") long reviewSeq) {
+	public ResponseEntity removeReview(@PathVariable("review_seq") long reviewSeq) {
 		reviewService.removeReview(reviewSeq);
-		return "success";
+		return ResponseEntity.ok(HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/reviews")
-	@ResponseStatus(HttpStatus.OK)
-	public Page<ResponseReviewDto> findReviews(
+	public ResponseEntity findReviews(
 		@RequestParam int reviewPage,
 		@RequestParam Long hospitalSeq) {
-		// Result VO 적용시키기
-		return reviewService.findReviews(reviewPage, hospitalSeq);
+		Page<ResponseReviewDto> reviews = reviewService.findReviews(reviewPage, hospitalSeq);
+		return ResponseEntity.ok().body(reviews);
 	}
 
 }
