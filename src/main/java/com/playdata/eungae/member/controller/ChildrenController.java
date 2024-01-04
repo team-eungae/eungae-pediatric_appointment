@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.playdata.eungae.member.dto.ChildrenDto;
 import com.playdata.eungae.member.service.ChildrenService;
 
@@ -25,7 +24,6 @@ public class ChildrenController {
 
 	@Autowired
 	public ChildrenController(ChildrenService childrenService) {
-
 		this.childrenService = childrenService;
 	}
 
@@ -39,21 +37,21 @@ public class ChildrenController {
 	@GetMapping("/add")
 	public String addChildrenForm(Model model) {
 		model.addAttribute("childrenDto", new ChildrenDto());
-		return "contents/member/my-children-add"; // my-children-add.html 뷰를 반환
+		return "contents/member/my-children-add";
 	}
 
 	@PostMapping("/add")
-	public String createChild(@ModelAttribute ChildrenDto childrenDto,
-		@RequestParam("photo") MultipartFile photoFile) {
+	public String createChild(@ModelAttribute ChildrenDto childrenDto, @RequestParam("photo") MultipartFile photoFile) {
 		childrenService.createChild(childrenDto, photoFile);
 		return "redirect:/children/list";
 	}
 
-
-	@DeleteMapping("/{id}")
-	public String deleteChild(@PathVariable Long id) {
-		childrenService.deleteChild(id);
-		return "redirect:/children"; // 자녀 목록 페이지로 리디렉션
+	@PostMapping("/{id}")
+	public String deleteChild(@PathVariable Long id, @RequestParam(value = "_method", required = false) String method) {
+		if ("delete".equals(method)) {
+			childrenService.deleteChild(id);
+		}
+		return "redirect:/children/list";
 	}
 
 }

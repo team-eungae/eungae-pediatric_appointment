@@ -1,5 +1,4 @@
 package com.playdata.eungae.member.service;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,50 +22,32 @@ public class ChildrenService {
 
 		this.childrenRepository = childrenRepository;
 	}
-	// 자녀 추가 (사진 파일 처리 로직 추가할 것)
+
 	@Transactional
 	public ChildrenDto createChild(ChildrenDto childrenDto, MultipartFile photoFile) {
-		if (!photoFile.isEmpty()) {
-			try {
-				byte[] photoContent = photoFile.getBytes();
-				childrenDto.setPhotoContent(photoContent); // DTO에 사진 데이터 설정
-			} catch (IOException e) {
-				throw new RuntimeException("정상 업로드가 안되었습니다", e);
-			}
+
+		if (photoFile != null && !photoFile.isEmpty()) {
+
+			String photoPath = savePhotoAndGetPath(photoFile);
+			childrenDto.setPhotoPath(photoPath);
+
 		}
+
 		Children children = Children.from(childrenDto);
 		children = childrenRepository.save(children);
+
 		return ChildrenDto.from(children);
 	}
+	private String savePhotoAndGetPath(MultipartFile photoFile) {
 
-	/*	private String savePhotoFile(MultipartFile photoFile) {
-		return "";
-	}
-*/
-	//자녀 정보 조회
-	@Transactional(readOnly = true)
-	public ChildrenDto getChildById(Long id) {
-		Children children = childrenRepository.findById(id)
-			.orElseThrow(() -> new EntityNotFoundException("해당 자녀 정보를 찾을 수 없습니다. " + id));
-		return ChildrenDto.from(children);
+		return " ";
 	}
 
-	//자녀 정보 수정
-	@Transactional
-	public ChildrenDto updateChild(Long id, ChildrenDto childrenDto) {
-		Children children = childrenRepository.findById(id)
-			.orElseThrow(() -> new EntityNotFoundException("해당 자녀의 정보를 찾을 수 없습니다.:" + id));
-
-		children.updateFromDto(childrenDto);
-
-		children = childrenRepository.save(children);
-		return ChildrenDto.from(children);
-	}
-
-	//자녀 삭제
 	@Transactional
 	public void deleteChild(Long id) {
+
 		childrenRepository.deleteById(id);
+
 	}
 
 	private String formatDate(String dateStr) {
@@ -76,7 +57,6 @@ public class ChildrenService {
 		try {
 			return outputFormat.format(inputFormat.parse(dateStr));
 		} catch (ParseException e) {
-			// 날짜 파싱에 실패한 경우, 원본 문자열 반환 혹은 적절한 예외 처리
 			return dateStr;
 		}
 	}
@@ -86,13 +66,11 @@ public class ChildrenService {
 		return childrenRepository.findAll().stream()
 			.map(children -> {
 				ChildrenDto dto = ChildrenDto.from(children);
-				dto.setBirthDate(formatDate(dto.getBirthDate())); // 날짜 형식 변환
+				dto.setBirthDate(formatDate(dto.getBirthDate()));
 				return dto;
 			})
 			.collect(Collectors.toList());
 	}
 
-
-	// 기타 메소드...
 }
 
