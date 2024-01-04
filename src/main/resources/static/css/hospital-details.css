@@ -56,16 +56,16 @@ main{
     width: 100%;
 }
 
-.clinic-hours-body #day{
+.clinic-hours-body .day{
     font-size: 4vw;
     font-weight: bold;
 }
 
-.clinic-hours-body #time{
+.clinic-hours-body .time{
     font-size: 4vw;
 }
 
-.clinic-hours-body #lunch-time{
+.clinic-hours-body .lunch-time{
     font-size: 3vw;
     color: rgb(128, 128, 128);
 }
