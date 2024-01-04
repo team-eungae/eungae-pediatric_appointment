@@ -19,7 +19,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	@Query("select r from Review r"
 		+ " join fetch r.member m"
 		+ " join fetch r.hospital h"
-		+ " where r.hospital.hospitalSeq = :hospitalSeq"
-	)
+		+ " where r.hospital.hospitalSeq = :hospitalSeq")
 	Page<Review> findAllWithMember(Pageable pageConfig, @Param("hospitalSeq") Long hospitalSeq);
 }

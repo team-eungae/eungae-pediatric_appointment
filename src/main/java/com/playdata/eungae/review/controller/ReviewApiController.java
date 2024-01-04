@@ -39,14 +39,14 @@ public class ReviewApiController {
 		@Valid @RequestBody RequestReviewFormDto requestReviewFormDto)
 	{
 		reviewService.createReview(appointmentSeq, requestReviewFormDto);
-		return "success";
+		return "Review have been successfully created";
 	}
 
 	@PatchMapping("/my/records/reviews/{review_seq}")
-	@ResponseStatus(HttpStatus.OK)
-	public String createReview(@PathVariable("review_seq") long reviewSeq) {
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public String removeReview(@PathVariable("review_seq") long reviewSeq) {
 		reviewService.removeReview(reviewSeq);
-		return "success";
+		return "Review have been successfully deleted";
 	}
 
 	@GetMapping("/reviews")
@@ -54,7 +54,6 @@ public class ReviewApiController {
 	public Page<ResponseReviewDto> findReviews(
 		@RequestParam int reviewPage,
 		@RequestParam Long hospitalSeq) {
-		// Result VO 적용시키기
 		return reviewService.findReviews(reviewPage, hospitalSeq);
 	}
 

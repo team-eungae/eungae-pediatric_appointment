@@ -27,6 +27,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -57,8 +58,9 @@ public class Appointment extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Hospital hospital;
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "appointment")
-	private Review review;
+	@Setter
+	// join용 seq
+	private Long review_seq;
 
 	@Column(nullable = false)
 	private LocalDateTime appointmentDate;
