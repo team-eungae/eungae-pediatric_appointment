@@ -20,8 +20,8 @@ public class AppointmentService {
 
 	public List<AppointmentResponseDto> getMyMedicalRecords(Long memberSeq) {
 		// 현재 status중 "2"가 진료 완료된 상태를 나타내는 값입니다.
-		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMember_MemberSeqAndStatus(memberSeq,
-			"2").orElseThrow(() -> new IllegalArgumentException("none"));
+		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberMemberSeqAndStatus(memberSeq,
+			"2").orElseThrow(() -> new IllegalArgumentException("can not find Appointment"));
 		// 현재 예약 등록 기능이 없어서 예약등록 기능이 구현된 후에 수정 예정입니다.
 		return myMedicalRecords.stream().map(record -> {
 			return AppointmentResponseDto.builder()

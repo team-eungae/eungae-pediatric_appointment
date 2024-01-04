@@ -12,5 +12,5 @@ import com.playdata.eungae.member.domain.Member;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 	// 내 진료기록 전체 조회
-	Optional<List<Appointment>> findAllByMember_MemberSeqAndStatus(Long memberSeq, String status);
+	Optional<List<Appointment>> findAllByMemberMemberSeqAndStatus(Long memberSeq, String status);
 }

@@ -32,7 +32,6 @@ public class MemberViewController {
 	public String medicalRecordList(Model model, @PathVariable("memberSeq") long memberSeq) {
 		List<AppointmentResponseDto> myMedicalRecords = appointmentService.getMyMedicalRecords(memberSeq);
 		model.addAttribute("myMedicalRecords", myMedicalRecords);
-		System.out.println(myMedicalRecords);
 		return "contents/member/medical-records";
 	}
 
