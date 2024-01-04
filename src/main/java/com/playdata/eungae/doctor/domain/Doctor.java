@@ -40,7 +40,7 @@ public class Doctor extends BaseEntity {
 	@Column(nullable = false)
 	private String name;
 
-	@ColumnDefault("1")
+	@ColumnDefault("'1'")
 	private String status;
 
 	@Column(nullable = false)
