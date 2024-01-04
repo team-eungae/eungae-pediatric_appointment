@@ -1,10 +1,6 @@
 package com.playdata.eungae.review.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.Date;
-
-import javax.swing.text.html.parser.Entity;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -41,7 +37,7 @@ class ReviewServiceTest {
 			.name("전병준")
 			.addressDetail("플레이데이터")
 			.birthDate("9/24")
-			.memberId("testId@gmail.com")
+			.email("testId@gmail.com")
 			.password("testpassword")
 			.phoneNumber("01011112222")
 			.zipCode("112233")
@@ -87,7 +83,6 @@ class ReviewServiceTest {
 
 	    //then
 		Assertions.assertThat(review).isEqualTo(reviewRepository.findAll().get(0));
-
 	}
 
 

@@ -4,34 +4,34 @@
       layout:decorate="~{layouts/mobile_layout}">
 <th:block layout:fragment="custom_header">
     <link rel="stylesheet" href="/css/my-page.css">
-    <title>자녀 관리 - 응애 | 소아과 예약</title>
+    <title>마이페이지 - 응애 | 소아과 예약</title>
 </th:block>
 <body>
-<main class="my-page" layout:fragment="content">
+<main class="my-page" layout:fragment="content" th:action="@{'my/profile/{memberSeq}'}" th:object="${member}" method="get">
     <h2 class="my-page-title">내 정보</h2>
     <div class="my-page__parent">
         <div class="my-page-content">
             <div class="my-page-sub__title col-3">이름</div>
             <div class="my-page__input col">
-                <input type="text" id="name" value="김수용">
+                <input type="text" id="name" name="name" th:value="${member.name}" readonly>
             </div>
         </div>
         <div class="my-page-content">
             <div class="my-page-sub__title col-3">핸드폰</div>
             <div class="my-page__input col">
-                <input type="text" id="phone_number" value="010-1234-5678">
+                <input type="text" id="phone_number" name="phone_number" th:value="${member.phoneNumber}" readonly>
             </div>
         </div>
         <div class="my-page-content">
             <div class="my-page-sub__title col-3">이메일</div>
             <div class="my-page__input col">
-                <input type="text" id="email" value="example@eungae.com">
+                <input type="text" id="email" name="email" th:value="${member.email}" readonly>
             </div>
         </div>
         <div class="my-page-content">
             <div class="my-page-sub__title col-3">주소</div>
             <div class="my-page__input col">
-                <input type="text" id="address" value="서울 용산구 독서당로 111, 301호">
+                <input type="text" id="address" name="address" th:value="${member.address}+ ' ' + ${member.addressDetail}" readonly>
             </div>
         </div>
     </div>

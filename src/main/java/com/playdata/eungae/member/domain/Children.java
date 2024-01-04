@@ -13,12 +13,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-@Entity
-@Table(name = "children")
+
+
 @Getter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Entity
+@Table(name = "children")
 public class Children extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
