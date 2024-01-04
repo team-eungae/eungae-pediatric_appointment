@@ -2,6 +2,7 @@ package com.playdata.eungae.member.service;
 
 import java.util.Optional;
 
+import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,46 +18,55 @@ import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ReflectionUtils;
 
 @RequiredArgsConstructor
 @Slf4j
 @Service
 public class MemberService implements UserDetailsService {
 
-	private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-	@Transactional
-	public Member signUp(Member member) {
-		validateDuplicateMemberEmail(member);
-		return memberRepository.save(member);
-	}
+    /**
+     * 회원가입
+     *
+     * @return 회원가입에 성공한 유저의 식별자
+     */
+    public Long singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
+        return memberRepository.save(Member.builder().email(signUpMemberRequestDto.getEmail()).password(signUpMemberRequestDto.getPassword()).name(signUpMemberRequestDto.getName()).phoneNumber(signUpMemberRequestDto.getPhoneNumber()).birthDate(signUpMemberRequestDto.getBirthDate()).address(signUpMemberRequestDto.getAddress()).addressDetail(signUpMemberRequestDto.getAddressDetail()).zipCode(signUpMemberRequestDto.getZipCode()).build()).getMemberSeq();
+    }
 
-	@Transactional
-	public MemberUpdateResponseDto updateMember(MemberUpdateRequestDto updateRequestDto) {
-		Member member = memberRepository.findByEmail(updateRequestDto.getEmail()).orElseThrow(null);
+    @Transactional
+    public Member signUp(Member member) {
+        validateDuplicateMemberEmail(member);
+        return memberRepository.save(member);
+    }
 
-		member.updateMemberDetails(updateRequestDto);
+    @Transactional
+    public MemberUpdateResponseDto updateMemberInfo(Long memberSeq, MemberUpdateRequestDto updateRequestDto) {
+        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new NullPointerException("해당 아이디가 존재하지 않습니다."));
+        member.updateMemberDetails(updateRequestDto);
+        return MemberUpdateResponseDto.toDto(memberRepository.save(member));
+    }
 
-		Member updatedMember = memberRepository.save(member);
-		return MemberUpdateResponseDto.toDto(updatedMember);
-	}
+    @Transactional(readOnly = true)
+    public MemberFindResponseDto findByMemberId(Long memberSeq) {
+        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new NullPointerException("해당 아이디가 존재하지 않습니다."));
+        return MemberFindResponseDto.toDto(member);
+    }
 
-	public MemberFindResponseDto findById(Long memberSeq) {
-		Optional<Member> optionalMember = memberRepository.findById(memberSeq);
-		return optionalMember.map(MemberFindResponseDto::toDto).orElse(null);
-	}
+    @Transactional(readOnly = true)
+    public MemberUpdateResponseDto updateFindByMemberId(Long memberSeq) {
+        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new NullPointerException("해당 아이디가 존재하지 않습니다."));
+        return MemberUpdateResponseDto.toDto(member);
+    }
 
-	public MemberUpdateResponseDto updateFindById(Long memberSeq) {
-		Optional<Member> optionalMember = memberRepository.findById(memberSeq);
-		return optionalMember.map(MemberUpdateResponseDto::toDto).orElse(null);
-	}
-
-	private void validateDuplicateMemberEmail(Member member) {
-		Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
-		if (findMemberEmail.isPresent()) {
-			throw new IllegalStateException("이미 있는 이메일입니다.");
-		}
-	}
+    private void validateDuplicateMemberEmail(Member member) {
+        Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
+        if (findMemberEmail.isPresent()) {
+            throw new IllegalStateException("이미 있는 이메일입니다.");
+        }
+    }
 
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

@@ -1,4 +1,14 @@
-function sample6_execDaumPostcode() {
+// 우편번호 찾기 찾기 화면을 넣을 element
+var element_wrap = document.getElementById('wrap');
+
+function foldDaumPostcode() {
+    // iframe을 넣은 element를 안보이게 한다.
+    element_wrap.style.display = 'none';
+}
+
+function execDaumPostcode() {
+    // 현재 scroll 위치를 저장해놓는다.
+    var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
     new daum.Postcode({
         oncomplete: function (data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
@@ -30,18 +40,61 @@ function sample6_execDaumPostcode() {
                 if (extraAddr !== '') {
                     extraAddr = ' (' + extraAddr + ')';
                 }
-                // 조합된 참고항목을 해당 필드에 넣는다.
-                document.getElementById("sample6_extraAddress").value = extraAddr;
 
-            } else {
-                document.getElementById("sample6_extraAddress").value = '';
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-            document.getElementById('sample6_postcode').value = data.zonecode;
-            document.getElementById("sample6_address").value = addr;
+            document.getElementById('newZipCode').value = data.zonecode;
+            document.getElementById("newAddress").value = addr;
             // 커서를 상세주소 필드로 이동한다.
-            document.getElementById("sample6_detailAddress").focus();
+            document.getElementById("newAddressDetail").focus();
+
+            // iframe을 넣은 element를 안보이게 한다.
+            // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+            element_wrap.style.display = 'none';
+            
+            // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+            document.body.scrollTop = currentScroll;
+        },
+        // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+        onresize: function (size) {
+            element_wrap.style.height = size.height + 'px';
+        },
+        width: '100%',
+        height: '100%'
+    }).embed(element_wrap);
+    
+    // iframe을 넣은 element를 보이게 한다.
+    element_wrap.style.display = 'block';
+}
+
+//회원정보 업데이트
+function updateMemberInfo() {
+    var memberSeq = document.getElementById("memberSeq").getAttribute("value");  // 사용자 ID를 적절히 설정해야 합니다.
+    var newName = $('#newName').val();
+    var newPhoneNumber = $('#newPhoneNumber').val();
+    var newAddress = $('#newAddress').val();
+    var newAddressDetail = $('#newAddressDetail').val();
+    var newZipCode = $('#newZipCode').val();
+
+    // AJAX를 사용하여 PATCH 요청 전송
+    $.ajax({
+        url: '/my/profile/form/' + memberSeq,  // 실제 서버 엔드포인트로 변경
+        type: 'PATCH',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            name: newName,
+            phoneNumber: newPhoneNumber,
+            address: newAddress,
+            addressDetail: newAddressDetail,
+            zipCode: newZipCode
+        }),
+        success: function(updatedUserData) {
+            // 업데이트 성공 시 /my/profile로 리디렉션
+            window.location.href = '/my/profile/' + memberSeq;
+        },
+        error: function(error) {
+            console.error('Error updating user:', error);
         }
-    }).open();
+    });
 }

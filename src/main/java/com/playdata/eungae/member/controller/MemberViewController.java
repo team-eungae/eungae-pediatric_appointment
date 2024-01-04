@@ -5,10 +5,10 @@ import com.playdata.eungae.member.dto.MemberFindResponseDto;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
 import com.playdata.eungae.member.service.MemberService;
+import org.springframework.ui.Model;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -32,29 +32,29 @@ import lombok.RequiredArgsConstructor;
 @Slf4j
 public class MemberViewController {
 
-	private final MemberService memberService;
+    private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 
-	@GetMapping("/records")
-	public String medicalRecordList() {
-		return "contents/member/medical-records";
-	}
+    @GetMapping("/records")
+    public String medicalRecordList() {
+        return "contents/member/medical-records";
+    }
 
-	@GetMapping("/records/1")
-	public String medicalRecordsDetails() {
-		return "contents/member/medical-records-details";
-	}
+    @GetMapping("/records/1")
+    public String medicalRecordsDetails() {
+        return "contents/member/medical-records-details";
+    }
 
     @GetMapping("/profile/{memberSeq}")
     public String myPage(@PathVariable Long memberSeq, Model model) {
-        MemberFindResponseDto memberFindResponseDto = memberService.findById(memberSeq);
+        MemberFindResponseDto memberFindResponseDto = memberService.findByMemberId(memberSeq);
         model.addAttribute("member", memberFindResponseDto);
         return "contents/member/my-page";
     }
 
     @GetMapping("/profile/form/{memberSeq}")
     public String updateProfile(@PathVariable Long memberSeq, Model model) {
-        model.addAttribute("member", memberService.updateFindById(memberSeq));
+        model.addAttribute("member", memberService.updateFindByMemberId(memberSeq));
         return "contents/member/my-page-form";
     }
 
@@ -63,39 +63,39 @@ public class MemberViewController {
         return "contents/member/my-reservations";
     }
 
-	@GetMapping("/hospitals")
-	public String regularHospitals() {
-		return "contents/member/regular-hospital";
-	}
+    @GetMapping("/hospitals")
+    public String regularHospitals() {
+        return "contents/member/regular-hospital";
+    }
 
-	@GetMapping("/children")
-	public String myChildren() {
-		return "contents/member/my-children";
-	}
+    @GetMapping("/children")
+    public String myChildren() {
+        return "contents/member/my-children";
+    }
 
-	@GetMapping("/children/form")
-	public String addMyChildren() {
-		return "contents/member/my-children-add";
-	}
+    @GetMapping("/children/form")
+    public String addMyChildren() {
+        return "contents/member/my-children-add";
+    }
 
-	@PostMapping("/signup")
-	public String singUp(
-		@Valid SignUpMemberRequestDto signUpMemberRequestDto,
-		BindingResult bindingResult,
-		Model model) {
+    @PostMapping("/signup")
+    public String singUp(
+            @Valid SignUpMemberRequestDto signUpMemberRequestDto,
+            BindingResult bindingResult,
+            Model model) {
 
-		if (bindingResult.hasErrors()) {
-			return "contents/member/login";
-		}
+        if (bindingResult.hasErrors()) {
+            return "contents/member/login";
+        }
 
-		try {
-			Member member = SignUpMemberRequestDto.toEntity(signUpMemberRequestDto);
-			memberService.signUp(member);
-		} catch (IllegalStateException e) {
-			model.addAttribute("errorMessage", e.getMessage());
-			return "contents/member/login";
-		}
+        try {
+            Member member = SignUpMemberRequestDto.toEntity(signUpMemberRequestDto);
+            memberService.signUp(member);
+        } catch (IllegalStateException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "contents/member/login";
+        }
 
-		return "redirect:/login";
-	}
+        return "redirect:/login";
+    }
 }

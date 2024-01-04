@@ -1,5 +1,4 @@
 $(function () {
-    //사용 예시 **************************
     $(document).on("click", "#confirm", function () {
         action_popup.confirm(`정말 탈퇴하시겠어요? 계정은 삭제되며 복구되지 않습니다`, function (res) {
             if (res) {
@@ -10,10 +9,19 @@ $(function () {
 
     $(".modal_close").on("click", function () {
         action_popup.close(this);
+        // 탈퇴 확인 시, 로그아웃 및 로그인 화면으로 이동
+        logoutAndRedirectToLogin();
     });
+
+    function logoutAndRedirectToLogin() {
+        // 여기에서 로그아웃 로직을 수행
+        // ...
+
+        // 로그아웃 후 로그인 화면으로 이동
+        window.location.href = "/login"; // 로그인 페이지 URL에 맞게 수정
+    }
+
 });
-
-
 
 /**
  *  alert, confirm 대용 팝업 메소드 정의 <br/>
