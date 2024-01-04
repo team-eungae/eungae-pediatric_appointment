@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-import javax.swing.text.html.parser.Entity;
-
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -89,7 +87,6 @@ class ReviewServiceTest {
 
 	    //then
 		Assertions.assertThat(review).isEqualTo(reviewRepository.findAll().get(0));
-
 	}
 
 

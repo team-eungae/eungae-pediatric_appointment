@@ -43,8 +43,21 @@ public class Doctor extends BaseEntity {
 	@ColumnDefault("'1'")
 	private String status;
 
+	@Column(nullable = false)
 	@ColumnDefault("'3'")
-	private Long treatmentPossible;
+	private int treatmentPossible;
 
 	private String profileImage;
+
+	public Doctor(String name) {
+		this.name = name;
+	}
+
+
+	//연관관계 편의 메소드
+	public void setHospital(Hospital hospital) {
+		this.hospital = hospital;
+		hospital.addDoctor(this);
+	}
+
 }

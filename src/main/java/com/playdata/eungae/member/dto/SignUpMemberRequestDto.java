@@ -7,6 +7,7 @@ import com.playdata.eungae.member.domain.Member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+
 import lombok.Data;
 
 @Data
@@ -38,10 +39,9 @@ public class SignUpMemberRequestDto {
 	@NotBlank(message = "우편번호 필수 입력 값입니다.")
 	private String zipCode;
 
-	public static Member toEntity(SignUpMemberRequestDto signUpMemberRequestDto
-		, PasswordEncoder passwordEncoder) {
+	public static Member toEntity(SignUpMemberRequestDto signUpMemberRequestDto, PasswordEncoder passwordEncoder) {
 		String password = passwordEncoder.encode(signUpMemberRequestDto.getPassword());
-
+    
 		return Member.builder()
 			.email(signUpMemberRequestDto.getEmail())
 			.password(password)
