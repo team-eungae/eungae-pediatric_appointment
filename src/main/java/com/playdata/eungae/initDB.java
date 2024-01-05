@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.hospital.domain.Hospital;
+import com.playdata.eungae.hospital.domain.HospitalSchedule;
 import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.review.domain.Review;
 
@@ -36,6 +37,9 @@ public class initDB {
 			em.persist(member);
 			Hospital hospital = getHospital();
 			em.persist(hospital);
+			HospitalSchedule hospitalSchedule = getHospitalSchedule();
+			hospitalSchedule.setHospital(hospital);
+			em.persist(hospitalSchedule);
 			// Hospital hospital = hospitalRepository.findById(1L).get();
 			Appointment appointment = getAppointment(member, hospital);
 			em.persist(appointment);
@@ -68,15 +72,38 @@ public class initDB {
 	private static Hospital getHospital() {
 		return Hospital.builder()
 			.password("testpassword")
-			.name("testname")
-			.notice("test")
+			.name("새움소아과 본관")
+			.notice("15세 이상 오지 마세요.")
 			.deposit(1000)
-			.contact("testcontant")
+			.contact("1577-7015")
 			.address("test")
-			.addressDetail("testDetail")
-			// .lunchTime(1000L)
-			// .lunchEndTime(1000L)
+			.xCoordinate(37.4729951)
+			.yCoordinate(126.8976605)
+			.address("서울 금천구 시흥대로 139길 8")
+			.addressDetail("본관")
 			.businessRegistration("test")
+			.hospitalSchedule(getHospitalSchedule())
+			.build();
+	}
+
+	private static HospitalSchedule getHospitalSchedule() {
+		return HospitalSchedule.builder()
+			.monOpen("0900")
+			.monClose("1830")
+			.tueOpen ("0830")
+			.tueClose("1830")
+			.wedOpen ("0830")
+			.wedClose("1830")
+			.thuOpen ("0830")
+			.thuClose("1830")
+			.friOpen ("0830")
+			.friClose("1830")
+			.satOpen ("0830")
+			.satClose("1830")
+			.sunOpen ("0830")
+			.sunClose("1830")
+			.lunchHour("1200")
+			.lunchEndHour("1300")
 			.build();
 	}
 
