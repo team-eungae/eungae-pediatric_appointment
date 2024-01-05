@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -40,6 +42,10 @@ public class Member extends BaseEntity {
 	@Builder.Default
 	@OneToMany(mappedBy = "member")
 	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
+
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
+	private List<Appointment> appointments = new ArrayList<>();
 
 	@Column(nullable = false, unique = true, updatable = false)
 	private String email;
