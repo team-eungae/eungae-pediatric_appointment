@@ -10,10 +10,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.playdata.eungae.hospital.domain.Hospital;
+import com.playdata.eungae.hospital.repository.HospitalRepository;
+import com.playdata.eungae.member.domain.FavoritesHospital;
 import com.playdata.eungae.member.domain.Member;
+
+import com.playdata.eungae.member.dto.RequestFavoriesDto;
+import com.playdata.eungae.member.repository.FavoritesHospitalRepository;
+
 import com.playdata.eungae.member.dto.MemberFindResponseDto;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+
 import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,32 +33,9 @@ import org.springframework.util.ReflectionUtils;
 @Service
 public class MemberService implements UserDetailsService {
 
-    private final MemberRepository memberRepository;
-
-    /**
-     * 회원가입
-     *
-     * @return 회원가입에 성공한 유저의 식별자
-     */
-    public Long singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
-        return memberRepository.save(Member.builder()
-                        .email(signUpMemberRequestDto.getEmail())
-                        .password(signUpMemberRequestDto.getPassword())
-                        .name(signUpMemberRequestDto.getName())
-                        .phoneNumber(signUpMemberRequestDto.getPhoneNumber())
-                        .birthDate(signUpMemberRequestDto.getBirthDate())
-                        .address(signUpMemberRequestDto.getAddress())
-                        .addressDetail(signUpMemberRequestDto.getAddressDetail())
-                        .zipCode(signUpMemberRequestDto.getZipCode())
-                        .build())
-                .getMemberSeq();
-    }
-
-    @Transactional
-    public Member signUp(Member member) {
-        validateDuplicateMemberEmail(member);
-        return memberRepository.save(member);
-    }
+	private final MemberRepository memberRepository;
+	private final HospitalRepository hospitalRepository;
+	private final FavoritesHospitalRepository favoritesHospitalRepository;
 
     @Transactional
     public MemberUpdateResponseDto updateMemberInfo(Long memberSeq, MemberUpdateRequestDto updateRequestDto) {
@@ -73,26 +58,91 @@ public class MemberService implements UserDetailsService {
                 .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
         return MemberUpdateResponseDto.toDto(member);
     }
+  
+	@Transactional
+	public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
+		MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
+		FavoritesHospital favoritesHospital = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
 
-    private void validateDuplicateMemberEmail(Member member) {
-        Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
-        if (findMemberEmail.isPresent()) {
-            throw new IllegalStateException("이미 있는 이메일입니다.");
-        }
-    }
+		favoritesHospitalRepository.save(favoritesHospital);
+		hospitalRepository.save(memberAndHospitalEntity.hospital);
+		memberRepository.save(memberAndHospitalEntity.member);
+	}
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	@Transactional
+	public void removeFavorites(RequestFavoriesDto requestFavoriesDto) {
+		MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
+		FavoritesHospital favoritesHospital = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
 
-        Optional<Member> member = memberRepository.findByEmail(email);
+		memberRepository.save(memberAndHospitalEntity.member);
+		hospitalRepository.save(memberAndHospitalEntity.hospital);
+		favoritesHospitalRepository.delete(favoritesHospital);
+	}
 
-        if (member.isEmpty()) {
-            throw new UsernameNotFoundException(email);
-        }
+	@Transactional
+	public Member savedMember(Member member) {
+		validateDuplicateMemberEmail(member);
+		return memberRepository.save(member);
+	}
 
-        return User.builder()
-                .username(String.valueOf(member.get().getMemberSeq()))
-                .password(member.get().getPassword())
-                .build();
-    }
+	@Override
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+		Optional<Member> member = memberRepository.findByEmail(email);
+
+		if (member.isEmpty()) {
+			throw new UsernameNotFoundException(email);
+		}
+
+		return User.builder()
+			.username(member.get().getEmail())
+			.password(member.get().getPassword())
+			.build();
+	}
+  
+  private MemberAndHospitalEntity getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
+
+		Member member = memberRepository.findById(requestFavoriesDto.getMemberSeq())
+			.orElseThrow(() -> new IllegalStateException("Can Not Found Member Entity"));
+
+		Hospital hospital = hospitalRepository.findById(requestFavoriesDto.getHospitalSeq())
+			.orElseThrow(() -> new IllegalStateException("Can Not Found Hospital Entity"));
+
+		return new MemberAndHospitalEntity(member, hospital);
+	}
+
+	// 연관관계 편의 메서드
+	private static FavoritesHospital settingRelation(Member member, Hospital hospital) {
+		FavoritesHospital favoritesHospital = FavoritesHospital.builder()
+			.member(member)
+			.hospital(hospital)
+			.build();
+		member.getFavoritesHospitals().add(favoritesHospital);
+		hospital.getFavoritesHospitals().add(favoritesHospital);
+		return favoritesHospital;
+	}
+
+	// ManyToMany를 삭제하기 위한 연관관계 정리 메서드
+	private static FavoritesHospital removeFavoritesHospital(Member member, Hospital hospital) {
+		FavoritesHospital favoritesHospital = member.getFavoritesHospitals()
+			.stream()
+			.filter((entity) -> entity.getHospital()
+				.equals(hospital))
+			.findFirst()
+			.orElseThrow(() -> new IllegalStateException("No registered favorites found."));
+		favoritesHospital.setMember(null);
+		favoritesHospital.setHospital(null);
+		member.getFavoritesHospitals().remove(favoritesHospital);
+		hospital.getFavoritesHospitals().remove(favoritesHospital);
+		return favoritesHospital;
+	}
+
+	private record MemberAndHospitalEntity(Member member, Hospital hospital) {}
+  
+  private void validateDuplicateMemberEmail(Member member) {
+      Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
+      if (findMemberEmail.isPresent()) {
+          throw new IllegalStateException("이미 있는 이메일입니다.");
+      }
+  }
 }
