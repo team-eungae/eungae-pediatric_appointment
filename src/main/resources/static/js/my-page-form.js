@@ -95,6 +95,7 @@ function updateMemberInfo() {
         },
         error: function(error) {
             console.error('Error updating user:', error);
+            alert('The provided ID does not exist.');
         }
     });
 }

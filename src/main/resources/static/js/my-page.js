@@ -6,7 +6,7 @@ $(function () {
             }
         });
     });
-
+    
     $(".modal_close").on("click", function () {
         action_popup.close(this);
         // 탈퇴 확인 시, 로그아웃 및 로그인 화면으로 이동

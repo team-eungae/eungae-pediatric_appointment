@@ -33,7 +33,17 @@ public class MemberService implements UserDetailsService {
      * @return 회원가입에 성공한 유저의 식별자
      */
     public Long singUp(SignUpMemberRequestDto signUpMemberRequestDto) {
-        return memberRepository.save(Member.builder().email(signUpMemberRequestDto.getEmail()).password(signUpMemberRequestDto.getPassword()).name(signUpMemberRequestDto.getName()).phoneNumber(signUpMemberRequestDto.getPhoneNumber()).birthDate(signUpMemberRequestDto.getBirthDate()).address(signUpMemberRequestDto.getAddress()).addressDetail(signUpMemberRequestDto.getAddressDetail()).zipCode(signUpMemberRequestDto.getZipCode()).build()).getMemberSeq();
+        return memberRepository.save(Member.builder()
+                        .email(signUpMemberRequestDto.getEmail())
+                        .password(signUpMemberRequestDto.getPassword())
+                        .name(signUpMemberRequestDto.getName())
+                        .phoneNumber(signUpMemberRequestDto.getPhoneNumber())
+                        .birthDate(signUpMemberRequestDto.getBirthDate())
+                        .address(signUpMemberRequestDto.getAddress())
+                        .addressDetail(signUpMemberRequestDto.getAddressDetail())
+                        .zipCode(signUpMemberRequestDto.getZipCode())
+                        .build())
+                .getMemberSeq();
     }
 
     @Transactional
@@ -44,20 +54,23 @@ public class MemberService implements UserDetailsService {
 
     @Transactional
     public MemberUpdateResponseDto updateMemberInfo(Long memberSeq, MemberUpdateRequestDto updateRequestDto) {
-        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new NullPointerException("해당 아이디가 존재하지 않습니다."));
+        Member member = memberRepository.findById(memberSeq)
+                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
         member.updateMemberDetails(updateRequestDto);
         return MemberUpdateResponseDto.toDto(memberRepository.save(member));
     }
 
     @Transactional(readOnly = true)
     public MemberFindResponseDto findByMemberId(Long memberSeq) {
-        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new NullPointerException("해당 아이디가 존재하지 않습니다."));
+        Member member = memberRepository.findById(memberSeq)
+                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
         return MemberFindResponseDto.toDto(member);
     }
 
     @Transactional(readOnly = true)
     public MemberUpdateResponseDto updateFindByMemberId(Long memberSeq) {
-        Member member = memberRepository.findById(memberSeq).orElseThrow(() -> new NullPointerException("해당 아이디가 존재하지 않습니다."));
+        Member member = memberRepository.findById(memberSeq)
+                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
         return MemberUpdateResponseDto.toDto(member);
     }
 
@@ -68,18 +81,18 @@ public class MemberService implements UserDetailsService {
         }
     }
 
-	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-		Optional<Member> member = memberRepository.findByEmail(email);
+        Optional<Member> member = memberRepository.findByEmail(email);
 
-		if (member.isEmpty()) {
-			throw new UsernameNotFoundException(email);
-		}
+        if (member.isEmpty()) {
+            throw new UsernameNotFoundException(email);
+        }
 
-		return User.builder()
-			.username(String.valueOf(member.get().getMemberSeq()))
-			.password(member.get().getPassword())
-			.build();
-	}
+        return User.builder()
+                .username(String.valueOf(member.get().getMemberSeq()))
+                .password(member.get().getPassword())
+                .build();
+    }
 }
