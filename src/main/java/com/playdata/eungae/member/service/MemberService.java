@@ -15,7 +15,6 @@ import com.playdata.eungae.member.domain.FavoritesHospital;
 import com.playdata.eungae.member.domain.Member;
 
 import com.playdata.eungae.member.dto.RequestFavoriesDto;
-import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
 import com.playdata.eungae.member.repository.FavoritesHospitalRepository;
 
 import com.playdata.eungae.member.dto.MemberFindResponseDto;
@@ -38,21 +37,21 @@ public class MemberService implements UserDetailsService {
 
 	@Transactional
 	public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
-		Result result = getMemberAndHospital(requestFavoriesDto);
-		FavoritesHospital favoritesHospital = settingRelation(result.member, result.hospital);
+		MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
+		FavoritesHospital favoritesHospital = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
 
 		favoritesHospitalRepository.save(favoritesHospital);
-		hospitalRepository.save(result.hospital);
-		memberRepository.save(result.member);
+		hospitalRepository.save(memberAndHospitalEntity.hospital);
+		memberRepository.save(memberAndHospitalEntity.member);
 	}
 
 	@Transactional
 	public void removeFavorites(RequestFavoriesDto requestFavoriesDto) {
-		Result result = getMemberAndHospital(requestFavoriesDto);
-		FavoritesHospital favoritesHospital = removeFavoritesHospital(result.member, result.hospital);
+		MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
+		FavoritesHospital favoritesHospital = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
 
-		memberRepository.save(result.member);
-		hospitalRepository.save(result.hospital);
+		memberRepository.save(memberAndHospitalEntity.member);
+		hospitalRepository.save(memberAndHospitalEntity.hospital);
 		favoritesHospitalRepository.delete(favoritesHospital);
 	}
 
@@ -82,7 +81,6 @@ public class MemberService implements UserDetailsService {
 		return optionalMember.map(MemberUpdateResponseDto::toDto).orElse(null);
 	}
 
-	@Transactional(readonly = "true")
 	private void validateDuplicateMemberEmail(Member member) {
 		Optional<Member> findMemberByEmail = memberRepository.findByEmail(member.getEmail());
 		if (findMemberByEmail.isPresent()) {
@@ -105,15 +103,15 @@ public class MemberService implements UserDetailsService {
 			.build();
 	}
   
-  private Result getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
+  private MemberAndHospitalEntity getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
 
 		Member member = memberRepository.findById(requestFavoriesDto.getMemberSeq())
-			.orElseThrow(() -> new IllegalStateException("Item Not Found"));
+			.orElseThrow(() -> new IllegalStateException("Can Not Found Member Entity"));
 
 		Hospital hospital = hospitalRepository.findById(requestFavoriesDto.getHospitalSeq())
-			.orElseThrow(() -> new IllegalStateException("Item Not Found"));
+			.orElseThrow(() -> new IllegalStateException("Can Not Found Hospital Entity"));
 
-		return new Result(member, hospital);
+		return new MemberAndHospitalEntity(member, hospital);
 	}
 
 	// 연관관계 편의 메서드
@@ -134,7 +132,7 @@ public class MemberService implements UserDetailsService {
 			.filter((entity) -> entity.getHospital()
 				.equals(hospital))
 			.findFirst()
-			.orElseThrow(() -> new IllegalStateException("Item Not Found"));
+			.orElseThrow(() -> new IllegalStateException("No registered favorites found."));
 		favoritesHospital.setMember(null);
 		favoritesHospital.setHospital(null);
 		member.getFavoritesHospitals().remove(favoritesHospital);
@@ -142,5 +140,5 @@ public class MemberService implements UserDetailsService {
 		return favoritesHospital;
 	}
 
-	private record Result(Member member, Hospital hospital) {}
+	private record MemberAndHospitalEntity(Member member, Hospital hospital) {}
 }
