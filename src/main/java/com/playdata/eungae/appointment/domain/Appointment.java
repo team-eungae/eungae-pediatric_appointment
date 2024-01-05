@@ -60,7 +60,7 @@ public class Appointment extends BaseEntity {
 
 	@Setter
 	// join용 seq
-	private Long review_seq;
+	private Long reviewSeq;
 
 	@Column(nullable = false)
 	private LocalDateTime appointmentDate;
