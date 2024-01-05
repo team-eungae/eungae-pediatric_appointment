@@ -10,7 +10,7 @@ a:visited {
     /* color: inherit; */
 }
 
-#zip-code {
+#newZipCode {
     width: 68%;
 }
 
@@ -98,4 +98,12 @@ a:visited {
     .sign-up-form__checkbox {
         grid-column: span 2;
     }
+}
+#wrap {
+    display: none;
+    border: 1px solid;
+    width: 90%;
+    height: 300px;
+    margin: 5px 5%;
+    position: relative"
 }

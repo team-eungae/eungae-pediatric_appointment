@@ -19,9 +19,9 @@ public class MemberUpdateResponseDto {
     private String addressDetail;
     private String zipCode;
 
-    //빌더
-    public static MemberUpdateResponseDto toDto(Member member){
+    public static MemberUpdateResponseDto toDto(Member member) {
         return MemberUpdateResponseDto.builder()
+                .memberSeq(member.getMemberSeq())
                 .email(member.getEmail())
                 .name(member.getName())
                 .phoneNumber(member.getPhoneNumber())

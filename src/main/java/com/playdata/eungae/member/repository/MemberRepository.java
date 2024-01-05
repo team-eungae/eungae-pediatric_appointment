@@ -10,5 +10,5 @@ import com.playdata.eungae.member.domain.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-	Optional<Member> findByEmail(String email);
+    Optional<Member> findByEmail(String email);
 }

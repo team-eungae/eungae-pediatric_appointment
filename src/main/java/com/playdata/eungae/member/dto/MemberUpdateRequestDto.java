@@ -11,11 +11,20 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class MemberUpdateRequestDto {
-    private String email;    //이메일
     private String name;
     private String phoneNumber;
     private String address;
     private String addressDetail;
     private String zipCode;
+
+    public static Member toEntity(MemberUpdateRequestDto updateRequestDto) {
+        return Member.builder()
+                .name(updateRequestDto.getName())
+                .phoneNumber(updateRequestDto.getPhoneNumber())
+                .address(updateRequestDto.getAddress())
+                .addressDetail(updateRequestDto.getAddressDetail())
+                .zipCode(updateRequestDto.getZipCode())
+                .build();
+    }
 
 }

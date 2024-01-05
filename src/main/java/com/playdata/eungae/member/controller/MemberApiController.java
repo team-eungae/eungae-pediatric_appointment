@@ -1,5 +1,9 @@
 package com.playdata.eungae.member.controller;
 
+import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
+import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -26,6 +30,11 @@ public class MemberApiController {
 
 	private final MemberService memberService;
 
+	@PatchMapping("/profile/form/{memberSeq}")
+	public MemberUpdateResponseDto updateMemberInfo(@PathVariable Long memberSeq, 
+							@RequestBody MemberUpdateRequestDto updateRequestDto) {
+		return memberService.updateMemberInfo(memberSeq, updateRequestDto);
+
 	@PostMapping("/hospital")
 	@ResponseStatus(HttpStatus.CREATED)
 	public String appendFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
@@ -39,5 +48,4 @@ public class MemberApiController {
 		memberService.removeFavorites(requestFavoriesDto);
 		return "Favorites have been successfully deleted";
 	}
-
 }

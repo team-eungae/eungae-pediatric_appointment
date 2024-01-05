@@ -1,5 +1,16 @@
 package com.playdata.eungae.member.controller;
 
+import com.playdata.eungae.member.domain.Member;
+import com.playdata.eungae.member.dto.MemberFindResponseDto;
+import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
+import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+import com.playdata.eungae.member.service.MemberService;
+import org.springframework.ui.Model;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,13 +29,13 @@ import com.playdata.eungae.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
-@Controller
-@RequestMapping("/my")
 @Slf4j
+@RequiredArgsConstructor
+@RequestMapping("/my")
+@Controller
 public class MemberViewController {
 
-	private final MemberService memberService;
+  private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 
 	private final AppointmentService appointmentService;
@@ -35,23 +46,23 @@ public class MemberViewController {
 		return "contents/member/medical-records";
 	}
 
-	@GetMapping("/records/1")
-	public String medicalRecordsDetails() {
-		return "contents/member/medical-records-details";
-	}
+    @GetMapping("/records/1")
+    public String medicalRecordsDetails() {
+        return "contents/member/medical-records-details";
+    }
 
-	@GetMapping("/profile/{memberSeq}")
-	public String myPage(@PathVariable Long memberSeq, Model model) {
-		MemberFindResponseDto memberFindResponseDto = memberService.findById(memberSeq);
-		model.addAttribute("member", memberFindResponseDto);
-		return "contents/member/my-page";
-	}
+    @GetMapping("/profile/{memberSeq}")
+    public String myPage(@PathVariable Long memberSeq, Model model) {
+        MemberFindResponseDto memberFindResponseDto = memberService.findByMemberId(memberSeq);
+        model.addAttribute("member", memberFindResponseDto);
+        return "contents/member/my-page";
+    }
 
-	@GetMapping("/profile/form/{memberSeq}")
-	public String updateProfile(@PathVariable Long memberSeq, Model model) {
-		model.addAttribute("member", memberService.updateFindById(memberSeq));
-		return "contents/member/my-page-form";
-	}
+    @GetMapping("/profile/form/{memberSeq}")
+    public String updateProfile(@PathVariable Long memberSeq, Model model) {
+        model.addAttribute("member", memberService.updateFindByMemberId(memberSeq));
+        return "contents/member/my-page-form";
+    }
 
 	@GetMapping("/appointments")
 	public String myReservationList() {
