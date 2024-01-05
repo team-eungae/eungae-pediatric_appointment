@@ -7,8 +7,8 @@
     <title>응애 - 내 주변 소아과를 가장 빠르게 예약하는 방법</title>
 </th:block>
 <body>
-<main  layout:fragment="content">
-    <form class="search-form" th:method="get" th:action="@{/map/search}">
+<main layout:fragment="content">
+    <form class="search-form" method="get" th:action="@{/map/search}">
         <div class="search-container">
             <input type="text" placeholder="찾고 싶은 병원을 검색하세요." class="search-input" name="keyword">
             <button type="submit" class="search-button">
@@ -17,11 +17,11 @@
         </div>
     </form>
     <div class="main-buttons">
-        <button class="main-button">
+        <button class="main-button" onclick="location.href='/my/appointments'">
             <i class="fa-solid fa-hospital-user"></i>
             <p class="main-button__text"><a th:href="@{/my/appointments}">내 예약 확인하기</a></p>
         </button>
-        <button class="main-button">
+        <button class="main-button" onclick="location.href='/map'">
             <i class="fa-solid fa-map-location-dot"></i>
             <p class="main-button__text"><a th:href="@{/map}">주변 병원 찾기</a></p>
         </button>

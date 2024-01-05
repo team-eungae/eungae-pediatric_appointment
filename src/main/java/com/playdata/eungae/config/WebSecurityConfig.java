@@ -2,9 +2,11 @@ package com.playdata.eungae.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,11 +55,19 @@ public class WebSecurityConfig {
 				.anyRequest().authenticated())
 			.formLogin(login -> login
 				.loginPage("/login")
-				.defaultSuccessUrl("/"))
+				.loginProcessingUrl("/login-proc")
+				.usernameParameter("email")
+				.passwordParameter("password")
+				.defaultSuccessUrl("/")
+				.failureUrl("/login/error"))
 			.logout(logout -> logout
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/"));
 		return http.build();
+	}
+
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(memberService).passwordEncoder(bCryptPasswordEncoder());
 	}
 
 	@Bean

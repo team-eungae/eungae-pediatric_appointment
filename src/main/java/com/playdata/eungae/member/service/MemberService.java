@@ -98,7 +98,7 @@ public class MemberService implements UserDetailsService {
 		}
 
 		return User.builder()
-			.username(String.valueOf(member.get().getMemberSeq()))
+			.username(member.get().getEmail())
 			.password(member.get().getPassword())
 			.build();
 	}
