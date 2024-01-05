@@ -18,7 +18,8 @@ public class MemberApiController {
 	private final MemberService memberService;
 
 	@PatchMapping("/profile/form/{memberSeq}")
-	public MemberUpdateResponseDto updateMemberInfo(@PathVariable Long memberSeq, @RequestBody MemberUpdateRequestDto updateRequestDto) {
+	public MemberUpdateResponseDto updateMemberInfo(@PathVariable Long memberSeq, 
+							@RequestBody MemberUpdateRequestDto updateRequestDto) {
 		return memberService.updateMemberInfo(memberSeq, updateRequestDto);
 	}
 
