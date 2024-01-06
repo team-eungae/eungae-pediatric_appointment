@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.playdata.eungae.appointment.domain.Appointment;
+import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
 import com.playdata.eungae.appointment.dto.AppointmentResponseDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.doctor.repository.DoctorRepository;
@@ -26,6 +27,10 @@ public class AppointmentService {
 	private final DoctorRepository doctorRepository;
 	private final HospitalScheduleRepository hospitalScheduleRepository;
 	private final HospitalRepository hospitalRepository;
+
+	public void saveAppointment(AppointmentRequestDto dto) {
+		dto.toEntity();
+	}
 
 	// 진료기록 불러오기
 	public List<AppointmentResponseDto> getMyMedicalRecords(Long memberSeq) {
