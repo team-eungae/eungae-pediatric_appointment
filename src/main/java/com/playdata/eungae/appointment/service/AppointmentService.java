@@ -8,20 +8,30 @@ import org.springframework.stereotype.Service;
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.appointment.dto.AppointmentResponseDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
+import com.playdata.eungae.doctor.repository.DoctorRepository;
+import com.playdata.eungae.hospital.repository.HospitalRepository;
+import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
+import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
+@Service
 public class AppointmentService {
-	private final AppointmentRepository appointmentRepository;
 
+	private final AppointmentRepository appointmentRepository;
+	private final MemberRepository memberRepository;
+	private final DoctorRepository doctorRepository;
+	private final HospitalScheduleRepository hospitalScheduleRepository;
+	private final HospitalRepository hospitalRepository;
+
+	// 진료기록 불러오기
 	public List<AppointmentResponseDto> getMyMedicalRecords(Long memberSeq) {
 		// 현재 status중 "2"가 진료 완료된 상태를 나타내는 값입니다.
-		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberMemberSeqAndStatus(memberSeq,
-			"2").orElseThrow(() -> new IllegalArgumentException("can not find Appointment"));
+		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberMemberSeqAndStatus(
+			memberSeq, "2").orElseThrow(() -> new IllegalArgumentException("can not find Appointment"));
 		// 현재 예약 등록 기능이 없어서 예약등록 기능이 구현된 후에 수정 예정입니다.
 		return myMedicalRecords.stream().map(record -> {
 			return AppointmentResponseDto.builder()
