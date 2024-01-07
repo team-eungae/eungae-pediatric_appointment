@@ -44,7 +44,7 @@ public class HospitalService {
 		List<HospitalSearchResponseDto> nearbyHospitalList = hospitalList.stream()
 			.filter(
 				hospital ->
-					calculateDistance(latitude, longitude, hospital.getXCoordinate(), hospital.getYCoordinate()) > 3)
+					calculateDistance(latitude, longitude, hospital.getXCoordinate(), hospital.getYCoordinate()) < 3)
 			.map(HospitalSearchResponseDto::toDto).toList();
 		if (nearbyHospitalList.isEmpty()) {
 			throw new NoSuchElementException("There's no hospital nearby");
