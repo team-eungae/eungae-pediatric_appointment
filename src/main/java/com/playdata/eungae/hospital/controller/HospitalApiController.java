@@ -1,6 +1,10 @@
 package com.playdata.eungae.hospital.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.playdata.eungae.hospital.dto.HospitalRegisterRequestDto;
+import com.playdata.eungae.hospital.dto.HospitalSearchResponseDto;
 import com.playdata.eungae.hospital.service.HospitalService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,4 +30,11 @@ public class HospitalApiController {
 		return "hospital created successfully";
 	}
 
+	@GetMapping("/{latitude}/{longitude}")
+	@ResponseStatus(HttpStatus.OK)
+	public List<HospitalSearchResponseDto> getNearbyHospital(@PathVariable double latitude,
+		@PathVariable double longitude) {
+		List<HospitalSearchResponseDto> nearbyHospital = hospitalService.findNearbyHospital(latitude, longitude);
+		return nearbyHospital;
+	}
 }
