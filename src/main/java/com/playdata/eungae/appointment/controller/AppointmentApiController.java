@@ -24,6 +24,8 @@ public class AppointmentApiController {
 	@GetMapping("/medical_history")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseDetailMedicalHistoryDto findMedicalHistory(@RequestParam Long appointmentSeq) {
+		// 예약 내역 조회
+		// RestController 말고 Controller에서 모델 엔 뷰로 화면에 전달해야함
 		 return appointmentService.findMedicalHistory(appointmentSeq);
 	}
 }

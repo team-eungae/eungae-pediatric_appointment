@@ -25,12 +25,10 @@ public class AppointmentService {
 
 		Appointment appointment = appointmentRepository.findAllWithReview(appointmentSeq)
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"));
-		Review review = reviewRepository.findById(appointment.getReviewSeq())
-			.orElseThrow(() -> new IllegalStateException("Can not found Review Entity"));
-
-		// 팩토리 메서드 패턴 적용 필요
-		return ResponseDetailMedicalHistoryDto.builder()
-			.build();
+		ResponseDetailMedicalHistoryDto responseDetailMediclaHistoryDto = ResponseDetailMedicalHistoryDto.toDto(appointment);
+		responseDetailMediclaHistoryDto.setWriteReview(reviewRepository.findById(appointment.getReviewSeq())
+				.isPresent());
+		return responseDetailMediclaHistoryDto;
 
 	}
 }

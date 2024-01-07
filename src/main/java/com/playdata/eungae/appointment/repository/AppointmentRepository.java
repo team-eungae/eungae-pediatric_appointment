@@ -26,6 +26,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch a.member m"
 		+ " join fetch a.doctor d"
 		+ " join fetch a.hospital h"
+		+ " join fetch m.children c"
 		+ " where a.appointmentSeq = :appointmentSeq")
 	Optional<Appointment> findAllWithReview(@Param("appointmentSeq") Long appointmentSeq);
 }

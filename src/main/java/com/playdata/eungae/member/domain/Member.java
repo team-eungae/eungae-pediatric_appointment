@@ -45,6 +45,10 @@ public class Member extends BaseEntity {
 
 	@Builder.Default
 	@OneToMany(mappedBy = "member")
+	private List<Children> children = new ArrayList<>();
+
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
 	private List<Appointment> appointments = new ArrayList<>();
 
 	@Column(nullable = false, unique = true, updatable = false)
