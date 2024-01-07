@@ -6,13 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import com.playdata.eungae.appointment.domain.Appointment;
-import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
 import com.playdata.eungae.appointment.dto.AppointmentResponseDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
-import com.playdata.eungae.doctor.repository.DoctorRepository;
-import com.playdata.eungae.hospital.repository.HospitalRepository;
-import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
-import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 public class AppointmentService {
 
 	private final AppointmentRepository appointmentRepository;
-	private final MemberRepository memberRepository;
-	private final DoctorRepository doctorRepository;
-	private final HospitalScheduleRepository hospitalScheduleRepository;
-	private final HospitalRepository hospitalRepository;
-
-	public void saveAppointment(AppointmentRequestDto dto) {
-		dto.toEntity();
-	}
 
 	// 진료기록 불러오기
 	public List<AppointmentResponseDto> getMyMedicalRecords(Long memberSeq) {

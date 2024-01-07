@@ -10,13 +10,13 @@
 <main  layout:fragment="content">
     <div class="hospital-informations">
         <div class="hospital-images">
-            <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230405_235%2F1680659886017rungP_JPEG%2F20230331_165151.jpg">
+            <img src="https://search.pstatic.net/common/?src=https%%2F%2Fldb-phinf.pstatic.net%2F20230405_235%2F1680659886017rungP_JPEG%2F20230331_165151.jpg">
         </div>
         <div class="hospital-informations-common">
             <h3 th:text="${hospital.name}">병원 이름</h3>
             <hr/>
             <div>
-                <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i><span  th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
+                <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i><span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
                 <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i><span th:text="${hospital.contact}">병원 번호</span></div>
             </div>
         </div>
@@ -30,12 +30,11 @@
                 <div class="card-body">
                     <div>
                         <table id="today">
-                            <th id="today-schedule">
+                            <th id="today-schedule"></th>
                             <td class="day" id="today-day">요일</td>
                             <td class="time"  id="today-time">영업시간</td>
                             <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
                             <td id="timeShowBtn"><button class="clinic-hours-button" onclick="onShowBtn()"><i class="fas fa-arrow-down"></i></button></td>
-                            </th>
                         </table>
                     </div>
                 </div>

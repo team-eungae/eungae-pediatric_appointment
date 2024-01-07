@@ -32,7 +32,4 @@ public class HospitalViewController {
 		model.addAttribute("doctorList",doctorList);
 		return "contents/hospital/hospital-details";
 	}
-
-
-
 }

@@ -18,9 +18,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -53,11 +55,9 @@ public class Doctor extends BaseEntity {
 		this.name = name;
 	}
 
-
 	//연관관계 편의 메소드
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 		hospital.addDoctor(this);
 	}
-
 }

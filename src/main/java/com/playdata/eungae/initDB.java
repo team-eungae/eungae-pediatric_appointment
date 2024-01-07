@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.appointment.domain.AppointmentStatus;
+import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
 import com.playdata.eungae.member.domain.Member;
@@ -19,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class initDB {
+
 	private final InitService initService;
 
 	@PostConstruct
@@ -36,15 +38,46 @@ public class initDB {
 		public void dbInitMember() {
 			Member member = getMember("test5@gmail.com");
 			em.persist(member);
+
+
 			Hospital hospital = getHospital();
 			em.persist(hospital);
+
+			Doctor doctor = getDoctor();
+			doctor.setHospital(hospital);
+			em.persist(doctor);
+
+			Doctor doctor2 = getDoctor2();
+			doctor2.setHospital(hospital);
+			em.persist(doctor2);
+
 			HospitalSchedule hospitalSchedule = getHospitalSchedule();
 			hospitalSchedule.setHospital(hospital);
 			em.persist(hospitalSchedule);
-			// Hospital hospital = hospitalRepository.findById(1L).get();
+
 			Appointment appointment = getAppointment(member, hospital);
 			em.persist(appointment);
 		}
+	}
+
+	private static Doctor getDoctor() {
+		return Doctor.builder()
+			.name("전병준")
+			.status("1")
+			.treatmentPossible(3)
+			.hospital(getHospital())
+			.profileImage("")
+			.build();
+	}
+
+	private static Doctor getDoctor2() {
+		return Doctor.builder()
+			.name("김우진")
+			.status("1")
+			.treatmentPossible(5)
+			.hospital(getHospital())
+			.profileImage("")
+			.build();
 	}
 
 	private static Review getReview(Member member, Hospital hospital, Appointment appointment) {

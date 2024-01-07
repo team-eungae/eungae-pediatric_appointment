@@ -23,6 +23,10 @@ public class AppointmentRequestDto {
 
 	public static Appointment toEntity(
 		AppointmentRequestDto appointmentRequestDto) {
-		return Appointment.builder().build();
+		return Appointment.builder()
+			.appointmentDate(appointmentRequestDto.getAppointmentDate())
+			.appointmentHour(appointmentRequestDto.getAppointmentHour())
+			.appointmentMinute(appointmentRequestDto.getAppointmentMinute())
+			.build();
 	}
 }
