@@ -39,7 +39,7 @@ public class HospitalService {
 		return HospitalViewResponseDto.toDto(hospital);
 	}
 
-	public List<HospitalSearchResponseDto> findNearbyHospital(double longitude, double latitude) {
+	public List<HospitalSearchResponseDto> findNearbyHospital(double latitude, double longitude) {
 		List<Hospital> hospitalList = hospitalRepository.findAll();
 		List<HospitalSearchResponseDto> nearbyHospitalList = hospitalList.stream()
 			.filter(
