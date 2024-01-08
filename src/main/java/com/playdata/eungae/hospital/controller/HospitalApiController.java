@@ -30,11 +30,11 @@ public class HospitalApiController {
 		return "hospital created successfully";
 	}
 
-	@GetMapping("/{latitude}/{longitude}")
+	@PostMapping("/{longitude}/{latitude}")
 	@ResponseStatus(HttpStatus.OK)
-	public List<HospitalSearchResponseDto> getNearbyHospital(@PathVariable double latitude,
-		@PathVariable double longitude) {
-		List<HospitalSearchResponseDto> nearbyHospital = hospitalService.findNearbyHospital(latitude, longitude);
+	public List<HospitalSearchResponseDto> getNearbyHospital(@PathVariable double longitude,
+		@PathVariable double latitude) {
+		List<HospitalSearchResponseDto> nearbyHospital = hospitalService.findNearbyHospital(longitude, latitude);
 		return nearbyHospital;
 	}
 }

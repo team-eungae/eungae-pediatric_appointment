@@ -39,12 +39,12 @@ public class HospitalService {
 		return HospitalViewResponseDto.toDto(hospital);
 	}
 
-	public List<HospitalSearchResponseDto> findNearbyHospital(double latitude, double longitude) {
+	public List<HospitalSearchResponseDto> findNearbyHospital(double longitude, double latitude) {
 		List<Hospital> hospitalList = hospitalRepository.findAll();
 		List<HospitalSearchResponseDto> nearbyHospitalList = hospitalList.stream()
 			.filter(
 				hospital ->
-					calculateDistance(latitude, longitude, hospital.getXCoordinate(), hospital.getYCoordinate()) < 3)
+					calculateDistance(latitude, longitude, hospital.getYCoordinate(), hospital.getXCoordinate()) < 3)
 			.map(HospitalSearchResponseDto::toDto).toList();
 		if (nearbyHospitalList.isEmpty()) {
 			throw new NoSuchElementException("There's no hospital nearby");
@@ -60,7 +60,7 @@ public class HospitalService {
 		lon2 = Math.toRadians(lon2);
 
 		double earthRadius = 6371; //Kilometers - 지구의 반지름
-		return earthRadius * Math.acos(Math.sin(lat1) * Math.sin(lat2)
-			+ Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));
+		return earthRadius * Math.acos(Math.sin(lon1) * Math.sin(lon2)
+			+ Math.cos(lon1) * Math.cos(lon2) * Math.cos(lat1 - lat2));
 	}
 }
