@@ -33,8 +33,8 @@ public class HospitalApiController {
 
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<HospitalSearchResponseDto> getNearbyHospital(double longitude, double latitude) {
-		List<HospitalSearchResponseDto> nearbyHospital = hospitalService.findNearbyHospital(longitude, latitude);
+	public List<HospitalSearchResponseDto> getAllNearbyHospital(double longitude, double latitude) {
+		List<HospitalSearchResponseDto> nearbyHospital = hospitalService.findAllNearbyHospital(longitude, latitude);
 		return nearbyHospital;
 	}
 }

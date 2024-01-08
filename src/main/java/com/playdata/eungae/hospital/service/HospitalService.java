@@ -21,8 +21,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class HospitalService {
-	private static final double MAX_DISTANCE = 3;
-	private static final double EARTH_RADIUS = 6371;
+	private static final double MAX_DISTANCE_KM = 3;
+	private static final double EARTH_RADIUS_KM = 6371;
 	private final HospitalRepository hospitalRepository;
 	private final HospitalScheduleRepository hospitalScheduleRepository;
 
@@ -41,13 +41,13 @@ public class HospitalService {
 		return HospitalViewResponseDto.toDto(hospital);
 	}
 
-	public List<HospitalSearchResponseDto> findNearbyHospital(double longitude, double latitude) {
+	public List<HospitalSearchResponseDto> findAllNearbyHospital(double longitude, double latitude) {
 		List<Hospital> hospitalList = hospitalRepository.findAll();
 		List<HospitalSearchResponseDto> nearbyHospitalList = hospitalList.stream()
 			.filter(
 				hospital ->
 					calculateDistance(latitude, longitude, hospital.getYCoordinate(), hospital.getXCoordinate())
-						< MAX_DISTANCE)
+						< MAX_DISTANCE_KM)
 			.map(HospitalSearchResponseDto::toDto).toList();
 		if (nearbyHospitalList.isEmpty()) {
 			throw new NoSuchElementException("There's no hospital nearby");
@@ -62,7 +62,7 @@ public class HospitalService {
 		lat2 = Math.toRadians(lat2);
 		lon2 = Math.toRadians(lon2);
 
-		return EARTH_RADIUS * Math.acos(Math.sin(lon1) * Math.sin(lon2)
+		return EARTH_RADIUS_KM * Math.acos(Math.sin(lon1) * Math.sin(lon2)
 			+ Math.cos(lon1) * Math.cos(lon2) * Math.cos(lat1 - lat2));
 	}
 }

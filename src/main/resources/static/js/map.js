@@ -1,6 +1,7 @@
 // 마커를 표시할 위치와 title 객체 배열입니다
 //응애 서비스를 이용하는 병원 마커
 let positions=[];
+let position ={};
 // 마커 이미지의 이미지 주소입니다
 const imageSrc = "/img/eungaemarker.png";
 const basicImageSrc = "/img/basic4.png";
@@ -13,6 +14,9 @@ const basicImageSize = new kakao.maps.Size(30, 42);
 let markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 let basicMarkerImage = new kakao.maps.MarkerImage(basicImageSrc, basicImageSize);
 
+let longitude, latitude;
+
+let content;
 // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
 if (navigator.geolocation){
     // GeoLocation을 이용해서 접속 위치를 얻어옵니다
@@ -32,8 +36,8 @@ if (navigator.geolocation){
             }
         }) */
     });
-    var longitude = 37.46758697, // 위도
-        latitude = 126.88656925; // 경도
+    longitude = 37.46758697, // 위도
+    latitude = 126.88656925; // 경도
     $.ajax({
         url:"api/hospital",
         type: "GET",
@@ -45,7 +49,7 @@ if (navigator.geolocation){
             marker.setMap(null); // 지도에 마커를 삭제합니다.
             console.log(hospitalList);
             hospitalList.forEach((hospital,index)=>{
-                var position = {
+                position = {
                     title:hospital.name,
                     latlng: new kakao.maps.LatLng(hospital.longitude,hospital.latitude),
                     address:hospital.address,
@@ -59,8 +63,8 @@ if (navigator.geolocation){
         }
     })
 } else {
-    var latitude = 126.8876698,
-        longitude = 37.4676446;
+    latitude = 126.8876698,
+    longitude = 37.4676446;
     $.ajax({
         url:"api/hospital",
         type: "GET",
@@ -74,8 +78,8 @@ if (navigator.geolocation){
 }
 
 // 마커를 담을 배열입니다
-var markers = [];
-var overlays= [];
+let markers = [];
+let overlays= [];
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
@@ -120,7 +124,7 @@ var index = 0;
 // 마커를 생성하고 지도위에 표시하는 함수입니다
 function addMarker(position, markerImage) {
 
-    var marker = new kakao.maps.Marker({
+    marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: position.latlng, // 마커를 표시할 위치
         title : position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
@@ -131,7 +135,7 @@ function addMarker(position, markerImage) {
     marker.setMap(map);
     // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
     kakao.maps.event.addListener(marker, 'click', function() {
-        var content = '<div id="wrap" class="wrap">' +
+        content = '<div id="wrap" class="wrap">' +
             '    <div class="info">' +
             '        <div class="title">' +
             position.title +
@@ -169,7 +173,7 @@ function addMarker(position, markerImage) {
 
 function addBasicMarker(position, markerImage) {
 
-    var marker = new kakao.maps.Marker({
+    marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: position.latlng, // 마커를 표시할 위치
         title : position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
@@ -180,7 +184,7 @@ function addBasicMarker(position, markerImage) {
     marker.setMap(map);
     // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
     kakao.maps.event.addListener(marker, 'click', function() {
-        var content = '<div id="wrap" class="wrap">' +
+        content = '<div id="wrap" class="wrap">' +
             '    <div class="info">' +
             '        <div class="title">' +
             position.title +
