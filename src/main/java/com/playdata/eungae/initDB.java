@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
+import com.playdata.eungae.appointment.domain.AppointmentStatus;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
 import com.playdata.eungae.member.domain.Member;
@@ -114,7 +115,7 @@ public class initDB {
 			.appointmentDate(LocalDateTime.now())
 			.appointmentHour("10")
 			.appointmentMinute("30")
-			.status("1")
+			.status(AppointmentStatus.APPOINTMENT)
 			.note("test")
 			.build();
 	}

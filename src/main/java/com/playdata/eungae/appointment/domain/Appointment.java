@@ -14,6 +14,8 @@ import com.playdata.eungae.review.domain.Review;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,8 +36,8 @@ import lombok.Setter;
 @DynamicInsert
 @Getter
 @Table(name = "appointment")
-@Entity
 @Builder
+@Entity
 public class Appointment extends BaseEntity {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -58,10 +60,6 @@ public class Appointment extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Hospital hospital;
 
-	@Setter
-	// join용 seq
-	private Long review_seq;
-
 	@Column(nullable = false)
 	private LocalDateTime appointmentDate;
 
@@ -71,9 +69,13 @@ public class Appointment extends BaseEntity {
 	@Column(nullable = false)
 	private String appointmentMinute;
 
-	@ColumnDefault("'0'")
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private AppointmentStatus status;
 
 	@Column
 	private String note;
+
+	// join seq
+	@Setter
+	private Long reviewSeq;
 }
