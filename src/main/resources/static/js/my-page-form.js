@@ -79,10 +79,11 @@ function updateMemberInfo() {
 
     // AJAX를 사용하여 PATCH 요청 전송
     $.ajax({
-        url: '/my/profile/form',
+        url: '/api/my/profile/form',
         type: 'PATCH',
         contentType: 'application/json',
         data: JSON.stringify({
+            email: email,
             name: newName,
             phoneNumber: newPhoneNumber,
             address: newAddress,
@@ -95,7 +96,7 @@ function updateMemberInfo() {
         },
         error: function(error) {
             console.error('Error updating user:', error.message);
-            alert('The provided ID does not exist.');
+            alert('The provided ID does not exist.', error);
         }
     });
 }

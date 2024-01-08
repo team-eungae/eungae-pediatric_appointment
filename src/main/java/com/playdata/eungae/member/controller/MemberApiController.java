@@ -1,18 +1,9 @@
 package com.playdata.eungae.member.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
-import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
 import com.playdata.eungae.member.dto.RequestFavoriesDto;
 import com.playdata.eungae.member.service.MemberService;
 
@@ -28,18 +19,13 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @PatchMapping("/profile/form")
-    public ResponseEntity<MemberUpdateResponseDto> updateMemberInfo(
-            @AuthenticationPrincipal UserDetails principal,
-            @RequestBody MemberUpdateRequestDto updateRequestDto) {
-
-        if (principal == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-        String email = principal.getUsername();
-        MemberUpdateResponseDto updateResponseDto = memberService.updateMemberInfo(email, updateRequestDto);
-        return ResponseEntity.ok(updateResponseDto);
+    public String updateMemberInfo(@RequestBody @Valid MemberUpdateRequestDto updateRequestDto) {
+        memberService.updateMemberInfo(updateRequestDto.getEmail(), updateRequestDto);
+        return "successful";
     }
+
 
     @PostMapping("/hospital")
     @ResponseStatus(HttpStatus.CREATED)
