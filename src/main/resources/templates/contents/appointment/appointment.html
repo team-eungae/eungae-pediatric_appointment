@@ -27,7 +27,8 @@
             <div class="appointment-info">
                 <ul class="appointment-info-detail">
                     <li class="on">
-                        <button class="dropdown-button"><i class="fa-solid fa-calendar appointment-icon"></i><strong>예약 날짜</strong></button>
+                        <button class="dropdown-button"><i class="fa-solid fa-calendar appointment-icon"></i><strong>예약
+                            날짜</strong></button>
                         <div id="menu1" class="content">
                             <input type="date" id="date" class="appointment-date">
                         </div>
@@ -63,11 +64,11 @@
                         </div>
                     </li>
                     <li>
-                        <button class="dropdown-button"><i
-                                class="fa-solid fa-child appointment-icon"></i><strong>진료자</strong></button>
-                        <div id="menu4" class="content">
-                            <label class="appointment-children">
-                                <input type="radio" name="appointment-children" value="전콜라">
+                        <button class="dropdown-button"><i class="fa-solid fa-child appointment-icon"></i><strong>진료자</strong></button>
+                        <div  id="menu4" class="content">
+                            <label class="appointment-children" th:each="children : ${children}">
+                                <input type="radio" name="appointment-children" th:value=${children.childrenSeq}
+                                       th:text="${children.name}" value="전콜라">
                                 <span>전콜라</span>
                             </label>
 

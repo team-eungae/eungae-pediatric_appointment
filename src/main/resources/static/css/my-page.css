@@ -44,7 +44,7 @@ a:visited {
     padding-left: 0.8rem;
 }
 
-.my-page__input>input {
+.my-page__input > input {
     border: solid 1px #ccc;
     width: 100%;
     border-radius: 6px;
@@ -85,7 +85,7 @@ a:visited {
     font-weight: 200;
 }
 
-.zip-code-container>.zip-code-find__button {
+.zip-code-container > .zip-code-find__button {
     width: 30%;
     align-items: center;
     padding: 0 0.5rem;
@@ -94,7 +94,7 @@ a:visited {
 }
 
 /*모달창*/
-.modal .btn{
+.modal .btn {
     cursor: pointer;
     border: 1px solid #999999;
     text-align: center;
@@ -102,18 +102,20 @@ a:visited {
     outline: none;
     font-weight: 500;
 }
-.dimLayer{
+
+.dimLayer {
     display: block;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.3);
     position: fixed;
     left: 0;
     top: 0px;
-    margin: 0;p
+    margin: 0;
     adding: 0;
     z-index: 9998;
 }
-.modal{
+
+.modal {
     width: 350px;
     height: 320px;
     border-radius: 10px;
@@ -121,10 +123,12 @@ a:visited {
     box-sizing: border-box;
     text-align: center;
 }
-.modal-section{
+
+.modal-section {
     background: #ffffff;
     box-sizing: border-box;
-    display: none;position: absolute;
+    display: none;
+    position: absolute;
     top: 20%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
@@ -132,15 +136,19 @@ a:visited {
     -moz-transform: translate(-50%, -50%);
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    display: none;z-index: 9999;
+    display: none;
+    z-index: 9999;
 }
-.menu_msg{
+
+.menu_msg {
     font-size: 21px;
     font-weight: 500;
 }
-.enroll_box p{
+
+.enroll_box p {
     padding-bottom: 56px;
 }
+
 .gray_btn {
     width: 90px;
     background: #ffffff;
@@ -151,6 +159,7 @@ a:visited {
     font-size: 17px;
     padding: 0rem;
 }
+
 .withdrawal {
     width: 90px;
     background: #326EB3;
