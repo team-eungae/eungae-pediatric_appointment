@@ -1,19 +1,16 @@
 package com.playdata.eungae.member.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.playdata.eungae.base.BaseEntity;
-import com.playdata.eungae.hospital.domain.Hospital;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,85 +33,85 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Member extends BaseEntity implements UserDetails {
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Id
-	private Long memberSeq;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id
+    private Long memberSeq;
 
-	@Builder.Default
-	@OneToMany(mappedBy = "member")
-	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "member")
+    private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
 
-	@Column(nullable = false, unique = true, updatable = false)
-	private String email;
+    @Column(nullable = false, unique = true, updatable = false)
+    private String email;
 
-	@Column(nullable = false)
-	private String password;
+    @Column(nullable = false)
+    private String password;
 
-	@Column(nullable = false, length = 20)
-	private String name;
+    @Column(nullable = false, length = 20)
+    private String name;
 
-	@Column(nullable = false, length = 15)
-	private String phoneNumber;
+    @Column(nullable = false, length = 15)
+    private String phoneNumber;
 
-	@Column(nullable = false)
-	private String birthDate;
+    @Column(nullable = false)
+    private String birthDate;
 
-	@Column(nullable = false)
-	private String address;
+    @Column(nullable = false)
+    private String address;
 
-	@Column(nullable = false)
-	private String addressDetail;
+    @Column(nullable = false)
+    private String addressDetail;
 
-	@Column(nullable = false)
-	private String zipCode;
+    @Column(nullable = false)
+    private String zipCode;
 
-	private Integer xCoordinate;
+    private Integer xCoordinate;
 
-	private Integer yCoordinate;
-	
-	@Column(columnDefinition = "varchar(5) default '0'")
-	private boolean kakaoCheck;
+    private Integer yCoordinate;
 
-	public void updateMemberDetails(MemberUpdateRequestDto updateRequestDto){
-		this.name = updateRequestDto.getName();
-		this.phoneNumber = updateRequestDto.getPhoneNumber();
-		this.address = updateRequestDto.getAddress();
-		this.addressDetail = updateRequestDto.getAddressDetail();
-		this.zipCode = updateRequestDto.getZipCode();
-	}
+    @Column(columnDefinition = "varchar(5) default '0'")
+    private boolean kakaoCheck;
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
-	}
+    public void updateMemberDetails(MemberUpdateRequestDto updateRequestDto) {
+        this.name = updateRequestDto.getName();
+        this.phoneNumber = updateRequestDto.getPhoneNumber();
+        this.address = updateRequestDto.getAddress();
+        this.addressDetail = updateRequestDto.getAddressDetail();
+        this.zipCode = updateRequestDto.getZipCode();
+    }
 
-	@Override
-	public String getUsername() {
-		return email;
-	}
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
+    @Override
+    public String getUsername() {
+        return email;
+    }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

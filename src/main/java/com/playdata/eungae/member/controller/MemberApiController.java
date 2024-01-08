@@ -1,8 +1,10 @@
 package com.playdata.eungae.member.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,25 +26,32 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/my")
 public class MemberApiController {
 
-	private final MemberService memberService;
+    private final MemberService memberService;
 
-	@PatchMapping("/profile/form/{memberSeq}")
-	public MemberUpdateResponseDto updateMemberInfo(@PathVariable Long memberSeq, 
-							@RequestBody MemberUpdateRequestDto updateRequestDto) {
-		return memberService.updateMemberInfo(memberSeq, updateRequestDto);
-	}
+    @PatchMapping("/profile/form")
+    public ResponseEntity<MemberUpdateResponseDto> updateMemberInfo(
+            @AuthenticationPrincipal UserDetails principal,
+            @RequestBody MemberUpdateRequestDto updateRequestDto) {
 
-	@PostMapping("/hospital")
-	@ResponseStatus(HttpStatus.CREATED)
-	public String appendFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
-		memberService.appendFavorites(requestFavoriesDto);
-		return "Favorites have been successfully appended";
-	}
+        if (principal == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        String email = principal.getUsername();
+        MemberUpdateResponseDto updateResponseDto = memberService.updateMemberInfo(email, updateRequestDto);
+        return ResponseEntity.ok(updateResponseDto);
+    }
 
-	@PatchMapping("/hospital")
-	@ResponseStatus(HttpStatus.ACCEPTED)
-	public String removeFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
-		memberService.removeFavorites(requestFavoriesDto);
-		return "Favorites have been successfully deleted";
-	}
+    @PostMapping("/hospital")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String appendFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
+        memberService.appendFavorites(requestFavoriesDto);
+        return "Favorites have been successfully appended";
+    }
+
+    @PatchMapping("/hospital")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public String removeFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {
+        memberService.removeFavorites(requestFavoriesDto);
+        return "Favorites have been successfully deleted";
+    }
 }
