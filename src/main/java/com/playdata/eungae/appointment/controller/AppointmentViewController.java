@@ -30,7 +30,6 @@ public class AppointmentViewController {
 
 		model.addAttribute("hospital", hospital);
 
-		log.warn("******** hospital: {}", hospital.getHospitalSchedule());
 		return "contents/appointment/appointment";
 	}
 }
