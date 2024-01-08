@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,10 +31,9 @@ public class HospitalApiController {
 		return "hospital created successfully";
 	}
 
-	@PostMapping("/{longitude}/{latitude}")
+	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	public List<HospitalSearchResponseDto> getNearbyHospital(@PathVariable double longitude,
-		@PathVariable double latitude) {
+	public List<HospitalSearchResponseDto> getNearbyHospital(double longitude, double latitude) {
 		List<HospitalSearchResponseDto> nearbyHospital = hospitalService.findNearbyHospital(longitude, latitude);
 		return nearbyHospital;
 	}

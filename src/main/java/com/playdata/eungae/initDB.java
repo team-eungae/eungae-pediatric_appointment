@@ -25,7 +25,7 @@ public class initDB {
 
 	private final InitService initService;
 
-	@PostConstruct
+	// @PostConstruct
 	public void init() {
 		// 이곳에 정의한 메소드를 추가해주시면 됩니다.
 		initService.dbInitMember();
@@ -45,6 +45,9 @@ public class initDB {
 			Hospital hospital = getHospital();
 			em.persist(hospital);
 
+			Hospital hospital2 = getHospital2();
+			em.persist(hospital2);
+
 			Doctor doctor = getDoctor();
 			doctor.setHospital(hospital);
 			em.persist(doctor);
@@ -56,6 +59,10 @@ public class initDB {
 			HospitalSchedule hospitalSchedule = getHospitalSchedule();
 			hospitalSchedule.setHospital(hospital);
 			em.persist(hospitalSchedule);
+
+			HospitalSchedule hospitalSchedule2 = getHospitalSchedule2();
+			hospitalSchedule2.setHospital(hospital2);
+			em.persist(hospitalSchedule2);
 
 			Appointment appointment = getAppointment(member, hospital);
 			em.persist(appointment);
@@ -94,14 +101,14 @@ public class initDB {
 
 	private static Member getMember(String mail) {
 		return Member.builder()
-			.address("독산")
+			.address("서울 금천구 가산디지털1로 25")
 			.name("전병준")
-			.addressDetail("플레이데이터")
+			.addressDetail("1801호")
 			.birthDate("9/24")
 			.email(mail)
 			.password("$2a$10$eLEyqJU4M1Hzhwn9SU07ou5MZNwBLzd7mfgFD/scIEhIyu4ofFWmC") //aA12345!
-			.phoneNumber("01011112222")
-			.zipCode("112233")
+			.phoneNumber("010-9655-1302")
+			.zipCode("14281")
 			.build();
 	}
 
@@ -127,6 +134,43 @@ public class initDB {
 			.monOpen("0900")
 			.monClose("1830")
 			.tueOpen ("0830")
+			.tueClose("1830")
+			.wedOpen ("0830")
+			.wedClose("1830")
+			.thuOpen ("0830")
+			.thuClose("1830")
+			.friOpen ("0830")
+			.friClose("1830")
+			.satOpen ("0830")
+			.satClose("1830")
+			.sunOpen ("0830")
+			.sunClose("1830")
+			.lunchHour("1200")
+			.lunchEndHour("1300")
+			.build();
+	}
+	private static Hospital getHospital2() {
+		return Hospital.builder()
+			.password("testpassword2")
+			.name("새움소아과 별관")
+			.notice("그냥 오지 마세요.")
+			.deposit(10000)
+			.contact("1577-7015123")
+			.address("test2")
+			.xCoordinate(37.47190170505455)
+			.yCoordinate(126.89769223068006)
+			.address("서울 금천구 시흥대로 130길 8")
+			.addressDetail("별관")
+			.businessRegistration("test")
+			.hospitalSchedule(getHospitalSchedule2())
+			.build();
+	}
+
+	private static HospitalSchedule getHospitalSchedule2() {
+		return HospitalSchedule.builder()
+			.monOpen("0900")
+			.monClose("1730")
+			.tueOpen ("0930")
 			.tueClose("1830")
 			.wedOpen ("0830")
 			.wedClose("1830")
