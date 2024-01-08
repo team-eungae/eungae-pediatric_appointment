@@ -77,5 +77,5 @@ public class Appointment extends BaseEntity {
 
 	// join seq
 	@Setter
-	private Long review_seq;
+	private Long reviewSeq;
 }
