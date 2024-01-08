@@ -2,7 +2,6 @@
 var markers = [];
 var overlays= [];
 
-
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
         center: new kakao.maps.LatLng(37.4659942, 126.8895083), // 지도의 중심좌표
@@ -50,14 +49,6 @@ for (var i = 0; i < basicPositions.length; i ++) {
     var basicImageSize = new kakao.maps.Size(30, 42);
     // 마커 이미지를 생성합니다
     var basicMarkerImage = new kakao.maps.MarkerImage(basicImageSrc, basicImageSize);
-
-    // // 마커를 생성합니다
-    // var marker = new kakao.maps.Marker({
-    // 	map: map, // 마커를 표시할 지도
-    // 	position: basicPositions[i].latlng, // 마커를 표시할 위치
-    // 	title : basicPositions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-    // 	image : basicMarkerImage // 마커 이미지
-    // });
 
     addBasicMarker(basicPositions[i], basicMarkerImage);
 }

@@ -13,12 +13,14 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Builder
 @Table(name = "hospital_image")
 @Entity
 public class HospitalImage extends BaseEntity {
@@ -36,4 +38,11 @@ public class HospitalImage extends BaseEntity {
 
 	@Column(nullable = false)
 	private String storeFileName;
+
+
+	//연관관계 편의 메소드
+	public void setHospital(Hospital hospital) {
+		this.hospital = hospital;
+		hospital.addHospitalImage(this);
+	}
 }
