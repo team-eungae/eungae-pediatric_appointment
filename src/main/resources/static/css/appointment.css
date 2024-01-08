@@ -31,8 +31,9 @@
 }
 .hospital-img{
     width: 10vh;
-
+    margin-right: 1rem;
 }
+
 .hospital-info{
     display: flex;
     width: 85vw;
@@ -46,8 +47,8 @@
 .appointment-date-view{
     width: 20vh;
     padding-top: 2rem;
-    padding-left: 2.5rem;
 }
+
 #time-list{
     display: flex;
     flex-wrap: wrap;

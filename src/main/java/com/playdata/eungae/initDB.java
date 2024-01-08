@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.doctor.domain.Doctor;
+
+import com.playdata.eungae.appointment.domain.AppointmentStatus;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalImage;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class initDB {
+
 	private final InitService initService;
 
 	@PostConstruct
@@ -43,22 +46,26 @@ public class initDB {
 		public void dbInitMember() {
 			Member member = getMember("test5@gmail.com");
 			em.persist(member);
+
 			Hospital hospital = getHospital();
 			em.persist(hospital);
-			Doctor doctor1 = getDoctor(hospital);
+
+      Doctor doctor1 = getDoctor(hospital);
 			Doctor doctor2 = getDoctor(hospital);
 			em.persist(doctor1);
 			em.persist(doctor2);
+      
 			HospitalSchedule hospitalSchedule = getHospitalSchedule();
 			hospitalSchedule.setHospital(hospital);
 			em.persist(hospitalSchedule);
-			// Hospital hospital = hospitalRepository.findById(1L).get();
+      
 			Appointment appointment1 = getAppointment(member, hospital, doctor1);
 			Appointment appointment2 = getAppointment(member, hospital, doctor1);
 			Appointment appointment3 = getAppointment(member, hospital, doctor1);
 			em.persist(appointment1);
 			em.persist(appointment2);
 			em.persist(appointment3);
+      
 			Review review1 = getReview(member, hospital, appointment1);
 			Review review2 = getReview(member, hospital, appointment2);
 			Review review3 = getReview(member, hospital, appointment3);
@@ -137,7 +144,7 @@ public class initDB {
 			.appointmentDate(LocalDateTime.now())
 			.appointmentHour("10")
 			.appointmentMinute("30")
-			.status("1")
+			.status(AppointmentStatus.APPOINTMENT)
 			.note("test")
 			.build();
 	}

@@ -9,9 +9,6 @@
 <body>
 <main layout:fragment="content">
     <div class="hospital-informations">
-        <!--        <div class="hospital-images">-->
-        <!--            <img src="https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20230405_235%2F1680659886017rungP_JPEG%2F20230331_165151.jpg">-->
-        <!--        </div>-->
         <div class="hospital-images">
             <img class="slide" th:each="hospitalImage:${hospitalImages}"
                  th:src="@{/images/}+${hospitalImage.storeFileName}" alt="hospital Images"/>
@@ -21,10 +18,10 @@
             <h3 th:text="${hospital.name}">병원 이름</h3>
             <hr/>
             <div>
-                <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i><span
-                        th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
-                <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i><span
-                        th:text="${hospital.contact}">병원 번호</span></div>
+                <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i>
+                  <span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
+                <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i>
+                  <span th:text="${hospital.contact}">병원 번호</span></div>
             </div>
         </div>
     </div>
@@ -37,17 +34,15 @@
                 <div class="card-body">
                     <div>
                         <table id="today">
-                            <th id="today-schedule">
                             <td class="day" id="today-day">요일</td>
                             <td class="time" id="today-time">영업시간</td>
-                            <td class="lunch-time">(점심 <span
-                                    th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                            <td class="lunch-time">
+                              (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                             </td>
                             <td id="timeShowBtn">
-                                <button class="clinic-hours-button" onclick="onShowBtn()"><i
-                                        class="fas fa-arrow-down"></i></button>
+                                <button class="clinic-hours-button" onclick="onShowBtn()">
+                                <i class="fas fa-arrow-down"></i></button>
                             </td>
-                            </th>
                         </table>
                     </div>
                 </div>
@@ -55,56 +50,56 @@
             <table id="schedule" style="display: none;">
                 <tr>
                     <td class="day">월요일</td>
-                    <td class="time"><span id="dutyTime1"
-                                           th:text="${hospital.hospitalSchedule.monOpen}+' - '+${hospital.hospitalSchedule.monClose}"></span>
+                    <td class="time">
+                      <span id="dutyTime1" th:text="${hospital.hospitalSchedule.monOpen}+' - '+${hospital.hospitalSchedule.monClose}"></span>
                     </td>
-                    <td class="lunch-time">(점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">화요일</td>
-                    <td class="time"><span id="dutyTime2"
-                                           th:text="${hospital.hospitalSchedule.tueOpen}+' - '+${hospital.hospitalSchedule.tueClose}"></span>
+                    <td class="time">
+                      <span id="dutyTime2" th:text="${hospital.hospitalSchedule.tueOpen}+' - '+${hospital.hospitalSchedule.tueClose}"></span>
                     </td>
-                    <td class="lunch-time">(점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">수요일</td>
-                    <td class="time"><span id="dutyTime3"
-                                           th:text="${hospital.hospitalSchedule.wedOpen}+' - '+${hospital.hospitalSchedule.wedClose}"></span>
+                    <td class="time">
+                      <span id="dutyTime3" th:text="${hospital.hospitalSchedule.wedOpen}+' - '+${hospital.hospitalSchedule.wedClose}"></span>
                     </td>
-                    <td class="lunch-time">(점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">목요일</td>
-                    <td class="time"><span id="dutyTime4"
-                                           th:text="${hospital.hospitalSchedule.thuOpen}+' - '+${hospital.hospitalSchedule.thuClose}"></span>
+                    <td class="time">
+                      <span id="dutyTime4" th:text="${hospital.hospitalSchedule.thuOpen}+' - '+${hospital.hospitalSchedule.thuClose}"></span>
                     </td>
-                    <td class="lunch-time">(점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">금요일</td>
-                    <td class="time"><span id="dutyTime5"
-                                           th:text="${hospital.hospitalSchedule.friOpen}+' - '+${hospital.hospitalSchedule.friClose}"></span>
+                    <td class="time">
+                      <span id="dutyTime5" th:text="${hospital.hospitalSchedule.friOpen}+' - '+${hospital.hospitalSchedule.friClose}"></span>
                     </td>
-                    <td class="lunch-time">(점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">토요일</td>
-                    <td class="time"><span id="dutyTime6"
-                                           th:text="${hospital.hospitalSchedule.satOpen}+' - '+${hospital.hospitalSchedule.satClose}"></span>
+                    <td class="time">
+                      <span id="dutyTime6" th:text="${hospital.hospitalSchedule.satOpen}+' - '+${hospital.hospitalSchedule.satClose}"></span>
                     </td>
-                    <td class="lunch-time">(점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>

@@ -98,7 +98,7 @@ function addMarker(position, markerImage) {
             '            <div class="desc">' +
             '                <div class="ellipsis">'+'서울특별시 구로구 독산동'+'</div>' +
             '                <div class="jibun ellipsis">진료 가능 시간</div>' +
-            '                <div><a href="/hospital" target="_blank" class="link">예약</a></div>' +
+            '                <div><a href="/hospital/1/appointments" class="link">예약</a></div>' +
             '            </div>' +
             '        </div>' +
             '    </div>' +

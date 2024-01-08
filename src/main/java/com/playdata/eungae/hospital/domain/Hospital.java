@@ -39,6 +39,9 @@ public class Hospital extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long hospitalSeq;
 
+	@Column(name = "hospital_id")
+	private String hospitalId;
+
 	@Setter
 	@OneToOne
 	@JoinColumn(name = "hospital_schedule_seq")
@@ -78,16 +81,16 @@ public class Hospital extends BaseEntity {
 	@Column(nullable = false)
 	private String address;
 
-	@Column(nullable = false)
+	// @Column(nullable = false)
 	private String addressDetail;
 
-	@Column(nullable = false)
+	// @Column(nullable = false)
 	private String businessRegistration;
 
-	@Column(nullable = false)
+	// @Column(nullable = false)
 	private double xCoordinate;
 
-	@Column(nullable = false)
+	// @Column(nullable = false)
 	private double yCoordinate;
 
 	public static Hospital buildHospital(HospitalSchedule hospitalSchedule, String password,
@@ -118,7 +121,6 @@ public class Hospital extends BaseEntity {
 		return hospital;
 
 	}
-
 	//연관관계 편의 메소드
 	public void addDoctor(Doctor doctor) {
 		this.doctorList.add(doctor);

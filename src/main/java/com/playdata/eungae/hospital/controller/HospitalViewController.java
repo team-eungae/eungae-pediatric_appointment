@@ -43,7 +43,4 @@ public class HospitalViewController {
 		model.addAttribute("hospitalImages", hospitalImages);
 		return "contents/hospital/hospital-details";
 	}
-
-
-
 }
