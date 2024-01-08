@@ -10,5 +10,5 @@ import com.playdata.eungae.member.domain.Children;
 
 @Repository
 public interface ChildrenRepository extends JpaRepository<Children, Long> {
-	Optional<List<Children>> findAllByMemberSeq(long MemberSeq);
+	Optional<List<Children>> findAllByMemberMemberSeq(long MemberSeq);
 }

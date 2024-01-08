@@ -28,7 +28,7 @@ public class AppointmentService {
 
 	public Optional<List<Children>> getMyChildren(String email) {
 		Member member = memberRepository.findByEmail(email).get();
-		return childrenRepository.findAllByMemberSeq(member.getMemberSeq());
+		return childrenRepository.findAllByMemberMemberSeq(member.getMemberSeq());
 	}
 
 	// 진료기록 불러오기

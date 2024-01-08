@@ -68,12 +68,20 @@ public class Member extends BaseEntity implements UserDetails {
 	@Column(nullable = false)
 	private String zipCode;
 
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
+	private List<Children> children = new ArrayList<>();
+
 	private Integer xCoordinate;
 
 	private Integer yCoordinate;
 	
 	@Column(columnDefinition = "varchar(5) default '0'")
 	private boolean kakaoCheck;
+
+	public void addChildren(Children children) {
+		this.children.add(children);
+	}
 
 	public void updateMemberDetails(MemberUpdateRequestDto updateRequestDto){
 		this.name = updateRequestDto.getName();

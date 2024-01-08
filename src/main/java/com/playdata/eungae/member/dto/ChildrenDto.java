@@ -27,7 +27,6 @@ public class ChildrenDto {
 	public static ChildrenDto from(Children entity) {
 		return ChildrenDto.builder()
 			.childrenSeq(entity.getChildrenSeq())
-			.memberSeq(entity.getMemberSeq())
 			.name(entity.getName())
 			.birthDate(entity.getBirthDate())
 			.gender(entity.getGender())
