@@ -1,0 +1,43 @@
+main {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    margin-bottom: 6.5rem;
+}
+
+.notice {
+    margin-top: 10vh;
+    margin-bottom: 3vh;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.notice_box {
+  border: solid 1px #b1b1b1;
+  border-radius: 7px;
+  padding: 5%;
+  margin-top: 5%;
+  height: 63vh;
+  overflow-y: auto;
+}
+.notice_type {
+  color: #79baf2;
+}
+.notice-detail__content{
+    line-height: 20pt;
+}
+.move-list {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.move-to-notice-list {
+    border: none;
+    border-radius: 4px;
+    background-color: #96B9D9;
+    background: #326EB3;
+    color: white;
+    font-size: 15px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}

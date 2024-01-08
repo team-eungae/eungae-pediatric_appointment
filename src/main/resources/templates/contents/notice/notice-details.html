@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/notice-details.css">
+    <title>공지사항 상세 - 응애 | 소아과 예약</title>
+</th:block>
+<body>
+<main layout:fragment="content" th:action="@{'notice/details/{noticeSeq}'}" th:object="${notice}" method="get">
+    <div class="container">
+        <div class="notice">
+            <p>공지사항</p>
+        </div>
+        <div class="notice_box">
+            <div class="notice_content_header">
+                <div class="notice_title">
+                    <h3 id="title" name="title" th:text="${notice.title}"></h3>
+                </div>
+                <div class="notice_detail">
+                    <div class="notice_type">공지사항</div>
+                    <div class="detail__header--wrapper__line"></div>
+                    <div class="write_date" th:text="${notice.modifiedAt}"></div>
+                    <hr/>
+                </div>
+            </div>
+            <div class="notice-detail__content">
+                <p id="content" name="content" th:text="${notice.content}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="move-list">
+        <button type="button" class="move-to-notice-list">
+            <a class="move-to-notice-list-text" th:href="@{/notice}">
+                목록으로
+            </a>
+        </button>
+    </div>
+</main>
+</body>
+</html>

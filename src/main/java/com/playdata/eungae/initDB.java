@@ -2,6 +2,7 @@ package com.playdata.eungae;
 
 import java.time.LocalDateTime;
 
+import com.playdata.eungae.article.domain.Notice;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +44,8 @@ public class initDB {
 			// Hospital hospital = hospitalRepository.findById(1L).get();
 			Appointment appointment = getAppointment(member, hospital);
 			em.persist(appointment);
+			Notice notice = getNotice();
+			em.persist(notice);
 		}
 	}
 
@@ -72,7 +75,7 @@ public class initDB {
 	private static Hospital getHospital() {
 		return Hospital.builder()
 			.password("testpassword")
-			.name("새움소아과 본관")
+			.name("새움소아과")
 			.notice("15세 이상 오지 마세요.")
 			.deposit(1000)
 			.contact("1577-7015")
@@ -117,5 +120,12 @@ public class initDB {
 			.status("1")
 			.note("test")
 			.build();
+	}
+
+	private static Notice getNotice() {
+		return Notice.builder()
+				.title("응애 시스템 점검")
+				.content("응애 서비스 시스템 점검 예정 안내입니다. 1월 8일 05시부터 10시까지 서비스 점검 예정이오니 약간 알아서 예약 안되는거 아쇼")
+				.build();
 	}
 }
