@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
-public class HospitalService{
+public class HospitalService {
 	private final HospitalRepository hospitalRepository;
 	private final HospitalScheduleRepository hospitalScheduleRepository;
 
@@ -28,7 +28,6 @@ public class HospitalService{
 		hospitalScheduleRepository.save(entity.getHospitalSchedule());
 	}
 
-
 	@Transactional(readOnly = true)
 	public HospitalViewResponseDto findHospitalById(Long hospitalSeq) {
 		Hospital hospital = hospitalRepository.findById(hospitalSeq)
@@ -36,4 +35,5 @@ public class HospitalService{
 
 		return HospitalViewResponseDto.toDto(hospital);
 	}
+
 }
