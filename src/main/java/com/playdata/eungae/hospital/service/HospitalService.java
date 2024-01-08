@@ -28,7 +28,6 @@ public class HospitalService{
 		hospitalScheduleRepository.save(entity.getHospitalSchedule());
 	}
 
-
 	@Transactional(readOnly = true)
 	public HospitalViewResponseDto findHospitalById(Long hospitalSeq) {
 		Hospital hospital = hospitalRepository.findById(hospitalSeq)

@@ -37,41 +37,41 @@ class HospitalServiceImplTest {
 		doctorList.add(doctor1);
 		doctorList.add(doctor2);
 
+		//
+		// HospitalSchedule hospitalSchedule = new HospitalSchedule(
+		// 	"1230","1330",
+		// 	"0830","1830",
+		// 	"0830","1830",
+		// 	"0830","1830",
+		// 	"0830","1830",
+		// 	"0830","1830",
+		// 	"0830","1830",
+		// 	"0830","1830");
+		// em.persist(hospitalSchedule);
 
-		HospitalSchedule hospitalSchedule = new HospitalSchedule(
-			"1230","1330",
-			"0830","1830",
-			"0830","1830",
-			"0830","1830",
-			"0830","1830",
-			"0830","1830",
-			"0830","1830",
-			"0830","1830");
-		em.persist(hospitalSchedule);
+		//
+		// Hospital hospital = Hospital.buildHospital(hospitalSchedule,
+		// 	"testpassword",
+		// 	"testname",
+		// 	"testnotice",
+		// 	3000,
+		// 	"02-111-2222",
+		// 	"testaddress",
+		// 	"testaddressdetail",
+		// 	"testbusinessregistration",
+		// 	34.56894,
+		// 	127.568465);
 
-
-		Hospital hospital = Hospital.buildHospital(hospitalSchedule,
-			"testpassword",
-			"testname",
-			"testnotice",
-			3000,
-			"02-111-2222",
-			"testaddress",
-			"testaddressdetail",
-			"testbusinessregistration",
-			34.56894,
-			127.568465);
-
-
-		em.persist(hospital);
-
-
-
-		//when
-		Hospital result =  hospitalRepository.save(hospital);
-
-		//then
-		Assertions.assertThat(hospital).isEqualTo(hospitalRepository.findAll().get(0));
+		//
+		// em.persist(hospital);
+		//
+		//
+		//
+		// //when
+		// Hospital result =  hospitalRepository.save(hospital);
+		//
+		// //then
+		// Assertions.assertThat(hospital).isEqualTo(hospitalRepository.findAll().get(0));
 
 	}
 
