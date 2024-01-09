@@ -7,16 +7,16 @@
     <title>공지사항 - 응애 | 소아과 예약</title>
 </th:block>
 <body>
-<main layout:fragment="content">
+<main layout:fragment="content" th:action="@{'notice'}" th:object="${noticeList}" method="get">
     <div>
         <div class="notice">
-            <p>공지사항</p>
+            <h3>공지사항</h3>
         </div>
 
         <div class="row">
             <div class="col-md-2">
                 <div class="notice-total">
-                    총<strong class="notice-total-number">&nbsp;297</strong>&nbsp;건
+                    총 <strong th:text="${#lists.size(noticeList)}" class="notice-total-number"></strong>&nbsp;건
                 </div>
             </div>
         </div>
@@ -32,174 +32,21 @@
                 </thead>
 
                 <tbody>
-                <tr
-                        class="notice-separator"
-                        style="height: 90px; background: #DBE5EF"
+                <tr th:each="notice : ${noticeList}"
+                    class="notice-separator"
+                    style="height: 90px;"
                 >
-                    <td colspan="1" rowspan="1" class="">
+                    <td th:text="${notice.noticeSeq}" colspan="1" rowspan="1" class="">
                         <span class="notice-type">1</span>
                     </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <a href="/service-center/notice/4158"
-                        >
-                            <div class="Notice_title-wrap__BiTff">
-                                <div class="notice-title">
-                                    판다 개인정보처리 방침에 대한 안내
-                                </div>
-                            </div>
-                        </a
-                        >
+                    <td colspan="1" rowspan="1" class="" height="40%">
+                        <div class="notice-title">
+                            <a th:href="@{/notice/details/{noticeSeq}(noticeSeq=${notice.noticeSeq})}"
+                               th:text="${notice.title}">
+                            </a>
+                        </div>
                     </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-writedate">2024.01.05</span>
-                    </td>
-                </tr>
-                <tr
-                        class="Table_--separator__Sm8j0"
-                        style="height: 90px; background: #DBE5EF"
-                >
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-type">2</span>
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <a href="/service-center/notice/4115"
-                        >
-                            <div class="Notice_title-wrap__BiTff">
-                                <div class="notice-title">
-                                    2023년 최저임금은 시급 9,620원입니다
-                                </div>
-                            </div>
-                        </a
-                        >
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-writedate">2024.01.05</span>
-                    </td>
-                </tr>
-
-                <tr
-                        class="Table_--separator__Sm8j0"
-                        style="height: 90px; background: none"
-                >
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-type">3</span>
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <a href="/service-center/notice/4286"
-                        >
-                            <div class="Notice_title-wrap__BiTff">
-                                <div class="notice-title">추석 연휴 고객센터 운영 안내</div>
-                            </div>
-                        </a
-                        >
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-writedate">2024.01.05</span>
-                    </td>
-                </tr>
-                <tr
-                        class="Table_--separator__Sm8j0"
-                        style="height: 90px; background: none"
-                >
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-type">4</span>
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <a href="/service-center/notice/4256"
-                        >
-                            <div class="Notice_title-wrap__BiTff">
-                                <div class="notice-title">
-                                    영화 (메가로돈 2) 예매권 이벤트
-                                </div>
-                            </div>
-                        </a
-                        >
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-writedate">2024.01.05</span>
-                    </td>
-                </tr>
-                <tr
-                        class="Table_--separator__Sm8j0"
-                        style="height: 90px; background: none"
-                >
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-type">5</span>
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <a href="/service-center/notice/4286"
-                        >
-                            <div class="Notice_title-wrap__BiTff">
-                                <div class="notice-title">추석 연휴 고객센터 운영 안내</div>
-                            </div>
-                        </a
-                        >
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-writedate">2024.01.05</span>
-                    </td>
-                </tr>
-                <tr
-                        class="Table_--separator__Sm8j0"
-                        style="height: 90px; background: none"
-                >
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-type">6</span>
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <a href="/service-center/notice/4256"
-                        >
-                            <div class="Notice_title-wrap__BiTff">
-                                <div class="notice-title">
-                                    영화 (메가로돈 2) 예매권 이벤트
-                                </div>
-                            </div>
-                        </a
-                        >
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-writedate">2024.01.05</span>
-                    </td>
-                </tr>
-                <tr
-                        class="Table_--separator__Sm8j0"
-                        style="height: 90px; background: none"
-                >
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-type">7</span>
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <a href="/service-center/notice/4286"
-                        >
-                            <div class="Notice_title-wrap__BiTff">
-                                <div class="notice-title">추석 연휴 고객센터 운영 안내</div>
-                            </div>
-                        </a
-                        >
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-writedate">2024.01.05</span>
-                    </td>
-                </tr>
-                <tr
-                        class="Table_--separator__Sm8j0"
-                        style="height: 90px; background: none"
-                >
-                    <td colspan="1" rowspan="1" class="">
-                        <span class="notice-type">8</span>
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
-                        <a href="/service-center/notice/4256"
-                        >
-                            <div class="Notice_title-wrap__BiTff">
-                                <div class="notice-title">
-                                    영화 (메가로돈 2) 예매권 이벤트
-                                </div>
-                            </div>
-                        </a
-                        >
-                    </td>
-                    <td colspan="1" rowspan="1" class="">
+                    <td th:text="${notice.modifiedAt}" colspan="1" rowspan="1" class="">
                         <span class="notice-writedate">2024.01.05</span>
                     </td>
                 </tr>

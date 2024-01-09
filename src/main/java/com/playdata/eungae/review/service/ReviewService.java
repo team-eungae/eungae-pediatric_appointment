@@ -1,5 +1,9 @@
 package com.playdata.eungae.review.service;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +37,8 @@ public class ReviewService {
 		Review review = RequestReviewFormDto.toEntity(requestReviewFormDto, appointment);
 
 		Review reviewEntity = reviewRepository.save(review);
-		appointment.setReviewSeq(reviewEntity.getReviewSeq()); ;
+
+		appointment.setReviewSeq(reviewEntity.getReviewSeq());
 	}
 
 	@Transactional
@@ -52,5 +57,16 @@ public class ReviewService {
 		);
 		return reviewRepository.findAllWithMember(pageConfig, hospitalSeq)
 			.map(ResponseReviewDto::toDto);
+	}
+
+	@Transactional(readOnly = true)
+	public List<ResponseReviewDto> findReviewsByHospitalSeq(Long hospitalSeq) {
+		List<Review> reviews = reviewRepository.findAllByHospitalHospitalSeq(hospitalSeq)
+			.orElseThrow(() -> new NoSuchElementException("review not found"));
+
+		return reviews
+			.stream()
+			.map(ResponseReviewDto::toDto)
+			.collect(Collectors.toList());
 	}
 }

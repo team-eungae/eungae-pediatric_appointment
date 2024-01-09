@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class MemberUpdateRequestDto {
+    private String email;
     private String name;
     private String phoneNumber;
     private String address;

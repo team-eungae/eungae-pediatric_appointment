@@ -7,17 +7,21 @@
     <title>병원 상세 - 응애 | 소아과 예약</title>
 </th:block>
 <body>
-<main  layout:fragment="content">
+<main layout:fragment="content">
     <div class="hospital-informations">
         <div class="hospital-images">
-            <img src="https://cdn.sayun.studio/boottent/files/assets/encore/photo/photo_454290aa-2867-4b44-97b2-1d7251b040bc.jpg">
+            <img class="slide" th:each="hospitalImage:${hospitalImages}"
+                 th:src="@{/images/}+${hospitalImage.storeFileName}" alt="hospital Images"/>
         </div>
+
         <div class="hospital-informations-common">
             <h3 th:text="${hospital.name}">병원 이름</h3>
             <hr/>
             <div>
-                <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i><span  th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
-                <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i><span th:text="${hospital.contact}">병원 번호</span></div>
+                <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i>
+                  <span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
+                <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i>
+                  <span th:text="${hospital.contact}">병원 번호</span></div>
             </div>
         </div>
     </div>
@@ -30,12 +34,15 @@
                 <div class="card-body">
                     <div>
                         <table id="today">
-                            <th id="today-schedule">
                             <td class="day" id="today-day">요일</td>
-                            <td class="time"  id="today-time">영업시간</td>
-                            <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
-                            <td id="timeShowBtn"><button class="clinic-hours-button" onclick="onShowBtn()"><i class="fas fa-arrow-down"></i></button></td>
-                            </th>
+                            <td class="time" id="today-time">영업시간</td>
+                            <td class="lunch-time">
+                              (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                            </td>
+                            <td id="timeShowBtn">
+                                <button class="clinic-hours-button" onclick="onShowBtn()">
+                                <i class="fas fa-arrow-down"></i></button>
+                            </td>
                         </table>
                     </div>
                 </div>
@@ -43,38 +50,66 @@
             <table id="schedule" style="display: none;">
                 <tr>
                     <td class="day">월요일</td>
-                    <td class="time"><span id="dutyTime1" th:text="${hospital.hospitalSchedule.monOpen}+' - '+${hospital.hospitalSchedule.monClose}"></span></td>
-                    <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
+                    <td class="time">
+                      <span id="dutyTime1" th:text="${hospital.hospitalSchedule.monOpen}+' - '+${hospital.hospitalSchedule.monClose}"></span>
+                    </td>
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    </td>
                 </tr>
                 <tr>
                     <td class="day">화요일</td>
-                    <td class="time"><span  id="dutyTime2" th:text="${hospital.hospitalSchedule.tueOpen}+' - '+${hospital.hospitalSchedule.tueClose}"></span></td>
-                    <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
+                    <td class="time">
+                      <span id="dutyTime2" th:text="${hospital.hospitalSchedule.tueOpen}+' - '+${hospital.hospitalSchedule.tueClose}"></span>
+                    </td>
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    </td>
                 </tr>
                 <tr>
                     <td class="day">수요일</td>
-                    <td class="time"><span id="dutyTime3" th:text="${hospital.hospitalSchedule.wedOpen}+' - '+${hospital.hospitalSchedule.wedClose}"></span></td>
-                    <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
+                    <td class="time">
+                      <span id="dutyTime3" th:text="${hospital.hospitalSchedule.wedOpen}+' - '+${hospital.hospitalSchedule.wedClose}"></span>
+                    </td>
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    </td>
                 </tr>
                 <tr>
                     <td class="day">목요일</td>
-                    <td class="time"><span id="dutyTime4" th:text="${hospital.hospitalSchedule.thuOpen}+' - '+${hospital.hospitalSchedule.thuClose}"></span></td>
-                    <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
+                    <td class="time">
+                      <span id="dutyTime4" th:text="${hospital.hospitalSchedule.thuOpen}+' - '+${hospital.hospitalSchedule.thuClose}"></span>
+                    </td>
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    </td>
                 </tr>
                 <tr>
                     <td class="day">금요일</td>
-                    <td class="time"><span  id="dutyTime5" th:text="${hospital.hospitalSchedule.friOpen}+' - '+${hospital.hospitalSchedule.friClose}"></span></td>
-                    <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
+                    <td class="time">
+                      <span id="dutyTime5" th:text="${hospital.hospitalSchedule.friOpen}+' - '+${hospital.hospitalSchedule.friClose}"></span>
+                    </td>
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    </td>
                 </tr>
                 <tr>
                     <td class="day">토요일</td>
-                    <td class="time"><span id="dutyTime6" th:text="${hospital.hospitalSchedule.satOpen}+' - '+${hospital.hospitalSchedule.satClose}"></span></td>
-                    <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
+                    <td class="time">
+                      <span id="dutyTime6" th:text="${hospital.hospitalSchedule.satOpen}+' - '+${hospital.hospitalSchedule.satClose}"></span>
+                    </td>
+                    <td class="lunch-time">
+                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    </td>
                 </tr>
                 <tr>
                     <td class="day">일요일</td>
-                    <td class="time"><span id="dutyTime7" th:text="${hospital.hospitalSchedule.sunOpen}+' - '+${hospital.hospitalSchedule.sunClose}"></span></td>
-                    <td class="lunch-time">(점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)</td>
+                    <td class="time"><span id="dutyTime0"
+                                           th:text="${hospital.hospitalSchedule.sunOpen}+' - '+${hospital.hospitalSchedule.sunClose}"></span>
+                    </td>
+                    <td class="lunch-time">(점심 <span
+                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                    </td>
                 </tr>
             </table>
         </div>
@@ -87,7 +122,8 @@
             <div id="hospital-address">
                 <span id="hospital_x" th:value="${hospital.xCoordinate}" hidden="hidden"></span>
                 <span id="hospital_y" th:value="${hospital.yCoordinate}" hidden="hidden"></span>
-                <div class="hospital-address-text"><i class="far fa-map"></i><span th:text="${hospital.address}+' '+${hospital.addressDetail}"></span></div>
+                <div class="hospital-address-text"><i class="far fa-map"></i><span
+                        th:text="${hospital.address}+' '+${hospital.addressDetail}"></span></div>
             </div>
             <div id="map"></div>
         </div>
@@ -97,31 +133,16 @@
             의사
         </div>
         <div class="hospital-doctor-body">
-            <div class="card">
+            <div class="card" th:each="doctor:${doctorList}">
                 <table>
                     <tr>
                         <td>
                             <div class="doctor-image">
-                                <img src="https://t1.daumcdn.net/cfile/tistory/99E72B4D5C41BD5727">
+                                <img th:src="@{/img/}+${doctor.profileImage}">
                             </div>
                         </td>
                         <td class="doctor-name">
-                            <p th:text="${doctorList[0].name}">비모</p>
-                        </td>
-
-                    </tr>
-                </table>
-            </div>
-            <div class="card">
-                <table>
-                    <tr>
-                        <td>
-                            <div class="doctor-image">
-                                <img src="https://post-phinf.pstatic.net/MjAyMDEyMTdfMTQz/MDAxNjA4MTk2MTAwODY3.QjNHvtYqACnS7--uS1q2EzVjaKZ-8UbvmG3rDdfug0kg.7iWwVgUyT-LMWdg7YSU-NtuMbd0kbD0S1eMoxjT2pQkg.PNG/21.png?type=w800_q75">
-                            </div>
-                        </td>
-                        <td class="doctor-name">
-                            <P th:text="${doctorList[1].name}">보노보노</P>
+                            <p th:text="${doctor.name}">의사 이름</p>
                         </td>
                     </tr>
                 </table>
@@ -134,57 +155,24 @@
     <div class="hospital-review">
         <div class="hospital-review-header">
             리뷰
-            <div> (13)</div>
+            <div>(<span th:text="${#lists.size(reviewList)}"></span>)</div>
         </div>
-        <div class="hospital-review-item">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <div class="hospital-review-content">
-                            <div class="review-content-header">
-                            <div class="review-writer">김*진</div>
-                            <div class="review-date">11월 29일</div>
-                            </div>
-                            <div class="review-rate">⭐⭐⭐⭐⭐</div>
-                            <div class="review-content">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
-
+        <div id="hospital-review-list">
+            <div class="hospital-review-item" th:each="review:${reviewList}">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="review-content-header">
+                            <div class="review-writer" th:text="${review.memberName}">김*진</div>
+                            <div class="review-date" th:text="${review.writeDate}">11월 29일</div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="hospital-review-item">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <div class="hospital-review-content">
-                            <div class="review-content-header">
-                                <div class="review-writer">김*진</div>
-                                <div class="review-date">11월 29일</div>
-                            </div>
-                            <div class="review-rate">⭐⭐⭐⭐⭐</div>
-                            <div class="review-content">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
-
+                        <div class="review-rate">
+                            <i th:each="num : ${#numbers.sequence(1,review.starRating)}" class="fa-solid fa-star"
+                               style="color: #ffd500;"></i>
+                            <i th:if="${review.starRating} != 5 "
+                               th:each="num : ${#numbers.sequence(1,5 -review.starRating)}" class="fa-regular fa-star"
+                               style="color: #ffd500;"></i>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="hospital-review-item">
-            <div class="card">
-                <div class="card-body">
-                    <div>
-                        <div class="hospital-review-content">
-                            <div class="review-content-header">
-                                <div class="review-writer">김*진</div>
-                                <div class="review-date">11월 29일</div>
-                            </div>
-                            <div class="review-rate">⭐⭐⭐⭐⭐</div>
-                            <div class="review-content">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
-
-                        </div>
+                        <div class="review-content" th:text="${review.content}">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
                     </div>
                 </div>
             </div>
@@ -196,10 +184,10 @@
 </main>
 
 
-
 <div layout:fragment="custom_js">
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=399f802c931e5e59db319cc955db0246"></script>
-    <script  th:inline="javascript" src="/js/hospital-details.js"></script>
+    <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=399f802c931e5e59db319cc955db0246"></script>
+    <script th:inline="javascript" src="/js/hospital-details.js"></script>
 </div>
 </body>
 </html>

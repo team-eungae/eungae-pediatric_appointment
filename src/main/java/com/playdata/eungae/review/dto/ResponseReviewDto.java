@@ -1,5 +1,8 @@
 package com.playdata.eungae.review.dto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.member.domain.Member;
@@ -23,11 +26,15 @@ public class ResponseReviewDto {
 
 	private String content;
 
+	private String writeDate;
+
 	public static ResponseReviewDto toDto(Review review) {
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yy년 MM월 dd일");
 		return ResponseReviewDto.builder()
 			.memberName(review.getMember().getName())
 			.starRating(review.getStarRating())
 			.content(review.getContent())
+			.writeDate(dateTimeFormatter.format(review.getCreatedAt()))
 			.build();
 	}
 }

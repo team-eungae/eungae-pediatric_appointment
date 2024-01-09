@@ -4,20 +4,23 @@ server:
 spring:
   application:
     name: eungae
+
   sql:
     init:
       encoding: UTF-8
       mode: always
+
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
     url: jdbc:oracle:thin:@127.0.0.1:1521:xe
     username: eungae
     password: eungae
+
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create
-      #ddl-auto: none
+#      ddl-auto: none
     defer-datasource-initialization: true
     properties:
       hibernate:
@@ -26,6 +29,11 @@ spring:
         default_batch_fetch_size: 1000
 
     open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+      location: ${IMAGES}
 
 logging:
   level:
@@ -35,3 +43,12 @@ logging:
         type:
           descriptor:
             sql: trace
+            
+com:
+  example:
+    upload : ${IMAGES}
+
+api:
+  open-data:
+    key: TNyXX5JCECUkYJvAg8BoOgdg80rqWkkhwO%2FYsR5kzKI4QxvVcKZVCgN7oiRPSU2LRuL8ldb%2B5mmtnBhStGnXYg%3D%3D
+    url: http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncFullDown
