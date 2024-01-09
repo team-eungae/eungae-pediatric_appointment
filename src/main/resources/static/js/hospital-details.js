@@ -1,4 +1,3 @@
-var imageSrc = "/img/eungaemarker.png";
 
 //현재 날짜의 해당하는 요일의 정보를 처음에 보여주기
 var todayTime = document.getElementById("today-time");
@@ -8,15 +7,16 @@ todayDayOfWeek.innerHTML = getKoreanDayOfWeek();
 
 function getTodayDutyHour() {
     const sysdate = new Date();
-    var dayOfWeek = sysdate.getDay();
-    return document.getElementById("dutyTime" + dayOfWeek).innerHTML;
+    var dayOfWeek = sysdate.getDay();  //일월~토 0~6
+    console.log("dutyTime"+dayOfWeek);
+    return document.getElementById("dutyTime"+dayOfWeek).innerHTML;
 }
 
 function getKoreanDayOfWeek() {
-    var daysOfWeek = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'];
+    var daysOfWeek = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
     const sysdate = new Date();
     var dayOfWeek = sysdate.getDay();
-    return daysOfWeek[dayOfWeek - 1];
+    return daysOfWeek[dayOfWeek];
 }
 
 let shownum = -1;
@@ -40,6 +40,7 @@ function showClinic() {
     const row = document.getElementById('schedule');
     row.style.display = '';
 }
+var imageSrc = "/img/eungaemarker.png";
 
 var xCoordinate = document.getElementById("hospital_x").getAttribute("value");
 var yCoordinate = document.getElementById("hospital_y").getAttribute("value");
@@ -66,3 +67,15 @@ var marker = new kakao.maps.Marker({
 
 // 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);
+
+
+$(".slide-1").on("click", function () {
+    $(".slide-container").css("transform","translateX(0)");
+});
+$(".slide-2").on("click", function () {
+    $(".slide-container").css("transform","translateX(-100vw)");
+});
+$(".slide-3").on("click", function () {
+    $(".slide-container").css("transform","translateX(-200vw)");
+});
+

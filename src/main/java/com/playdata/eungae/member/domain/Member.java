@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
@@ -43,6 +45,14 @@ public class Member extends BaseEntity implements UserDetails {
 	@Builder.Default
 	@OneToMany(mappedBy = "member")
 	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
+
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
+	private List<Children> children = new ArrayList<>();
+
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
+	private List<Appointment> appointments = new ArrayList<>();
 
 	@Column(nullable = false, unique = true, updatable = false)
 	private String email;

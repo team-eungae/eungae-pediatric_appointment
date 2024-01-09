@@ -1,6 +1,8 @@
 package com.playdata.eungae.appointment.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -22,6 +24,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -59,6 +62,10 @@ public class Appointment extends BaseEntity {
 	@JoinColumn(name = "hospital_seq")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Hospital hospital;
+
+	@Builder.Default
+	@OneToMany(mappedBy = "appointment")
+	private List<AppointmentDocument> appointmentDocuments = new ArrayList<>();
 
 	@Column(nullable = false)
 	private LocalDateTime appointmentDate;

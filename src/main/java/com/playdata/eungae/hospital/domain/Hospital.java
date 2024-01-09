@@ -9,16 +9,13 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.member.domain.FavoritesHospital;
-import com.playdata.eungae.member.domain.Member;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -53,6 +50,10 @@ public class Hospital extends BaseEntity {
 	@OneToMany(mappedBy = "hospital")
 	@Builder.Default
 	private List<Doctor> doctorList = new ArrayList<>();
+
+	@OneToMany(mappedBy = "hospital")
+	@Builder.Default
+	private List<HospitalImage> hospitalImageList = new ArrayList<>();
 
 	@Setter
 	@OneToMany(mappedBy = "hospital")
@@ -123,5 +124,9 @@ public class Hospital extends BaseEntity {
 	//연관관계 편의 메소드
 	public void addDoctor(Doctor doctor) {
 		this.doctorList.add(doctor);
+	}
+
+	public void addHospitalImage(HospitalImage hospitalImage) {
+		this.hospitalImageList.add(hospitalImage);
 	}
 }
