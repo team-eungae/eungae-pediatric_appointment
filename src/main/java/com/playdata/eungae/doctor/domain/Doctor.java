@@ -26,7 +26,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
 @DynamicInsert
 @Table(name = "doctor")
 @Entity
