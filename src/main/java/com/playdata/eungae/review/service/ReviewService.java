@@ -33,7 +33,7 @@ public class ReviewService {
 		Review review = RequestReviewFormDto.toEntity(requestReviewFormDto, appointment);
 
 		Review reviewEntity = reviewRepository.save(review);
-		appointment.setReview_seq(reviewEntity.getReviewSeq()); ;
+		appointment.setReviewSeq(reviewEntity.getReviewSeq()); ;
 	}
 
 	@Transactional
