@@ -1,5 +1,6 @@
 package com.playdata.eungae.appointment.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,4 +43,12 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch m.children c"
 		+ " where m.memberSeq = :memberSeq")
 	Optional<Page<Appointment>> findAppointment(Pageable pageConfig, @Param("memberSeq") Long memberSeq);
+
+	@Query("select a"
+		+ " from Appointment a"
+		+ " join fetch a.hospital h"
+		+ " where a.hospital.hospitalSeq = :hospitalSeq"
+		+ " and a.appointmentDate = :appointmentDate"
+		+ " and a.appointmentHHMM = :appointmentHHMM")
+	List<Appointment> findAllWithHospital(@Param("hospitalSeq") Long hospitalSeq,@Param("appointmentDate") LocalDate appointmentDate,@Param("appointmentHHMM") String formatTime);
 }

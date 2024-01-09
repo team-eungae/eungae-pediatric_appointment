@@ -3,6 +3,7 @@ package com.playdata.eungae.appointment.controller;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,4 +42,16 @@ public class AppointmentApiController {
 	) {
 		return appointmentService.findAppointment(pageNumber, memberSeq);
 	}
+	@GetMapping("/test")
+	@ResponseStatus(HttpStatus.OK)
+	public void findTime(
+		@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam String appointmentDate,
+		@RequestParam Integer appointmentDayOfWeek,
+		@RequestParam Long doctorSeq,
+		@RequestParam Long hospitalSeq
+	) {
+		log.info("======================={}==================",appointmentDate);
+		appointmentService.getHospitalSchedule(appointmentDate, appointmentDayOfWeek, doctorSeq, hospitalSeq);
+	}
+
 }
