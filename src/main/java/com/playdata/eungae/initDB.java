@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 
+import com.playdata.eungae.article.domain.Notice;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -61,6 +62,9 @@ public class initDB {
 			HospitalSchedule hospitalSchedule = getHospitalSchedule();
 			hospitalSchedule.setHospital(hospital);
 			em.persist(hospitalSchedule);
+
+			Notice notice = getNotice();
+			em.persist(notice);
       
 			Appointment appointment1 = getAppointment(member, hospital, doctor1);
 			Appointment appointment2 = getAppointment(member, hospital, doctor1);
@@ -188,6 +192,12 @@ public class initDB {
 			.note("test")
 			.build();
 	}
+
+	private static Notice getNotice() {
+		return Notice.builder()
+				.title("응애 시스템 점검")
+				.content("응애 서비스 시스템 점검 예정 안내입니다. 1월 8일 05시부터 10시까지 서비스 점검 예정이오니 약간 알아서 예약 안되는거 아쇼")
+				.build();
 
 	private static Doctor getDoctor(Hospital hospital) {
 		return Doctor.builder()

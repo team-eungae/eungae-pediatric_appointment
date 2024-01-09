@@ -1,0 +1,37 @@
+package com.playdata.eungae.article.service;
+
+import com.playdata.eungae.article.domain.Notice;
+import com.playdata.eungae.article.dto.NoticeListResponseDto;
+import com.playdata.eungae.article.dto.NoticeResponseDto;
+import com.playdata.eungae.article.repository.NoticeRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
+@Slf4j
+@Service
+public class NoticeService {
+
+    private final NoticeRepository noticeRepository;
+
+    @Transactional(readOnly = true)
+    public NoticeResponseDto findByNoticeId(Long noticeSeq) {
+        Notice notice = noticeRepository.findById(noticeSeq)
+                .orElseThrow(() -> new IllegalStateException("This post doesn't exist."));
+        return NoticeResponseDto.toDto(notice);
+    }
+
+    @Transactional(readOnly = true)
+    public List<NoticeListResponseDto> findByNoticeList() {
+        List<Notice> notices = noticeRepository.findAll();
+        List<NoticeListResponseDto> noticeList = notices.stream().map(NoticeListResponseDto::toDto)
+                .collect(Collectors.toList());
+        return noticeList;
+    }
+
+}
