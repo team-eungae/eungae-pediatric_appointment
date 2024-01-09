@@ -2,28 +2,76 @@
     margin-top: 15%;
 }
 
-main{
+main {
     background-color: #ecf1f6c9;
 }
+
 .hospital-informations {
     background-color: white;
 }
 
-.hospital-images {
-    margin-top: 20%;
-    text-align: center;
-}
 
-.hospital-images img {
-    border-bottom-left-radius: 10vw;
-    border-bottom-right-radius: 10vw;
-    border-top-right-radius: 10vw;
-    border-top-left-radius: 10vw;
+.hospital-images {
+    position: relative;
+    overflow: hidden;
+
+    margin-top: 20%;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    text-align: center;
+
+    border-radius: 10vw;
 
     object-fit: fill;
 
     width: 90vw;
     height: 24vh;
+
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 90vw;
+    height: 24vh;
+    background-size: cover;
+    background-position: center;
+
+    animation: hospital-images 9s infinite linear;
+}
+
+.slide:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.slide:nth-child(2) {
+    animation-delay: -3s;
+}
+
+.slide:nth-child(3) {
+    animation-delay: -6s;
+}
+
+@keyframes hospital-images {
+    0% {
+        transform: translateX(0);
+    }
+
+    26% {
+        transform: translateX(0);
+    }
+    33% {
+        transform: translateX(-100%);
+        animation-timing-function: step-end;
+    }
+    93% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
 }
 
 .hospital-informations-common {
@@ -33,10 +81,11 @@ main{
     padding-bottom: 2vh;
 }
 
-.hospital-informations-address i{
+.hospital-informations-address i {
     padding-right: 3vw;
 }
-.hospital-informations-phone i{
+
+.hospital-informations-phone i {
     padding-right: 3vw;
 }
 
@@ -52,20 +101,20 @@ main{
     margin-bottom: 2%;
 }
 
-.clinic-hours-body #today{
+.clinic-hours-body #today {
     width: 100%;
 }
 
-.clinic-hours-body .day{
+.clinic-hours-body .day {
     font-size: 4vw;
     font-weight: bold;
 }
 
-.clinic-hours-body .time{
+.clinic-hours-body .time {
     font-size: 4vw;
 }
 
-.clinic-hours-body .lunch-time{
+.clinic-hours-body .lunch-time {
     font-size: 3vw;
     color: rgb(128, 128, 128);
 }
@@ -105,7 +154,7 @@ main{
     padding-bottom: 1vh;
 }
 
-.hospital-address-body i{
+.hospital-address-body i {
     padding-right: 3vw;
 }
 
@@ -113,7 +162,7 @@ main{
     padding-bottom: 1vh;
 }
 
-.hospital-address-body #map{
+.hospital-address-body #map {
     width: 88vw;
     height: 30vh;
     border-radius: 5vw;
@@ -139,13 +188,13 @@ main{
     margin-right: 6vw;
 }
 
-.hospital-doctor-body .card{
+.hospital-doctor-body .card {
     border-radius: 3vw;
     margin-bottom: 2vh;
 }
 
 
-.hospital-doctor-body .doctor-name{
+.hospital-doctor-body .doctor-name {
     width: 30vw;
     text-align: center;
 }
@@ -168,6 +217,7 @@ main{
     background-color: white;
     padding-bottom: 2vh;
 }
+
 /*리뷰*/
 .hospital-review {
     margin-top: 1vh;
@@ -190,30 +240,25 @@ main{
     margin-right: 6vw;
 }
 
-.hospital-review-item .card{
+.hospital-review-item .card {
     border-radius: 3vw;
     margin-bottom: 2vh;
 }
 
 
-.review-content-header{
+.review-content-header {
     display: flex;
     width: 100%;
     justify-content: space-between;
 }
 
-.review-date{
+.review-date {
     position: relative;
     right: 0;
-    padding-right: 20px;
+    padding-right: 10px;
     font-size: 3vw;
     color: rgb(128, 128, 128);
 }
-/*.review-content{*/
-/*    overflow:hidden;*/
-/*    text-overflow:ellipsis;*/
-/*    white-space:nowrap;*/
-/*}*/
 
 /************************/
 
@@ -223,7 +268,7 @@ main{
     float: right;
 }
 
-.reservation-button-place button{
+.reservation-button-place button {
     margin-left: 6vw;
     margin-right: 3vw;
     border-radius: 1vh;
@@ -233,9 +278,14 @@ main{
     width: 35vw;
     height: 5vh;
 }
+
 .mobile-nav-bottom {
-    background: #ffffff;!important;
-    z-index: 10;!important;
-    box-shadow: 0px 0px 0px 2px #ECEFF2; !important;
-    height: 7vh; !important;
+    background: #ffffff;
+!important;
+    z-index: 10;
+!important;
+    box-shadow: 0px 0px 0px 2px #ECEFF2;
+!important;
+    height: 7vh;
+!important;
 }

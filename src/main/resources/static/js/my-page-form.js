@@ -70,7 +70,7 @@ function execDaumPostcode() {
 
 //회원정보 업데이트
 function updateMemberInfo() {
-    var memberSeq = document.getElementById("memberSeq").getAttribute("value");  // 사용자 ID를 적절히 설정해야 합니다.
+    var email = document.getElementById("email").getAttribute("value"); //email로 회원정보를 불러옵니다,
     var newName = $('#newName').val();
     var newPhoneNumber = $('#newPhoneNumber').val();
     var newAddress = $('#newAddress').val();
@@ -79,10 +79,11 @@ function updateMemberInfo() {
 
     // AJAX를 사용하여 PATCH 요청 전송
     $.ajax({
-        url: '/my/profile/form/' + memberSeq,  // 실제 서버 엔드포인트로 변경
+        url: '/api/my/profile/form',
         type: 'PATCH',
         contentType: 'application/json',
         data: JSON.stringify({
+            email: email,
             name: newName,
             phoneNumber: newPhoneNumber,
             address: newAddress,
@@ -91,11 +92,11 @@ function updateMemberInfo() {
         }),
         success: function(updatedUserData) {
             // 업데이트 성공 시 /my/profile로 리디렉션
-            window.location.href = '/my/profile/' + memberSeq;
+            window.location.href = '/my/profile';
         },
         error: function(error) {
-            console.error('Error updating user:', error);
-            alert('The provided ID does not exist.');
+            console.error('Error updating user:', error.message);
+            alert('The provided ID does not exist.', error);
         }
     });
 }

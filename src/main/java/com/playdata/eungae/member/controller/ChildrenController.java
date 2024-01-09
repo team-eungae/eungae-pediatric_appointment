@@ -3,6 +3,8 @@ package com.playdata.eungae.member.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,8 +42,11 @@ public class ChildrenController {
 	}
 
 	@PostMapping("/add")
-	public String createChild(@ModelAttribute ChildrenDto childrenDto, @RequestParam("photo") MultipartFile photoFile) {
-		childrenService.createChildren(childrenDto, photoFile);
+	public String createChild(@ModelAttribute ChildrenDto childrenDto,
+		@RequestParam("photo") MultipartFile photoFile,
+		@AuthenticationPrincipal UserDetails member) {
+		String email = member.getUsername();
+		childrenService.createChildren(childrenDto, photoFile, email);
 		return "redirect:/children/list";
 	}
 

@@ -26,6 +26,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @DynamicInsert
 @Table(name = "doctor")
 @Entity
@@ -46,7 +47,6 @@ public class Doctor extends BaseEntity {
 	private String status;
 
 	@Column(nullable = false)
-	@ColumnDefault("3")
 	private int treatmentPossible;
 
 	private String profileImage;
