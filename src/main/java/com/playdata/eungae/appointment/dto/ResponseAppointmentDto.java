@@ -41,8 +41,7 @@ public class ResponseAppointmentDto {
 			.childrenName(appointment.getChildren().getName())
 			.doctorName(appointment.getDoctor().getName())
 			.hospitalName(appointment.getHospital().getName())
-			.appointmentHour(appointment.getAppointmentHour())
-			.appointmentMinute(appointment.getAppointmentMinute())
+			.appointmentHour(appointment.getAppointmentHHMM())
 			.build();
 	}
 }

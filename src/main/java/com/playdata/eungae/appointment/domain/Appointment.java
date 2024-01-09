@@ -1,5 +1,6 @@
 package com.playdata.eungae.appointment.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,13 +69,10 @@ public class Appointment extends BaseEntity {
 	private List<AppointmentDocument> appointmentDocuments = new ArrayList<>();
 
 	@Column(nullable = false)
-	private LocalDateTime appointmentDate;
+	private LocalDate appointmentDate;
 
-	@Column(nullable = false)
-	private String appointmentHour;
-
-	@Column(nullable = false)
-	private String appointmentMinute;
+	@Column/*(nullable = false)*/
+	private String appointmentHHMM;
 
 	@Enumerated(EnumType.STRING)
 	private AppointmentStatus status;

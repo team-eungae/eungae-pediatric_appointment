@@ -1,5 +1,6 @@
 package com.playdata.eungae.appointment.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,11 +42,9 @@ public class ResponseDetailMedicalHistoryDto {
 	// 어떻게 처리할지
 	private boolean writeReview;
 
-	private LocalDateTime appointmentDate;
+	private LocalDate appointmentDate;
 
-	private String appointmentHour;
-
-	private String appointmentMinute;
+	private String appointmentHHMM;
 
 	public static ResponseDetailMedicalHistoryDto toDto(Appointment appointment) {
 		return ResponseDetailMedicalHistoryDto.builder()
@@ -54,8 +53,7 @@ public class ResponseDetailMedicalHistoryDto {
 			.doctorName(appointment.getDoctor().getName())
 			.hospitalName(appointment.getHospital().getName())
 			.appointmentDate(appointment.getAppointmentDate())
-			.appointmentHour(appointment.getAppointmentHour())
-			.appointmentMinute(appointment.getAppointmentMinute())
+			.appointmentHHMM(appointment.getAppointmentHHMM())
 			.build();
 	}
 

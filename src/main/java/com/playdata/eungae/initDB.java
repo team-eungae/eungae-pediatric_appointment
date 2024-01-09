@@ -1,5 +1,6 @@
 package com.playdata.eungae;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
@@ -178,9 +179,8 @@ public class initDB {
 			.member(member)
 			.hospital(hospital)
 			.doctor(doctor)
-			.appointmentDate(LocalDateTime.now())
-			.appointmentHour("10")
-			.appointmentMinute("30")
+			.appointmentDate(LocalDate.now())
+			.appointmentHHMM("1030")
 			.status(AppointmentStatus.APPOINTMENT)
 			.note("test")
 			.build();

@@ -1,14 +1,7 @@
 package com.playdata.eungae.appointment.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-
-import com.playdata.eungae.appointment.domain.Appointment;
-import com.playdata.eungae.doctor.domain.Doctor;
-import com.playdata.eungae.hospital.domain.Hospital;
-import com.playdata.eungae.member.domain.Children;
-import com.playdata.eungae.member.domain.Member;
-import com.playdata.eungae.review.domain.Review;
 
 import lombok.Builder;
 import lombok.Data;
@@ -26,9 +19,8 @@ public class AppointmentResponseDto {
 	private String hospitalName;
 	// private Review review;
 
-	private LocalDateTime appointmentDate;
-	private String appointmentHour;
-	private String appointmentMinute;
+	private LocalDate appointmentDate;
+	private String appointmentHHMM;
 	private String note;
 
 	/*
