@@ -18,6 +18,8 @@ public class HospitalSearchResponseDto {
 	private String contact; //연락처
 	private String address;
 	private String addressDetail;
+	private double longitude;
+	private double latitude;
 
 	public static HospitalSearchResponseDto toDto(Hospital entity){
 		return HospitalSearchResponseDto.builder()
@@ -28,6 +30,8 @@ public class HospitalSearchResponseDto {
 			.contact(entity.getContact())
 			.address(entity.getAddress())
 			.addressDetail(entity.getAddressDetail())
+			.longitude(entity.getXCoordinate())
+			.latitude(entity.getYCoordinate())
 			.build();
 	}
 }
