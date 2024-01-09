@@ -6,104 +6,36 @@
     <link rel="stylesheet" href="/css/community-list.css">
     <title>커뮤니티 - 응애 | 소아과 예약</title>
 </th:block>
+
 <body>
-<main  layout:fragment="content">
+<main layout:fragment="content">
     <button class="post-button"><a th:href="@{/article/post}">글쓰기</a></button>
     <div class="community-header">
         <p>커뮤니티</p>
         <hr/>
     </div>
     <div class="community-body">
-        <div class="community-post">
+        <!-- 반복되는 게시글 부분 -->
+        <div class="community-post" th:each="post : ${posts}">
             <div class="row">
                 <div class="col-9">
-                    <a th:href="@{/article/details}" class="post-title">제목</a>
-                    <p class="post-contents">동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세</p>
+                    <a th:href="@{/article/details(post.id)}" class="post-title" th:text="${post.title}">제목</a>
+                    <p class="post-contents" th:text="${post.content}">내용</p>
                 </div>
                 <div class="col-3">
-                    <img src="https://i.namu.wiki/i/5dbYIx9wSf1tIJGRb5NO8-fgK5YWOCMJA2Q-cEpsOOOFPlxhyqAUhhV5Cm87Pnanhb5-TpoXKFs9P2AZDGjFUQ.webp" class="thumbnail-image"/>
+                    <img th:src="${post.thumbnailImageUrl}" class="thumbnail-image"/>
                 </div>
             </div>
             <div class="written-records">
                 <ul class="written-list">
-                    <li class="records-item">스폰지밥</li>
-                    <li class="records-item">1900.01.01</li>
+                    <li class="records-item" th:text="${post.author}">작성자</li>
+                    <li class="records-item" th:text="${#temporals.format(post.date, 'yyyy.MM.dd')}">작성일</li>
                 </ul>
             </div>
             <hr/>
         </div>
-        <div class="community-post">
-            <div class="row">
-                <div class="col-9">
-                    <a th:href="@{/article/details}" class="post-title">제목</a>
-                    <p class="post-contents">남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세</p>
-                </div>
-                <div class="col-3">
-                    <img src="https://img1.daumcdn.net/thumb/R1280x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/cnoC/image/0i6vz0BAJtOUDb3zAs4dL_-fW6U.jpg" class="thumbnail-image"/>
-                </div>
-            </div>
-            <div class="written-records">
-                <ul class="written-list">
-                    <li class="records-item">징징이</li>
-                    <li class="records-item">1900.01.01</li>
-                </ul>
-            </div>
-            <hr/>
-        </div>
-        <div class="community-post">
-            <div class="row">
-                <div class="col-9">
-                    <a th:href="@{/article/details}" class="post-title">제목</a>
-                    <p class="post-contents">남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세</p>
-                </div>
-                <div class="col-3">
-                    <img src="https://t1.daumcdn.net/cfile/tistory/996719435C5E660105" class="thumbnail-image"/>
-                </div>
-            </div>
-            <div class="written-records">
-                <ul class="written-list">
-                    <li class="records-item">스폰지밥</li>
-                    <li class="records-item">1900.01.01</li>
-                </ul>
-            </div>
-            <hr/>
-        </div>
-        <div class="community-post">
-            <div class="row">
-                <div class="col-9">
-                    <a th:href="@{/article/details}" class="post-title">제목</a>
-                    <p class="post-contents">남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세</p>
-                </div>
-                <div class="col-3">
-                    <img src="https://t2.daumcdn.net/thumb/R720x0.fjpg/?fname=http://t1.daumcdn.net/brunch/service/user/cnoC/image/wcoB5UbOJCJKelL1-xscrQ5OrCM.jpg" class="thumbnail-image"/>
-                </div>
-            </div>
-            <div class="written-records">
-                <ul class="written-list">
-                    <li class="records-item">뚱이</li>
-                    <li class="records-item">1900.01.01</li>
-                </ul>
-            </div>
-            <hr/>
-        </div>
-        <div class="community-post">
-            <div class="row">
-                <div class="col-9">
-                    <a th:href="@{/article/details}" class="post-title">제목</a>
-                    <p class="post-contents">남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세</p>
-                </div>
-                <div class="col-3">
-                    <img src="https://t1.daumcdn.net/cfile/tistory/996719435C5E660105" class="thumbnail-image"/>
-                </div>
-            </div>
-            <div class="written-records">
-                <ul class="written-list">
-                    <li class="records-item">스폰지밥</li>
-                    <li class="records-item">1900.01.01</li>
-                </ul>
-            </div>
-            <hr/>
-        </div>
+        <!-- 게시글 끝 -->
+
         <div class="post-bottom"></div>
     </div>
 </main>
