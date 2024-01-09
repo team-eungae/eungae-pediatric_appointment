@@ -38,7 +38,7 @@ public class ReviewService {
 
 		Review reviewEntity = reviewRepository.save(review);
 
-		appointment.setReviewSeq(reviewEntity.getReviewSeq()); 
+		appointment.setReviewSeq(reviewEntity.getReviewSeq());
 	}
 
 	@Transactional

@@ -2,7 +2,6 @@ package com.playdata.eungae.member.service;
 
 import java.util.Optional;
 
-import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,7 +25,6 @@ import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.ReflectionUtils;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -37,32 +35,33 @@ public class MemberService implements UserDetailsService {
 	private final HospitalRepository hospitalRepository;
 	private final FavoritesHospitalRepository favoritesHospitalRepository;
 
-    @Transactional
-    public MemberUpdateResponseDto updateMemberInfo(Long memberSeq, MemberUpdateRequestDto updateRequestDto) {
-        Member member = memberRepository.findById(memberSeq)
-                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
-        member.updateMemberDetails(updateRequestDto);
-        return MemberUpdateResponseDto.toDto(memberRepository.save(member));
-    }
+	@Transactional
+	public MemberUpdateResponseDto updateMemberInfo(Long memberSeq, MemberUpdateRequestDto updateRequestDto) {
+		Member member = memberRepository.findById(memberSeq)
+			.orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
+		member.updateMemberDetails(updateRequestDto);
+		return MemberUpdateResponseDto.toDto(memberRepository.save(member));
+	}
 
-    @Transactional(readOnly = true)
-    public MemberFindResponseDto findByMemberId(Long memberSeq) {
-        Member member = memberRepository.findById(memberSeq)
-                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
-        return MemberFindResponseDto.toDto(member);
-    }
+	@Transactional(readOnly = true)
+	public MemberFindResponseDto findByMemberId(Long memberSeq) {
+		Member member = memberRepository.findById(memberSeq)
+			.orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
+		return MemberFindResponseDto.toDto(member);
+	}
 
-    @Transactional(readOnly = true)
-    public MemberUpdateResponseDto updateFindByMemberId(Long memberSeq) {
-        Member member = memberRepository.findById(memberSeq)
-                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
-        return MemberUpdateResponseDto.toDto(member);
-    }
-  
+	@Transactional(readOnly = true)
+	public MemberUpdateResponseDto updateFindByMemberId(Long memberSeq) {
+		Member member = memberRepository.findById(memberSeq)
+			.orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
+		return MemberUpdateResponseDto.toDto(member);
+	}
+
 	@Transactional
 	public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
 		MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
-		FavoritesHospital favoritesHospital = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+		FavoritesHospital favoritesHospital = settingRelation(memberAndHospitalEntity.member,
+			memberAndHospitalEntity.hospital);
 
 		favoritesHospitalRepository.save(favoritesHospital);
 		hospitalRepository.save(memberAndHospitalEntity.hospital);
@@ -72,7 +71,8 @@ public class MemberService implements UserDetailsService {
 	@Transactional
 	public void removeFavorites(RequestFavoriesDto requestFavoriesDto) {
 		MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
-		FavoritesHospital favoritesHospital = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+		FavoritesHospital favoritesHospital = removeFavoritesHospital(memberAndHospitalEntity.member,
+			memberAndHospitalEntity.hospital);
 
 		memberRepository.save(memberAndHospitalEntity.member);
 		hospitalRepository.save(memberAndHospitalEntity.hospital);
@@ -83,6 +83,11 @@ public class MemberService implements UserDetailsService {
 	public Member savedMember(Member member) {
 		validateDuplicateMemberEmail(member);
 		return memberRepository.save(member);
+	}
+
+	@Transactional(readOnly = true)
+	public Optional<Member> findByEmail(String email) {
+		return memberRepository.findByEmail(email);
 	}
 
 	@Override
@@ -99,8 +104,8 @@ public class MemberService implements UserDetailsService {
 			.password(member.get().getPassword())
 			.build();
 	}
-  
-  private MemberAndHospitalEntity getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
+
+	private MemberAndHospitalEntity getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
 
 		Member member = memberRepository.findById(requestFavoriesDto.getMemberSeq())
 			.orElseThrow(() -> new IllegalStateException("Can Not Found Member Entity"));
@@ -137,12 +142,13 @@ public class MemberService implements UserDetailsService {
 		return favoritesHospital;
 	}
 
-	private record MemberAndHospitalEntity(Member member, Hospital hospital) {}
-  
-  private void validateDuplicateMemberEmail(Member member) {
-      Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
-      if (findMemberEmail.isPresent()) {
-          throw new IllegalStateException("이미 있는 이메일입니다.");
-      }
-  }
+	private record MemberAndHospitalEntity(Member member, Hospital hospital) {
+	}
+
+	private void validateDuplicateMemberEmail(Member member) {
+		Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
+		if (findMemberEmail.isPresent()) {
+			throw new IllegalStateException("이미 있는 이메일입니다.");
+		}
+	}
 }

@@ -3,6 +3,7 @@ package com.playdata.eungae.member.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -10,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.playdata.eungae.member.domain.Children;
+import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.dto.ChildrenDto;
 import com.playdata.eungae.member.repository.ChildrenRepository;
+import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,20 +23,21 @@ import lombok.RequiredArgsConstructor;
 public class ChildrenService {
 
 	private final ChildrenRepository childrenRepository;
+	private final MemberRepository memberRepository;
 
 	@Transactional
-	public void createChildren(ChildrenDto childrenDto, MultipartFile photoFile) {
+	public void createChildren(ChildrenDto childrenDto, MultipartFile photoFile, String email) {
 
 		if (photoFile != null && !photoFile.isEmpty()) {
-
 			String photoPath = savePhotoAndGetPath(photoFile);
 			childrenDto.setPhotoPath(photoPath);
 		}
 
+		Member member = memberRepository.findByEmail(email).get();
 		Children children = Children.from(childrenDto);
-		children = childrenRepository.save(children);
+		children.setMember(member);
 
-		ChildrenDto.from(children);
+		childrenRepository.save(children);
 	}
 
 	private String savePhotoAndGetPath(MultipartFile photoFile) {

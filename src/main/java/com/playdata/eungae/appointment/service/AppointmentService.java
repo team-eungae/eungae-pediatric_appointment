@@ -1,11 +1,16 @@
 package com.playdata.eungae.appointment.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.appointment.dto.AppointmentResponseDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
+import com.playdata.eungae.member.domain.Children;
+import com.playdata.eungae.member.domain.Member;
+import com.playdata.eungae.member.repository.ChildrenRepository;
+import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,8 +31,16 @@ import com.playdata.eungae.review.repository.ReviewRepository;
 public class AppointmentService {
 
 	private final AppointmentRepository appointmentRepository;
+	private final MemberRepository memberRepository;
+	private final ChildrenRepository childrenRepository;
   private final ReviewRepository reviewRepository;
 	private static final int PAGE_SIZE = 20;
+
+
+	public Optional<List<Children>> getMyChildren(String email) {
+		Member member = memberRepository.findByEmail(email).get();
+		return childrenRepository.findAllByMemberMemberSeq(member.getMemberSeq());
+	}
 
 	// 진료기록 불러오기
 	public List<AppointmentResponseDto> getMyMedicalRecords(Long memberSeq) {
