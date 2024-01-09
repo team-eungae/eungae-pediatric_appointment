@@ -1,19 +1,14 @@
 package com.playdata.eungae;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.time.LocalDateTime;
 
-import com.playdata.eungae.article.domain.Notice;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.playdata.eungae.appointment.domain.Appointment;
-import com.playdata.eungae.doctor.domain.Doctor;
-
 import com.playdata.eungae.appointment.domain.AppointmentStatus;
+import com.playdata.eungae.article.domain.Notice;
+import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalImage;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
@@ -31,7 +26,7 @@ public class initDB {
 
 	private final InitService initService;
 
-	// @PostConstruct
+	@PostConstruct
 	public void init() {
 		// 이곳에 정의한 메소드를 추가해주시면 됩니다.
 		initService.dbInitMember();
@@ -51,28 +46,25 @@ public class initDB {
 			Hospital hospital = getHospital();
 			em.persist(hospital);
 
-			Hospital hospital2 = getHospital2();
-			em.persist(hospital2);
-
-      Doctor doctor1 = getDoctor(hospital);
+			Doctor doctor1 = getDoctor(hospital);
 			Doctor doctor2 = getDoctor(hospital);
 			em.persist(doctor1);
 			em.persist(doctor2);
-      
+
 			HospitalSchedule hospitalSchedule = getHospitalSchedule();
 			hospitalSchedule.setHospital(hospital);
 			em.persist(hospitalSchedule);
 
 			Notice notice = getNotice();
 			em.persist(notice);
-      
+
 			Appointment appointment1 = getAppointment(member, hospital, doctor1);
 			Appointment appointment2 = getAppointment(member, hospital, doctor1);
 			Appointment appointment3 = getAppointment(member, hospital, doctor1);
 			em.persist(appointment1);
 			em.persist(appointment2);
 			em.persist(appointment3);
-      
+
 			Review review1 = getReview(member, hospital, appointment1);
 			Review review2 = getReview(member, hospital, appointment2);
 			Review review3 = getReview(member, hospital, appointment3);
@@ -142,6 +134,7 @@ public class initDB {
 			.lunchEndHour("1300")
 			.build();
 	}
+
 	private static Hospital getHospital2() {
 		return Hospital.builder()
 			.password("testpassword2")
@@ -163,17 +156,17 @@ public class initDB {
 		return HospitalSchedule.builder()
 			.monOpen("0900")
 			.monClose("1730")
-			.tueOpen ("0930")
+			.tueOpen("0930")
 			.tueClose("1830")
-			.wedOpen ("0830")
+			.wedOpen("0830")
 			.wedClose("1830")
-			.thuOpen ("0830")
+			.thuOpen("0830")
 			.thuClose("1830")
-			.friOpen ("0830")
+			.friOpen("0830")
 			.friClose("1830")
-			.satOpen ("0830")
+			.satOpen("0830")
 			.satClose("1830")
-			.sunOpen ("0830")
+			.sunOpen("0830")
 			.sunClose("1830")
 			.lunchHour("1200")
 			.lunchEndHour("1300")
@@ -195,24 +188,25 @@ public class initDB {
 
 	private static Notice getNotice() {
 		return Notice.builder()
-				.title("응애 시스템 점검")
-				.content("응애 서비스 시스템 점검 예정 안내입니다. 1월 8일 05시부터 10시까지 서비스 점검 예정이오니 약간 알아서 예약 안되는거 아쇼")
+			.title("응애 시스템 점검")
+			.content("응애 서비스 시스템 점검 예정 안내입니다. 1월 8일 05시부터 10시까지 서비스 점검 예정이오니 약간 알아서 예약 안되는거 아쇼")
+			.build();
+	}
+
+		private static Doctor getDoctor (Hospital hospital){
+			return Doctor.builder()
+				.name("김우진")
+				.hospital(hospital)
+				.treatmentPossible(3)
+				.profileImage("doctor.jpeg")
 				.build();
+		}
 
-	private static Doctor getDoctor(Hospital hospital) {
-		return Doctor.builder()
-			.name("김우진")
-			.hospital(hospital)
-			.treatmentPossible(3)
-			.profileImage("doctor.jpeg")
-			.build();
+		private static HospitalImage getHospitalImage (Hospital hospital){
+			return HospitalImage.builder()
+				.hospital(hospital)
+				.originFileName("")
+				.storeFileName("")
+				.build();
+		}
 	}
-
-	private static HospitalImage getHospitalImage(Hospital hospital) {
-		return HospitalImage.builder()
-			.hospital(hospital)
-			.originFileName("")
-			.storeFileName("")
-			.build();
-	}
-}
