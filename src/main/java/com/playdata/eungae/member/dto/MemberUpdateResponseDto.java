@@ -30,4 +30,5 @@ public class MemberUpdateResponseDto {
                 .zipCode(member.getZipCode())
                 .build();
     }
+
 }

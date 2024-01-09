@@ -19,7 +19,7 @@ public class MemberFindResponseDto {
     private String addressDetail;
 
     //빌더
-    public static MemberFindResponseDto toDto(Member member){
+    public static MemberFindResponseDto toDto(Member member) {
         return MemberFindResponseDto.builder()
                 .email(member.getEmail())
                 .name(member.getName())
