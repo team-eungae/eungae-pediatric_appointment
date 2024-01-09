@@ -82,6 +82,12 @@ public class MemberService implements UserDetailsService {
         validateDuplicateMemberEmail(member);
         return memberRepository.save(member);
     }
+  
+  
+	  @Transactional(readOnly = true)
+  	public Optional<Member> findByEmail(String email) {
+	  	return memberRepository.findByEmail(email);
+  	}
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

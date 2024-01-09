@@ -10,35 +10,24 @@ import lombok.Data;
 
 @Data
 @Builder
-public class HospitalViewResponseDto {
-
+public class HospitalSearchResponseDto {
 	private Long hospitalSeq;
-	private HospitalScheduleViewResponseDto hospitalSchedule;
-	private List<DoctorViewResponseDto> doctor;
-	private String password;
 	private String name;
 	private String notice;
 	private int deposit; //예약금
 	private String contact; //연락처
 	private String address;
 	private String addressDetail;
-	private String businessRegistration;
-	private double xCoordinate;
-	private double yCoordinate;
 
-	public static HospitalViewResponseDto toDto(Hospital entity) {
-		return HospitalViewResponseDto.builder()
-			.hospitalSchedule(HospitalScheduleViewResponseDto.toDto(entity.getHospitalSchedule()))
-			.password(entity.getPassword())
+	public static HospitalSearchResponseDto toDto(Hospital entity){
+		return HospitalSearchResponseDto.builder()
+			.hospitalSeq(entity.getHospitalSeq())
 			.name(entity.getName())
 			.notice(entity.getNotice())
 			.deposit(entity.getDeposit())
 			.contact(entity.getContact())
 			.address(entity.getAddress())
 			.addressDetail(entity.getAddressDetail())
-			.businessRegistration(entity.getBusinessRegistration())
-			.xCoordinate(entity.getXCoordinate())
-			.yCoordinate(entity.getYCoordinate())
 			.build();
 	}
 }

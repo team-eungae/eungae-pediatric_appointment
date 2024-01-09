@@ -3,7 +3,9 @@ package com.playdata.eungae.member.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,10 +39,6 @@ public class Member extends BaseEntity implements UserDetails {
     @Id
     private Long memberSeq;
 
-    @Builder.Default
-    @OneToMany(mappedBy = "member")
-    private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
-
     @Column(nullable = false, unique = true, updatable = false)
     private String email;
 
@@ -71,6 +69,18 @@ public class Member extends BaseEntity implements UserDetails {
 
     @Column(columnDefinition = "varchar(5) default '0'")
     private boolean kakaoCheck;
+  
+	  @Builder.Default
+	  @OneToMany(mappedBy = "member")
+	  private List<Children> children = new ArrayList<>();
+
+	  @Builder.Default
+	  @OneToMany(mappedBy = "member")
+	  private List<Appointment> appointments = new ArrayList<>();
+  
+    @Builder.Default
+    @OneToMany(mappedBy = "member")
+    private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
 
     public void updateMemberDetails(MemberUpdateRequestDto updateRequestDto) {
         this.name = updateRequestDto.getName();
@@ -79,6 +89,10 @@ public class Member extends BaseEntity implements UserDetails {
         this.addressDetail = updateRequestDto.getAddressDetail();
         this.zipCode = updateRequestDto.getZipCode();
     }
+
+	public void addChildren(Children children) {
+		this.children.add(children);
+	}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

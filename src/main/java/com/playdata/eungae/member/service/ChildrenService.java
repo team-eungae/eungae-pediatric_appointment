@@ -1,53 +1,52 @@
 package com.playdata.eungae.member.service;
-import java.io.IOException;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.playdata.eungae.member.domain.Children;
+import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.dto.ChildrenDto;
 import com.playdata.eungae.member.repository.ChildrenRepository;
-import jakarta.persistence.EntityNotFoundException;
+import com.playdata.eungae.member.repository.MemberRepository;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class ChildrenService {
+
 	private final ChildrenRepository childrenRepository;
-
-	@Autowired
-	public ChildrenService(ChildrenRepository childrenRepository) {
-
-		this.childrenRepository = childrenRepository;
-	}
+	private final MemberRepository memberRepository;
 
 	@Transactional
-	public ChildrenDto createChild(ChildrenDto childrenDto, MultipartFile photoFile) {
+	public void createChildren(ChildrenDto childrenDto, MultipartFile photoFile, String email) {
 
 		if (photoFile != null && !photoFile.isEmpty()) {
-
 			String photoPath = savePhotoAndGetPath(photoFile);
 			childrenDto.setPhotoPath(photoPath);
-
 		}
 
+		Member member = memberRepository.findByEmail(email).get();
 		Children children = Children.from(childrenDto);
-		children = childrenRepository.save(children);
+		children.setMember(member);
 
-		return ChildrenDto.from(children);
+		childrenRepository.save(children);
 	}
-	private String savePhotoAndGetPath(MultipartFile photoFile) {
 
+	private String savePhotoAndGetPath(MultipartFile photoFile) {
 		return " ";
 	}
 
 	@Transactional
 	public void deleteChild(Long id) {
-
 		childrenRepository.deleteById(id);
-
 	}
 
 	private String formatDate(String dateStr) {
@@ -71,6 +70,4 @@ public class ChildrenService {
 			})
 			.collect(Collectors.toList());
 	}
-
 }
-

@@ -1,7 +1,9 @@
 package com.playdata.eungae.member.dto;
 
 import org.springframework.web.multipart.MultipartFile;
+
 import com.playdata.eungae.member.domain.Children;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,9 +25,8 @@ public class ChildrenDto {
 	private MultipartFile photoContent;
 
 	public static ChildrenDto from(Children entity) {
-		ChildrenDto dto = ChildrenDto.builder()
+		return ChildrenDto.builder()
 			.childrenSeq(entity.getChildrenSeq())
-			.memberSeq(entity.getMemberSeq())
 			.name(entity.getName())
 			.birthDate(entity.getBirthDate())
 			.gender(entity.getGender())
@@ -33,6 +34,5 @@ public class ChildrenDto {
 			.photoPath(entity.getPhotoPath())
 			.etcInfo(entity.getEtcInfo())
 			.build();
-		return dto;
 	}
 }
