@@ -21,10 +21,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
 import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
-import com.playdata.eungae.review.repository.ReviewRepository;    
-  
+import com.playdata.eungae.review.repository.ReviewRepository;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
@@ -33,9 +34,8 @@ public class AppointmentService {
 	private final AppointmentRepository appointmentRepository;
 	private final MemberRepository memberRepository;
 	private final ChildrenRepository childrenRepository;
-  private final ReviewRepository reviewRepository;
+	private final ReviewRepository reviewRepository;
 	private static final int PAGE_SIZE = 20;
-
 
 	public Optional<List<Children>> getMyChildren(String email) {
 		Member member = memberRepository.findByEmail(email).get();
@@ -67,10 +67,11 @@ public class AppointmentService {
 		Appointment appointment = appointmentRepository.findAllWithReview(appointmentSeq)
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"));
 
-		ResponseDetailMedicalHistoryDto responseDetailMediclaHistoryDto = ResponseDetailMedicalHistoryDto.toDto(appointment);
+		ResponseDetailMedicalHistoryDto responseDetailMediclaHistoryDto = ResponseDetailMedicalHistoryDto.toDto(
+			appointment);
 
 		responseDetailMediclaHistoryDto.setWriteReview(reviewRepository.findById(appointment.getReviewSeq())
-				.isPresent());
+			.isPresent());
 
 		return responseDetailMediclaHistoryDto;
 
@@ -87,4 +88,5 @@ public class AppointmentService {
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"))
 			.map(ResponseAppointmentDto::toDto);
 
+	}
 }
