@@ -1,6 +1,5 @@
 package com.playdata.eungae.hospital.domain;
 
-
 import com.playdata.eungae.base.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -31,10 +30,10 @@ public class HospitalSchedule extends BaseEntity {
 	@OneToOne(mappedBy = "hospitalSchedule")
 	private Hospital hospital;
 
-	@Column(nullable = false,  length = 4)
+	@Column(nullable = false, length = 4)
 	private String lunchHour;
 
-	@Column(nullable = false,  length = 4)
+	@Column(nullable = false, length = 4)
 	private String lunchEndHour;
 
 	@Column(nullable = false, length = 4)

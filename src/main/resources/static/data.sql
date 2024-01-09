@@ -1,0 +1,6 @@
+--
+--
+-- INSERT INTO member (member_seq, email, password, name, phone_number, birth_date, address, address_detail, zip_code, created_at, modified_at)
+-- VALUES (1, 'amdin@admin', 'aA12345!', 'kim', '01032626945', '19991213', '판교', '판교역', '11033', SYSDATE, sysdate);
+--
+--

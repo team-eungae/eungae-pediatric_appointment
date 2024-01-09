@@ -6,21 +6,6 @@ $(function () {
             }
         });
     });
-    
-    $(".modal_close").on("click", function () {
-        action_popup.close(this);
-        // 탈퇴 확인 시, 로그아웃 및 로그인 화면으로 이동
-        logoutAndRedirectToLogin();
-    });
-
-    function logoutAndRedirectToLogin() {
-        // 여기에서 로그아웃 로직을 수행
-        // ...
-
-        // 로그아웃 후 로그인 화면으로 이동
-        window.location.href = "/login"; // 로그인 페이지 URL에 맞게 수정
-    }
-
 });
 
 /**

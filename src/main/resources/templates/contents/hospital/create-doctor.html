@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>의사 등록 | 응애 - 소아과 예약</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/shared.css">
+    <link rel="icon" type="image/x-icon" href="/img/favicon-96x96.png">
+    <script src="https://kit.fontawesome.com/38adf5dcd0.js" crossorigin="anonymous"></script>
+    <script src="/js/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <form th:action="@{/hospital/doctors}" method="post" enctype="multipart/form-data" style="margin-top: 30vh;">
+        <div class="mb-3">
+            <label>의사 이름</label>
+            <input type="text" name="name"/>
+        </div>
+        <div class="mb-3">
+            <label>예약 시간 당 진료 가능 인원 수</label>
+            <input type="number" name="treatmentPossible"/>
+        </div>
+        <div class="frame">
+            <div class="mb-3 imageContainer">
+                <label for="profileImage">프로필 사진</label>
+                <div id="frame" class="frame">
+                    <input name="profileImage" id="profileImage" type="file">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">의사 등록</button>
+    </form>
+</div>
+</body>
+</html>
