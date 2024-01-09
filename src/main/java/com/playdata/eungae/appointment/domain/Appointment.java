@@ -16,6 +16,8 @@ import com.playdata.eungae.review.domain.Review;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -37,8 +39,8 @@ import lombok.Setter;
 @DynamicInsert
 @Getter
 @Table(name = "appointment")
-@Entity
 @Builder
+@Entity
 public class Appointment extends BaseEntity {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -63,13 +65,7 @@ public class Appointment extends BaseEntity {
 
 	@Builder.Default
 	@OneToMany(mappedBy = "appointment")
-	// 연관관계가 양방향으로 설정되있지 않아 추가했습니다.
-	// 이 부분을 OneToMany로 한 이유가 있을까요??
 	private List<AppointmentDocument> appointmentDocuments = new ArrayList<>();
-
-	@Setter
-	// join용 seq
-	private Long reviewSeq;
 
 	@Column(nullable = false)
 	private LocalDateTime appointmentDate;
@@ -80,9 +76,13 @@ public class Appointment extends BaseEntity {
 	@Column(nullable = false)
 	private String appointmentMinute;
 
-	@ColumnDefault("'0'")
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private AppointmentStatus status;
 
 	@Column
 	private String note;
+
+	// join seq
+	@Setter
+	private Long reviewSeq;
 }

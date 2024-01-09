@@ -2,12 +2,15 @@ package com.playdata.eungae.member.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import org.hibernate.annotations.DynamicInsert;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.hospital.domain.Hospital;
@@ -33,7 +36,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "member")
 @Entity
-public class Member extends BaseEntity {
+public class Member extends BaseEntity implements UserDetails {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Id
@@ -88,5 +91,40 @@ public class Member extends BaseEntity {
 		this.address = updateRequestDto.getAddress();
 		this.addressDetail = updateRequestDto.getAddressDetail();
 		this.zipCode = updateRequestDto.getZipCode();
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

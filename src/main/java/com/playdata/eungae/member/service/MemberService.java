@@ -2,6 +2,7 @@ package com.playdata.eungae.member.service;
 
 import java.util.Optional;
 
+import com.playdata.eungae.member.dto.SignUpMemberRequestDto;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,6 +26,7 @@ import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ReflectionUtils;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -35,6 +37,28 @@ public class MemberService implements UserDetailsService {
 	private final HospitalRepository hospitalRepository;
 	private final FavoritesHospitalRepository favoritesHospitalRepository;
 
+    @Transactional
+    public MemberUpdateResponseDto updateMemberInfo(Long memberSeq, MemberUpdateRequestDto updateRequestDto) {
+        Member member = memberRepository.findById(memberSeq)
+                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
+        member.updateMemberDetails(updateRequestDto);
+        return MemberUpdateResponseDto.toDto(memberRepository.save(member));
+    }
+
+    @Transactional(readOnly = true)
+    public MemberFindResponseDto findByMemberId(Long memberSeq) {
+        Member member = memberRepository.findById(memberSeq)
+                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
+        return MemberFindResponseDto.toDto(member);
+    }
+
+    @Transactional(readOnly = true)
+    public MemberUpdateResponseDto updateFindByMemberId(Long memberSeq) {
+        Member member = memberRepository.findById(memberSeq)
+                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
+        return MemberUpdateResponseDto.toDto(member);
+    }
+  
 	@Transactional
 	public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
 		MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
@@ -61,33 +85,6 @@ public class MemberService implements UserDetailsService {
 		return memberRepository.save(member);
 	}
 
-	@Transactional
-	public MemberUpdateResponseDto updateMember(MemberUpdateRequestDto updateRequestDto) {
-		Member member = memberRepository.findByEmail(updateRequestDto.getEmail()).orElseThrow(null);
-
-		member.updateMemberDetails(updateRequestDto);
-
-		Member updatedMember = memberRepository.save(member);
-		return MemberUpdateResponseDto.toDto(updatedMember);
-	}
-
-	public MemberFindResponseDto findById(Long memberSeq) {
-		Optional<Member> optionalMember = memberRepository.findById(memberSeq);
-		return optionalMember.map(MemberFindResponseDto::toDto).orElse(null);
-	}
-
-	public MemberUpdateResponseDto updateFindById(Long memberSeq) {
-		Optional<Member> optionalMember = memberRepository.findById(memberSeq);
-		return optionalMember.map(MemberUpdateResponseDto::toDto).orElse(null);
-	}
-
-	private void validateDuplicateMemberEmail(Member member) {
-		Optional<Member> findMemberByEmail = memberRepository.findByEmail(member.getEmail());
-		if (findMemberByEmail.isPresent()) {
-			throw new IllegalStateException("이미 가입된 이메일입니다.");
-		}
-	}
-
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
@@ -98,7 +95,7 @@ public class MemberService implements UserDetailsService {
 		}
 
 		return User.builder()
-			.username(String.valueOf(member.get().getMemberSeq()))
+			.username(member.get().getEmail())
 			.password(member.get().getPassword())
 			.build();
 	}
@@ -141,4 +138,11 @@ public class MemberService implements UserDetailsService {
 	}
 
 	private record MemberAndHospitalEntity(Member member, Hospital hospital) {}
+  
+  private void validateDuplicateMemberEmail(Member member) {
+      Optional<Member> findMemberEmail = memberRepository.findByEmail(member.getEmail());
+      if (findMemberEmail.isPresent()) {
+          throw new IllegalStateException("이미 있는 이메일입니다.");
+      }
+  }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -21,7 +22,10 @@
             </a>
         </div>
         <div class="col-4 align-self-center">
-            <button class="profile-button float-right" onclick="location.href='/signup'">
+            <button class="profile-button float-right" onclick="location.href='/my/profile'" sec:authorize="isAuthenticated()">
+                <i class="fa-solid fa-user fa-xl"></i>
+            </button>
+            <button class="profile-button float-right" onclick="location.href='/login'" sec:authorize="isAnonymous()">
                 <i class="fa-solid fa-user fa-xl"></i>
             </button>
         </div>

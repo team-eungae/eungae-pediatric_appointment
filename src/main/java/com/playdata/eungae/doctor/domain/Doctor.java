@@ -18,12 +18,15 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Builder
 @DynamicInsert
 @Table(name = "doctor")
 @Entity
@@ -44,7 +47,6 @@ public class Doctor extends BaseEntity {
 	private String status;
 
 	@Column(nullable = false)
-	@ColumnDefault("'3'")
 	private int treatmentPossible;
 
 	private String profileImage;
@@ -53,11 +55,9 @@ public class Doctor extends BaseEntity {
 		this.name = name;
 	}
 
-
 	//연관관계 편의 메소드
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;
 		hospital.addDoctor(this);
 	}
-
 }

@@ -1,0 +1,44 @@
+main {
+    padding-left: 5vw;
+    padding-right: 5vw;
+    margin-bottom: 3.5rem;
+}
+
+.notice {
+    margin-top: 10vh;
+    margin-bottom: 3vh;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.notice-content {
+  text-align: center;
+  font-size: 15px;
+}
+.notice-th {
+  text-align: center;
+  font-size: 17px;
+  padding: 3%;
+}
+
+table {
+  width: 100%;
+  border-top: 2px solid #333;
+  border-collapse: collapse;
+}
+th,
+td {
+  border-bottom: 1px solid #b1b1b1;
+  padding: 5px;
+}
+.notice-category {
+  float: right;
+}
+.notice-content {
+  margin-top: 5%;
+}
+.page-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

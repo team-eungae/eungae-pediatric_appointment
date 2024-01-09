@@ -3,62 +3,76 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mobile_layout}">
 <th:block layout:fragment="custom_header">
-  <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-  <link rel="stylesheet" href="/css/my-page-form.css">
-  <title>내 정보 수정 - 응애 | 소아과 예약</title>
+    <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <link rel="stylesheet" href="/css/my-page-form.css">
+    <title>내 정보 수정 - 응애 | 소아과 예약</title>
 </th:block>
 <body>
 <main class="my-page-form" layout:fragment="content">
-  <h2 class="my-page-title">내 정보 수정</h2>
+    <form>
+        <h2 class="my-page-title">내 정보 수정</h2>
 
-  <div class="my-page__parent">
-    <div class="my-page-content">
-      <div class="my-page-sub__title col-3">이름</div>
-      <div class="my-page__input col">
-        <input type="text" id="name" value="김수용">
-      </div>
-    </div>
-    <div class="my-page-content">
-      <div class="my-page-sub__title col-3">핸드폰</div>
-      <div class="my-page__input col">
-        <input type="text" id="phone_number" value="010-1234-5678">
-      </div>
-    </div>
-    <div class="my-page-content">
-      <div class="my-page-sub__title col-3">이메일</div>
-      <div class="my-page__input col">
-        <input type="text" id="email" value="example@eungae.com">
-      </div>
-    </div>
-    <div class="my-page-content">
-      <div class="my-page-sub__title col-3">우편번호</div>
-      <div class="zip-code-container">
-        <div class="my-page__input col">
-          <input type="text" id="zip-code" value="11033">
-          <input type="button" id="zip-code-find__button" class="zip-code-find__button"
-                 onclick="sample6_execDaumPostcode()" value=" 찾기">
+        <p id="memberSeq" th:value="${member.memberSeq}" hidden="hidden"></p>
+
+        <div class="my-page__parent">
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">이름</div>
+                <div class="my-page__input col">
+                    <input type="text" id="newName" name="name" th:value="${member.name}" required>
+                </div>
+            </div>
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">핸드폰</div>
+                <div class="my-page__input col">
+                    <input type="text" id="newPhoneNumber" name="phoneNumber" th:value="${member.phoneNumber}" required>
+                </div>
+            </div>
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">이메일</div>
+                <div class="my-page__input col">
+                    <input type="text" id="email" name="email" th:value="${member.email}" disabled>
+                </div>
+            </div>
+
+            <div id="wrap">
+                <img src="https://t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
+                     style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()"
+                     alt="접기 버튼">
+            </div>
+
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">우편번호</div>
+                <div class="zip-code-container">
+                    <div class="my-page__input col">
+                        <input type="text" id="newZipCode" name="zipCode" th:value="${member.zipCode}" required>
+                        <input type="button" id="zip-code-find__button" class="zip-code-find__button"
+                               onclick="execDaumPostcode()" value="찾기">
+                    </div>
+                </div>
+            </div>
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">주소</div>
+                <div class="my-page__input col">
+                    <input type="text" id="newAddress" name="address" th:value="${member.address}" required>
+                </div>
+            </div>
+            <div class="my-page-content">
+                <div class="my-page-sub__title col-3">상세주소</div>
+                <div class="my-page__input col">
+                    <input type="text" id="newAddressDetail" name="addressDetail" th:value="${member.addressDetail}"
+                           required>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-    <div class="my-page-content">
-      <div class="my-page-sub__title col-3">주소</div>
-      <div class="my-page__input col">
-        <input type="text" id="address" value="서울 용산구 독서당로 111">
-      </div>
-    </div>
-    <div class="my-page-content">
-      <div class="my-page-sub__title col-3">상세주소</div>
-      <div class="my-page__input col">
-        <input type="text" id="address-detail" value="301호">
-      </div>
-    </div>
-    <div class="my-page-content">
-      <button type="submit" class="my-page-content save">저장하기</button>
-    </div>
-  </div>
+        <div class="my-page-content">
+            <button type="button" id="btn-update" class="my-page-content save" onclick="updateMemberInfo()">저장하기
+            </button>
+        </div>
+        </div>
+    </form>
 </main>
 <div layout:fragment="custom_js">
-  <script src="/js/my-page-form.js"></script>
+    <script src="/js/my-page-form.js"></script>
 </div>
 </body>
 </html>

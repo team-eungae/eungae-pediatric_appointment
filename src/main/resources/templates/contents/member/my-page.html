@@ -13,36 +13,42 @@
         <div class="my-page-content">
             <div class="my-page-sub__title col-3">이름</div>
             <div class="my-page__input col">
-                <input type="text" id="name" name="name" th:value="${member.name}" readonly>
+                <input type="text" id="name" name="name" th:value="${member.name}" disabled>
             </div>
         </div>
         <div class="my-page-content">
             <div class="my-page-sub__title col-3">핸드폰</div>
             <div class="my-page__input col">
-                <input type="text" id="phone_number" name="phone_number" th:value="${member.phoneNumber}" readonly>
+                <input type="text" id="phone_number" name="phone_number" th:value="${member.phoneNumber}" disabled>
             </div>
         </div>
         <div class="my-page-content">
             <div class="my-page-sub__title col-3">이메일</div>
             <div class="my-page__input col">
-                <input type="text" id="email" name="email" th:value="${member.email}" readonly>
+                <input type="text" id="email" name="email" th:value="${member.email}" disabled>
             </div>
         </div>
         <div class="my-page-content">
             <div class="my-page-sub__title col-3">주소</div>
             <div class="my-page__input col">
-                <input type="text" id="address" name="address" th:value="${member.address}+ ' ' + ${member.addressDetail}" readonly>
+                <input type="text" id="address" name="address"
+                       th:value="${member.address}+ ' ' + ${member.addressDetail}" disabled>
             </div>
         </div>
     </div>
     <div class="my-page__buttons">
-        <a class="my-page__button my-page__button-top col" th:href="@{/my/profile/form}"><i class="fa-solid fa-gear my-page__button__icon"></i>내 정보 수정</a>
-        <a class="my-page__button col" th:href="@{/my/children}"><i class="fa-solid fa-children my-page__button__icon"></i>자녀 관리</a>
-        <a class="my-page__button col" th:href="@{/my/reviews}"><i class="fa-solid fa-pen-to-square my-page__button__icon"></i>리뷰 관리</a>
-        <a class="my-page__button col" th:href="@{/my/reservations}"><i class="fa-solid fa-calendar-check my-page__button__icon"></i>예약
+        <a class="my-page__button my-page__button-top col" th:href="@{/my/profile/form}"><i
+                class="fa-solid fa-gear my-page__button__icon"></i>내 정보 수정</a>
+        <a class="my-page__button col" th:href="@{/my/children}"><i
+                class="fa-solid fa-children my-page__button__icon"></i>자녀 관리</a>
+        <a class="my-page__button col" th:href="@{/my/reviews}"><i
+                class="fa-solid fa-pen-to-square my-page__button__icon"></i>리뷰 관리</a>
+        <a class="my-page__button col" th:href="@{/my/reservations}"><i
+                class="fa-solid fa-calendar-check my-page__button__icon"></i>예약
             관리</a>
-        <a class="my-page__button col" th:href="@{/}"><i class="fa-solid fa-right-from-bracket my-page__button__icon"></i>로그아웃</a>
-<!--        <a class="my-page-withdrawal__button" th:href="@{/}">회원 탈퇴</a>-->
+        <a class="my-page__button col" th:href="@{/logout}"><i
+                class="fa-solid fa-right-from-bracket my-page__button__icon"></i>로그아웃</a>
+        <!--        <a class="my-page-withdrawal__button" th:href="@{/}">회원 탈퇴</a>-->
         <div class="wrap">
             <section>
                 <a type="button" class="my-page-withdrawal__button" id="confirm">회원 탈퇴</a>

@@ -41,8 +41,9 @@ public class HomeController {
 		Model model) {
 
 		if (bindingResult.hasErrors()) {
-			return "contents/member/login";
+			return "contents/member/sign-up";
 		}
+
 		try {
 			Member member = SignUpMemberRequestDto.toEntity(signUpMemberRequestDto, passwordEncoder);
 			memberService.savedMember(member);
@@ -59,8 +60,15 @@ public class HomeController {
 		return "contents/member/login";
 	}
 
+	@GetMapping("/login/error")
+	public String loginError(Model model) {
+		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
+		return "contents/member/login";
+	}
+
 	@GetMapping("/map")
 	public String findHospital() {
+
 		return "contents/hospital/find-hospital";
 	}
 

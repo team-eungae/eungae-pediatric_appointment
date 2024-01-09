@@ -33,7 +33,6 @@ public class SignUpMemberRequestDto {
 	@NotBlank(message = "주소 필수 입력 값입니다.")
 	private String address;
 
-	@NotBlank(message = "상세주소 필수 입력 값입니다.")
 	private String addressDetail;
 
 	@NotBlank(message = "우편번호 필수 입력 값입니다.")
@@ -41,7 +40,7 @@ public class SignUpMemberRequestDto {
 
 	public static Member toEntity(SignUpMemberRequestDto signUpMemberRequestDto, PasswordEncoder passwordEncoder) {
 		String password = passwordEncoder.encode(signUpMemberRequestDto.getPassword());
-    
+
 		return Member.builder()
 			.email(signUpMemberRequestDto.getEmail())
 			.password(password)

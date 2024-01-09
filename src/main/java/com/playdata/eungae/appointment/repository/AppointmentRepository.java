@@ -10,9 +10,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.playdata.eungae.appointment.domain.Appointment;
+import com.playdata.eungae.member.domain.Member;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+  
+	// 내 진료기록 전체 조회
+	Optional<List<Appointment>> findAllByMemberMemberSeqAndStatus(Long memberSeq, String status);
 
 	@Query("select a from Appointment a"
 			+ " join fetch a.hospital"
