@@ -20,14 +20,15 @@ public class DoctorViewController {
 	private final DoctorService doctorService;
 
 	@GetMapping("/doctors/form")
-	public String createHospitalDoctorView(){
+	public String HospitalDoctorForm(){
 		return "contents/hospital/create-doctor";
 	}
 
+
 	@PostMapping("/doctors")
-	@ResponseBody
-	public String createHospitalDoctor(@ModelAttribute DoctorRegisterRequestDto doctorRegisterRequestDto){
-		doctorService.createDoctor(doctorRegisterRequestDto);
-		return "Doctor created successfully";
+	public String createHospitalDoctor(@ModelAttribute DoctorRegisterRequestDto doctorRegisterRequestDto, Long hospitalSeq){
+		doctorService.createDoctor(doctorRegisterRequestDto, hospitalSeq);
+		return "redirect:/hospital/doctors/form";
 	}
+
 }

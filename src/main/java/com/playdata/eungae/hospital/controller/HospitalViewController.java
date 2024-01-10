@@ -35,7 +35,7 @@ public class HospitalViewController {
 		HospitalViewResponseDto hospitalById = hospitalService.findHospitalById(hospitalSeq);
 		List<DoctorViewResponseDto> doctorList = doctorService.findDoctorsByHospitalId(hospitalSeq);
 		List<ResponseReviewDto> reviews = reviewService.findReviewsByHospitalSeq(hospitalSeq);
-		List<HospitalImageResponseDto> hospitalImages = hospitalImageService.findhospitalImages(hospitalSeq);
+		List<HospitalImageResponseDto> hospitalImages = hospitalImageService.findHospitalImages(hospitalSeq);
 
 		model.addAttribute("hospital",hospitalById);
 		model.addAttribute("doctorList",doctorList);
