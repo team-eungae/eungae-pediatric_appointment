@@ -33,22 +33,6 @@
     margin-bottom: 2vh;
 }
 
-label {
-    margin-top: 1vh;
-    border:0;
-    background-color: #326EB3;
-    color: #fff;
-    border-radius: 3vw;
-    padding-left: 4vw;
-    padding-right: 4vw;
-    padding-top: 1vh;
-    padding-bottom: 1vh;
-}
-
-#post-image {
-    display: none;
-}
-
 .write-button {
     background-color: #142C47;
     border-radius: 3vw;
@@ -57,4 +41,39 @@ label {
     width: 20vw;
     height: 4vh;
     margin-left: 68vw;
+}
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    justify-content: space-around;
+    padding: 0 3.2em;
+    text-align: center;
+    width: 5em;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 2.3px;
+    -webkit-text-stroke-color: gold;
+    cursor: pointer;
+}
+
+.star-rating :checked ~ label {
+    -webkit-text-fill-color: gold !important;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    -webkit-text-fill-color: #fff58c;
+}
+
+.star {
+    margin-left: 0.2em;
 }
