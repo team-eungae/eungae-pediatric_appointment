@@ -1,7 +1,6 @@
 package com.playdata.eungae;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +13,7 @@ import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalImage;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
 import com.playdata.eungae.hospital.service.HospitalImageService;
+import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.review.domain.Review;
 
@@ -41,7 +41,17 @@ public class initDB {
 		private final HospitalImageService hospitalImageService;
 
 		public void dbInitMember() {
+			Children children = Children.builder()
+				.name("전병준")
+				.birthDate("test")
+				.gender("test")
+				.build();
+
 			Member member = getMember("test5@gmail.com");
+
+			children.setMember(member);
+
+			em.persist(children);
 			em.persist(member);
 
 			Hospital hospital = getHospital();
@@ -59,12 +69,16 @@ public class initDB {
 			Notice notice = getNotice();
 			em.persist(notice);
 
-			Appointment appointment1 = getAppointment(member, hospital, doctor1);
-			Appointment appointment2 = getAppointment(member, hospital, doctor1);
-			Appointment appointment3 = getAppointment(member, hospital, doctor1);
+			Appointment appointment1 = getAppointment(member, hospital, doctor1, children);
+			Appointment appointment2 = getAppointment(member, hospital, doctor1, children);
+			Appointment appointment3 = getAppointment(member, hospital, doctor1, children);
+			Appointment appointment4 = getMedicalHistory(member, hospital, doctor1, children);
+			Appointment appointment5 = getMedicalHistory(member, hospital, doctor1, children);
 			em.persist(appointment1);
 			em.persist(appointment2);
 			em.persist(appointment3);
+			em.persist(appointment4);
+			em.persist(appointment5);
 
 			Review review1 = getReview(member, hospital, appointment1);
 			Review review2 = getReview(member, hospital, appointment2);
@@ -174,14 +188,28 @@ public class initDB {
 			.build();
 	}
 
-	private static Appointment getAppointment(Member member, Hospital hospital, Doctor doctor) {
+	private static Appointment getAppointment(Member member, Hospital hospital, Doctor doctor, Children children) {
 		return Appointment.builder()
+			.children(children)
 			.member(member)
 			.hospital(hospital)
 			.doctor(doctor)
 			.appointmentDate(LocalDate.now())
 			.appointmentHHMM("1030")
 			.status(AppointmentStatus.APPOINTMENT)
+			.note("test")
+			.build();
+	}
+
+	private static Appointment getMedicalHistory(Member member, Hospital hospital, Doctor doctor, Children children) {
+		return Appointment.builder()
+			.children(children)
+			.member(member)
+			.hospital(hospital)
+			.doctor(doctor)
+			.appointmentDate(LocalDate.now())
+			.appointmentHHMM("1030")
+			.status(AppointmentStatus.DIAGNOSIS)
 			.note("test")
 			.build();
 	}

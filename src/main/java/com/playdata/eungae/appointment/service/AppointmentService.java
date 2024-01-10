@@ -1,8 +1,6 @@
 package com.playdata.eungae.appointment.service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,22 +10,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import com.playdata.eungae.appointment.domain.Appointment;
-import com.playdata.eungae.appointment.dto.AppointmentResponseDto;
-import com.playdata.eungae.appointment.dto.AppointmentTimeResponseDto;
-import com.playdata.eungae.appointment.repository.AppointmentRepository;
-import com.playdata.eungae.doctor.domain.Doctor;
-import com.playdata.eungae.doctor.repository.DoctorRepository;
-import com.playdata.eungae.hospital.domain.HospitalSchedule;
-import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
-import com.playdata.eungae.member.domain.Children;
-import com.playdata.eungae.member.domain.Member;
-import com.playdata.eungae.member.repository.ChildrenRepository;
-import com.playdata.eungae.member.repository.MemberRepository;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,21 +17,36 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.playdata.eungae.appointment.domain.Appointment;
+import com.playdata.eungae.appointment.domain.AppointmentStatus;
+import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
 import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
+import com.playdata.eungae.appointment.repository.AppointmentRepository;
+import com.playdata.eungae.doctor.repository.DoctorRepository;
+import com.playdata.eungae.hospital.domain.HospitalSchedule;
+import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
+import com.playdata.eungae.member.domain.Children;
+import com.playdata.eungae.member.domain.Member;
+import com.playdata.eungae.member.repository.ChildrenRepository;
+import com.playdata.eungae.member.repository.MemberRepository;
 import com.playdata.eungae.review.repository.ReviewRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class AppointmentService {
+
+	private static final int PAGE_SIZE = 20;
 	private final HospitalScheduleRepository hospitalScheduleRepository;
 	private final DoctorRepository doctorRepository;
 	private final AppointmentRepository appointmentRepository;
 	private final MemberRepository memberRepository;
 	private final ChildrenRepository childrenRepository;
 	private final ReviewRepository reviewRepository;
-	private static final int PAGE_SIZE = 20;
 
 	@Transactional(readOnly = true)
 	public Optional<List<Children>> getMyChildren(String email) {
@@ -59,27 +56,21 @@ public class AppointmentService {
 
 	// 진료기록 불러오기
 	@Transactional(readOnly = true)
-	public List<AppointmentResponseDto> getMyMedicalRecords(Long memberSeq) {
-		// 현재 status중 "2"가 진료 완료된 상태를 나타내는 값입니다.
-		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberMemberSeqAndStatus(
-			memberSeq, "2").orElseThrow(() -> new IllegalArgumentException("can not find Appointment"));
-		// 현재 예약 등록 기능이 없어서 예약등록 기능이 구현된 후에 수정 예정입니다.
-		return myMedicalRecords.stream().map(record -> {
-			return AppointmentResponseDto.builder()
-				.appointmentSeq(record.getMember().getMemberSeq())
-				.childrenName(record.getChildren().getName())
-				.hospitalName(record.getHospital().getName())
-				.doctorName(record.getDoctor().getName())
-				.appointmentDate(record.getAppointmentDate())
-				.appointmentHHMM(record.getAppointmentHHMM())
-				.build();
-		}).collect(Collectors.toList());
+	public List<ResponseMedicalHistoryDto> getMyMedicalRecords(String memberEmail) {
+		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberEmail(memberEmail, AppointmentStatus.DIAGNOSIS);
+		if (myMedicalRecords.isEmpty()) {
+			throw new IllegalStateException("can not find Appointment");
+		}
+
+		return myMedicalRecords.stream()
+			.map(ResponseMedicalHistoryDto::toDto)
+			.collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
 	public ResponseDetailMedicalHistoryDto findMedicalHistory(Long appointmentSeq) {
 
-		Appointment appointment = appointmentRepository.findAllWithReview(appointmentSeq)
+		Appointment appointment = appointmentRepository.findWithReview(appointmentSeq)
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"));
 
 		ResponseDetailMedicalHistoryDto responseDetailMediclaHistoryDto = ResponseDetailMedicalHistoryDto.toDto(
@@ -99,11 +90,12 @@ public class AppointmentService {
 			pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt")
 		);
 
-		return appointmentRepository.findAppointment(pageConfig, memberSeq)
+		return appointmentRepository.findAllAppointment(pageConfig, memberSeq)
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"))
 			.map(ResponseAppointmentDto::toDto);
 	}
 
+/*
 	@Transactional(readOnly = true)
 	public List<String> getAppointmentPossibleLocalTime(
 		String appointmentDate,
@@ -112,6 +104,7 @@ public class AppointmentService {
 		Long hospitalSeq) {
 
 	}
+*/
 
 	// 병원 운영 시간
 	private Map<String, String> getHospitalDutyTime(
@@ -219,5 +212,11 @@ public class AppointmentService {
 			log.info("============================={}============================", appointment.getAppointmentSeq());
 		}
 		return hospitalDutyHour;
+	}
+
+	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.DIAGNOSIS)
+			.orElseThrow(() -> new IllegalStateException("Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+		return ResponseDetailMedicalHistoryDto.toDto(appointment);
 	}
 }

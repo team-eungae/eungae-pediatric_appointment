@@ -1,5 +1,6 @@
 package com.playdata.eungae.member.controller;
 
+import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
 import com.playdata.eungae.member.dto.MemberFindResponseDto;
 import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
 import com.playdata.eungae.member.service.MemberService;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.playdata.eungae.appointment.dto.AppointmentResponseDto;
+import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
 
 @Slf4j
@@ -32,17 +33,28 @@ public class MemberViewController {
 
     private final AppointmentService appointmentService;
 
-    @GetMapping("/records/{memberSeq}")
-    public String medicalRecordList(Model model, @PathVariable("memberSeq") long memberSeq) {
-        List<AppointmentResponseDto> myMedicalRecords = appointmentService.getMyMedicalRecords(memberSeq);
+    @GetMapping("/records")
+    public String medicalRecordList(
+        Model model,
+        @AuthenticationPrincipal UserDetails principal
+        // @PathVariable int page,
+    ) {
+        List<ResponseMedicalHistoryDto> myMedicalRecords = appointmentService.getMyMedicalRecords(principal.getUsername());
+
         model.addAttribute("myMedicalRecords", myMedicalRecords);
         return "contents/member/medical-records";
     }
 
-    @GetMapping("/records/1")
-    public String medicalRecordsDetails() {
+    @GetMapping("/records/{appointmentSeq}")
+    public String medicalRecordsDetails(
+        Model model,
+        @PathVariable Long appointmentSeq
+    ) {
+        ResponseDetailMedicalHistoryDto myMedicalRecordDetail = appointmentService.getMyMedicalRecordDetail(appointmentSeq);
+        model.addAttribute("myMedicalDetail", myMedicalRecordDetail);
         return "contents/member/medical-records-details";
     }
+
 
     @GetMapping("/profile")
     public String myPage(@AuthenticationPrincipal UserDetails principal, Model model) {

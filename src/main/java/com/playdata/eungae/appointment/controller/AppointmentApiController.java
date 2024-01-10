@@ -1,9 +1,6 @@
 package com.playdata.eungae.appointment.controller;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +26,6 @@ public class AppointmentApiController {
 	@GetMapping("/medical_history")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseDetailMedicalHistoryDto findMedicalHistory(@RequestParam Long appointmentSeq) {
-		// 예약 내역 조회
-		// RestController 말고 Controller에서 모델 엔 뷰로 화면에 전달해야함
 		 return appointmentService.findMedicalHistory(appointmentSeq);
 	}
 
@@ -41,17 +36,6 @@ public class AppointmentApiController {
 		@RequestParam Long memberSeq
 	) {
 		return appointmentService.findAppointment(pageNumber, memberSeq);
-	}
-	@GetMapping("/test")
-	@ResponseStatus(HttpStatus.OK)
-	public void findTime(
-		@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam String appointmentDate,
-		@RequestParam Integer appointmentDayOfWeek,
-		@RequestParam Long doctorSeq,
-		@RequestParam Long hospitalSeq
-	) {
-		log.info("======================={}==================",appointmentDate);
-		appointmentService.getHospitalSchedule(appointmentDate, appointmentDayOfWeek, doctorSeq, hospitalSeq);
 	}
 
 }
