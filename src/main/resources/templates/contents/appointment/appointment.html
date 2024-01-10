@@ -12,6 +12,9 @@
 <main layout:fragment="content">
     <div class="form-wrapper">
         <form method="post" action="">
+            <label>
+                <input hidden="hidden" id="hospitalSeq" th:value="${hospital.hospitalSeq}">
+            </label>
             <fieldset class="appointment-hospital">
                 <div class="hospital-info">
                     <img class="hospital-img" src="/img/logo2.png" alt="병원 대표 이미지">
@@ -29,7 +32,20 @@
                         <button class="dropdown-button"><i class="fa-solid fa-calendar appointment-icon"></i><strong>예약
                             날짜</strong></button>
                         <div id="menu1" class="content">
-                            <input type="date" id="date" class="appointment-date">
+                            <input type="date" id="date" class="appointment-date" name="appointmentDate">
+                        </div>
+                    </li>
+                    <li>
+                        <button class="dropdown-button"><i class="fa-solid fa-user-doctor appointment-icon"></i><strong>진료
+                            의사</strong></button>
+                        <div id="menu3" class="content">
+                            <div class="appointment-doctor-wrapper" th:each="doctor:${doctors}">
+                                <img src="/img/doctor.jpeg" class="doctor-img">
+                                <label class="appointment-doctor">
+                                    <input type="radio" name="doctorSeq" th:value="${doctor.doctorSeq}">
+                                    <span th:text="${doctor.name}">의사 이름</span>
+                                </label>
+                            </div>
                         </div>
                     </li>
                     <li>
@@ -42,31 +58,11 @@
                         </div>
                     </li>
                     <li>
-                        <button class="dropdown-button"><i class="fa-solid fa-user-doctor appointment-icon"></i><strong>진료
-                            의사</strong></button>
-                        <div id="menu3" class="content">
-                            <div class="appointment-doctor-wrapper">
-                                <img src="/img/doctor.jpeg" class="doctor-img">
-                                <label class="appointment-doctor">
-                                    <input type="radio" name="appointment-doctor" value="강동원">
-                                    <span>강동원</span>
-                                </label>
-                            </div>
-                            <div class="appointment-doctor-wrapper">
-                                <img src="/img/doctor.jpeg" class="doctor-img">
-                                <label class="appointment-doctor">
-                                    <input type="radio" name="appointment-doctor" value="류준열">
-                                    <span>류준열</span>
-                                </label>
-                            </div>
-
-                        </div>
-                    </li>
-                    <li>
-                        <button class="dropdown-button"><i class="fa-solid fa-child appointment-icon"></i><strong>진료자</strong></button>
-                        <div  id="menu4" class="content">
+                        <button class="dropdown-button"><i
+                                class="fa-solid fa-child appointment-icon"></i><strong>진료자</strong></button>
+                        <div id="menu4" class="content">
                             <label class="appointment-children" th:each="children : ${children}">
-                                <input type="radio" name="appointment-children" th:value=${children.childrenSeq}>
+                                <input type="radio" name="childrenSeq" th:value=${children.childrenSeq}>
                                 <span th:text="${children.name}">애기 이름</span>
                             </label>
                         </div>
@@ -76,14 +72,14 @@
                                 class="fa-solid fa-clipboard appointment-icon"></i><strong>증상</strong></button>
                         <div id="menu5" class="content">
                             <label>
-                                <textarea class="appointment-symptom" name="appointment-symptom"
+                                <textarea class="appointment-symptom" name="note"
                                           placeholder="증상을 간단히 입력해주세요."></textarea>
                             </label>
                         </div>
                     </li>
                 </ul>
                 <div class="btn-wrapper">
-                    <button type="button" class="btn-submit"><strong>예약 접수</strong></button>
+                    <button type="submit" class="btn-submit"><strong>예약 접수</strong></button>
                 </div>
             </div>
         </form>

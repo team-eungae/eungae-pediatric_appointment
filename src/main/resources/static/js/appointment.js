@@ -24,17 +24,9 @@ var setdate = function () {
 document.getElementById('date').addEventListener("change", setdate)
 
 //진료가능시간 버튼 만들기
-var starttime = "8:00";
-var endtime = "18:00";
-var list = ["8:00", "8:30", "9:00", "9:30", "10:00", "10.30", "11:00", "11:30", "12:00", "12:30", "2:00", "2:30", "3:00", "3:30", "4:00", "4:30", "5:00", "5:30", "6:00"];
-
-
+var list;
 $(document).ready(function () {
-    for (var i = 0; i < list.length; i++) {
-        document.getElementById('time-list').innerHTML = document.getElementById('time-list').innerHTML + '<label class="appointment-time"><input type=\"radio\" name=\"appointment-time\" value=\"' + list[i] + '"\"><span>' + list[i] + '</span></label>';
-    }
     setdate()
-
     // todo: ajax로 휴무일만 받아와서 해당 달력 라이브러리로
     //  휴무일을 달력에서 비활성화할 수 있는 기능이 있는지 확인할 것.
 });
@@ -47,4 +39,49 @@ buttons.forEach(function (button, index) {
 
         this.parentNode.classList.toggle('on');
     });
+});
+
+// 로직
+
+// let value = document.getElementById('date').value;
+var date = sysdate.toISOString().substring(0, 10);
+var dayOfWeek = sysdate.getDay();
+
+document.getElementById('date').addEventListener('change', function (e) {
+    let value = document.getElementById('date').value;
+    date = value.getDay();
+});
+
+var doctorSeq;
+var hospitalSeq = document.getElementById("hospitalSeq").value;
+console.log(hospitalSeq);
+
+$('input[name=doctorSeq]').change(function (e) {
+    doctorSeq = $('input[name=doctorSeq]:checked').val();
+    $.ajax({
+        type: 'GET',
+        url: '/api/appointment/time',
+        dataType: "json",
+        data: {
+            appointmentDate: date,
+            appointmentDayOfWeek: dayOfWeek,
+            doctorSeq: doctorSeq,
+            hospitalSeq: hospitalSeq
+        },
+        contentType: 'application/json',
+        success: function (data) {
+            let timeList = $('#time-list');
+            timeList.empty();
+            for (let i = 0; i < data.length; i++) {
+                timeList.append('<label class="appointment-time"><input type=\"radio\" name=\"appointmentHHMM\" value=\"' + data[i].substring(0, 5) + '"\"><span>' + data[i].substring(0, 5) + '</span></label>');
+            }
+        }, error: function () {
+            alert("경고");
+        }
+    })
+});
+
+$('input[name=date]').change(function (e) {
+    let timeList = $('#time-list');
+    timeList.empty();
 });

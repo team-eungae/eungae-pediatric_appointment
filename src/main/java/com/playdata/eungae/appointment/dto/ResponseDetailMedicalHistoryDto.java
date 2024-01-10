@@ -56,5 +56,4 @@ public class ResponseDetailMedicalHistoryDto {
 			.appointmentHHMM(appointment.getAppointmentHHMM())
 			.build();
 	}
-
 }
