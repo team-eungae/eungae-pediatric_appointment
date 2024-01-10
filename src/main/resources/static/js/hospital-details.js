@@ -68,14 +68,25 @@ var marker = new kakao.maps.Marker({
 // 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);
 
+//병원 이미지 슬라이드
+$(document).ready(function () {
+    var slideCount = parseInt($('.hospital-images').attr('data-count'));
+    var currentIndex = 0;
 
-$(".slide-1").on("click", function () {
-    $(".slide-container").css("transform","translateX(0)");
-});
-$(".slide-2").on("click", function () {
-    $(".slide-container").css("transform","translateX(-100vw)");
-});
-$(".slide-3").on("click", function () {
-    $(".slide-container").css("transform","translateX(-200vw)");
-});
+    function showSlide(index) {
+        $('.slide').removeClass('active').hide();
+        $('.slide').eq(index).addClass('active').show();
+    }
 
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % slideCount;
+        showSlide(currentIndex);
+    }
+
+    showSlide(currentIndex);
+
+    // 3초마다 자동 슬라이드
+    setInterval(function () {
+        nextSlide();
+    }, 3000);
+});

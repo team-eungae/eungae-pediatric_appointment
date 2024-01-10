@@ -1,5 +1,7 @@
 package com.playdata.eungae.appointment.controller;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -21,12 +23,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/my")
+@RequestMapping("/api")
 public class AppointmentApiController {
 
 	private final AppointmentService appointmentService;
 
-	@GetMapping("/medical_history")
+	@GetMapping("/my/medical_history")
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseDetailMedicalHistoryDto findMedicalHistory(@RequestParam Long appointmentSeq) {
 		// 예약 내역 조회
@@ -34,7 +36,7 @@ public class AppointmentApiController {
 		 return appointmentService.findMedicalHistory(appointmentSeq);
 	}
 
-	@GetMapping("/appointments")
+	@GetMapping("/my/appointments")
 	@ResponseStatus(HttpStatus.OK)
 	public Page<ResponseAppointmentDto> findAppointment(
 		@RequestParam int pageNumber,
@@ -42,16 +44,16 @@ public class AppointmentApiController {
 	) {
 		return appointmentService.findAppointment(pageNumber, memberSeq);
 	}
-	@GetMapping("/test")
+
+	@GetMapping("/appointment/time")
 	@ResponseStatus(HttpStatus.OK)
-	public void findTime(
-		@DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam String appointmentDate,
+	public List<LocalTime> findTime(
+		@RequestParam String appointmentDate,
 		@RequestParam Integer appointmentDayOfWeek,
 		@RequestParam Long doctorSeq,
-		@RequestParam Long hospitalSeq
-	) {
-		log.info("======================={}==================",appointmentDate);
-		appointmentService.getHospitalSchedule(appointmentDate, appointmentDayOfWeek, doctorSeq, hospitalSeq);
+		@RequestParam Long hospitalSeq) {
+
+		return appointmentService.createAppointmentPossibleTime(appointmentDate, appointmentDayOfWeek, doctorSeq, hospitalSeq);
 	}
 
 }

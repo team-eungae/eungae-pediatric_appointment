@@ -31,9 +31,7 @@ public class ResponseAppointmentDto {
 
 	private String hospitalName;
 
-	private String appointmentHour;
-
-	private String appointmentMinute;
+	private String appointmentHHMM;
 
 	public static ResponseAppointmentDto toDto(Appointment appointment) {
 		return ResponseAppointmentDto.builder()
@@ -41,7 +39,7 @@ public class ResponseAppointmentDto {
 			.childrenName(appointment.getChildren().getName())
 			.doctorName(appointment.getDoctor().getName())
 			.hospitalName(appointment.getHospital().getName())
-			.appointmentHour(appointment.getAppointmentHHMM())
+			.appointmentHHMM(appointment.getAppointmentHHMM())
 			.build();
 	}
 }
