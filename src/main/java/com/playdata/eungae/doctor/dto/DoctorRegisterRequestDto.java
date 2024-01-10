@@ -28,7 +28,7 @@ public class DoctorRegisterRequestDto {
 		return Doctor.builder()
 			.name(doctorRegisterRequestDto.getName())
 			.treatmentPossible(doctorRegisterRequestDto.getTreatmentPossible())
-			.profileImage(resultFileStore.getStoreFileName())
+			.profileImageStoreName(resultFileStore.getStoreFileName())
 			.build();
 	}
 }

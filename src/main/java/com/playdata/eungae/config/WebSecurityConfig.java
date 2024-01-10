@@ -52,7 +52,8 @@ public class WebSecurityConfig {
 				.requestMatchers(new MvcRequestMatcher(introspector, "/login")).permitAll()
 				.requestMatchers(new MvcRequestMatcher(introspector, "/signup")).permitAll()
 				.requestMatchers(new MvcRequestMatcher(introspector, "/map")).permitAll()
-				.anyRequest().authenticated())
+				// .anyRequest().authenticated())
+				.anyRequest().permitAll())
 			.formLogin(login -> login
 				.loginPage("/login")
 				.loginProcessingUrl("/login-proc")

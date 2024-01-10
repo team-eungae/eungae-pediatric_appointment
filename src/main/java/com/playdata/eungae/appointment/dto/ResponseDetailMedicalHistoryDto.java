@@ -47,5 +47,4 @@ public class ResponseDetailMedicalHistoryDto {
 		}
 		return true;
 	}
-
 }

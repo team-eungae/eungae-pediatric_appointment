@@ -21,7 +21,7 @@ public class DoctorViewResponseDto{
 			.name(doctor.getName())
 			.status(doctor.getStatus())
 			.treatmentPossible(doctor.getTreatmentPossible())
-			.profileImage(doctor.getProfileImage())
+			.profileImage(doctor.getProfileImageStoreName())
 			.build();
 	}
 }

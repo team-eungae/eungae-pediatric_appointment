@@ -80,13 +80,31 @@ public class initDB {
 			em.persist(appointment4);
 			em.persist(appointment5);
 
+			em.persist(getAppointment2(member, hospital, doctor1));
+			em.persist(getAppointment2(member, hospital, doctor1));
+			em.persist(getAppointment2(member, hospital, doctor1));
+
 			Review review1 = getReview(member, hospital, appointment1);
 			Review review2 = getReview(member, hospital, appointment2);
 			Review review3 = getReview(member, hospital, appointment3);
+
 			em.persist(review1);
 			em.persist(review2);
 			em.persist(review3);
+
+			Children children = getChildren(member);
+			em.persist(children);
 		}
+	}
+
+	private static Children getChildren(Member member) {
+		return Children.builder()
+			.name("김수용")
+			.birthDate("20230105")
+			.gender("Male")
+			.profileImage("/img/default-children-2.png")
+			.member(member)
+			.build();
 	}
 
 	private static Review getReview(Member member, Hospital hospital, Appointment appointment) {
@@ -226,15 +244,15 @@ public class initDB {
 				.name("김우진")
 				.hospital(hospital)
 				.treatmentPossible(3)
-				.profileImage("doctor.jpeg")
+				.profileImageStoreName("doctor.jpeg")
 				.build();
 		}
 
-		private static HospitalImage getHospitalImage (Hospital hospital){
-			return HospitalImage.builder()
-				.hospital(hospital)
-				.originFileName("")
-				.storeFileName("")
-				.build();
-		}
+	private static HospitalImage getHospitalImage(Hospital hospital) {
+		return HospitalImage.builder()
+			.hospital(hospital)
+			.originFileName("")
+			.storeFileName("")
+			.build();
 	}
+}

@@ -1,5 +1,9 @@
 package com.playdata.eungae.appointment.controller;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/my")
+@RequestMapping("/api")
 public class AppointmentApiController {
 
 	private final AppointmentService appointmentService;
@@ -32,4 +36,14 @@ public class AppointmentApiController {
 		return appointmentService.findAppointment(pageNumber, memberSeq);
 	}
 
+	@GetMapping("/appointment/time")
+	@ResponseStatus(HttpStatus.OK)
+	public List<LocalTime> findTime(
+		@RequestParam String appointmentDate,
+		@RequestParam Integer appointmentDayOfWeek,
+		@RequestParam Long doctorSeq,
+		@RequestParam Long hospitalSeq) {
+
+		return appointmentService.createAppointmentPossibleTime(appointmentDate, appointmentDayOfWeek, doctorSeq, hospitalSeq);
+	}
 }
