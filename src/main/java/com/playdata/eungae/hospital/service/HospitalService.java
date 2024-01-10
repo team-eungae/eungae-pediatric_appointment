@@ -55,6 +55,16 @@ public class HospitalService {
 		return nearbyHospitalList;
 	}
 
+	public List<HospitalSearchResponseDto> findAllByKeyword(String keyword) {
+		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keyword);
+		if (hospitalsByKeyword.isEmpty()) {
+			throw new IllegalArgumentException("Unable to find hospital with keyword{%s}".formatted(keyword));
+		}
+		return hospitalsByKeyword.stream()
+			.map(HospitalSearchResponseDto::toDto)
+			.toList();
+	}
+
 	private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
 		// 현재 lat, 현재 lon, 목적지 lat, 목적지 lon
 		lat1 = Math.toRadians(lat1);
