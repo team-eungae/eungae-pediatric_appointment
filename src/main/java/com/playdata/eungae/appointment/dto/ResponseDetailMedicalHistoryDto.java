@@ -23,8 +23,6 @@ public class ResponseDetailMedicalHistoryDto {
 
 	private String hospitalName;
 
-	// 리뷰 작성 유무
-	// 어떻게 처리할지
 	private boolean writeReview;
 
 	private LocalDate appointmentDate;

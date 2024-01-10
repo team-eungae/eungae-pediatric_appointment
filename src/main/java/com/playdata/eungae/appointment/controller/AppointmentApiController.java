@@ -23,12 +23,6 @@ public class AppointmentApiController {
 
 	private final AppointmentService appointmentService;
 
-	@GetMapping("/medical_history")
-	@ResponseStatus(HttpStatus.OK)
-	public ResponseDetailMedicalHistoryDto findMedicalHistory(@RequestParam Long appointmentSeq) {
-		 return appointmentService.findMedicalHistory(appointmentSeq);
-	}
-
 	@GetMapping("/appointments")
 	@ResponseStatus(HttpStatus.OK)
 	public Page<ResponseAppointmentDto> findAppointment(

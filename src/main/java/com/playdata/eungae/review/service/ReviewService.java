@@ -29,10 +29,11 @@ public class ReviewService {
 	private final int PAGE_SIZE = 20;
 
 	@Transactional
-	public void createReview(long appointmentSeq, RequestReviewFormDto requestReviewFormDto) {
+	public void createReview(RequestReviewFormDto requestReviewFormDto) {
 
-		Appointment appointment = appointmentRepository.findByIdWhitHospital(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"));
+		Appointment appointment = appointmentRepository.findByIdWhitHospital(requestReviewFormDto.getAppointmentSeq())
+			.orElseThrow(() -> new IllegalStateException("Can not found Appointment, appointmentSeq = {%d}"
+				.formatted(requestReviewFormDto.getAppointmentSeq())));
 
 		Review review = RequestReviewFormDto.toEntity(requestReviewFormDto, appointment);
 
@@ -44,7 +45,7 @@ public class ReviewService {
 	@Transactional
 	public void removeReview(long reviewSeq) {
 		Review review = reviewRepository.findById(reviewSeq)
-			.orElseThrow(() -> new IllegalStateException("Can not found Review Entity"));
+			.orElseThrow(() -> new IllegalStateException("Can not found Review, reviewSeq = {%d}".formatted(reviewSeq)));
 		// 리뷰의 논리적 삭제 컬럼을 Y로 바꿔주는 로직을 짜야한다
 		review.remove();
 	}
@@ -61,8 +62,25 @@ public class ReviewService {
 
 	@Transactional(readOnly = true)
 	public List<ResponseReviewDto> findReviewsByHospitalSeq(Long hospitalSeq) {
-		List<Review> reviews = reviewRepository.findAllByHospitalHospitalSeq(hospitalSeq)
-			.orElseThrow(() -> new NoSuchElementException("review not found"));
+		List<Review> reviews = reviewRepository.findAllByHospitalHospitalSeq(hospitalSeq);
+
+		if (reviews.isEmpty()) {
+			throw new NoSuchElementException("Can not found Review, hospitalSeq = {%d}".formatted(hospitalSeq));
+		}
+
+		return reviews
+			.stream()
+			.map(ResponseReviewDto::toDto)
+			.collect(Collectors.toList());
+	}
+
+	@Transactional(readOnly = true)
+	public List<ResponseReviewDto> findReviewsByMemberEmail(String memberEmail) {
+		List<Review> reviews = reviewRepository.findReviewsByMemberEmail(memberEmail);
+
+		if (reviews.isEmpty()) {
+			throw new NoSuchElementException("Can not found Review, memberEmail = {%s}".formatted(memberEmail));
+		}
 
 		return reviews
 			.stream()

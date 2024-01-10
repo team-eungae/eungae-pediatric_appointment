@@ -59,28 +59,18 @@ public class AppointmentService {
 	public List<ResponseMedicalHistoryDto> getMyMedicalRecords(String memberEmail) {
 		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberEmail(memberEmail, AppointmentStatus.DIAGNOSIS);
 		if (myMedicalRecords.isEmpty()) {
-			throw new IllegalStateException("can not find Appointment");
+			throw new IllegalStateException("Can not found Appointment. memberEmail = {%d}".formatted(memberEmail));
 		}
 
 		return myMedicalRecords.stream()
 			.map(ResponseMedicalHistoryDto::toDto)
 			.collect(Collectors.toList());
 	}
-
 	@Transactional(readOnly = true)
-	public ResponseDetailMedicalHistoryDto findMedicalHistory(Long appointmentSeq) {
-
-		Appointment appointment = appointmentRepository.findWithReview(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"));
-
-		ResponseDetailMedicalHistoryDto responseDetailMediclaHistoryDto = ResponseDetailMedicalHistoryDto.toDto(
-			appointment);
-
-		responseDetailMediclaHistoryDto.setWriteReview(reviewRepository.findById(appointment.getReviewSeq())
-			.isPresent());
-
-		return responseDetailMediclaHistoryDto;
-
+	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.DIAGNOSIS)
+			.orElseThrow(() -> new IllegalStateException("Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+		return ResponseDetailMedicalHistoryDto.toDto(appointment);
 	}
 
 	@Transactional(readOnly = true)
@@ -201,6 +191,7 @@ public class AppointmentService {
 		return allWithHospital;
 	}
 
+	@Transactional(readOnly = true)
 	public List<Appointment> getHospitalSchedule(String appointmentDate, int appointmentDayOfWeek,
 		Long doctorSeq, Long hospitalSeq) {
 
@@ -214,9 +205,4 @@ public class AppointmentService {
 		return hospitalDutyHour;
 	}
 
-	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
-		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.DIAGNOSIS)
-			.orElseThrow(() -> new IllegalStateException("Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
-		return ResponseDetailMedicalHistoryDto.toDto(appointment);
-	}
 }
