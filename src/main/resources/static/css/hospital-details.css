@@ -28,13 +28,16 @@ main {
     height: 24vh;
 
 }
-
+.basicHospitalImage{
+    width: 351px;
+    height: 202px;
+}
 .slide {
     position: absolute;
     top: 0;
     left: 0;
-    width: 90vw;
-    height: 24vh;
+    width: 350px;
+    height: 200px;
     background-size: cover;
     background-position: center;
 

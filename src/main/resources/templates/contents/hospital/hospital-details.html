@@ -10,8 +10,9 @@
 <main layout:fragment="content">
     <div class="hospital-informations">
         <div class="hospital-images">
-            <img class="slide" th:each="hospitalImage:${hospitalImages}"
-                 th:src="@{/images/}+${hospitalImage.storeFileName}" alt="hospital Images"/>
+            <img  th:if="${#lists.isEmpty(hospitalImages)}" class="basicHospitalImage" th:src="@{/img/logo3.png}" alt="basicImage"/>
+            <img th:unless="${#lists.isEmpty(hospitalImages)}" th:src="@{/images/}+${hospitalImage.storeFileName}" class="slide" th:each="hospitalImage:${hospitalImages}"
+                 alt="hospitalImages"  th:onError="this.src='@{/img/logo3.png}'"/>
         </div>
 
         <div class="hospital-informations-common">
