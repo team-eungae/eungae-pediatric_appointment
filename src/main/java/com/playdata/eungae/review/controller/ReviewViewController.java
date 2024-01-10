@@ -33,7 +33,8 @@ public class ReviewViewController {
     }
 
     @PostMapping("/post")
-    @ResponseStatus(HttpStatus.CREATED)
+    // redirect 시 ResponseStatus 어노테이션을 붙이면 redirect가 실행되지 않습니다.
+    // @ResponseStatus(HttpStatus.CREATED)
     public String createReview(
         @Valid RequestReviewFormDto requestReviewFormDto
     ) {
