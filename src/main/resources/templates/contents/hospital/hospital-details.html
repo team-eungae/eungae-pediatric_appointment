@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/hospital_layout}">
+      layout:decorate="~{layouts/hosptial_detail_layout}">
 <th:block layout:fragment="custom_header">
     <link rel="stylesheet" href="/css/hospital-details.css">
     <title>병원 상세 - 응애 | 소아과 예약</title>
@@ -181,8 +181,13 @@
     <div class="bbung">
 
     </div>
-</main>
 
+    <div class="container-fluid fixed-bottom text-center mobile-nav-bottom" th:fragment="hospitalBottom">
+        <div class="reservation-button-place">
+            <button><a th:href="@{/hospital/{hospitalSeq}/appointments(hospitalSeq=${hospital.hospitalSeq})}">예약하기</a></button>
+        </div>
+    </div>
+</main>
 
 <div layout:fragment="custom_js">
     <script type="text/javascript"
