@@ -1,18 +1,9 @@
 package com.playdata.eungae.review.dto;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import com.playdata.eungae.appointment.domain.Appointment;
-import com.playdata.eungae.hospital.domain.Hospital;
-import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.review.domain.Review;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,9 +11,17 @@ import lombok.Data;
 @Data
 public class ResponseReviewDto {
 
+	private Long reviewSeq;
+
+	private Long hospitalSeq;
+
+	private String hospitalName;
+
 	private String memberName;
 
 	private int starRating;
+
+	private String title;
 
 	private String content;
 
@@ -31,6 +30,10 @@ public class ResponseReviewDto {
 	public static ResponseReviewDto toDto(Review review) {
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yy년 MM월 dd일");
 		return ResponseReviewDto.builder()
+			.reviewSeq(review.getReviewSeq())
+			.hospitalSeq(review.getHospital().getHospitalSeq())
+			.hospitalName(review.getHospital().getName())
+			.title(review.getTitle())
 			.memberName(review.getMember().getName())
 			.starRating(review.getStarRating())
 			.content(review.getContent())

@@ -50,6 +50,9 @@ public class Review extends BaseEntity {
 	private int starRating;
 
 	@Column(nullable = false)
+	private String title;
+
+	@Column(nullable = false)
 	private String content;
 
 	public void remove() {

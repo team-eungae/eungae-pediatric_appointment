@@ -1,7 +1,6 @@
 package com.playdata.eungae.appointment.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +16,10 @@ import com.playdata.eungae.appointment.service.AppointmentService;
 import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
 import com.playdata.eungae.doctor.repository.DoctorRepository;
 import com.playdata.eungae.doctor.service.DoctorService;
+
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
 import com.playdata.eungae.hospital.service.HospitalService;
 import com.playdata.eungae.member.domain.Children;
-import com.playdata.eungae.member.service.ChildrenService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

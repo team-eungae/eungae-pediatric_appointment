@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
+
+import com.playdata.eungae.appointment.domain.AppointmentStatus;
+import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
 import com.playdata.eungae.appointment.dto.AppointmentResponseDto;
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
@@ -25,6 +28,7 @@ import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
+
 import com.playdata.eungae.doctor.repository.DoctorRepository;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
@@ -44,6 +48,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AppointmentService {
 
+	private static final int PAGE_SIZE = 20;
 	private final HospitalRepository hospitalRepository;
 	private final HospitalScheduleRepository hospitalScheduleRepository;
 	private final DoctorRepository doctorRepository;
@@ -51,8 +56,6 @@ public class AppointmentService {
 	private final MemberRepository memberRepository;
 	private final ChildrenRepository childrenRepository;
 	private final ReviewRepository reviewRepository;
-
-	private static final int PAGE_SIZE = 20;
 
 	@Transactional(readOnly = true)
 	public Optional<List<Children>> getMyChildren(String email) {
@@ -83,36 +86,21 @@ public class AppointmentService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<AppointmentResponseDto> getMyMedicalRecords(Long memberSeq) {
-		// 현재 status중 "2"가 진료 완료된 상태를 나타내는 값입니다.
-		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberMemberSeqAndStatus(
-			memberSeq, "2").orElseThrow(() -> new IllegalArgumentException("can not find Appointment"));
-		// 현재 예약 등록 기능이 없어서 예약등록 기능이 구현된 후에 수정 예정입니다.
-		return myMedicalRecords.stream().map(appointment -> {
-			return AppointmentResponseDto.builder()
-				.appointmentSeq(appointment.getMember().getMemberSeq())
-				.childrenName(appointment.getChildren().getName())
-				.hospitalName(appointment.getHospital().getName())
-				.doctorName(appointment.getDoctor().getName())
-				.appointmentDate(appointment.getAppointmentDate())
-				.appointmentHHMM(appointment.getAppointmentHHMM())
-				.build();
-		}).collect(Collectors.toList());
+	public List<ResponseMedicalHistoryDto> getMyMedicalRecords(String memberEmail) {
+		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberEmail(memberEmail, AppointmentStatus.DIAGNOSIS);
+		if (myMedicalRecords.isEmpty()) {
+			throw new IllegalStateException("Can not found Appointment. memberEmail = {%s}".formatted(memberEmail));
+    }
+		return myMedicalRecords.stream()
+			.map(ResponseMedicalHistoryDto::toDto)
+			.collect(Collectors.toList());
 	}
-
+  
 	@Transactional(readOnly = true)
-	public ResponseDetailMedicalHistoryDto findMedicalHistory(Long appointmentSeq) {
-
-		Appointment appointment = appointmentRepository.findAllWithReview(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"));
-
-		ResponseDetailMedicalHistoryDto responseDetailMediclaHistoryDto = ResponseDetailMedicalHistoryDto.toDto(
-			appointment);
-
-		responseDetailMediclaHistoryDto.setWriteReview(reviewRepository.findById(appointment.getReviewSeq())
-			.isPresent());
-
-		return responseDetailMediclaHistoryDto;
+	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.DIAGNOSIS)
+			.orElseThrow(() -> new IllegalStateException("Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+		return ResponseDetailMedicalHistoryDto.toDto(appointment);
 	}
 
 	@Transactional(readOnly = true)
@@ -122,52 +110,9 @@ public class AppointmentService {
 			pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt")
 		);
 
-		return appointmentRepository.findAppointment(pageConfig, memberSeq)
+		return appointmentRepository.findAllAppointment(pageConfig, memberSeq)
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"))
 			.map(ResponseAppointmentDto::toDto);
-	}
-
-	@Transactional(readOnly = true)
-	public List<LocalTime> createAppointmentPossibleTime
-		(String appointmentDate,
-			int appointmentDayOfWeek,
-			Long doctorSeq,
-			Long hospitalSeq) {
-
-		Map<String, String> hospitalDutyTime = getHospitalDutyTime(hospitalSeq, appointmentDayOfWeek);
-		String openHour = hospitalDutyTime.get("openHour");
-		String closeHour = hospitalDutyTime.get("closeHour");
-		String lunchStartHour = hospitalDutyTime.get("lunchStartHour");
-		String lunchEndHour = hospitalDutyTime.get("lunchEndHour");
-
-		LocalTime convertOpenHour = convertStringToLocalTime(openHour);
-		LocalTime convertCloseHour = convertStringToLocalTime(closeHour);
-		LocalTime convertLunchStartHour = convertStringToLocalTime(lunchStartHour);
-		LocalTime convertLunchEndHour = convertStringToLocalTime(lunchEndHour);
-
-		List<LocalTime> hospitalDutyTimeList = new ArrayList<>();
-
-		LocalDate localDate = convertStringToLocalDate(appointmentDate);
-
-		for (; !convertOpenHour.isAfter(convertCloseHour); convertOpenHour = convertOpenHour.plusMinutes(30)) {
-
-			if (!convertOpenHour.isBefore(convertLunchStartHour)
-				&& convertOpenHour.isBefore(convertLunchEndHour)) {
-				continue;
-			}
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-			String convertLocalTimeToString = convertOpenHour.format(formatter);
-
-			int currentAppointmentCount = appointmentRepository.findAllWithHospital(hospitalSeq, localDate,
-				convertLocalTimeToString, doctorSeq).size();
-
-			Integer doctorTreatmentPossibleCount = getDoctorTreatmentPossibleCount(doctorSeq);
-
-			if (doctorTreatmentPossibleCount > currentAppointmentCount) {
-				hospitalDutyTimeList.add(convertOpenHour);
-			}
-		}
-		return hospitalDutyTimeList;
 	}
 
 	// 병원 운영 시간

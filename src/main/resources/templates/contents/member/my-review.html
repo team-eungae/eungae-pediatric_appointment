@@ -12,55 +12,22 @@
         <h4 class="review-title">내가 쓴 리뷰내역</h4>
     </div>
     <hr/>
-    <div class="review-info">
+    <div class="review-info" th:each="responseReviewDto : ${responseReviewDtos}">
         <div class="review">
             <p class="hospital-name">
-                <a href="##">플러스소아청소년과의원</a>
+                <a th:href="@{|/hospital/${responseReviewDto.hospitalSeq}|}" th:text="${responseReviewDto.hospitalName}">플러스소아청소년과의원</a>
                 <button class="review-delete-button">삭제</button>
             </p>
-            <p class="review-star">
-                ⭐⭐⭐⭐⭐ <span class="review-write-date">11.11</span>
-            </p>
-            <p class="review-context">
-                여기 가지마세요 간호사님 진짜 불친절합니다
-            </p>
-        </div>
-        <hr/>
-        <div class="review">
-            <p class="hospital-name">
-                <a href="##">플러스소아청소년과의원</a>
-                <button class="review-delete-button">삭제</button>
-            </p>
-            <p class="review-star">
-                ⭐⭐⭐⭐⭐ <span class="review-write-date">11.11</span>
-            </p>
-            <p class="review-context">
-                여기 가지마세요 간호사님 진짜 불친절합니다
-            </p>
-        </div>
-        <hr/>
-        <div class="review">
-            <p class="hospital-name">
-                <a href="##">플러스소아청소년과의원</a>
-                <button class="review-delete-button">삭제</button>
-            </p>
-            <p class="review-star">
-                ⭐⭐⭐⭐⭐ <span class="review-write-date">11.11</span>
-            </p>
-            <p class="review-context">
-                여기 가지마세요 간호사님 진짜 불친절합니다
-            </p>
-        </div>
-        <hr/>
-        <div class="review">
-            <p class="hospital-name">
-                <a href="##">플러스소아청소년과의원</a>
-                <button class="review-delete-button">삭제</button>
-            </p>
-            <p class="review-star">
-                ⭐⭐⭐⭐⭐ <span class="review-write-date">11.11</span>
-            </p>
-            <p class="review-context">
+
+            <div class="review-rate">
+                <i th:each="num : ${#numbers.sequence(1,responseReviewDto.starRating)}" class="fa-solid fa-star"
+                   style="color: #ffd500;"></i>
+                <i th:if="${responseReviewDto.starRating} != 5 "
+                   th:each="num : ${#numbers.sequence(1,5 -responseReviewDto.starRating)}" class="fa-regular fa-star"
+                   style="color: #ffd500;"></i>
+            </div>
+
+            <p class="review-context" th:text="${responseReviewDto.content}">
                 여기 가지마세요 간호사님 진짜 불친절합니다
             </p>
         </div>
