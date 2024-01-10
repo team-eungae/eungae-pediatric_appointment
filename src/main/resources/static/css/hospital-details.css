@@ -29,28 +29,21 @@ main {
 
 }
 
+.hospital-images {
+    position: relative;
+    width: 90vw;
+    height: 24vh;
+    overflow: hidden;
+}
+
 .slide {
     position: absolute;
     top: 0;
     left: 0;
-    width: 90vw;
-    height: 24vh;
+    width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
-
-    animation: hospital-images 9s infinite linear;
-}
-
-.slide:nth-child(1) {
-    animation-delay: 0s;
-}
-
-.slide:nth-child(2) {
-    animation-delay: -3s;
-}
-
-.slide:nth-child(3) {
-    animation-delay: -6s;
 }
 
 @keyframes hospital-images {

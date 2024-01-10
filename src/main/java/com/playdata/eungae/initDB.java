@@ -224,14 +224,14 @@ public class initDB {
 			.build();
 	}
 
-	private static Doctor getDoctor(Hospital hospital) {
-		return Doctor.builder()
-			.name("김우진")
-			.hospital(hospital)
-			.treatmentPossible(3)
-			.profileImage("doctor.jpeg")
-			.build();
-	}
+		private static Doctor getDoctor (Hospital hospital){
+			return Doctor.builder()
+				.name("김우진")
+				.hospital(hospital)
+				.treatmentPossible(3)
+				.profileImageStoreName("doctor.jpeg")
+				.build();
+		}
 
 	private static HospitalImage getHospitalImage(Hospital hospital) {
 		return HospitalImage.builder()

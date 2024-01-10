@@ -44,9 +44,9 @@ logging:
           descriptor:
             sql: trace
             
-com:
-  example:
-    upload : ${IMAGES}
+file:
+  upload:
+    path: ${IMAGES}
 
 api:
   open-data:

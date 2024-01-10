@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http//www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/hospital_layout}">
+      layout:decorate="~{layouts/hosptial_detail_layout}">
 <th:block layout:fragment="custom_header">
     <link rel="stylesheet" href="/css/hospital-details.css">
     <title>병원 상세 - 응애 | 소아과 예약</title>
@@ -9,9 +9,10 @@
 <body>
 <main layout:fragment="content">
     <div class="hospital-informations">
-        <div class="hospital-images">
-            <img class="slide" th:each="hospitalImage:${hospitalImages}"
-                 th:src="@{/images/}+${hospitalImage.storeFileName}" alt="hospital Images"/>
+        <div class="hospital-images" th:attr="data-count=${hospitalImages.size()}">
+            <div th:each="hospitalImage, index: ${hospitalImages}" class="slide"
+                 th:style="'background-image: url(' + |${'/images/' + hospitalImage.storeFileName}| + ');'"
+                 th:class="${index == 0} ? 'slide active' : 'slide'"></div>
         </div>
 
         <div class="hospital-informations-common">
@@ -19,9 +20,9 @@
             <hr/>
             <div>
                 <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i>
-                  <span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
+                    <span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
                 <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i>
-                  <span th:text="${hospital.contact}">병원 번호</span></div>
+                    <span th:text="${hospital.contact}">병원 번호</span></div>
             </div>
         </div>
     </div>
@@ -37,11 +38,12 @@
                             <td class="day" id="today-day">요일</td>
                             <td class="time" id="today-time">영업시간</td>
                             <td class="lunch-time">
-                              (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                                (점심 <span
+                                    th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                             </td>
                             <td id="timeShowBtn">
                                 <button class="clinic-hours-button" onclick="onShowBtn()">
-                                <i class="fas fa-arrow-down"></i></button>
+                                    <i class="fas fa-arrow-down"></i></button>
                             </td>
                         </table>
                     </div>
@@ -51,55 +53,67 @@
                 <tr>
                     <td class="day">월요일</td>
                     <td class="time">
-                      <span id="dutyTime1" th:text="${hospital.hospitalSchedule.monOpen}+' - '+${hospital.hospitalSchedule.monClose}"></span>
+                        <span id="dutyTime1"
+                              th:text="${hospital.hospitalSchedule.monOpen}+' - '+${hospital.hospitalSchedule.monClose}"></span>
                     </td>
                     <td class="lunch-time">
-                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        (점심 <span
+                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">화요일</td>
                     <td class="time">
-                      <span id="dutyTime2" th:text="${hospital.hospitalSchedule.tueOpen}+' - '+${hospital.hospitalSchedule.tueClose}"></span>
+                        <span id="dutyTime2"
+                              th:text="${hospital.hospitalSchedule.tueOpen}+' - '+${hospital.hospitalSchedule.tueClose}"></span>
                     </td>
                     <td class="lunch-time">
-                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        (점심 <span
+                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">수요일</td>
                     <td class="time">
-                      <span id="dutyTime3" th:text="${hospital.hospitalSchedule.wedOpen}+' - '+${hospital.hospitalSchedule.wedClose}"></span>
+                        <span id="dutyTime3"
+                              th:text="${hospital.hospitalSchedule.wedOpen}+' - '+${hospital.hospitalSchedule.wedClose}"></span>
                     </td>
                     <td class="lunch-time">
-                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        (점심 <span
+                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">목요일</td>
                     <td class="time">
-                      <span id="dutyTime4" th:text="${hospital.hospitalSchedule.thuOpen}+' - '+${hospital.hospitalSchedule.thuClose}"></span>
+                        <span id="dutyTime4"
+                              th:text="${hospital.hospitalSchedule.thuOpen}+' - '+${hospital.hospitalSchedule.thuClose}"></span>
                     </td>
                     <td class="lunch-time">
-                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        (점심 <span
+                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">금요일</td>
                     <td class="time">
-                      <span id="dutyTime5" th:text="${hospital.hospitalSchedule.friOpen}+' - '+${hospital.hospitalSchedule.friClose}"></span>
+                        <span id="dutyTime5"
+                              th:text="${hospital.hospitalSchedule.friOpen}+' - '+${hospital.hospitalSchedule.friClose}"></span>
                     </td>
                     <td class="lunch-time">
-                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        (점심 <span
+                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
                     <td class="day">토요일</td>
                     <td class="time">
-                      <span id="dutyTime6" th:text="${hospital.hospitalSchedule.satOpen}+' - '+${hospital.hospitalSchedule.satClose}"></span>
+                        <span id="dutyTime6"
+                              th:text="${hospital.hospitalSchedule.satOpen}+' - '+${hospital.hospitalSchedule.satClose}"></span>
                     </td>
                     <td class="lunch-time">
-                      (점심 <span th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        (점심 <span
+                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                     </td>
                 </tr>
                 <tr>
@@ -181,8 +195,13 @@
     <div class="bbung">
 
     </div>
-</main>
 
+    <div class="container-fluid fixed-bottom text-center mobile-nav-bottom" th:fragment="hospitalBottom">
+        <div class="reservation-button-place">
+            <button><a th:href="@{/hospital/{hospitalSeq}/appointments(hospitalSeq=${hospital.hospitalSeq})}">예약하기</a></button>
+        </div>
+    </div>
+</main>
 
 <div layout:fragment="custom_js">
     <script type="text/javascript"

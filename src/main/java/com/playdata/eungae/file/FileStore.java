@@ -16,95 +16,90 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class FileStore {
 
-    @Value("${com.example.upload}")
-    String uploadPath;
-    private final String uploadFolder = System.getProperty("user.home");
+	@Value("${file.upload.path}")
+	String uploadPath;
 
+	public String getFullPath(String storeFilename) {
+		return uploadPath + File.separator + storeFilename;
+	}
 
+	public List<ResultFileStore> storeFiles(List<MultipartFile> multipartFiles) throws IOException {
+		List<ResultFileStore> storeFileResult = new ArrayList<>();
 
-    public String getFullPath(String storeFilename){
-        return uploadPath +File.separator + storeFilename;
-    }
+		if (!multipartFiles.isEmpty()) {
+			for (MultipartFile multipartFile : multipartFiles) {
+				storeFileResult.add(storeFile(multipartFile));
+			}
 
-    public List<ResultFileStore> storeFiles(List<MultipartFile> multipartFiles) throws IOException{
-        List<ResultFileStore> storeFileResult = new ArrayList<>();
+		}
+		return storeFileResult;
+	}
 
-        if(!multipartFiles.isEmpty()){
-            for(MultipartFile multipartFile: multipartFiles){
-                storeFileResult.add(storeFile(multipartFile));
-            }
+	public ResultFileStore storeFile(MultipartFile multipartFile) throws IOException {
+		if (multipartFile.isEmpty()) {
+			return new ResultFileStore();
+		}
 
-        }
-        return storeFileResult;
-    }
+		// 파일 이름
+		String originalFilename = multipartFile.getOriginalFilename();
+		log.info("originalFilename :" + originalFilename);
 
-    public ResultFileStore storeFile(MultipartFile multipartFile) throws IOException{
-        if(multipartFile.isEmpty()){
-            return null;
-        }
+		// 파일 저장 이름
+		String storeFileName = createStoreFileName(originalFilename);
+		log.info("storeFileName:" + storeFileName);
 
-        // 파일 이름
-        String originalFilename= multipartFile.getOriginalFilename();
-        log.info("originalFilename :" + originalFilename);
+		// 폴더 생성
+		String folderPath = makeFolder();
 
-        // 파일 저장 이름
-        String storeFileName = createStoreFileName(originalFilename);
-        log.info("storeFileName:" + storeFileName);
+		//이미지 저장
+		multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
-        // 폴더 생성
-        String folderPath = makeFolder();
+		return new ResultFileStore(folderPath, storeFileName, originalFilename);
+	}
 
-        //이미지 저장
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
+	private String createStoreFileName(String originalFileName) {
+		String uuid = UUID.randomUUID().toString();
+		return uuid + "_" + originalFileName;
+	}
 
-        return new ResultFileStore(folderPath,storeFileName);
-    }
+	private String makeFolder() {
+		String folderPath = uploadPath;
+		log.info("folderPath:" + folderPath);
+		File uploadPathFolder = new File(folderPath);
 
-    private String createStoreFileName(String originalFileName){
-        String uuid = UUID.randomUUID().toString();
-        return uuid + "_" + originalFileName;
-    }
+		if (uploadPathFolder.exists() == false) {
+			uploadPathFolder.mkdirs();
+		}
+		return folderPath;
+	}
 
-    private String makeFolder(){
-        String folderPath = uploadPath;
-        log.info("folderPath:" + folderPath);
-        File uploadPathFolder = new File(folderPath);
+	public ResultFileStore storeProfileFile(MultipartFile multipartFile) throws IOException {
+		if (multipartFile.isEmpty()) {
+			return new ResultFileStore();
+		}
 
-        if(uploadPathFolder.exists() == false){
-            uploadPathFolder.mkdirs();
-        }
-        return folderPath;
-    }
+		String originalFilename = multipartFile.getOriginalFilename();
+		log.info("originalFilename : " + originalFilename);
 
-    public ResultFileStore storeProfileFile(MultipartFile multipartFile) throws IOException {
-        if(multipartFile.isEmpty()){
-            return null;
-        }
+		String storeFileName = createStoreFileName(originalFilename);
+		log.info("storeFileName " + storeFileName);
 
-        String originalFilename = multipartFile.getOriginalFilename();
-        log.info("originalFilename : " + originalFilename);
+		String folderPath = makeProfileFolder();
 
-        String storeFileName = createStoreFileName(originalFilename);
-        log.info("storeFileName " + storeFileName);
+		multipartFile.transferTo(new File(getFullPath(storeFileName)));
 
-        String folderPath = makeProfileFolder();
+		return new ResultFileStore(folderPath, storeFileName, originalFilename);
+	}
 
-        multipartFile.transferTo(new File(getFullPath(storeFileName)));
+	private String makeProfileFolder() {
+		String folderPath = uploadPath;
+		log.info("folderPath : " + folderPath);
+		File uploadPathFolder = new File(folderPath);
 
-        return new ResultFileStore(folderPath,storeFileName);
-    }
-
-    private String makeProfileFolder(){
-        String folderPath = uploadPath;
-        log.info("folderPath : " +folderPath);
-        File uploadPathFolder = new File(folderPath);
-
-        if(!uploadPathFolder.exists()){
-            uploadPathFolder.mkdirs();
-        }
-        return folderPath;
-    }
-
-
+		if (!uploadPathFolder.exists()) {
+			uploadPathFolder.mkdirs();
+		}
+		return folderPath;
+	}
 
 }

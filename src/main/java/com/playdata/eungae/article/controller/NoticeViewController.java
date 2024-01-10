@@ -18,7 +18,7 @@ import java.util.List;
 public class NoticeViewController {
     private final NoticeService noticeService;
 
-    @GetMapping()
+    @GetMapping
     public String noticeList(Model model) {
         List<NoticeListResponseDto> noticeList = noticeService.findByNoticeList();
         model.addAttribute("noticeList", noticeList);
