@@ -18,17 +18,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
-
 import com.playdata.eungae.appointment.domain.AppointmentStatus;
-import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
-import com.playdata.eungae.appointment.dto.AppointmentResponseDto;
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
 import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
+import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
-
 import com.playdata.eungae.doctor.repository.DoctorRepository;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
@@ -95,7 +92,7 @@ public class AppointmentService {
 			.map(ResponseMedicalHistoryDto::toDto)
 			.collect(Collectors.toList());
 	}
-  
+
 	@Transactional(readOnly = true)
 	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
 		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.DIAGNOSIS)
@@ -170,6 +167,49 @@ public class AppointmentService {
 		hospitalDutyTime.put("closeHour", closeHour);
 
 		return hospitalDutyTime;
+	}
+
+	@Transactional(readOnly = true)
+	public List<LocalTime> createAppointmentPossibleTime
+		(String appointmentDate,
+			int appointmentDayOfWeek,
+			Long doctorSeq,
+			Long hospitalSeq) {
+
+		Map<String, String> hospitalDutyTime = getHospitalDutyTime(hospitalSeq, appointmentDayOfWeek);
+		String openHour = hospitalDutyTime.get("openHour");
+		String closeHour = hospitalDutyTime.get("closeHour");
+		String lunchStartHour = hospitalDutyTime.get("lunchStartHour");
+		String lunchEndHour = hospitalDutyTime.get("lunchEndHour");
+
+		LocalTime convertOpenHour = convertStringToLocalTime(openHour);
+		LocalTime convertCloseHour = convertStringToLocalTime(closeHour);
+		LocalTime convertLunchStartHour = convertStringToLocalTime(lunchStartHour);
+		LocalTime convertLunchEndHour = convertStringToLocalTime(lunchEndHour);
+
+		List<LocalTime> hospitalDutyTimeList = new ArrayList<>();
+
+		LocalDate localDate = convertStringToLocalDate(appointmentDate);
+
+		for (; !convertOpenHour.isAfter(convertCloseHour); convertOpenHour = convertOpenHour.plusMinutes(30)) {
+
+			if (!convertOpenHour.isBefore(convertLunchStartHour)
+				&& convertOpenHour.isBefore(convertLunchEndHour)) {
+				continue;
+			}
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+			String convertLocalTimeToString = convertOpenHour.format(formatter);
+
+			int currentAppointmentCount = appointmentRepository.findAllWithHospital(hospitalSeq, localDate,
+				convertLocalTimeToString, doctorSeq).size();
+
+			Integer doctorTreatmentPossibleCount = getDoctorTreatmentPossibleCount(doctorSeq);
+
+			if (doctorTreatmentPossibleCount > currentAppointmentCount) {
+				hospitalDutyTimeList.add(convertOpenHour);
+			}
+		}
+		return hospitalDutyTimeList;
 	}
 
 	// DB에 있는 운영시간을 String -> LocalTime 변환

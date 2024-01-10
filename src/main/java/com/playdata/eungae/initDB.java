@@ -80,10 +80,6 @@ public class initDB {
 			em.persist(appointment4);
 			em.persist(appointment5);
 
-			em.persist(getAppointment2(member, hospital, doctor1));
-			em.persist(getAppointment2(member, hospital, doctor1));
-			em.persist(getAppointment2(member, hospital, doctor1));
-
 			Review review1 = getReview(member, hospital, appointment1);
 			Review review2 = getReview(member, hospital, appointment2);
 			Review review3 = getReview(member, hospital, appointment3);
@@ -92,8 +88,8 @@ public class initDB {
 			em.persist(review2);
 			em.persist(review3);
 
-			Children children = getChildren(member);
-			em.persist(children);
+			Children children2 = getChildren(member);
+			em.persist(children2);
 		}
 	}
 
@@ -109,6 +105,7 @@ public class initDB {
 
 	private static Review getReview(Member member, Hospital hospital, Appointment appointment) {
 		return Review.builder()
+			.title("리뷰입니다.")
 			.member(member)
 			.hospital(hospital)
 			.appointment(appointment)
