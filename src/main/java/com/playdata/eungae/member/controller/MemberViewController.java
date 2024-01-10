@@ -100,9 +100,4 @@ public class MemberViewController {
     public String addMyChildren() {
         return "contents/member/my-children-add";
     }
-
-    @GetMapping("/reviews")
-    public String myReviewList() {
-        return "contents/member/my-review";
-    }
 }
