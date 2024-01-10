@@ -35,10 +35,10 @@ public class ReviewViewController {
     @PostMapping("/post")
     @ResponseStatus(HttpStatus.CREATED)
     public String createReview(
-        @Valid @RequestBody RequestReviewFormDto requestReviewFormDto
+        @Valid RequestReviewFormDto requestReviewFormDto
     ) {
         reviewService.createReview(requestReviewFormDto);
-        return "redirect://my/reviews";
+        return "redirect:/my/reviews";
     }
 
 }
