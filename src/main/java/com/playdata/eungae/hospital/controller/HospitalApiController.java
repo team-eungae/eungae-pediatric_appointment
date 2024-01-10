@@ -45,10 +45,16 @@ public class HospitalApiController {
 		return "hospital Image created successfully";
 	}
 
-  @GetMapping
+	@GetMapping("/around")
 	@ResponseStatus(HttpStatus.OK)
 	public List<HospitalSearchResponseDto> getAllNearbyHospital(double longitude, double latitude) {
 		List<HospitalSearchResponseDto> nearbyHospital = hospitalService.findAllNearbyHospital(longitude, latitude);
 		return nearbyHospital;
+	}
+
+	@GetMapping("/search")
+	@ResponseStatus(HttpStatus.OK)
+	public List<HospitalSearchResponseDto> getAllByKeyword(String keyword){
+		return hospitalService.findAllByKeyword(keyword);
 	}
 }
