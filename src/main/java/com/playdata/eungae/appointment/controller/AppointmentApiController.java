@@ -53,7 +53,6 @@ public class AppointmentApiController {
 		@RequestParam Long doctorSeq,
 		@RequestParam Long hospitalSeq) {
 
-		log.info("********** {}", hospitalSeq);
 		return appointmentService.createAppointmentPossibleTime(appointmentDate, appointmentDayOfWeek, doctorSeq, hospitalSeq);
 	}
 
