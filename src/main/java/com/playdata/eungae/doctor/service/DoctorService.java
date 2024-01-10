@@ -31,13 +31,13 @@ public class DoctorService {
 			.collect(Collectors.toList());
 	}
 
-	public void createDoctor(DoctorRegisterRequestDto doctorRegisterRequestDto){
+	public void createDoctor(DoctorRegisterRequestDto doctorRegisterRequestDto, Long hospitalSeq){
 		try {
 			Doctor entity = doctorRegisterRequestDto.toEntity(doctorRegisterRequestDto);
-			entity.setHospital(hospitalRepository.getReferenceById(1L));
+			entity.setHospital(hospitalRepository.getReferenceById(hospitalSeq));
 			doctorRepository.save(entity);
 		} catch (IOException e) {
-			throw new RuntimeException("Doctor profile Image error");
+			throw new RuntimeException("Doctor profile Image error", e);
 		}
 	}
 }

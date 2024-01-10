@@ -27,26 +27,22 @@ public class HospitalImageService {
 	private final FileStore fileStore;
 
 	@Transactional
-	public void saveHospitalImage(MultipartFile file, Long hospitalSeq) {
-		HospitalImage hospitalImage;
+	public void saveHospitalImage(ResultFileStore resultFileStore, Long hospitalSeq) {
 		Hospital hospital = hospitalRepository.findById(hospitalSeq)
-			.orElseThrow(() -> new NoSuchElementException("Hospital not found"));
-		try {
-			ResultFileStore resultFileStore = fileStore.storeFile(file);
-			hospitalImage = HospitalImage.builder()
-				.storeFileName(resultFileStore.getStoreFileName())
-				.originFileName(file.getOriginalFilename())
-				.build();
-			hospitalImage.setHospital(hospital);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+			.orElseThrow(() -> new NoSuchElementException("Hospital not found. hospital ID = {%s}".formatted(hospitalSeq)));
+
+		HospitalImage hospitalImage = HospitalImage.builder()
+			.storeFileName(resultFileStore.getStoreFileName())
+			.originFileName(resultFileStore.getOriginalFileName())
+			.build();
+
+		hospitalImage.setHospital(hospital);
 
 		hospitalImageRepository.save(hospitalImage);
 	}
 
 	@Transactional(readOnly = true)
-	public List<HospitalImageResponseDto> findhospitalImages(Long hospitalSeq) {
+	public List<HospitalImageResponseDto> findHospitalImages(Long hospitalSeq) {
 		List<HospitalImage> hospitalImageList = hospitalImageRepository.findAllByHospitalHospitalSeq(hospitalSeq);
 
 		return hospitalImageList.stream()

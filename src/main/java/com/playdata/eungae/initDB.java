@@ -198,7 +198,7 @@ public class initDB {
 				.name("김우진")
 				.hospital(hospital)
 				.treatmentPossible(3)
-				.profileImage("doctor.jpeg")
+				.profileImageStoreName("doctor.jpeg")
 				.build();
 		}
 
