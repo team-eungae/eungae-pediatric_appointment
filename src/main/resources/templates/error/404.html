@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <title>500 error</title>
+</th:block>
+<body>
+   <main layout:fragment="content">
+       <div style="width: 100%" height="100%">
+           <img th:src="@{/img/404.png}" style="width: 100%" height="100%"/>
+       </div>
+   </main>
+</body>
+</html>
