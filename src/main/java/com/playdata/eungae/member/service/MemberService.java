@@ -38,7 +38,7 @@ public class MemberService implements UserDetailsService {
     @Transactional
     public MemberUpdateResponseDto updateMemberInfo(String email, MemberUpdateRequestDto updateRequestDto) {
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
+                .orElseThrow(() -> new IllegalStateException("No member found for the email provided. email = {%s}".formatted(email)));
         member.updateMemberDetails(updateRequestDto);
         return MemberUpdateResponseDto.toDto(memberRepository.save(member));
     }
