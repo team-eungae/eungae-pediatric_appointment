@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.repository.ChildrenRepository;
 import com.playdata.eungae.member.repository.MemberRepository;
+import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -92,14 +94,13 @@ public class AppointmentService {
 	@Transactional(readOnly = true)
 	public List<ResponseMedicalHistoryDto> getMyMedicalRecords(String memberEmail) {
 		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberEmail(memberEmail);
-		if (myMedicalRecords.isEmpty()) {
-			throw new IllegalStateException("Can not found Appointment. memberEmail = {%s}".formatted(memberEmail));
-    }
 
 		// 진료 기록만 조회
 		return myMedicalRecords.stream()
 			.map(ResponseMedicalHistoryDto::toDto)
 			.filter(Objects::nonNull)
+			.sorted(Comparator.comparing(ResponseMedicalHistoryDto::getAppointmentSeq)
+				.reversed())
 			.collect(Collectors.toList());
 	}
 
@@ -125,6 +126,8 @@ public class AppointmentService {
 		return appointments.stream()
 			.map(ResponseAppointmentDto::toDto)
 			.filter(Objects::nonNull)
+			.sorted(Comparator.comparing(ResponseAppointmentDto::getAppointmentSeq)
+				.reversed())
 			.collect(Collectors.toList());
 
 	}
