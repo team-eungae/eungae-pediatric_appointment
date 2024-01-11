@@ -20,9 +20,12 @@
             <hr/>
             <div>
                 <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i>
-                    <span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span></div>
+                    <span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span>
+                    <button id="likeButton" class="btn"><i class="fa-regular fa-star"></i></button>
+                </div>
                 <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i>
-                    <span th:text="${hospital.contact}">병원 번호</span></div>
+                    <span th:text="${hospital.contact}">병원 번호</span>
+                </div>
             </div>
         </div>
     </div>
