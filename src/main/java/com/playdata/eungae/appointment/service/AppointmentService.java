@@ -25,7 +25,7 @@ import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.doctor.domain.Doctor;
-import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
+import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.doctor.repository.DoctorRepository;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
@@ -61,11 +61,11 @@ public class AppointmentService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<DoctorViewResponseDto> getDoctors(Long hospitalSeq) {
+	public List<DoctorResponseDto> getDoctors(Long hospitalSeq) {
 		return doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq)
 			.get()
 			.stream()
-			.map(DoctorViewResponseDto::toDto)
+			.map(DoctorResponseDto::toDto)
 			.collect(Collectors.toList());
 	}
 

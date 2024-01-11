@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
-import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
-import com.playdata.eungae.doctor.repository.DoctorRepository;
-import com.playdata.eungae.doctor.service.DoctorService;
 
+import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
 import com.playdata.eungae.hospital.service.HospitalService;
 import com.playdata.eungae.member.domain.Children;
@@ -54,7 +52,7 @@ public class AppointmentViewController {
 		String email = member.getUsername();
 		List<Children> myChildren = appointmentService.getMyChildren(email).get();
 
-		List<DoctorViewResponseDto> doctors = appointmentService.getDoctors(hospitalSeq);
+		List<DoctorResponseDto> doctors = appointmentService.getDoctors(hospitalSeq);
 
 		model.addAttribute("hospital", hospital);
 		model.addAttribute("children", myChildren);
