@@ -42,9 +42,6 @@ public class ResponseDetailMedicalHistoryDto {
 	}
 
 	private static boolean isWriteReview(Long reviewSeq) {
-		if (reviewSeq == null) {
-			return false;
-		}
-		return true;
+		return reviewSeq != null;
 	}
 }

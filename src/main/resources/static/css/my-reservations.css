@@ -56,3 +56,14 @@
     padding-bottom: 1%;
     color: white;
 }
+
+.canceled-reservation {
+    background-color: #e4606d;
+    border: 0;
+    border-radius: 3vw;
+    padding-left: 4vw;
+    padding-right: 4vw;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    color: white;
+}

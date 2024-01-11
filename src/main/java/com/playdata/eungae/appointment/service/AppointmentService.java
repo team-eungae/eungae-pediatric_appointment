@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,6 +67,16 @@ public class AppointmentService {
 	}
 
 	@Transactional
+	public ResponseAppointmentDto deleteAppointment(Long appointmentSeq) {
+		Appointment appointment = appointmentRepository.findById(appointmentSeq)
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found appointment, appointmentSeq = {%d}".formatted(appointmentSeq)));
+		appointment.setStatus(AppointmentStatus.CANCEL);
+		return ResponseAppointmentDto.toDto(appointment);
+
+	}
+
+	@Transactional
 	public void saveAppointment(AppointmentRequestDto requestDto, String email) {
 
 		Hospital hospital = hospitalRepository.findById(requestDto.getHospitalSeq()).get();
@@ -84,12 +91,15 @@ public class AppointmentService {
 
 	@Transactional(readOnly = true)
 	public List<ResponseMedicalHistoryDto> getMyMedicalRecords(String memberEmail) {
-		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberEmail(memberEmail, AppointmentStatus.DIAGNOSIS);
+		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberEmail(memberEmail);
 		if (myMedicalRecords.isEmpty()) {
 			throw new IllegalStateException("Can not found Appointment. memberEmail = {%s}".formatted(memberEmail));
     }
+
+		// 진료 기록만 조회
 		return myMedicalRecords.stream()
 			.map(ResponseMedicalHistoryDto::toDto)
+			.filter(Objects::nonNull)
 			.collect(Collectors.toList());
 	}
 
@@ -101,15 +111,22 @@ public class AppointmentService {
 	}
 
 	@Transactional(readOnly = true)
-	public Page<ResponseAppointmentDto> findAppointment(int pageNumber, Long memberSeq) {
+	public List<ResponseAppointmentDto> findAllAppointment(/*int pageNumber,*/ String memberEmail) {
 
+/*
+		고도화 작업하며 pageable 기능 추가할것
 		Pageable pageConfig = PageRequest.of(
 			pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt")
 		);
+*/
+		List<Appointment> appointments = appointmentRepository.findAllByMemberEmail(memberEmail);
 
-		return appointmentRepository.findAllAppointment(pageConfig, memberSeq)
-			.orElseThrow(() -> new IllegalStateException("Can not found Appointment Entity"))
-			.map(ResponseAppointmentDto::toDto);
+		// 유효한 예약과 취소된 예약을 조회
+		return appointments.stream()
+			.map(ResponseAppointmentDto::toDto)
+			.filter(Objects::nonNull)
+			.collect(Collectors.toList());
+
 	}
 
 	// 병원 운영 시간

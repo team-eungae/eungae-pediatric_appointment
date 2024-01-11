@@ -1,19 +1,19 @@
 package com.playdata.eungae.appointment.controller;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.playdata.eungae.appointment.dto.RequestAppointmentDeleteDto;
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
-import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +27,8 @@ public class AppointmentApiController {
 
 	private final AppointmentService appointmentService;
 
+/*
+	pageable 작업하며 비동기 처리를 처리할 RestController
 	@GetMapping("/appointments")
 	@ResponseStatus(HttpStatus.OK)
 	public Page<ResponseAppointmentDto> findAppointment(
@@ -35,6 +37,7 @@ public class AppointmentApiController {
 	) {
 		return appointmentService.findAppointment(pageNumber, memberSeq);
 	}
+*/
 
 	@GetMapping("/appointment/time")
 	@ResponseStatus(HttpStatus.OK)
@@ -45,5 +48,11 @@ public class AppointmentApiController {
 		@RequestParam Long hospitalSeq) {
 
 		return appointmentService.createAppointmentPossibleTime(appointmentDate, appointmentDayOfWeek, doctorSeq, hospitalSeq);
+	}
+
+	@PatchMapping("/my/appointments")
+	@ResponseStatus(HttpStatus.ACCEPTED)
+	public ResponseAppointmentDto deleteAppointment(@RequestBody RequestAppointmentDeleteDto requestAppointmentDeleteDto) {
+		return appointmentService.deleteAppointment(requestAppointmentDeleteDto.getAppointmentSeq());
 	}
 }

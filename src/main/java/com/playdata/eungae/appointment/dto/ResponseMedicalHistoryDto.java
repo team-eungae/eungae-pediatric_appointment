@@ -3,6 +3,7 @@ package com.playdata.eungae.appointment.dto;
 import java.time.LocalDate;
 
 import com.playdata.eungae.appointment.domain.Appointment;
+import com.playdata.eungae.appointment.domain.AppointmentStatus;
 
 import lombok.Builder;
 import lombok.Data;
@@ -15,20 +16,24 @@ public class ResponseMedicalHistoryDto {
 	private String childrenName;
 	private String doctorName;
 	private String hospitalName;
-
 	private LocalDate appointmentDate;
 	private String appointmentHHMM;
 	private String note;
+	private Long reviewSeq;
 
-	public static ResponseMedicalHistoryDto toDto(Appointment entity){
+	public static ResponseMedicalHistoryDto toDto(Appointment appointment){
+		if (appointment.getStatus() != AppointmentStatus.DIAGNOSIS){
+			return null;
+		}
 		return ResponseMedicalHistoryDto.builder()
-			.appointmentSeq(entity.getAppointmentSeq())
-			.childrenName(entity.getChildren().getName())
-			.doctorName(entity.getDoctor().getName())
-			.hospitalName(entity.getHospital().getName())
-			.appointmentDate(entity.getAppointmentDate())
-			.appointmentHHMM(entity.getAppointmentHHMM())
-			.note(entity.getNote())
+			.reviewSeq(appointment.getReviewSeq())
+			.appointmentSeq(appointment.getAppointmentSeq())
+			.childrenName(appointment.getChildren().getName())
+			.doctorName(appointment.getDoctor().getName())
+			.hospitalName(appointment.getHospital().getName())
+			.appointmentDate(appointment.getAppointmentDate())
+			.appointmentHHMM(appointment.getAppointmentHHMM())
+			.note(appointment.getNote())
 			.build();
 	}
 }

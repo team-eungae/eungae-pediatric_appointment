@@ -17,7 +17,12 @@
             <div class="card" th:onclick="|location.href='@{/my/records/{appointmentSeq}(appointmentSeq=${myMedicalRecords.appointmentSeq})}'|" >
                 <div class="myrecords">
                     <div class="hospital-name">
-                        <p th:text="${myMedicalRecords.hospitalName}"></p>
+                        <div class="review-YN">
+                            <p th:text="${myMedicalRecords.hospitalName}" class="set-display-inline"></p>
+                            <p th:if="${myMedicalRecords.reviewSeq != null}" class="set-display-inline-review">
+                                리뷰 작성 완료
+                            </p>
+                        </div>
                     </div>
                     <hr/>
                     <table>

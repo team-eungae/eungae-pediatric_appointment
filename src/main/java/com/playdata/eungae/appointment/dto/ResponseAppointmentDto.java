@@ -1,23 +1,12 @@
 package com.playdata.eungae.appointment.dto;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 import com.playdata.eungae.appointment.domain.Appointment;
-import com.playdata.eungae.appointment.domain.AppointmentDocument;
-import com.playdata.eungae.doctor.domain.Doctor;
-import com.playdata.eungae.hospital.domain.Hospital;
-import com.playdata.eungae.member.domain.Children;
+import com.playdata.eungae.appointment.domain.AppointmentStatus;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Setter;
 
 @Builder
 @Data
@@ -25,20 +14,32 @@ public class ResponseAppointmentDto {
 
 	private Long appointmentSeq;
 
+	private Long hospitalSeq;
+
 	private String childrenName;
 
 	private String doctorName;
 
 	private String hospitalName;
 
+	private LocalDate appointmentDate;
+
 	private String appointmentHHMM;
 
+	private AppointmentStatus status;
+
 	public static ResponseAppointmentDto toDto(Appointment appointment) {
+		if (appointment.getStatus() == AppointmentStatus.DIAGNOSIS) {
+			return null;
+		}
 		return ResponseAppointmentDto.builder()
+			.status(appointment.getStatus())
+			.hospitalSeq(appointment.getHospital().getHospitalSeq())
 			.appointmentSeq(appointment.getAppointmentSeq())
 			.childrenName(appointment.getChildren().getName())
 			.doctorName(appointment.getDoctor().getName())
 			.hospitalName(appointment.getHospital().getName())
+			.appointmentDate(appointment.getAppointmentDate())
 			.appointmentHHMM(appointment.getAppointmentHHMM())
 			.build();
 	}

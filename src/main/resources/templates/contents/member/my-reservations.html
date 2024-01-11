@@ -13,49 +13,40 @@
         <hr/>
     </div>
     <div class="my-reservaions-body">
-        <div class="my-reservations">
-            <div class="hospital-name">
-                삼성에스마디정형외과의원
-                <hr/>
-            </div>
-            <ul>
-                <li>환자명 - ㅁㅁㅁ</li>
-                <li>예약일 - 2011.11.11</li>
-                <li>예약시간 - 12:30</li>
-                <li>진료과 - 소아과</li>
-                <li>의사명 - 으이사</li>
-            </ul>
-            <div class="button-place">
-                <a th:href="@{/hospital}" class="hospital-details">
-                    병원보기
-                </a>
-                <button class="reservation-cancel">
-                    예약취소
-                </button>
+        <div th:unless="${#lists.size(responseAppointmentDtos) == 0} ">
+            <div class="my-reservations" th:each=" responseAppointmentDto : ${responseAppointmentDtos}">
+                <div class="hospital-name" th:text="${responseAppointmentDto.hospitalName}">
+                    삼성에스마디정형외과의원
+                    <hr/>
+                </div>
+                <ul>
+                    <li th:text="${responseAppointmentDto.childrenName}">환자명 - ㅁㅁㅁ</li>
+                    <li th:text="${responseAppointmentDto.appointmentDate}">예약일 - 2011.11.11</li>
+                    <li th:text="${responseAppointmentDto.appointmentHHMM}">예약시간 - 12:30</li>
+                    <li th:text="${responseAppointmentDto.doctorName}">의사명 - 으이사</li>
+                </ul>
+                <div class="button-place" th:if="${responseAppointmentDto.status == T(com.playdata.eungae.appointment.domain.AppointmentStatus).APPOINTMENT}">
+                    <a th:href="@{|/hospital/${responseAppointmentDto.hospitalSeq}|}" class="hospital-details">
+                        병원보기
+                    </a>
+                    <button th:onclick="deleteAppointment([[${responseAppointmentDto.appointmentSeq}]])" class="reservation-cancel">
+                        예약취소
+                    </button>
+                </div>
+                <div class="button-place" th:if="${responseAppointmentDto.status == T(com.playdata.eungae.appointment.domain.AppointmentStatus).CANCEL}">
+                    <button class="canceled-reservation" disabled>
+                        취소된 예약입니다.
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="my-reservations">
-            <div class="hospital-name">
-                탑플러스안과의원
-                <hr/>
-            </div>
-            <ul>
-                <li>환자명 - ㄱㄱㄱ</li>
-                <li>예약일 - 2011.11.11</li>
-                <li>예약시간 - 14:30</li>
-                <li>진료과 - 소아과</li>
-                <li>의사명 - 김안과</li>
-            </ul>
-            <div class="button-place">
-                <a th:href="@{/hospital}" class="hospital-details">
-                    병원보기
-                </a>
-                <button class="reservation-cancel">
-                    예약취소
-                </button>
-            </div>
+        <div th:if="${#lists.size(responseAppointmentDtos) == 0} ">
+            예약 내역이 없습니다.
         </div>
     </div>
 </main>
+<div layout:fragment="custom_js">
+    <script src="/js/my-reservations.js"></script>
+</div>
 </body>
 </html>

@@ -82,3 +82,21 @@
     background-color: #142C47;
     color: white;
 }
+
+.set-display-inline {
+    display : inline-block;
+}
+
+.set-display-inline-review {
+    font-size: 12px;
+    display : inline-block;
+    background-color: #99B7D9;
+    border-radius: 20px;
+    margin-left: 9px;
+    padding: 10px;
+}
+
+.review-YN {
+    display: flex;
+    justify-content: space-between;
+}
