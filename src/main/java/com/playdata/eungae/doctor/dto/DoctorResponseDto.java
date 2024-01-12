@@ -8,20 +8,20 @@ import lombok.Data;
 
 @Data
 @Builder
-public class DoctorViewResponseDto{
+public class DoctorResponseDto {
 	private Long doctorSeq;
 	private String name;
 	private String status;
 	private int treatmentPossible;
-	private String profileImage;
+	private String DoctorProfileImage;
 
-	public static DoctorViewResponseDto toDto(Doctor doctor){
-		return DoctorViewResponseDto.builder()
+	public static DoctorResponseDto toDto(Doctor doctor){
+		return DoctorResponseDto.builder()
 			.doctorSeq(doctor.getDoctorSeq())
 			.name(doctor.getName())
 			.status(doctor.getStatus())
 			.treatmentPossible(doctor.getTreatmentPossible())
-			.profileImage(doctor.getProfileImageStoreName())
+			.DoctorProfileImage(doctor.getDoctorProfileImage())
 			.build();
 	}
 }

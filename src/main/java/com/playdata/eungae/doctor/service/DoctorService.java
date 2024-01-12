@@ -1,16 +1,17 @@
 package com.playdata.eungae.doctor.service;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.doctor.dto.DoctorRegisterRequestDto;
-import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
+import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.doctor.repository.DoctorRepository;
+import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.repository.HospitalRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -21,23 +22,27 @@ public class DoctorService {
 	private final DoctorRepository doctorRepository;
 	private final HospitalRepository hospitalRepository;
 
-	public List<DoctorViewResponseDto> findDoctorsByHospitalId(Long hospitalSeq){
-		
-		List<Doctor> doctorList = doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq)
-			.orElseThrow(() -> new NoSuchElementException("Doctor not found"));
-		
+	@Transactional(readOnly = true)
+	public List<DoctorResponseDto> findDoctorsByHospitalSeq(Long hospitalSeq) {
+
+		List<Doctor> doctorList = doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq);
+
 		return doctorList.stream()
-			.map(DoctorViewResponseDto::toDto)
+			.map(DoctorResponseDto::toDto)
 			.collect(Collectors.toList());
 	}
 
-	public void createDoctor(DoctorRegisterRequestDto doctorRegisterRequestDto, Long hospitalSeq){
-		try {
-			Doctor entity = doctorRegisterRequestDto.toEntity(doctorRegisterRequestDto);
-			entity.setHospital(hospitalRepository.getReferenceById(hospitalSeq));
-			doctorRepository.save(entity);
-		} catch (IOException e) {
-			throw new RuntimeException("Doctor profile Image error", e);
-		}
+	@Transactional
+	public void createDoctor(DoctorRegisterRequestDto doctorRegisterRequestDto, String hospitalId) {
+		Doctor doctor = doctorRegisterRequestDto.toEntity(doctorRegisterRequestDto);
+
+		Hospital hospital = hospitalRepository.findByHospitalId(hospitalId)
+			.orElseThrow(
+				() -> new NoSuchElementException("Hospital not found by hospitalId = {%s}".formatted(hospitalId)));
+
+		doctor.setHospital(hospital);
+
+		doctorRepository.save(doctor);
 	}
+
 }

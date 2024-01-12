@@ -46,11 +46,8 @@ public class HospitalApiController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public String createHospitalImages(MultipartFile file, Long hospitalSeq) {
 		ResultFileStore resultFileStore;
-		try {
-			resultFileStore = fileStore.storeFile(file);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		resultFileStore = fileStore.storeFile(file);
+
 		hospitalImageService.saveHospitalImage(resultFileStore, hospitalSeq);
 
 		return "hospital Image created successfully";
