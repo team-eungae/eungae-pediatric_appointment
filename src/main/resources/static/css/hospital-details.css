@@ -44,6 +44,20 @@ main {
     background-position: center;
 }
 
+#likeButton {
+  float: right;
+  padding: 0;
+  outline: none;
+  color: gold;
+  font-size: x-large;
+  -webkit-tap-highlight-color : unset;
+  -webkit-tap-highlight-color : transparent;
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+
 @keyframes hospital-images {
     0% {
         transform: translateX(0);
