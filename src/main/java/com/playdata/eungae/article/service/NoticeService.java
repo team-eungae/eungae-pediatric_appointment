@@ -1,7 +1,6 @@
 package com.playdata.eungae.article.service;
 
 import com.playdata.eungae.article.domain.Notice;
-import com.playdata.eungae.article.dto.NoticeListResponseDto;
 import com.playdata.eungae.article.dto.NoticeResponseDto;
 import com.playdata.eungae.article.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,9 +26,9 @@ public class NoticeService {
     }
 
     @Transactional(readOnly = true)
-    public List<NoticeListResponseDto> findByNoticeList() {
+    public List<NoticeResponseDto> findByNoticeList() {
         List<Notice> notices = noticeRepository.findAll();
-        List<NoticeListResponseDto> noticeList = notices.stream().map(NoticeListResponseDto::toDto)
+        List<NoticeResponseDto> noticeList = notices.stream().map(NoticeResponseDto::toDto)
                 .collect(Collectors.toList());
         return noticeList;
     }

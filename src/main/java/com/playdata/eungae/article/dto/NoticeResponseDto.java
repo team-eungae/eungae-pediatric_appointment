@@ -1,4 +1,3 @@
-
 package com.playdata.eungae.article.dto;
 
 import com.playdata.eungae.article.domain.Notice;
@@ -10,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 @Data
 @Builder
 public class NoticeResponseDto {
-
+    private static DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private Long noticeSeq;
     private String title;
     private String content;
@@ -18,7 +17,7 @@ public class NoticeResponseDto {
     private String modifiedAt;
 
     public static NoticeResponseDto toDto(Notice notice) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
         return NoticeResponseDto.builder()
                 .noticeSeq(notice.getNoticeSeq())
                 .title(notice.getTitle())
@@ -27,4 +26,5 @@ public class NoticeResponseDto {
                 .modifiedAt(dateTimeFormatter.format(notice.getCreatedAt()))
                 .build();
     }
+
 }
