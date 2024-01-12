@@ -38,16 +38,6 @@ public class MemberApiController {
         return "successful";
     }
 
-    @GetMapping("/hospital")
-    @ResponseStatus(HttpStatus.OK)
-    public String findFavorites(
-        Model model,
-        @AuthenticationPrincipal UserDetails principal
-    ) {
-        List<ResponseFavoritesHospitalDto> responseFavoritesHospitalDtos = memberService.findFavorites(principal.getUsername());
-        return "Favorites have been successfully appended";
-    }
-
     @PostMapping("/hospital")
     @ResponseStatus(HttpStatus.CREATED)
     public String appendFavorites(@RequestBody @Valid RequestFavoriesDto requestFavoriesDto) {

@@ -1,6 +1,8 @@
 package com.playdata.eungae.member.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +17,7 @@ import com.playdata.eungae.member.domain.FavoritesHospital;
 import com.playdata.eungae.member.domain.Member;
 
 import com.playdata.eungae.member.dto.RequestFavoriesDto;
+import com.playdata.eungae.member.dto.ResponseFavoritesHospitalDto;
 import com.playdata.eungae.member.repository.FavoritesHospitalRepository;
 
 import com.playdata.eungae.member.dto.MemberFindResponseDto;
@@ -22,6 +25,7 @@ import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
 
 import com.playdata.eungae.member.repository.MemberRepository;
+import com.playdata.eungae.review.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +61,15 @@ public class MemberService implements UserDetailsService {
         return MemberUpdateResponseDto.toDto(member);
     }
 
+    @Transactional(readOnly = true)
+    public List<ResponseFavoritesHospitalDto> getFavoritesByMemberEmail(String userEmail) {
+        List<FavoritesHospital> favoritesHospitals = favoritesHospitalRepository.getByUserEmail(userEmail);
+
+        return favoritesHospitals.stream()
+            .map(ResponseFavoritesHospitalDto::toDto)
+            .collect(Collectors.toList());
+    }
+
     @Transactional
     public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
         MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
@@ -82,12 +95,7 @@ public class MemberService implements UserDetailsService {
         validateDuplicateMemberEmail(member);
         return memberRepository.save(member);
     }
-  
-  
-	  @Transactional(readOnly = true)
-  	public Optional<Member> findByEmail(String email) {
-	  	return memberRepository.findByEmail(email);
-  	}
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -141,7 +149,8 @@ public class MemberService implements UserDetailsService {
         return favoritesHospital;
     }
 
-    private record MemberAndHospitalEntity(Member member, Hospital hospital) {
+
+	private record MemberAndHospitalEntity(Member member, Hospital hospital) {
     }
 
     private void validateDuplicateMemberEmail(Member member) {

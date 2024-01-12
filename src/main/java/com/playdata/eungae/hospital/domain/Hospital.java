@@ -9,6 +9,7 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.member.domain.FavoritesHospital;
+import com.playdata.eungae.review.domain.Review;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,6 +55,10 @@ public class Hospital extends BaseEntity {
 
 	@OneToMany(mappedBy = "hospital")
 	@Builder.Default
+	private List<Review> reviews = new ArrayList<>();
+
+	@OneToMany(mappedBy = "hospital")
+	@Builder.Default
 	private List<HospitalImage> hospitalImageList = new ArrayList<>();
 
 	@Setter
@@ -62,6 +67,7 @@ public class Hospital extends BaseEntity {
 	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
 
 	@OneToMany(mappedBy = "hospital")
+	@Builder.Default
 	private List<Appointment> appointments = new ArrayList<>();
 
 	@Column(nullable = false)
