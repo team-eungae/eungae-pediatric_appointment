@@ -1,5 +1,7 @@
 package com.playdata.eungae.article.dto;
 
+import java.time.format.DateTimeFormatter;
+
 import com.playdata.eungae.article.domain.CommunityBoard;
 import com.playdata.eungae.member.domain.Member;
 
@@ -19,9 +21,12 @@ public class CommunityBoardDto {
 	private Long memberSeq;
 	private String title;
 	private String content;
+	private String author;
+	private String date;
+	private String thumbnailImageUrl;
 
 
-	public static CommunityBoardDto from(CommunityBoard entity) {
+	public static CommunityBoardDto toDto(CommunityBoard entity) {
 		return CommunityBoardDto.builder()
 			.communityBoardSeq(entity.getCommunityBoardSeq())
 			.memberSeq(entity.getMember().getMemberSeq()) // Member 객체에서 ID 추출

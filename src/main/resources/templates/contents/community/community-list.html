@@ -23,14 +23,20 @@
                     <p class="post-contents" th:text="${post.content}">내용</p>
                 </div>
                 <div class="col-3">
-                    <img th:src="${post.thumbnailImageUrl}" class="thumbnail-image"/>
+                   <!-- <img th:src="${post.thumbnailImageUrl}" class="thumbnail-image"/> -->
                 </div>
             </div>
             <div class="written-records">
                 <ul class="written-list">
-                    <li class="records-item" th:text="${post.author}">작성자</li>
-                    <li class="records-item" th:text="${#temporals.format(post.date, 'yyyy.MM.dd')}">작성일</li>
+                 <!--   <li class="records-item" th:text="${post.author}">작성자</li>
+                    <li class="records-item" th:text="${#temporals.format(post.date, 'yyyy.MM.dd')}">작성일</li> -->
                 </ul>
+                <button class="children-closed-btn btn-sm align-self-start" onclick="showDeleteButton(this)">
+                    <i class="fa-solid fa-gear"></i>
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-danger">삭제</button>
+                </button>
+
             </div>
             <hr/>
         </div>
