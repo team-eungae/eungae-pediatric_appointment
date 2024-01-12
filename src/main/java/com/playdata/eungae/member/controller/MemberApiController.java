@@ -19,13 +19,12 @@ public class MemberApiController {
 
     private final MemberService memberService;
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/profile/form")
     public String updateMemberInfo(@RequestBody @Valid MemberUpdateRequestDto updateRequestDto) {
         memberService.updateMemberInfo(updateRequestDto.getEmail(), updateRequestDto);
         return "successful";
     }
-
 
     @PostMapping("/hospital")
     @ResponseStatus(HttpStatus.CREATED)
