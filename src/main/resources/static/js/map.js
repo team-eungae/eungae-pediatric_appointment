@@ -73,6 +73,8 @@ if (navigator.geolocation){
                 positions[index]=position;
                 addMarker(positions[index],markerImage);
             });
+        },error:function(){
+            alert("주변 병원 검색중 오류가 발생하였습니다.");
         }
     })
 } else {
@@ -129,7 +131,7 @@ const onSearch = (event) => {
                 addMarker(positions[index],markerImage);
             });
         }, error:function() {
-            marker = new kakao.maps.Marker({});
+            alert("키워드 검색 중 오류가 발생하였습니다. 다른 키원드로 검색해주세요");
         }
     })
 }
