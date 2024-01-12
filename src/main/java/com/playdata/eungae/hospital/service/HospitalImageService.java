@@ -24,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 public class HospitalImageService {
 	private final HospitalImageRepository hospitalImageRepository;
 	private final HospitalRepository hospitalRepository;
-	private final FileStore fileStore;
 
 	@Transactional
 	public void saveHospitalImage(ResultFileStore resultFileStore, Long hospitalSeq) {

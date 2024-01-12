@@ -1,20 +1,19 @@
 package com.playdata.eungae.article.controller;
 
-import java.util.List;
-
+import com.playdata.eungae.article.dto.CommunityBoardDto;
+import com.playdata.eungae.article.service.CommunityBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.playdata.eungae.article.dto.CommunityBoardDto;
-import com.playdata.eungae.article.service.CommunityBoardService;
 
 @Controller
-@RequestMapping("/article")
 public class ArticleViewController {
 
 	private final CommunityBoardService communityBoardService;
@@ -24,26 +23,34 @@ public class ArticleViewController {
 		this.communityBoardService = communityBoardService;
 	}
 
-	@GetMapping("/list")
-	public String communityList(Model model) {
-		List<CommunityBoardDto> posts = communityBoardService.readAllCommunityBoards();
-		model.addAttribute("posts",posts);
+	@GetMapping("/article")
+	public String listArticles(Model model) {
+		model.addAttribute("posts", communityBoardService.getAllCommunityBoards());
 		return "contents/community/community-list";
 	}
 
-	@GetMapping("/details")
-	public String communityDetail() {
-		return "contents/community/community-post-details";
-	}
+	@GetMapping("/article/post")
+	public String showArticleForm(Model model) {
 
-	@GetMapping("/post")
-	public String communityWrite() {
 		return "contents/community/community-write";
 	}
 
-	@PostMapping("/post")
-	public String postCommunityBoard(@ModelAttribute CommunityBoardDto communityBoardDto) {
-		communityBoardService.createCommunityBoard(communityBoardDto);
-		return "redirect:/article/list"; // 게시글 목록 페이지로 리디렉션
+	@PostMapping("/article/post")
+	public String postArticle(@ModelAttribute CommunityBoardDto communityBoardDto, Authentication authentication) {
+		String email = ((UserDetails) authentication.getPrincipal()).getUsername();
+		communityBoardService.createCommunityBoard(communityBoardDto, email);
+		return "redirect:/article";
 	}
+	@GetMapping("/article/{article-seq}")
+	public String viewArticle(@PathVariable("article-seq") Long id, Model model) {
+		model.addAttribute("post", communityBoardService.getCommunityBoardById(id));
+		return "contents/community/community-post-details";
+	}
+
+	@GetMapping("/article/{article-seq}/form")
+	public String editArticleForm(@PathVariable("article-seq") Long id, Model model) {
+		model.addAttribute("post", communityBoardService.getCommunityBoardById(id));
+		return "contents/community/community-write";
+	}
+
 }

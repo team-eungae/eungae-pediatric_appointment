@@ -93,7 +93,6 @@ $(document).ready(function () {
 
 // 찜하기 버튼의 클릭 이벤트 처리
 $(document).ready(function () {
-
     const hospitalSeq = $("#hospitalSeq").val()
     let liked = true;
 
@@ -133,7 +132,5 @@ $(document).ready(function () {
               alert("즐겨찾기 추가에 실패했습니다.");
           }
       })
-
-
   });
 });

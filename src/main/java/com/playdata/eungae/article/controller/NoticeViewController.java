@@ -1,6 +1,5 @@
 package com.playdata.eungae.article.controller;
 
-import com.playdata.eungae.article.dto.NoticeListResponseDto;
 import com.playdata.eungae.article.dto.NoticeResponseDto;
 import com.playdata.eungae.article.service.NoticeService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ public class NoticeViewController {
 
     @GetMapping
     public String noticeList(Model model) {
-        List<NoticeListResponseDto> noticeList = noticeService.findByNoticeList();
+        List<NoticeResponseDto> noticeList = noticeService.findByNoticeList();
         model.addAttribute("noticeList", noticeList);
         return "contents/notice/notice-list";
     }

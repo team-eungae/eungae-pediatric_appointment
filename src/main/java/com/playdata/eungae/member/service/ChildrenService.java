@@ -1,18 +1,22 @@
 package com.playdata.eungae.member.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.playdata.eungae.file.FileStore;
+import com.playdata.eungae.file.ResultFileStore;
 import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.dto.ChildrenDto;
+import com.playdata.eungae.member.dto.ChildrenRequestDto;
 import com.playdata.eungae.member.repository.ChildrenRepository;
 import com.playdata.eungae.member.repository.MemberRepository;
 
@@ -24,24 +28,24 @@ public class ChildrenService {
 
 	private final ChildrenRepository childrenRepository;
 	private final MemberRepository memberRepository;
-
 	@Transactional
-	public void createChildren(ChildrenDto childrenDto, MultipartFile photoFile, String email) {
+	public List<ChildrenDto> createChildren(ChildrenRequestDto childrenRequestDto, ResultFileStore resultFileStore, String email) throws IOException {
 
-		if (photoFile != null && !photoFile.isEmpty()) {
-			String photoPath = savePhotoAndGetPath(photoFile);
-			childrenDto.setPhotoPath(photoPath);
-		}
+		Member member = memberRepository.findByEmail(email)
+			.orElseThrow(() -> new IllegalStateException("해당 이메일의 사용자가 존재하지 않습니다: " + email));
 
-		Member member = memberRepository.findByEmail(email).get();
-		Children children = Children.from(childrenDto);
+		Children children = ChildrenRequestDto.toEntity(childrenRequestDto, resultFileStore.getStoreFileName());
 		children.setMember(member);
-
 		childrenRepository.save(children);
+
+		// 전체 자녀 목록 반환
+		return getAllChildren();
 	}
 
-	private String savePhotoAndGetPath(MultipartFile photoFile) {
-		return " ";
+	private File convertToFile(MultipartFile multipartFile) throws IOException {
+		File convFile = new File(multipartFile.getOriginalFilename());
+		multipartFile.transferTo(convFile);
+		return convFile;
 	}
 
 	@Transactional
@@ -64,7 +68,7 @@ public class ChildrenService {
 	public List<ChildrenDto> getAllChildren() {
 		return childrenRepository.findAll().stream()
 			.map(children -> {
-				ChildrenDto dto = ChildrenDto.from(children);
+				ChildrenDto dto = ChildrenDto.toDto(children);
 				dto.setBirthDate(formatDate(dto.getBirthDate()));
 				return dto;
 			})

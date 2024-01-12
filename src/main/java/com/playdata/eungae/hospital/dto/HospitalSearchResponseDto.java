@@ -1,8 +1,5 @@
 package com.playdata.eungae.hospital.dto;
 
-import java.util.List;
-
-import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
 import com.playdata.eungae.hospital.domain.Hospital;
 
 import lombok.Builder;

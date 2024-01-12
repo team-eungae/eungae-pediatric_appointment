@@ -48,7 +48,7 @@ public class Doctor extends BaseEntity {
 	@Column(nullable = false)
 	private int treatmentPossible;
 
-	private String profileImageStoreName;
+	private String DoctorProfileImage;
 
 	public Doctor(String name) {
 		this.name = name;

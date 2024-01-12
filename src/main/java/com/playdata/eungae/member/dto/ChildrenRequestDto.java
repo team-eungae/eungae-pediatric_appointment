@@ -1,7 +1,5 @@
 package com.playdata.eungae.member.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.playdata.eungae.member.domain.Children;
 
 import lombok.AllArgsConstructor;
@@ -13,23 +11,22 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChildrenDto {
+public class ChildrenRequestDto {
 	private Long childrenSeq;
 	private long memberSeq;
 	private String name;
 	private String birthDate;
 	private String gender;
-	private String profileImage;
 	private String etcInfo;
 
-	public static ChildrenDto toDto(Children entity) {
-		return ChildrenDto.builder()
-			.childrenSeq(entity.getChildrenSeq())
-			.name(entity.getName())
-			.birthDate(entity.getBirthDate())
-			.gender(entity.getGender())
-			.profileImage(entity.getProfileImage())
-			.etcInfo(entity.getEtcInfo())
+	public static Children toEntity(ChildrenRequestDto childrenRequestDto, String profileImage) {
+		return Children.builder()
+			.childrenSeq(childrenRequestDto.getChildrenSeq())
+			.name(childrenRequestDto.getName())
+			.birthDate(childrenRequestDto.getBirthDate())
+			.gender(childrenRequestDto.getGender())
+			.profileImage(profileImage)
+			.etcInfo(childrenRequestDto.getEtcInfo())
 			.build();
 	}
 }

@@ -1,6 +1,6 @@
 package com.playdata.eungae.article.domain;
 
-import com.playdata.eungae.article.dto.CommunityBoardDto;
+import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.member.domain.Member;
 
 import jakarta.persistence.Column;
@@ -23,7 +23,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "community_board")
-public class CommunityBoard {
+public class CommunityBoard extends BaseEntity {
+
 	@Id
 	@GeneratedValue
 	private Long communityBoardSeq;
@@ -38,18 +39,7 @@ public class CommunityBoard {
 	@Column(nullable = false)
 	private String content;
 
-	public static CommunityBoard from(CommunityBoardDto dto) {
-		CommunityBoard communityBoard = CommunityBoard.builder()
-			.title(dto.getTitle())
-			.content(dto.getContent())
-			.build();
-		return communityBoard;
-	}
 
-	public void update(String title, String content) {
-		this.title = title;
-		this.content = content;
-	}
 
 	public void setMember(Member member) {
 		this.member = member;

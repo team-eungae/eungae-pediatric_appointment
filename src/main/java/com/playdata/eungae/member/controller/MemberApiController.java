@@ -38,7 +38,7 @@ public class MemberApiController {
         return memberService.checkFavoriteStatus(hospitalSeq, principal.getUsername());
     }
 
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     @PatchMapping("/profile/form")
     public String updateMemberInfo(@RequestBody @Valid MemberUpdateRequestDto updateRequestDto) {
         memberService.updateMemberInfo(updateRequestDto.getEmail(), updateRequestDto);

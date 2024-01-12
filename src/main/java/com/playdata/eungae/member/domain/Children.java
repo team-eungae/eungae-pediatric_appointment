@@ -51,30 +51,10 @@ public class Children extends BaseEntity {
 	@Column
 	private String profileImage;
 
-	@Column
-	private String photoPath;
-
-	@Lob
-	@Column
-	private byte[] photoContent;
-
-	@Column
-	private String imageMimeType;
-
 	// 연관관계 편의 메서드
 	public void setMember(Member member) {
 		this.member = member;
 		member.addChildren(this);
 	}
 
-	public static Children from(ChildrenDto dto) {
-		return Children.builder()
-			.name(dto.getName())
-			.birthDate(dto.getBirthDate())
-			.gender(dto.getGender())
-			.profileImage(dto.getProfileImage())
-			.photoPath(dto.getPhotoPath())
-			.etcInfo(dto.getEtcInfo())
-			.build();
-	}
 }

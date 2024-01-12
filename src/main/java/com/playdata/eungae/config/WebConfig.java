@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class FileUploadConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer {
 
     @Value("${file.upload.path}")
     String photoUploadPath;
@@ -20,7 +20,7 @@ public class FileUploadConfig implements WebMvcConfigurer {
         // 실제로 자원이 저장된 로컬 경로
         String resourcePath ="file:///"+photoUploadPath;
 
-        // /images/로 시작하는 요청이 오면, C:/uploadImages/ 와 연결
+        // /images/로 시작하는 요청이 오면, 로컬 경로와 연결
         registry.addResourceHandler(webPath).addResourceLocations(resourcePath);
     }
 }

@@ -2,7 +2,6 @@ package com.playdata.eungae.doctor.dto;
 
 
 
-import java.io.IOException;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +11,6 @@ import com.playdata.eungae.file.ResultFileStore;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
 
 @Data
 @Builder
@@ -20,15 +18,15 @@ public class DoctorRegisterRequestDto {
 
 	private String name;
 	private int treatmentPossible;
-	private MultipartFile profileImage;
+	private MultipartFile DoctorProfileImage;
 
-	public Doctor toEntity(DoctorRegisterRequestDto doctorRegisterRequestDto) throws IOException {
+	public Doctor toEntity(DoctorRegisterRequestDto doctorRegisterRequestDto){
 		FileStore fileStore = new FileStore();
-		ResultFileStore resultFileStore = fileStore.storeProfileFile(doctorRegisterRequestDto.getProfileImage());
+		ResultFileStore resultFileStore = fileStore.storeProfileFile(doctorRegisterRequestDto.getDoctorProfileImage());
 		return Doctor.builder()
 			.name(doctorRegisterRequestDto.getName())
 			.treatmentPossible(doctorRegisterRequestDto.getTreatmentPossible())
-			.profileImageStoreName(resultFileStore.getStoreFileName())
+			.DoctorProfileImage(resultFileStore.getStoreFileName())
 			.build();
 	}
 }

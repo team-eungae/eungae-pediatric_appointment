@@ -2,7 +2,7 @@ package com.playdata.eungae.hospital.dto;
 
 import java.util.List;
 
-import com.playdata.eungae.doctor.dto.DoctorViewResponseDto;
+import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.hospital.domain.Hospital;
 
 import lombok.Builder;
@@ -14,7 +14,7 @@ public class HospitalViewResponseDto {
 
 	private Long hospitalSeq;
 	private HospitalScheduleViewResponseDto hospitalSchedule;
-	private List<DoctorViewResponseDto> doctor;
+	private List<DoctorResponseDto> doctor;
 	private String password;
 	private String name;
 	private String notice;
