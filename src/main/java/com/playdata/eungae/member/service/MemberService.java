@@ -25,7 +25,6 @@ import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
 
 import com.playdata.eungae.member.repository.MemberRepository;
-import com.playdata.eungae.review.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -63,31 +62,35 @@ public class MemberService implements UserDetailsService {
 
     @Transactional(readOnly = true)
     public List<ResponseFavoritesHospitalDto> getFavoritesByMemberEmail(String userEmail) {
-        List<FavoritesHospital> favoritesHospitals = favoritesHospitalRepository.getByUserEmail(userEmail);
+        List<FavoritesHospital> favoritesHospitals = favoritesHospitalRepository.getFavoritesHospitalListByUserEmail(userEmail);
 
         return favoritesHospitals.stream()
             .map(ResponseFavoritesHospitalDto::toDto)
             .collect(Collectors.toList());
     }
 
-    @Transactional
-    public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
-        MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
-        FavoritesHospital favoritesHospital = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
-
-        favoritesHospitalRepository.save(favoritesHospital);
-        hospitalRepository.save(memberAndHospitalEntity.hospital);
-        memberRepository.save(memberAndHospitalEntity.member);
+    @Transactional(readOnly = true)
+    public boolean checkFavoriteStatus(Long hospitalSeq, String userEmail) {
+        return !favoritesHospitalRepository.getFavoritesHospitalByUserEmail(userEmail, hospitalSeq).isEmpty();
     }
 
-    @Transactional
-    public void removeFavorites(RequestFavoriesDto requestFavoriesDto) {
-        MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
-        FavoritesHospital favoritesHospital = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
 
-        memberRepository.save(memberAndHospitalEntity.member);
-        hospitalRepository.save(memberAndHospitalEntity.hospital);
-        favoritesHospitalRepository.delete(favoritesHospital);
+    @Transactional
+    public void changeFavoriteStatus(Long hospitalSeq, String userEmail) {
+
+        favoritesHospitalRepository.getFavoritesHospitalByUserEmail(userEmail, hospitalSeq)
+            .ifPresentOrElse(
+                favoritesHospital -> {
+                    MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(userEmail, hospitalSeq);
+                    FavoritesHospital favoritesHospitalResult = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+                    saveEntities(favoritesHospitalResult, memberAndHospitalEntity);
+                },
+                () -> {
+                    MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(userEmail, hospitalSeq);
+                    FavoritesHospital favoritesHospitalResult = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+                    saveEntities(favoritesHospitalResult, memberAndHospitalEntity);
+                }
+            );
     }
 
     @Transactional
@@ -112,12 +115,12 @@ public class MemberService implements UserDetailsService {
                 .build();
     }
 
-    private MemberAndHospitalEntity getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
+    private MemberAndHospitalEntity getMemberAndHospital(String memberEmail, Long hospitalSeq) {
 
-        Member member = memberRepository.findById(requestFavoriesDto.getMemberSeq())
+        Member member = memberRepository.findByEmail(memberEmail)
                 .orElseThrow(() -> new IllegalStateException("Can Not Found Member Entity"));
 
-        Hospital hospital = hospitalRepository.findById(requestFavoriesDto.getHospitalSeq())
+        Hospital hospital = hospitalRepository.findById(hospitalSeq)
                 .orElseThrow(() -> new IllegalStateException("Can Not Found Hospital Entity"));
 
         return new MemberAndHospitalEntity(member, hospital);
@@ -149,8 +152,13 @@ public class MemberService implements UserDetailsService {
         return favoritesHospital;
     }
 
+    private void saveEntities(FavoritesHospital favoritesHospitalResult, MemberAndHospitalEntity memberAndHospital) {
+        favoritesHospitalRepository.save(favoritesHospitalResult);
+        hospitalRepository.save(memberAndHospital.hospital);
+        memberRepository.save(memberAndHospital.member);
+    }
 
-	private record MemberAndHospitalEntity(Member member, Hospital hospital) {
+    private record MemberAndHospitalEntity(Member member, Hospital hospital) {
     }
 
     private void validateDuplicateMemberEmail(Member member) {
