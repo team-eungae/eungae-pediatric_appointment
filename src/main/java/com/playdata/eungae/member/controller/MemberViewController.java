@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
 import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
@@ -82,7 +83,12 @@ public class MemberViewController {
     }
 
     @GetMapping("/appointments")
-    public String myReservationList() {
+    public String myReservationList(
+        @AuthenticationPrincipal UserDetails principal,
+        Model model
+    ) {
+        List<ResponseAppointmentDto> responseAppointmentDtos = appointmentService.findAllAppointment(principal.getUsername());
+        model.addAttribute("responseAppointmentDtos", responseAppointmentDtos);
         return "contents/member/my-reservations";
     }
 

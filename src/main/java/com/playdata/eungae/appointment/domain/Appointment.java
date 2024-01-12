@@ -74,6 +74,7 @@ public class Appointment extends BaseEntity {
 	@Column/*(nullable = false)*/
 	private String appointmentHHMM;
 
+	@Setter
 	@Enumerated(EnumType.STRING)
 	private AppointmentStatus status;
 

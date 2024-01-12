@@ -22,7 +22,7 @@
             <div class="review-rate">
                 <i th:each="num : ${#numbers.sequence(1,responseReviewDto.starRating)}" class="fa-solid fa-star"
                    style="color: #ffd500;"></i>
-                <i th:if="${responseReviewDto.starRating} != 5 "
+                <i th:if="${responseReviewDto.starRating != 5}"
                    th:each="num : ${#numbers.sequence(1,5 -responseReviewDto.starRating)}" class="fa-regular fa-star"
                    style="color: #ffd500;"></i>
             </div>
