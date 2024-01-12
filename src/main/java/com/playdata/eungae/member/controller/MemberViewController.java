@@ -17,6 +17,7 @@ import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
 import com.playdata.eungae.member.dto.MemberFindResponseDto;
 import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+import com.playdata.eungae.member.dto.ResponseFavoritesHospitalDto;
 import com.playdata.eungae.member.service.MemberService;
 import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.service.ReviewService;
@@ -83,17 +84,22 @@ public class MemberViewController {
     }
 
     @GetMapping("/appointments")
-    public String myReservationList(
+    public String getMyReservationList(
         @AuthenticationPrincipal UserDetails principal,
         Model model
     ) {
-        List<ResponseAppointmentDto> responseAppointmentDtos = appointmentService.findAllAppointment(principal.getUsername());
+        List<ResponseAppointmentDto> responseAppointmentDtos = appointmentService.getAppointmentListByMemberEmail(principal.getUsername());
         model.addAttribute("responseAppointmentDtos", responseAppointmentDtos);
         return "contents/member/my-reservations";
     }
 
     @GetMapping("/hospitals")
-    public String regularHospitals() {
+    public String findFavorites(
+        Model model,
+        @AuthenticationPrincipal UserDetails principal
+    ) {
+        List<ResponseFavoritesHospitalDto> responseFavoritesHospitalDtos = memberService.getFavoritesByMemberEmail(principal.getUsername());
+        model.addAttribute("favoritesHospitalDtos", responseFavoritesHospitalDtos);
         return "contents/member/regular-hospital";
     }
 

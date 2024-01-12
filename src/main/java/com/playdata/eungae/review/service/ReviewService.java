@@ -1,5 +1,6 @@
 package com.playdata.eungae.review.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -68,23 +69,22 @@ public class ReviewService {
 			throw new NoSuchElementException("Can not found Review, hospitalSeq = {%d}".formatted(hospitalSeq));
 		}
 
-		return reviews
-			.stream()
+		return reviews.stream()
 			.map(ResponseReviewDto::toDto)
+			.sorted(Comparator.comparing(ResponseReviewDto::getReviewSeq)
+				.reversed())
 			.collect(Collectors.toList());
 	}
 
 	@Transactional(readOnly = true)
 	public List<ResponseReviewDto> findReviewsByMemberEmail(String memberEmail) {
+
 		List<Review> reviews = reviewRepository.findReviewsByMemberEmail(memberEmail);
 
-		if (reviews.isEmpty()) {
-			throw new NoSuchElementException("Can not found Review, memberEmail = {%s}".formatted(memberEmail));
-		}
-
-		return reviews
-			.stream()
+		return reviews.stream()
 			.map(ResponseReviewDto::toDto)
+			.sorted(Comparator.comparing(ResponseReviewDto::getReviewSeq)
+				.reversed())
 			.collect(Collectors.toList());
 	}
 }

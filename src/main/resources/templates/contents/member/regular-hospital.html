@@ -12,33 +12,23 @@
         <h4 class="regular-hospital-title">내 단골 소아과</h4>
     </div>
     <hr class="regular-hospital-title-hr" />
-    <div class="hospital-info">
-        <img class="hospital-image" src="/img/hospital.jpeg" />
-        <div>
-            <a th:href="@{/hospital}" class="hospital-name">아이원병원</a>
-            <p class="location">480m • 광명 소하동</p>
-            <p class="closed">진료 중 • 22:00에 진료 종료</p>
-            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+    <div th:unless="${#lists.size(favoritesHospitalDtos) == 0} ">
+        <div th:each="favoritesHospitalDto : ${favoritesHospitalDtos}">
+            <div class="hospital-info" >
+                <img class="hospital-image" src="/img/hospital.jpeg" />
+                <div>
+                    <a th:href="@{|/hospital/${favoritesHospitalDto.hospitalSeq}|}" th:text="${favoritesHospitalDto.hospitalName}" class="hospital-name">아이원병원</a>
+                    <p class="location">480m • 광명 소하동</p>
+                    <p class="closed">진료 중 • 22:00에 진료 종료</p>
+                    <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+                </div>
+            </div>
+            <hr />
         </div>
     </div>
-    <hr />
-    <div class="hospital-info">
-        <img class="hospital-image" src="/img/hospital.jpeg" />
-        <div>
-            <a th:href="@{/hospital}" class="hospital-name">아이원병원</a>
-            <p class="location">480m • 광명 소하동</p>
-            <p class="closed">진료 중 • 22:00에 진료 종료</p>
-            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
-        </div>
-    </div>
-    <hr />
-    <div class="hospital-info">
-        <img class="hospital-image" src="/img/hospital.jpeg" />
-        <div>
-            <a  th:href="@{/hospital}" class="hospital-name">아이원병원</a>
-            <p class="location">480m • 광명 소하동</p>
-            <p class="closed">진료 중 • 22:00에 진료 종료</p>
-            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+    <div th:if="${#lists.size(favoritesHospitalDtos) == 0} ">
+        <div class="hospital-info" >
+            <p>단골 소아과가 없습니다.</p>
         </div>
     </div>
 </main>

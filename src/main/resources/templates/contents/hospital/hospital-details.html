@@ -19,6 +19,7 @@
             <h3 th:text="${hospital.name}">병원 이름</h3>
             <hr/>
             <div>
+                <input type="hidden" id="hospitalSeq" th:value="${hospital.hospitalSeq}">
                 <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i>
                     <span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span>
                     <button id="likeButton" class="btn"><i class="fa-regular fa-star"></i></button>

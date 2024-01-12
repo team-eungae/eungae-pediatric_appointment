@@ -1,6 +1,8 @@
 package com.playdata.eungae.member.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +17,7 @@ import com.playdata.eungae.member.domain.FavoritesHospital;
 import com.playdata.eungae.member.domain.Member;
 
 import com.playdata.eungae.member.dto.RequestFavoriesDto;
+import com.playdata.eungae.member.dto.ResponseFavoritesHospitalDto;
 import com.playdata.eungae.member.repository.FavoritesHospitalRepository;
 
 import com.playdata.eungae.member.dto.MemberFindResponseDto;
@@ -57,24 +60,37 @@ public class MemberService implements UserDetailsService {
         return MemberUpdateResponseDto.toDto(member);
     }
 
-    @Transactional
-    public void appendFavorites(RequestFavoriesDto requestFavoriesDto) {
-        MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
-        FavoritesHospital favoritesHospital = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+    @Transactional(readOnly = true)
+    public List<ResponseFavoritesHospitalDto> getFavoritesByMemberEmail(String userEmail) {
+        List<FavoritesHospital> favoritesHospitals = favoritesHospitalRepository.getFavoritesHospitalListByUserEmail(userEmail);
 
-        favoritesHospitalRepository.save(favoritesHospital);
-        hospitalRepository.save(memberAndHospitalEntity.hospital);
-        memberRepository.save(memberAndHospitalEntity.member);
+        return favoritesHospitals.stream()
+            .map(ResponseFavoritesHospitalDto::toDto)
+            .collect(Collectors.toList());
     }
 
-    @Transactional
-    public void removeFavorites(RequestFavoriesDto requestFavoriesDto) {
-        MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(requestFavoriesDto);
-        FavoritesHospital favoritesHospital = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+    @Transactional(readOnly = true)
+    public boolean checkFavoriteStatus(Long hospitalSeq, String userEmail) {
+        return !favoritesHospitalRepository.getFavoritesHospitalByUserEmail(userEmail, hospitalSeq).isEmpty();
+    }
 
-        memberRepository.save(memberAndHospitalEntity.member);
-        hospitalRepository.save(memberAndHospitalEntity.hospital);
-        favoritesHospitalRepository.delete(favoritesHospital);
+
+    @Transactional
+    public void changeFavoriteStatus(Long hospitalSeq, String userEmail) {
+
+        favoritesHospitalRepository.getFavoritesHospitalByUserEmail(userEmail, hospitalSeq)
+            .ifPresentOrElse(
+                favoritesHospital -> {
+                    MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(userEmail, hospitalSeq);
+                    FavoritesHospital favoritesHospitalResult = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+                    saveEntities(favoritesHospitalResult, memberAndHospitalEntity);
+                },
+                () -> {
+                    MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(userEmail, hospitalSeq);
+                    FavoritesHospital favoritesHospitalResult = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+                    saveEntities(favoritesHospitalResult, memberAndHospitalEntity);
+                }
+            );
     }
 
     @Transactional
@@ -82,12 +98,7 @@ public class MemberService implements UserDetailsService {
         validateDuplicateMemberEmail(member);
         return memberRepository.save(member);
     }
-  
-  
-	  @Transactional(readOnly = true)
-  	public Optional<Member> findByEmail(String email) {
-	  	return memberRepository.findByEmail(email);
-  	}
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -104,12 +115,12 @@ public class MemberService implements UserDetailsService {
                 .build();
     }
 
-    private MemberAndHospitalEntity getMemberAndHospital(RequestFavoriesDto requestFavoriesDto) {
+    private MemberAndHospitalEntity getMemberAndHospital(String memberEmail, Long hospitalSeq) {
 
-        Member member = memberRepository.findById(requestFavoriesDto.getMemberSeq())
+        Member member = memberRepository.findByEmail(memberEmail)
                 .orElseThrow(() -> new IllegalStateException("Can Not Found Member Entity"));
 
-        Hospital hospital = hospitalRepository.findById(requestFavoriesDto.getHospitalSeq())
+        Hospital hospital = hospitalRepository.findById(hospitalSeq)
                 .orElseThrow(() -> new IllegalStateException("Can Not Found Hospital Entity"));
 
         return new MemberAndHospitalEntity(member, hospital);
@@ -139,6 +150,12 @@ public class MemberService implements UserDetailsService {
         member.getFavoritesHospitals().remove(favoritesHospital);
         hospital.getFavoritesHospitals().remove(favoritesHospital);
         return favoritesHospital;
+    }
+
+    private void saveEntities(FavoritesHospital favoritesHospitalResult, MemberAndHospitalEntity memberAndHospital) {
+        favoritesHospitalRepository.save(favoritesHospitalResult);
+        hospitalRepository.save(memberAndHospital.hospital);
+        memberRepository.save(memberAndHospital.member);
     }
 
     private record MemberAndHospitalEntity(Member member, Hospital hospital) {

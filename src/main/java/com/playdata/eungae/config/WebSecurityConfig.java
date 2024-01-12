@@ -37,9 +37,7 @@ public class WebSecurityConfig {
 			.requestMatchers(new AntPathRequestMatcher("/css/**"))
 			.requestMatchers(new AntPathRequestMatcher("/js/**"))
 			.requestMatchers(new AntPathRequestMatcher("/img/**"))
-			.requestMatchers(new AntPathRequestMatcher("/lib/**"))
-			// 개발 단계에서 편의성을 위해 api를 AntPathRequestMatcher에 추가했습니다.
-			.requestMatchers(new AntPathRequestMatcher("/api/**"));
+			.requestMatchers(new AntPathRequestMatcher("/lib/**"));
 	}
 
 	@Bean
