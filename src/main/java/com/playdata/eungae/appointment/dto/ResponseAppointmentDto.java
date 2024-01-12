@@ -29,9 +29,6 @@ public class ResponseAppointmentDto {
 	private AppointmentStatus status;
 
 	public static ResponseAppointmentDto toDto(Appointment appointment) {
-		if (appointment.getStatus() == AppointmentStatus.DIAGNOSIS) {
-			return null;
-		}
 		return ResponseAppointmentDto.builder()
 			.status(appointment.getStatus())
 			.hospitalSeq(appointment.getHospital().getHospitalSeq())

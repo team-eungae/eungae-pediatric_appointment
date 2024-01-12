@@ -1,10 +1,22 @@
 package com.playdata.eungae.member.controller;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
 import com.playdata.eungae.member.dto.RequestFavoriesDto;
+import com.playdata.eungae.member.dto.ResponseFavoritesHospitalDto;
 import com.playdata.eungae.member.service.MemberService;
 
 import jakarta.validation.Valid;
@@ -26,6 +38,15 @@ public class MemberApiController {
         return "successful";
     }
 
+    @GetMapping("/hospital")
+    @ResponseStatus(HttpStatus.OK)
+    public String findFavorites(
+        Model model,
+        @AuthenticationPrincipal UserDetails principal
+    ) {
+        List<ResponseFavoritesHospitalDto> responseFavoritesHospitalDtos = memberService.findFavorites(principal.getUsername());
+        return "Favorites have been successfully appended";
+    }
 
     @PostMapping("/hospital")
     @ResponseStatus(HttpStatus.CREATED)

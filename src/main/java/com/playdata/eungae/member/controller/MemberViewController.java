@@ -83,11 +83,11 @@ public class MemberViewController {
     }
 
     @GetMapping("/appointments")
-    public String myReservationList(
+    public String getMyReservationList(
         @AuthenticationPrincipal UserDetails principal,
         Model model
     ) {
-        List<ResponseAppointmentDto> responseAppointmentDtos = appointmentService.findAllAppointment(principal.getUsername());
+        List<ResponseAppointmentDto> responseAppointmentDtos = appointmentService.getAppointmentListByMemberEmail(principal.getUsername());
         model.addAttribute("responseAppointmentDtos", responseAppointmentDtos);
         return "contents/member/my-reservations";
     }

@@ -33,7 +33,6 @@ import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.repository.ChildrenRepository;
 import com.playdata.eungae.member.repository.MemberRepository;
-import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -97,8 +96,8 @@ public class AppointmentService {
 
 		// 진료 기록만 조회
 		return myMedicalRecords.stream()
+			.filter((appointment -> appointment.getStatus() == AppointmentStatus.DIAGNOSIS))
 			.map(ResponseMedicalHistoryDto::toDto)
-			.filter(Objects::nonNull)
 			.sorted(Comparator.comparing(ResponseMedicalHistoryDto::getAppointmentSeq)
 				.reversed())
 			.collect(Collectors.toList());
@@ -112,7 +111,7 @@ public class AppointmentService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<ResponseAppointmentDto> findAllAppointment(/*int pageNumber,*/ String memberEmail) {
+	public List<ResponseAppointmentDto> getAppointmentListByMemberEmail(/*int pageNumber,*/ String memberEmail) {
 
 /*
 		고도화 작업하며 pageable 기능 추가할것
@@ -125,7 +124,7 @@ public class AppointmentService {
 		// 유효한 예약과 취소된 예약을 조회
 		return appointments.stream()
 			.map(ResponseAppointmentDto::toDto)
-			.filter(Objects::nonNull)
+			.filter((responseAppointmentDto) -> responseAppointmentDto.getStatus() != AppointmentStatus.DIAGNOSIS)
 			.sorted(Comparator.comparing(ResponseAppointmentDto::getAppointmentSeq)
 				.reversed())
 			.collect(Collectors.toList());

@@ -22,9 +22,6 @@ public class ResponseMedicalHistoryDto {
 	private Long reviewSeq;
 
 	public static ResponseMedicalHistoryDto toDto(Appointment appointment){
-		if (appointment.getStatus() != AppointmentStatus.DIAGNOSIS){
-			return null;
-		}
 		return ResponseMedicalHistoryDto.builder()
 			.reviewSeq(appointment.getReviewSeq())
 			.appointmentSeq(appointment.getAppointmentSeq())

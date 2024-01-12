@@ -27,18 +27,6 @@ public class AppointmentApiController {
 
 	private final AppointmentService appointmentService;
 
-/*
-	pageable 작업하며 비동기 처리를 처리할 RestController
-	@GetMapping("/appointments")
-	@ResponseStatus(HttpStatus.OK)
-	public Page<ResponseAppointmentDto> findAppointment(
-		@RequestParam int pageNumber,
-		@RequestParam Long memberSeq
-	) {
-		return appointmentService.findAppointment(pageNumber, memberSeq);
-	}
-*/
-
 	@GetMapping("/appointment/time")
 	@ResponseStatus(HttpStatus.OK)
 	public List<LocalTime> findTime(
@@ -51,7 +39,7 @@ public class AppointmentApiController {
 	}
 
 	@PatchMapping("/my/appointments")
-	@ResponseStatus(HttpStatus.ACCEPTED)
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseAppointmentDto deleteAppointment(@RequestBody RequestAppointmentDeleteDto requestAppointmentDeleteDto) {
 		return appointmentService.deleteAppointment(requestAppointmentDeleteDto.getAppointmentSeq());
 	}

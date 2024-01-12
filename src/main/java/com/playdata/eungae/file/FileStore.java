@@ -67,7 +67,7 @@ public class FileStore {
 		log.info("folderPath:" + folderPath);
 		File uploadPathFolder = new File(folderPath);
 
-		if (uploadPathFolder.exists() == false) {
+		if (!uploadPathFolder.exists()) {
 			uploadPathFolder.mkdirs();
 		}
 		return folderPath;

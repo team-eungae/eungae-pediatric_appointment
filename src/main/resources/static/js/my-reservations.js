@@ -13,7 +13,7 @@ function deleteAppointment(appointmentSeq) {
         },
         error: function(error) {
             console.error('Error updating user:', error.message);
-            alert('The provided ID does not exist.', error);
+            alert('선택한 예약이 존재하지 않습니다.');
         }
     });
 
