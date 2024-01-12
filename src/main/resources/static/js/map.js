@@ -11,6 +11,8 @@ const basicImageSize = new kakao.maps.Size(30, 42);
 const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 const basicMarkerImage = new kakao.maps.MarkerImage(basicImageSrc, basicImageSize);
 
+const blankCheck = /\s/g;
+
 // 마커를 표시할 위치와 title 객체 배열입니다
 let positions = [];
 let position = {};
@@ -51,8 +53,8 @@ if (navigator.geolocation){
             }
         }) */
     });
-    longitude = 37.46758697; // 경도
-    latitude = 126.88656925; // 위도
+    longitude = 126.88656925; // 경도
+    latitude = 37.46758697;  // 위도37.46758697;
     $.ajax({
         url:"api/hospital/around",
         type: "GET",
@@ -74,17 +76,17 @@ if (navigator.geolocation){
                 addMarker(positions[index],markerImage);
             });
         },error:function(){
-            alert("주변 병원 검색중 오류가 발생하였습니다.");
+            alert("주변 병원검색중 오류가 발생하였습니다.");
         }
     })
 } else {
-    latitude = 126.8876698,
-    longitude = 37.4676446;
+    longitude = 126.88656925; // 경도
+    latitude = 37.46758697;  // 위도37.46758697;
     $.ajax({
         url:"api/hospital/around",
         type: "GET",
         data: {
-            "longitude": latitude,
+            "longitude": longitude,
             "latitude": latitude
         },success:function(result) {
             console.log(result);
@@ -98,6 +100,10 @@ const onSearch = (event) => {
     keyword=document.getElementById("keyword").value;
     if(keyword.length<2) {
         alert("두글자 이상 입력해주세요");
+        return;
+    }
+    if(keyword.match(blankCheck)){
+        alert("공백을 재거해주세요");
         return;
     }
     console.log(keyword);
@@ -142,7 +148,7 @@ searchForm.addEventListener("submit",onSearch);
 
 let mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
-        center: new kakao.maps.LatLng(longitude, latitude), // 지도의 중심좌표
+        center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
         level: 6 // 지도의 확대 레벨
     };
 
