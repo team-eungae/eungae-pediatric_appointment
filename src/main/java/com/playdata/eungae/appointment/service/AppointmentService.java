@@ -61,7 +61,6 @@ public class AppointmentService {
 	@Transactional(readOnly = true)
 	public List<DoctorResponseDto> getDoctors(Long hospitalSeq) {
 		return doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq)
-			.get()
 			.stream()
 			.map(DoctorResponseDto::toDto)
 			.collect(Collectors.toList());

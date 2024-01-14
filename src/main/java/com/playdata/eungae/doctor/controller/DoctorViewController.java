@@ -1,18 +1,11 @@
 package com.playdata.eungae.doctor.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import com.playdata.eungae.doctor.dto.DoctorRegisterRequestDto;
 import com.playdata.eungae.doctor.service.DoctorService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/hospital")
@@ -34,5 +27,13 @@ public class DoctorViewController {
 		doctorService.createDoctor(doctorRegisterRequestDto, "hospitalIdTest");
 
 		return  "redirect:/hospital/doctors/form";
+	}
+
+	@PatchMapping("/doctors")
+	@ResponseStatus(HttpStatus.OK)
+	public String deleteHospitalDoctor(@PathVariable Long doctorSeq){
+		doctorService.deleteDoctor(doctorSeq);
+		
+		return "redirect:/hospital/doctors";
 	}
 }
