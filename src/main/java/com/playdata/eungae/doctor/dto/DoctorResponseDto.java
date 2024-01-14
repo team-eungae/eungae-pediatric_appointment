@@ -13,7 +13,7 @@ public class DoctorResponseDto {
 	private String name;
 	private String status;
 	private int treatmentPossible;
-	private String DoctorProfileImage;
+	private String doctorProfileImage;
 
 	public static DoctorResponseDto toDto(Doctor doctor){
 		return DoctorResponseDto.builder()
@@ -21,7 +21,7 @@ public class DoctorResponseDto {
 			.name(doctor.getName())
 			.status(doctor.getStatus())
 			.treatmentPossible(doctor.getTreatmentPossible())
-			.DoctorProfileImage(doctor.getDoctorProfileImage())
+			.doctorProfileImage(doctor.getDoctorProfileImage())
 			.build();
 	}
 }
