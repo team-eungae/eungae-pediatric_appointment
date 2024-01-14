@@ -17,31 +17,31 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class DoctorService {
-	private final DoctorRepository doctorRepository;
-	private final HospitalRepository hospitalRepository;
+    private final DoctorRepository doctorRepository;
+    private final HospitalRepository hospitalRepository;
 
-	@Transactional(readOnly = true)
-	public List<DoctorResponseDto> findDoctorsByHospitalSeq(Long hospitalSeq) {
+    @Transactional(readOnly = true)
+    public List<DoctorResponseDto> findDoctorsByHospitalSeq(Long hospitalSeq) {
 
-		List<Doctor> doctorList = doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq);
+        List<Doctor> doctorList = doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq);
 
 		return doctorList.stream()
 				.map(DoctorResponseDto::toDto)
 				.collect(Collectors.toList());
 	}
 
-	@Transactional
-	public void createDoctor(DoctorRegisterRequestDto doctorRegisterRequestDto, String hospitalId) {
-		Doctor doctor = doctorRegisterRequestDto.toEntity(doctorRegisterRequestDto);
+    @Transactional
+    public void createDoctor(DoctorRegisterRequestDto doctorRegisterRequestDto, String hospitalId) {
+        Doctor doctor = doctorRegisterRequestDto.toEntity(doctorRegisterRequestDto);
 
 		Hospital hospital = hospitalRepository.findByHospitalId(hospitalId)
 				.orElseThrow(
 						() -> new NoSuchElementException("Hospital not found by hospitalId = {%s}".formatted(hospitalId)));
 
-		doctor.setHospital(hospital);
+        doctor.setHospital(hospital);
 
-		doctorRepository.save(doctor);
-	}
+        doctorRepository.save(doctor);
+    }
 
 	@Transactional
 	public void deleteDoctor(Long doctorSeq) {
@@ -51,5 +51,13 @@ public class DoctorService {
 
 		doctor.deleteDoctor();
 	}
+
+    @Transactional(readOnly = true)
+    public DoctorResponseDto getDoctor(Long doctorSeq) {
+        Doctor doctor = doctorRepository.findById(doctorSeq)
+                .orElseThrow(() -> new NoSuchElementException("Doctor not found by doctor ID = {%s}".formatted(doctorSeq)));
+
+        return DoctorResponseDto.toDto(doctor);
+    }
 
 }
