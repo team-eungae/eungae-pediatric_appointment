@@ -101,14 +101,11 @@ $(document).ready(function () {
         url: '/api/my/hospital?hospitalSeq=' + hospitalSeq,
         contentType: 'application/json',
         success: function (data) {
-            liked = data; // 찜하기 상태 초기값 (찜하지 않음)
-            if (liked) {
-                // 찜하기 상태일 때 아이콘과 텍스트 변경
-                $("#likeButton").html('<i class="fa-solid fa-star"></i>');
-            } else {
-                // 찜하기 해제 상태일 때 아이콘과 텍스트 변경
+            liked = data;
+            liked ?
+                $("#likeButton").html('<i class="fa-solid fa-star"></i>')
+                :
                 $("#likeButton").html('<i class="fa-regular fa-star"></i>');
-            }
         }
     })
 
