@@ -66,14 +66,16 @@ if (navigator.geolocation){
             hospitalList.forEach((hospital,index)=>{
                 position = {
                     title:hospital.name,
-                    latlng: new kakao.maps.LatLng(hospital.longitude,hospital.latitude),
+                    latlng: new kakao.maps.LatLng(hospital.latitude,hospital.longitude),
                     address:hospital.address,
                     addressDetail:hospital.addressDetail,
                     hospitalSeq:hospital.hospitalSeq,
                     contact:hospital.contact
                 }
                 positions[index]=position;
+                console.log(index);
                 addMarker(positions[index],markerImage);
+
             });
         },error:function(){
             alert("주변 병원검색중 오류가 발생하였습니다.");
@@ -127,7 +129,7 @@ const onSearch = (event) => {
             hospitalList.forEach((hospital,index) => {
                 position = {
                     title:hospital.name,
-                    latlng: new kakao.maps.LatLng(hospital.longitude,hospital.latitude),
+                    latlng: new kakao.maps.LatLng(hospital.latitude,hospital.longitude),
                     address:hospital.address,
                     addressDetail:hospital.addressDetail,
                     hospitalSeq:hospital.hospitalSeq,
@@ -143,8 +145,6 @@ const onSearch = (event) => {
 }
 
 searchForm.addEventListener("submit",onSearch);
-
-
 
 let mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
@@ -218,6 +218,8 @@ function addMarker(position, markerImage) {
         overlay.setMap(map);
         overlays.push(overlay);
         index = index + 1;
+        console.log(index);
+        alert(index);
     });
 
     // 생성된 마커를 배열에 추가합니다
