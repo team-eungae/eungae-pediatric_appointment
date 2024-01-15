@@ -22,6 +22,7 @@ import com.playdata.eungae.member.service.MemberService;
 import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.service.ReviewService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +33,6 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberViewController {
 
     private final MemberService memberService;
-    private final PasswordEncoder passwordEncoder;
     private final AppointmentService appointmentService;
     private final ReviewService reviewService;
 
@@ -51,7 +51,8 @@ public class MemberViewController {
     @GetMapping("/records/{appointmentSeq}")
     public String medicalRecordsDetails(
         Model model,
-        @PathVariable Long appointmentSeq
+        // 유효성 검사 추가
+        @Valid @PathVariable Long appointmentSeq
     ) {
         ResponseDetailMedicalHistoryDto myMedicalRecordDetail = appointmentService.getMyMedicalRecordDetail(appointmentSeq);
         model.addAttribute("myMedicalRecordDetail", myMedicalRecordDetail);
