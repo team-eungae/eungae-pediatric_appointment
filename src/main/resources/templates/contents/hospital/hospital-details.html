@@ -10,9 +10,11 @@
 <main layout:fragment="content">
     <div class="hospital-informations">
         <div class="hospital-images">
-            <img  th:if="${#lists.isEmpty(hospitalImages)}" class="basicHospitalImage" th:src="@{/img/logo3.png}" alt="basicImage"/>
-            <img th:unless="${#lists.isEmpty(hospitalImages)}" th:src="@{/images/}+${hospitalImage.storeFileName}" class="slide" th:each="hospitalImage:${hospitalImages}"
-                 alt="hospitalImages"  th:onError="this.src='@{/img/logo3.png}'"/>
+            <img th:if="${#lists.isEmpty(hospitalImages)}" class="basicHospitalImage" th:src="@{/img/logo3.png}"
+                 alt="basicImage"/>
+            <img th:unless="${#lists.isEmpty(hospitalImages)}" th:src="@{/images/}+${hospitalImage.storeFileName}"
+                 class="slide" th:each="hospitalImage:${hospitalImages}"
+                 alt="hospitalImages" th:onError="this.src='@{/img/logo3.png}'"/>
         </div>
 
         <div class="hospital-informations-common">
@@ -156,7 +158,9 @@
                     <tr>
                         <td>
                             <div class="doctor-image">
-                                <img th:src="@{/img/}+${doctor.profileImage}">
+                                <img th:unless="${doctor.doctorProfileImage eq null}" th:src="@{/img/doctor.jpeg}" alt="Doctor Image"/>
+                                <img th:if="${doctor.doctorProfileImage eq null}" th:src="@{'/img/' + doctor.doctorProfileImage}"
+                                     alt="Doctor Image"/>
                             </div>
                         </td>
                         <td class="doctor-name">
@@ -202,7 +206,8 @@
 
     <div class="container-fluid fixed-bottom text-center mobile-nav-bottom" th:fragment="hospitalBottom">
         <div class="reservation-button-place">
-            <button><a th:href="@{/hospital/{hospitalSeq}/appointments(hospitalSeq=${hospital.hospitalSeq})}">예약하기</a></button>
+            <button><a th:href="@{/hospital/{hospitalSeq}/appointments(hospitalSeq=${hospital.hospitalSeq})}">예약하기</a>
+            </button>
         </div>
     </div>
 </main>
