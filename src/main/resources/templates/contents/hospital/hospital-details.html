@@ -158,9 +158,8 @@
                     <tr>
                         <td>
                             <div class="doctor-image">
-                                <img th:unless="${doctor.doctorProfileImage eq null}" th:src="@{/img/doctor.jpeg}" alt="Doctor Image"/>
-                                <img th:if="${doctor.doctorProfileImage eq null}" th:src="@{'/img/' + doctor.doctorProfileImage}"
-                                     alt="Doctor Image"/>
+                                <img th:if="${doctor.doctorProfileImage eq null}" th:src="@{/img/doctor.jpeg}" alt="Basic Doctor Image"/>
+                                <img th:unless="${doctor.doctorProfileImage eq null}" th:src="@{/images/} + ${doctor.doctorProfileImage}"
                             </div>
                         </td>
                         <td class="doctor-name">

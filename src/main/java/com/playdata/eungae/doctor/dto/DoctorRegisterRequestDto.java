@@ -18,7 +18,7 @@ public class DoctorRegisterRequestDto {
 
 	private String name;
 	private int treatmentPossible;
-	private MultipartFile DoctorProfileImage;
+	private MultipartFile doctorProfileImage;
 
 	public Doctor toEntity(DoctorRegisterRequestDto doctorRegisterRequestDto){
 		FileStore fileStore = new FileStore();
@@ -26,7 +26,7 @@ public class DoctorRegisterRequestDto {
 		return Doctor.builder()
 			.name(doctorRegisterRequestDto.getName())
 			.treatmentPossible(doctorRegisterRequestDto.getTreatmentPossible())
-			.DoctorProfileImage(resultFileStore.getStoreFileName())
+			.doctorProfileImage(resultFileStore.getStoreFileName())
 			.build();
 	}
 }

@@ -2,6 +2,8 @@ package com.playdata.eungae.base;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -12,6 +14,7 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 
 @Getter
+@DynamicInsert
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
@@ -23,4 +26,11 @@ public abstract class BaseEntity {
 	@Column(nullable = false)
 	@LastModifiedDate
 	private LocalDateTime modifiedAt;
+
+	@ColumnDefault("'N'")
+	private char deleteYN;
+
+	public void deleted() {
+		this.deleteYN = 'Y';
+	}
 }
