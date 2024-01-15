@@ -1,8 +1,10 @@
 package com.playdata.eungae.member.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
-import com.playdata.eungae.member.dto.ChildrenDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,9 +13,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -35,6 +36,10 @@ public class Children extends BaseEntity {
 	@JoinColumn(name = "member_seq")
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Member member;
+
+	@Builder.Default
+	@OneToMany(mappedBy = "children")
+	private List<Appointment> appointmentList = new ArrayList<>();
 
 	@Column(nullable = false)
 	private String name;

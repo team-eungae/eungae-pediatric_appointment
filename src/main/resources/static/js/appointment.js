@@ -43,31 +43,37 @@ $('input[name=doctorSeq], input[name=childrenSeq], input[name=appointmentDate]')
     let childrenSeq = $('input[name=childrenSeq]:checked').val();
     let doctorSeq = $('input[name=doctorSeq]:checked').val();
 
-    let value = document.getElementById('date').value;
+    value = document.getElementById('date').value;
     let dateObject = new Date(value)
 
     dayOfWeek = dateObject.getDay()
 
-    if (childrenSeq && date && doctorSeq) {
+    if (childrenSeq && value && doctorSeq) {
         $.ajax({
             type: 'GET',
             url: '/api/appointment/time',
             dataType: "json",
             data: {
-                appointmentDate: date,
+                appointmentDate: value,
                 appointmentDayOfWeek: dayOfWeek,
                 doctorSeq: doctorSeq,
-                hospitalSeq: hospitalSeq
+                hospitalSeq: hospitalSeq,
+                childrenSeq: childrenSeq
             },
             contentType: 'application/json',
             success: function (data) {
-                console.log(data)
-                let timeList = $('#time-list');
-                timeList.empty();
-                for (let i = 0; i < data.length; i++) {
-                    timeList.append('<label class="appointment-time"><input type=\"radio\" name=\"appointmentHHMM\" value=\"' + data[i].substring(0, 5) + '"\"><span>' + data[i].substring(0, 5) + '</span></label>');
+                let timeTable = data[0]
+                console.log(timeTable)
+                if (data[1] === true) {
+                    alert("해당 날짜에 이미 예약이 존재합니다.")
+                    return
+                } else {
+                    let timeList = $('#time-list');
+                    timeList.empty();
+                    for (let i = 0; i < timeTable.length; i++) {
+                        timeList.append('<label class="appointment-time"><input type=\"radio\" name=\"appointmentHHMM\" value=\"' + timeTable[i].substring(0, 5) + '"\"><span>' + timeTable[i].substring(0, 5) + '</span></label>');
+                    }
                 }
-                console.log("요청 성공")
             }, error: function () {
                 alert("경고");
             }

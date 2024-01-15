@@ -1,7 +1,9 @@
 package com.playdata.eungae.appointment.controller;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,13 +31,22 @@ public class AppointmentApiController {
 
 	@GetMapping("/appointment/time")
 	@ResponseStatus(HttpStatus.OK)
-	public List<LocalTime> findTime(
+	public List<Object> findTime(
 		@RequestParam String appointmentDate,
 		@RequestParam Integer appointmentDayOfWeek,
 		@RequestParam Long doctorSeq,
-		@RequestParam Long hospitalSeq) {
+		@RequestParam Long hospitalSeq,
+		@RequestParam Long childrenSeq
+	) {
+		List<Object> result = new ArrayList<>();
+		List<LocalTime> appointmentPossibleTime = appointmentService.createAppointmentPossibleTime(appointmentDate,
+			appointmentDayOfWeek, doctorSeq, hospitalSeq, childrenSeq);
+		boolean childrenAppointmentStatus = appointmentService.getChildrenAppointmentTime(childrenSeq,
+			appointmentDate);
+		result.add(appointmentPossibleTime);
+		result.add(childrenAppointmentStatus);
+		return result;
 
-		return appointmentService.createAppointmentPossibleTime(appointmentDate, appointmentDayOfWeek, doctorSeq, hospitalSeq);
 	}
 
 	@PatchMapping("/my/appointments")
