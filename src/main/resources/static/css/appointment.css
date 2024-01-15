@@ -215,7 +215,7 @@ li {
         text-align: center;
     }
 
-    &.on {
+    & {
         .button {
             background-color: #fff;
             font-weight: bold;
@@ -225,7 +225,7 @@ li {
             display: block;
             margin-top: 5px;
         }
-        #menu3{
+        #menu2{
             display: flex;
         }
     }

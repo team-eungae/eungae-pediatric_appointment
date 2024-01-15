@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -125,18 +127,53 @@ public class AppointmentService {
 
 	}
 
-	public void checkAppointmentStatus(Long appointmentSeq) {
-		Appointment appointment = appointmentRepository.findById(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException(
-				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
-
-		if (appointment.getStatus() != AppointmentStatus.DIAGNOSIS) {
-			throw new IllegalStateException("appointment is not diagnosed");
-		}
-
-	}
 
 	// 병원 운영 시간
+
+	@Transactional(readOnly = true)
+	public List<LocalTime> createAppointmentPossibleTime
+		(String appointmentDate,
+			int appointmentDayOfWeek,
+			Long doctorSeq,
+			Long hospitalSeq,
+			Long childrenSeq
+		) {
+		Map<String, String> hospitalDutyTime = getHospitalDutyTime(hospitalSeq, appointmentDayOfWeek);
+		String openHour = hospitalDutyTime.get("openHour");
+		String closeHour = hospitalDutyTime.get("closeHour");
+		String lunchStartHour = hospitalDutyTime.get("lunchStartHour");
+		String lunchEndHour = hospitalDutyTime.get("lunchEndHour");
+
+		LocalTime convertOpenHour = convertStringToLocalTime(openHour);
+		LocalTime convertCloseHour = convertStringToLocalTime(closeHour);
+		LocalTime convertLunchStartHour = convertStringToLocalTime(lunchStartHour);
+		LocalTime convertLunchEndHour = convertStringToLocalTime(lunchEndHour);
+
+		List<LocalTime> hospitalDutyTimeList = new ArrayList<>();
+
+		LocalDate localDate = convertStringToLocalDate(appointmentDate);
+
+		for (; !convertOpenHour.isAfter(convertCloseHour); convertOpenHour = convertOpenHour.plusMinutes(30)) {
+
+			if (!convertOpenHour.isBefore(convertLunchStartHour)
+				&& convertOpenHour.isBefore(convertLunchEndHour)) {
+				continue;
+			}
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
+			String convertLocalTimeToString = convertOpenHour.format(formatter);
+
+			int currentAppointmentCount = appointmentRepository.findAllWithHospital(hospitalSeq, localDate,
+				convertLocalTimeToString, doctorSeq).size();
+
+			Integer doctorTreatmentPossibleCount = getDoctorTreatmentPossibleCount(doctorSeq);
+
+			if (doctorTreatmentPossibleCount > currentAppointmentCount) {
+				hospitalDutyTimeList.add(convertOpenHour);
+			}
+		}
+		return hospitalDutyTimeList;
+	}
+
 	private Map<String, String> getHospitalDutyTime(
 		Long hospitalSeq, // 병원 식별자
 		int appointmentDayOfWeek /* 요일 */) {
@@ -194,46 +231,24 @@ public class AppointmentService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<LocalTime> createAppointmentPossibleTime
-		(String appointmentDate,
-			int appointmentDayOfWeek,
-			Long doctorSeq,
-			Long hospitalSeq) {
+	public boolean getChildrenAppointmentTime(Long childrenSeq, String appointmentDate) {
 
-		Map<String, String> hospitalDutyTime = getHospitalDutyTime(hospitalSeq, appointmentDayOfWeek);
-		String openHour = hospitalDutyTime.get("openHour");
-		String closeHour = hospitalDutyTime.get("closeHour");
-		String lunchStartHour = hospitalDutyTime.get("lunchStartHour");
-		String lunchEndHour = hospitalDutyTime.get("lunchEndHour");
+		Map<String, String> childrenAppointments = new HashMap<>();
+		
+		Children children = childrenRepository.findById(childrenSeq)
+			.orElseThrow(() -> new NoSuchElementException("Can not found children"));
 
-		LocalTime convertOpenHour = convertStringToLocalTime(openHour);
-		LocalTime convertCloseHour = convertStringToLocalTime(closeHour);
-		LocalTime convertLunchStartHour = convertStringToLocalTime(lunchStartHour);
-		LocalTime convertLunchEndHour = convertStringToLocalTime(lunchEndHour);
+		List<Appointment> appointmentList = children.getAppointmentList();
 
-		List<LocalTime> hospitalDutyTimeList = new ArrayList<>();
-
-		LocalDate localDate = convertStringToLocalDate(appointmentDate);
-
-		for (; !convertOpenHour.isAfter(convertCloseHour); convertOpenHour = convertOpenHour.plusMinutes(30)) {
-
-			if (!convertOpenHour.isBefore(convertLunchStartHour)
-				&& convertOpenHour.isBefore(convertLunchEndHour)) {
-				continue;
-			}
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-			String convertLocalTimeToString = convertOpenHour.format(formatter);
-
-			int currentAppointmentCount = appointmentRepository.findAllWithHospital(hospitalSeq, localDate,
-				convertLocalTimeToString, doctorSeq).size();
-
-			Integer doctorTreatmentPossibleCount = getDoctorTreatmentPossibleCount(doctorSeq);
-
-			if (doctorTreatmentPossibleCount > currentAppointmentCount) {
-				hospitalDutyTimeList.add(convertOpenHour);
-			}
+		if (appointmentList.isEmpty()) {
+			return false;
+		} else {
+			return children.getAppointmentList()
+				.stream()
+				.anyMatch((appointment -> appointment.getStatus() == AppointmentStatus.APPOINTMENT
+					&& appointment.getAppointmentDate()
+					.isEqual(convertStringToLocalDate(appointmentDate))));
 		}
-		return hospitalDutyTimeList;
 	}
 
 	// DB에 있는 운영시간을 String -> LocalTime 변환
@@ -250,7 +265,18 @@ public class AppointmentService {
 	}
 
 	private Integer getDoctorTreatmentPossibleCount(Long doctorSeq) {
-		return doctorRepository.findById(doctorSeq).get().getTreatmentPossible();
+		return doctorRepository.findById(doctorSeq)
+			.get()
+			.getTreatmentPossible();
 	}
 
+	public void checkAppointmentStatus(Long appointmentSeq) {
+		Appointment appointment = appointmentRepository.findById(appointmentSeq)
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+
+		if (appointment.getStatus() != AppointmentStatus.DIAGNOSIS) {
+			throw new IllegalStateException("appointment is not diagnosed");
+		}
+	}
 }
