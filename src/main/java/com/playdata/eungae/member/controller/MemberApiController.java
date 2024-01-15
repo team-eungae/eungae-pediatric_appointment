@@ -3,9 +3,7 @@ package com.playdata.eungae.member.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@CrossOrigin
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/my")
@@ -31,11 +28,11 @@ public class MemberApiController {
 
     @GetMapping("/hospital")
     @ResponseStatus(HttpStatus.OK)
-    public boolean checkMyFavorite(
+    public boolean checkHospitalInFavorites(
         @AuthenticationPrincipal UserDetails principal,
         @RequestParam("hospitalSeq") Long hospitalSeq
     ) {
-        return memberService.checkFavoriteStatus(hospitalSeq, principal.getUsername());
+        return memberService.checkHospitalInFavorites(hospitalSeq, principal.getUsername());
     }
 
     @ResponseStatus(HttpStatus.OK)

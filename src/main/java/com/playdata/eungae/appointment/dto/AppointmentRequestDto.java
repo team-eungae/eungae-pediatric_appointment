@@ -31,8 +31,7 @@ public class AppointmentRequestDto {
 		Hospital hospital,
 		Children children,
 		Doctor doctor,
-		Member member)
-	{
+		Member member) {
 		return Appointment.builder()
 			// 예약 상태 추가
 			.status(AppointmentStatus.APPOINTMENT)
@@ -41,7 +40,7 @@ public class AppointmentRequestDto {
 			.children(children)
 			.member(member)
 			.appointmentDate(appointmentRequestDto.getAppointmentDate())
-			.appointmentHHMM(appointmentRequestDto.getAppointmentHHMM())
+			.appointmentHHMM(appointmentRequestDto.getAppointmentHHMM().replace(":", ""))
 			.note(appointmentRequestDto.getNote())
 			.build();
 	}
