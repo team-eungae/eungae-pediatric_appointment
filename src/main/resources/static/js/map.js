@@ -19,7 +19,7 @@ let position = {};
 
 // 마커를 담을 배열입니다
 let markers = [];
-let marker;
+// let marker;
 
 // 오버레이들을 담을 배열입니다
 let overlays= [];
@@ -177,7 +177,7 @@ var overlay = new kakao.maps.CustomOverlay({
 // 마커를 생성하고 지도위에 표시하는 함수입니다
 function addMarker(position, markerImage) {
 
-    marker = new kakao.maps.Marker({
+    var marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: position.latlng, // 마커를 표시할 위치
         title : position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
@@ -219,7 +219,6 @@ function addMarker(position, markerImage) {
         overlays.push(overlay);
         index = index + 1;
         console.log(index);
-        alert(index);
     });
 
     // 생성된 마커를 배열에 추가합니다
@@ -263,7 +262,7 @@ function addBasicMarker (position, markerImage) {
         });
         overlay.setMap(map);
         overlays.push(overlay);
-        index = index + 1;
+        // index = index + 1;
     });
 
     // 생성된 마커를 배열에 추가합니다
