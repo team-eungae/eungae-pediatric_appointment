@@ -23,34 +23,39 @@ public class ArticleViewController {
 		this.communityBoardService = communityBoardService;
 	}
 
-	@GetMapping("/article")
+	@GetMapping("/articles")
 	public String listArticles(Model model) {
 		model.addAttribute("posts", communityBoardService.getAllCommunityBoards());
 		return "contents/community/community-list";
 	}
 
-	@GetMapping("/article/post")
+	@GetMapping("/articles/post")
 	public String showArticleForm(Model model) {
 
 		return "contents/community/community-write";
 	}
 
-	@PostMapping("/article/post")
+	@PostMapping("/articles/post")
 	public String postArticle(@ModelAttribute CommunityBoardDto communityBoardDto, Authentication authentication) {
 		String email = ((UserDetails) authentication.getPrincipal()).getUsername();
 		communityBoardService.createCommunityBoard(communityBoardDto, email);
-		return "redirect:/article";
+		return "redirect:/articles";
 	}
-	@GetMapping("/article/{article-seq}")
+	@GetMapping("/articles/{article-seq}")
 	public String viewArticle(@PathVariable("article-seq") Long id, Model model) {
 		model.addAttribute("post", communityBoardService.getCommunityBoardById(id));
 		return "contents/community/community-post-details";
 	}
 
-	@GetMapping("/article/{article-seq}/form")
+	@GetMapping("/articles/{article-seq}/form")
 	public String editArticleForm(@PathVariable("article-seq") Long id, Model model) {
 		model.addAttribute("post", communityBoardService.getCommunityBoardById(id));
 		return "contents/community/community-write";
 	}
 
+	@PostMapping("/articles/delete/{communityBoardSeq}")
+	public String deleteArticle(@PathVariable Long communityBoardSeq) {
+		communityBoardService.deleteCommunityBoard(communityBoardSeq);
+		return "redirect:/articles";
+	}
 }

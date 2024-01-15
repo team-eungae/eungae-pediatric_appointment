@@ -9,7 +9,7 @@
 
 <body>
 <main layout:fragment="content">
-    <button class="post-button"><a th:href="@{/article/post}">글쓰기</a></button>
+    <button class="post-button"><a th:href="@{/articles/post}">글쓰기</a></button>
     <div class="community-header">
         <p>커뮤니티</p>
         <hr/>
@@ -19,7 +19,7 @@
         <div class="community-post" th:each="post : ${posts}">
             <div class="row">
                 <div class="col-9">
-                    <a th:href="@{/article/details(post.id)}" class="post-title" th:text="${post.title}">제목</a>
+                    <a th:href="@{/articles/{articleSeq}(articleSeq=${post.communityBoardSeq})}" th:text="${post.title}">제목</a>
                     <p class="post-contents" th:text="${post.content}">내용</p>
                 </div>
                 <div class="col-3">
@@ -28,15 +28,16 @@
             </div>
             <div class="written-records">
                 <ul class="written-list">
-                 <!--   <li class="records-item" th:text="${post.author}">작성자</li>
-                    <li class="records-item" th:text="${#temporals.format(post.date, 'yyyy.MM.dd')}">작성일</li> -->
+                    <p class="post-author" th:text="${post.memberSeq}">작성자</p>
+                    <p class="post-date" th:text="${post.getFormattedDate()}">작성일</p>
                 </ul>
-                <button class="children-closed-btn btn-sm align-self-start" onclick="showDeleteButton(this)">
+                <button class="article-closed-btn btn-sm align-self-start" onclick="toggleDeleteButton(this)">
                     <i class="fa-solid fa-gear"></i>
-                    <input type="hidden" name="_method" value="delete" />
-                    <button type="submit" class="btn btn-danger">삭제</button>
                 </button>
-
+                <form th:action="@{/articles/delete/{communityBoardSeq}(communityBoardSeq=${post.communityBoardSeq})}" method="post" style="display: none;" class="delete-form">
+                    <input type="hidden" name="_method" th:value="${post.communityBoardSeq}" />
+                    <button type="submit" class="btn btn-danger">삭제</button>
+                </form>
             </div>
             <hr/>
         </div>
@@ -44,6 +45,7 @@
 
         <div class="post-bottom"></div>
     </div>
+    <script src="/js/community-list.js"></script>
 </main>
 </body>
 </html>

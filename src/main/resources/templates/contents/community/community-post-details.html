@@ -15,28 +15,25 @@
     <div class="post-details-body">
         <div class="post-writter">
             <ul>
-                <li class="post-writer-items post-writter-nickname">
-                    작성자 - 스폰지밥
-                </li>
+                <li class="post-writer-items post-writter-nickname" th:text="'작성자 - ' + ${post.memberSeq}">작성자</li>
                 <li class="post-writer-items"> | </li>
-                <li class="post-writer-items post-written-date">
-                    작성일 - 2023-01-01
-                </li>
+                <li class="post-writer-items post-written-date" th:text="'작성일 - ' + ${post.getFormattedDate()}">작성일</li>
             </ul>
         </div>
         <div class="post-details-title">
-            <p>이건 애국자 1절입니다.</p>
+            <p th:text="${post.title}"></p>
         </div>
         <div class="post-details-contents">
-            <p>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세</p>
+            <p th:text="${post.content}"></p>
         </div>
         <div class="post-details-images">
-            <div class="img-place">
+          <!--  <div class="img-place">
                 <img src="https://i.namu.wiki/i/5dbYIx9wSf1tIJGRb5NO8-fgK5YWOCMJA2Q-cEpsOOOFPlxhyqAUhhV5Cm87Pnanhb5-TpoXKFs9P2AZDGjFUQ.webp"/>
             </div>
             <div class="img-place">
                 <img src="https://cdn.huffingtonpost.kr/news/photo/201609/36700_71074.jpeg"/>
             </div>
+            -->
         </div>
         <hr/>
     </div>
