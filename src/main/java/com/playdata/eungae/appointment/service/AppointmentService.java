@@ -234,12 +234,7 @@ public class AppointmentService {
 	public boolean getChildrenAppointmentTime(Long childrenSeq, String appointmentDate) {
 
 		Map<String, String> childrenAppointments = new HashMap<>();
-		log.info("===============================================");
-		log.info(appointmentDate);
-		log.info("===============================================");
-
-
-		// 병원의 월~일 운영시간 및 점심시간 전체
+		
 		Children children = childrenRepository.findById(childrenSeq)
 			.orElseThrow(() -> new NoSuchElementException("Can not found children"));
 
@@ -253,7 +248,6 @@ public class AppointmentService {
 				.anyMatch((appointment -> appointment.getStatus() == AppointmentStatus.APPOINTMENT
 					&& appointment.getAppointmentDate()
 					.isEqual(convertStringToLocalDate(appointmentDate))));
-
 		}
 	}
 
@@ -271,7 +265,9 @@ public class AppointmentService {
 	}
 
 	private Integer getDoctorTreatmentPossibleCount(Long doctorSeq) {
-		return doctorRepository.findById(doctorSeq).get().getTreatmentPossible();
+		return doctorRepository.findById(doctorSeq)
+			.get()
+			.getTreatmentPossible();
 	}
 
 	public void checkAppointmentStatus(Long appointmentSeq) {
