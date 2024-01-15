@@ -36,9 +36,6 @@ public class Doctor extends BaseEntity {
 
     private String doctorProfileImage;
 
-    @ColumnDefault("'N'")
-    private char deleteYN;
-
     public Doctor(String name) {
         this.name = name;
     }
@@ -49,7 +46,5 @@ public class Doctor extends BaseEntity {
         hospital.addDoctor(this);
     }
 
-    public void deleteDoctor() {
-        this.deleteYN = 'Y';
-    }
+
 }

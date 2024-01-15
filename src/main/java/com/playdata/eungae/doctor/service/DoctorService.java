@@ -49,7 +49,7 @@ public class DoctorService {
 				.orElseThrow(() -> new NoSuchElementException(
 						"Doctor not found by doctorSeq = {%s}".formatted(doctorSeq)));
 
-		doctor.deleteDoctor();
+		doctor.deleted();
 	}
 
     @Transactional(readOnly = true)
