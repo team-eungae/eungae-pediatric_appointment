@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
+import com.playdata.eungae.appointment.domain.AppointmentStatus;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.review.domain.Review;
 import com.playdata.eungae.review.dto.RequestReviewFormDto;
@@ -35,6 +36,11 @@ public class ReviewService {
 		Appointment appointment = appointmentRepository.findByIdWhitHospital(requestReviewFormDto.getAppointmentSeq())
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment, appointmentSeq = {%d}"
 				.formatted(requestReviewFormDto.getAppointmentSeq())));
+
+		// 진단 완료가 된 상태가 아니면 exception 발생
+		if (appointment.getStatus() != AppointmentStatus.DIAGNOSIS) {
+			throw new IllegalStateException("appointment is not diagnosed");
+		}
 
 		Review review = RequestReviewFormDto.toEntity(requestReviewFormDto, appointment);
 
@@ -71,8 +77,6 @@ public class ReviewService {
 
 		return reviews.stream()
 			.map(ResponseReviewDto::toDto)
-			.sorted(Comparator.comparing(ResponseReviewDto::getReviewSeq)
-				.reversed())
 			.collect(Collectors.toList());
 	}
 
@@ -83,8 +87,6 @@ public class ReviewService {
 
 		return reviews.stream()
 			.map(ResponseReviewDto::toDto)
-			.sorted(Comparator.comparing(ResponseReviewDto::getReviewSeq)
-				.reversed())
 			.collect(Collectors.toList());
 	}
 }

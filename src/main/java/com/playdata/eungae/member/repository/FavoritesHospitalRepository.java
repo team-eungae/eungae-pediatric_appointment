@@ -22,4 +22,6 @@ public interface FavoritesHospitalRepository extends JpaRepository<FavoritesHosp
 		+ " and f.hospital.hospitalSeq = :hospitalSeq")
 	Optional<FavoritesHospital> getFavoritesHospitalByUserEmail(@Param("userEmail") String userEmail,
 																@Param("hospitalSeq") Long hospitalSeq);
+
+	boolean existsByHospitalHospitalSeqAndMemberEmail(Long hospitalSeq, String email);
 }

@@ -21,11 +21,17 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	Page<Review> findAllWithMember(Pageable pageConfig, @Param("hospitalSeq") Long hospitalSeq);
 
 
-	List<Review> findAllByHospitalHospitalSeq(Long hospitalSeq);
+	@Query("select r from Review r"
+		+ " join fetch r.member"
+		+ " join fetch r.hospital"
+		+ " where r.hospital.hospitalSeq = :hospitalSeq"
+		+ " order by r.reviewSeq desc ")
+	List<Review> findAllByHospitalHospitalSeq(@Param("hospitalSeq") Long hospitalSeq);
 
 	@Query("select r from Review r"
 		+ " join fetch r.member"
 		+ " join fetch r.hospital"
-		+ " where r.member.email = :email")
+		+ " where r.member.email = :email"
+		+ " order by r.reviewSeq desc ")
 	List<Review> findReviewsByMemberEmail(@Param("email") String memberEmail);
 }
