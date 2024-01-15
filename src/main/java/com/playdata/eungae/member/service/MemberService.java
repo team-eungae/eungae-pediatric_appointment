@@ -16,7 +16,6 @@ import com.playdata.eungae.hospital.repository.HospitalRepository;
 import com.playdata.eungae.member.domain.FavoritesHospital;
 import com.playdata.eungae.member.domain.Member;
 
-import com.playdata.eungae.member.dto.RequestFavoriesDto;
 import com.playdata.eungae.member.dto.ResponseFavoritesHospitalDto;
 import com.playdata.eungae.member.repository.FavoritesHospitalRepository;
 
@@ -70,8 +69,8 @@ public class MemberService implements UserDetailsService {
     }
 
     @Transactional(readOnly = true)
-    public boolean checkFavoriteStatus(Long hospitalSeq, String userEmail) {
-        return !favoritesHospitalRepository.getFavoritesHospitalByUserEmail(userEmail, hospitalSeq).isEmpty();
+    public boolean checkHospitalInFavorites(Long hospitalSeq, String userEmail) {
+        return favoritesHospitalRepository.existsByHospitalHospitalSeqAndMemberEmail(hospitalSeq, userEmail);
     }
 
 
@@ -118,10 +117,10 @@ public class MemberService implements UserDetailsService {
     private MemberAndHospitalEntity getMemberAndHospital(String memberEmail, Long hospitalSeq) {
 
         Member member = memberRepository.findByEmail(memberEmail)
-                .orElseThrow(() -> new IllegalStateException("Can Not Found Member Entity"));
+            .orElseThrow(() -> new IllegalStateException("No member found for the email provided. email = {%s}".formatted(memberEmail)));
 
         Hospital hospital = hospitalRepository.findById(hospitalSeq)
-                .orElseThrow(() -> new IllegalStateException("Can Not Found Hospital Entity"));
+            .orElseThrow(() -> new IllegalStateException("Can not found hospital. hospitalSeq = {%d}".formatted(hospitalSeq)));
 
         return new MemberAndHospitalEntity(member, hospital);
     }

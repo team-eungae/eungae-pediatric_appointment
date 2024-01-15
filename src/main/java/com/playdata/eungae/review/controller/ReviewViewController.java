@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.playdata.eungae.appointment.service.AppointmentService;
 import com.playdata.eungae.review.dto.RequestReviewFormDto;
 import com.playdata.eungae.review.service.ReviewService;
 
@@ -21,12 +22,14 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewViewController {
 
     private final ReviewService reviewService;
+    private final AppointmentService appointmentService;
 
     @GetMapping("/post")
     public String reviewWrite(
         Model model,
         @RequestParam Long appointmentSeq
     ) {
+        appointmentService.checkAppointmentStatus(appointmentSeq);
         model.addAttribute("appointmentSeq", appointmentSeq);
         return "contents/member/review-write";
     }

@@ -4,11 +4,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -61,7 +59,6 @@ public class AppointmentService {
 	@Transactional(readOnly = true)
 	public List<DoctorResponseDto> getDoctors(Long hospitalSeq) {
 		return doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq)
-			.get()
 			.stream()
 			.map(DoctorResponseDto::toDto)
 			.collect(Collectors.toList());
@@ -80,6 +77,7 @@ public class AppointmentService {
 	@Transactional
 	public void saveAppointment(AppointmentRequestDto requestDto, String email) {
 
+		// 이부분 Exception 처리가 필요한 것 같습니다.
 		Hospital hospital = hospitalRepository.findById(requestDto.getHospitalSeq()).get();
 		Doctor doctor = doctorRepository.findById(requestDto.getDoctorSeq()).get();
 		Children children = childrenRepository.findById(requestDto.getChildrenSeq()).get();
@@ -98,8 +96,6 @@ public class AppointmentService {
 		return myMedicalRecords.stream()
 			.filter((appointment -> appointment.getStatus() == AppointmentStatus.DIAGNOSIS))
 			.map(ResponseMedicalHistoryDto::toDto)
-			.sorted(Comparator.comparing(ResponseMedicalHistoryDto::getAppointmentSeq)
-				.reversed())
 			.collect(Collectors.toList());
 	}
 
@@ -125,9 +121,18 @@ public class AppointmentService {
 		return appointments.stream()
 			.map(ResponseAppointmentDto::toDto)
 			.filter((responseAppointmentDto) -> responseAppointmentDto.getStatus() != AppointmentStatus.DIAGNOSIS)
-			.sorted(Comparator.comparing(ResponseAppointmentDto::getAppointmentSeq)
-				.reversed())
 			.collect(Collectors.toList());
+
+	}
+
+	public void checkAppointmentStatus(Long appointmentSeq) {
+		Appointment appointment = appointmentRepository.findById(appointmentSeq)
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+
+		if (appointment.getStatus() != AppointmentStatus.DIAGNOSIS) {
+			throw new IllegalStateException("appointment is not diagnosed");
+		}
 
 	}
 
@@ -247,4 +252,5 @@ public class AppointmentService {
 	private Integer getDoctorTreatmentPossibleCount(Long doctorSeq) {
 		return doctorRepository.findById(doctorSeq).get().getTreatmentPossible();
 	}
+
 }

@@ -43,7 +43,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch a.hospital "
 		+ " join fetch a.doctor "
 		+ " join fetch a.children "
-		+ " where a.member.email = :memberEmail")
+		+ " where a.member.email = :memberEmail"
+		+ " order by a.appointmentSeq desc ")
 	List<Appointment> findAllByMemberEmail(@Param("memberEmail") String memberEmail);
 
 	@Query("select a"

@@ -1,5 +1,6 @@
 package com.playdata.eungae;
 
+import java.io.File;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ import com.playdata.eungae.review.domain.Review;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
@@ -241,7 +243,7 @@ public class initDB {
 				.name("김우진")
 				.hospital(hospital)
 				.treatmentPossible(3)
-				.DoctorProfileImage("doctor.jpeg")
+				.doctorProfileImage("doctor.jpeg")
 				.build();
 		}
 
