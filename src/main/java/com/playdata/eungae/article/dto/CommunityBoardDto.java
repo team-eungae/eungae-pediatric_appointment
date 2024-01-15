@@ -1,5 +1,6 @@
 package com.playdata.eungae.article.dto;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.playdata.eungae.article.domain.CommunityBoard;
@@ -21,7 +22,7 @@ public class CommunityBoardDto {
 	private Long memberSeq;
 	private String title;
 	private String content;
-	private String author;
+	private LocalDateTime createdDate;
 	private String date;
 	private String thumbnailImageUrl;
 
@@ -32,6 +33,10 @@ public class CommunityBoardDto {
 			.memberSeq(entity.getMember().getMemberSeq()) // Member 객체에서 ID 추출
 			.title(entity.getTitle())
 			.content(entity.getContent())
+			.createdDate(entity.getCreatedAt())
 			.build();
+	}
+	public String getFormattedDate() {
+		return this.createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 	}
 }
