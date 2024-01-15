@@ -31,54 +31,50 @@ $(document).ready(function () {
     //  휴무일을 달력에서 비활성화할 수 있는 기능이 있는지 확인할 것.
 });
 
-const buttons = document.querySelectorAll('.dropdown-button');
 
-buttons.forEach(function (button, index) {
-    button.addEventListener('click', function (e) {
-        e.preventDefault();
+let value = document.getElementById('date').value;
+let date = sysdate.toISOString().substring(0, 10);
+let dayOfWeek = sysdate.getDay();
 
-        this.parentNode.classList.toggle('on');
-    });
-});
-
-// 로직
-
-// let value = document.getElementById('date').value;
-var date = sysdate.toISOString().substring(0, 10);
-var dayOfWeek = sysdate.getDay();
-
-document.getElementById('date').addEventListener('change', function (e) {
-    let value = document.getElementById('date').value;
-    date = value.getDay();
-});
-
-var doctorSeq;
 var hospitalSeq = document.getElementById("hospitalSeq").value;
 console.log(hospitalSeq);
 
-$('input[name=doctorSeq]').change(function (e) {
-    doctorSeq = $('input[name=doctorSeq]:checked').val();
-    $.ajax({
-        type: 'GET',
-        url: '/api/appointment/time',
-        dataType: "json",
-        data: {
-            appointmentDate: date,
-            appointmentDayOfWeek: dayOfWeek,
-            doctorSeq: doctorSeq,
-            hospitalSeq: hospitalSeq
-        },
-        contentType: 'application/json',
-        success: function (data) {
-            let timeList = $('#time-list');
-            timeList.empty();
-            for (let i = 0; i < data.length; i++) {
-                timeList.append('<label class="appointment-time"><input type=\"radio\" name=\"appointmentHHMM\" value=\"' + data[i].substring(0, 5) + '"\"><span>' + data[i].substring(0, 5) + '</span></label>');
+$('input[name=doctorSeq], input[name=childrenSeq], input[name=appointmentDate]').change(function (e) {
+    let childrenSeq = $('input[name=childrenSeq]:checked').val();
+    let doctorSeq = $('input[name=doctorSeq]:checked').val();
+
+    let value = document.getElementById('date').value;
+    let dateObject = new Date(value)
+
+    dayOfWeek = dateObject.getDay()
+
+    if (childrenSeq && date && doctorSeq) {
+        $.ajax({
+            type: 'GET',
+            url: '/api/appointment/time',
+            dataType: "json",
+            data: {
+                appointmentDate: date,
+                appointmentDayOfWeek: dayOfWeek,
+                doctorSeq: doctorSeq,
+                hospitalSeq: hospitalSeq
+            },
+            contentType: 'application/json',
+            success: function (data) {
+                console.log(data)
+                let timeList = $('#time-list');
+                timeList.empty();
+                for (let i = 0; i < data.length; i++) {
+                    timeList.append('<label class="appointment-time"><input type=\"radio\" name=\"appointmentHHMM\" value=\"' + data[i].substring(0, 5) + '"\"><span>' + data[i].substring(0, 5) + '</span></label>');
+                }
+                console.log("요청 성공")
+            }, error: function () {
+                alert("경고");
             }
-        }, error: function () {
-            alert("경고");
-        }
-    })
+        })
+    } else {
+        return
+    }
 });
 
 $('input[name=date]').change(function (e) {

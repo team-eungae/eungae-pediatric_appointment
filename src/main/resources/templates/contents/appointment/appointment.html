@@ -28,17 +28,20 @@
             <hr/>
             <div class="appointment-info">
                 <ul class="appointment-info-detail">
-                    <li class="on">
-                        <button class="dropdown-button"><i class="fa-solid fa-calendar appointment-icon"></i><strong>예약
-                            날짜</strong></button>
+                    <li>
+                        <div class="dropdown-button"><i
+                                class="fa-solid fa-child appointment-icon"></i><strong>진료자</strong></div>
                         <div id="menu1" class="content">
-                            <input type="date" id="date" class="appointment-date" name="appointmentDate">
+                            <label class="appointment-children" th:each="children : ${children}">
+                                <input type="radio" name="childrenSeq" th:value=${children.childrenSeq}>
+                                <span th:text="${children.name}">애기 이름</span>
+                            </label>
                         </div>
                     </li>
                     <li>
-                        <button class="dropdown-button"><i class="fa-solid fa-user-doctor appointment-icon"></i><strong>진료
-                            의사</strong></button>
-                        <div id="menu3" class="content">
+                        <div class="dropdown-button"><i class="fa-solid fa-user-doctor appointment-icon"></i><strong>진료
+                            의사</strong></div>
+                        <div id="menu2" class="content">
                             <div class="appointment-doctor-wrapper" th:each="doctor:${doctors}">
                                 <img src="/img/doctor.jpeg" class="doctor-img">
                                 <label class="appointment-doctor">
@@ -49,27 +52,24 @@
                         </div>
                     </li>
                     <li>
-                        <button class="dropdown-button"><i class="fa-solid fa-clock appointment-icon"></i><strong>예약
-                            시간</strong></button>
-                        <div id="menu2" class="content">
+                        <div class="dropdown-button"><i class="fa-solid fa-calendar appointment-icon"></i><strong>예약
+                            날짜</strong></div>
+                        <div id="menu3" class="content">
+                            <input type="date" id="date" class="appointment-date" name="appointmentDate">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dropdown-button"><i class="fa-solid fa-clock appointment-icon"></i><strong>예약
+                            시간</strong></div>
+                        <div id="menu4" class="content">
                             <fieldset class="appointment-info1">
                                 <div id="time-list"></div>
                             </fieldset>
                         </div>
                     </li>
                     <li>
-                        <button class="dropdown-button"><i
-                                class="fa-solid fa-child appointment-icon"></i><strong>진료자</strong></button>
-                        <div id="menu4" class="content">
-                            <label class="appointment-children" th:each="children : ${children}">
-                                <input type="radio" name="childrenSeq" th:value=${children.childrenSeq}>
-                                <span th:text="${children.name}">애기 이름</span>
-                            </label>
-                        </div>
-                    </li>
-                    <li>
-                        <button class="dropdown-button"><i
-                                class="fa-solid fa-clipboard appointment-icon"></i><strong>증상</strong></button>
+                        <div class="dropdown-button"><i
+                                class="fa-solid fa-clipboard appointment-icon"></i><strong>증상</strong></div>
                         <div id="menu5" class="content">
                             <label>
                                 <textarea class="appointment-symptom" name="note"
