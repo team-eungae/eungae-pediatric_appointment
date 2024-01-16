@@ -31,16 +31,6 @@ public class AppointmentViewController {
 	private final AppointmentService appointmentService;
 	private final HospitalService hospitalService;
 
-	@PostMapping("/{hospitalSeq}/appointments")
-	public String saveAppointment(
-		AppointmentRequestDto appointmentRequestDto,
-		@AuthenticationPrincipal UserDetails member
-	) {
-		String email = member.getUsername();
-		appointmentService.saveAppointment(appointmentRequestDto, email);
-		return "/index";
-	}
-
 	@GetMapping("/{hospitalSeq}/appointments")
 	public String getAppointmentForm(
 		@PathVariable Long hospitalSeq,
