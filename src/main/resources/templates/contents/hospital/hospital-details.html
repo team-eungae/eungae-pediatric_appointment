@@ -181,22 +181,33 @@
             리뷰
             <div>(<span th:text="${#lists.size(reviewList)}"></span>)</div>
         </div>
-        <div id="hospital-review-list">
-            <div class="hospital-review-item" th:each="review:${reviewList}">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="review-content-header">
-                            <div class="review-writer" th:text="${review.memberName}">김*진</div>
-                            <div class="review-date" th:text="${review.writeDate}">11월 29일</div>
+        <div th:if="${#lists.size(reviewList) != 0}">
+            <div id="hospital-review-list">
+                <div class="hospital-review-item" th:each="review:${reviewList}">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="review-content-header">
+                                <div class="review-writer" th:text="${review.memberName}">김*진</div>
+                                <div class="review-date" th:text="${review.writeDate}">11월 29일</div>
+                            </div>
+                            <div class="review-rate">
+                                <i th:each="num : ${#numbers.sequence(1,review.starRating)}" class="fa-solid fa-star"
+                                   style="color: #ffd500;"></i>
+                                <i th:if="${review.starRating} != 5 "
+                                   th:each="num : ${#numbers.sequence(1,5 -review.starRating)}" class="fa-regular fa-star"
+                                   style="color: #ffd500;"></i>
+                            </div>
+                            <div class="review-content" th:text="${review.content}">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
                         </div>
-                        <div class="review-rate">
-                            <i th:each="num : ${#numbers.sequence(1,review.starRating)}" class="fa-solid fa-star"
-                               style="color: #ffd500;"></i>
-                            <i th:if="${review.starRating} != 5 "
-                               th:each="num : ${#numbers.sequence(1,5 -review.starRating)}" class="fa-regular fa-star"
-                               style="color: #ffd500;"></i>
-                        </div>
-                        <div class="review-content" th:text="${review.content}">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${#lists.size(reviewList) == 0}">
+            <div class="card">
+                <div class="card-body">
+                    <div class="review-content-header">
+                        <div class="review-writer">리뷰가 존재하지 않습니다.</div>
                     </div>
                 </div>
             </div>
