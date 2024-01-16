@@ -31,14 +31,14 @@ public class HospitalViewController {
 	private final ReviewService reviewService;
 
 	@GetMapping("/{hospitalSeq}")
-	public String getHospitalDetail(@PathVariable Long hospitalSeq, Model model){
+	public String getHospitalDetail(@PathVariable Long hospitalSeq, Model model) {
 		HospitalViewResponseDto hospitalById = hospitalService.findHospitalById(hospitalSeq);
 		List<DoctorResponseDto> doctorList = doctorService.findDoctorsByHospitalSeq(hospitalSeq);
 		List<ResponseReviewDto> reviews = reviewService.findReviewsByHospitalSeq(hospitalSeq);
 		List<HospitalImageResponseDto> hospitalImages = hospitalImageService.findHospitalImages(hospitalSeq);
 
-		model.addAttribute("hospital",hospitalById);
-		model.addAttribute("doctorList",doctorList);
+		model.addAttribute("hospital", hospitalById);
+		model.addAttribute("doctorList", doctorList);
 		model.addAttribute("reviewList", reviews);
 		model.addAttribute("hospitalImages", hospitalImages);
 		return "contents/hospital/hospital-details";

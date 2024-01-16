@@ -21,28 +21,27 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/review")
 public class ReviewViewController {
 
-    private final ReviewService reviewService;
-    private final AppointmentService appointmentService;
+	private final ReviewService reviewService;
+	private final AppointmentService appointmentService;
 
-    @GetMapping("/post")
-    public String reviewWrite(
-        Model model,
-        @RequestParam Long appointmentSeq
-    ) {
-        appointmentService.checkAppointmentStatus(appointmentSeq);
-        model.addAttribute("appointmentSeq", appointmentSeq);
-        return "contents/member/review-write";
-    }
+	@GetMapping("/post")
+	public String reviewWrite(
+		Model model,
+		@RequestParam Long appointmentSeq
+	) {
+		appointmentService.checkAppointmentStatus(appointmentSeq);
+		model.addAttribute("appointmentSeq", appointmentSeq);
+		return "contents/member/review-write";
+	}
 
-    @PostMapping("/post")
-    // redirect 시 ResponseStatus 어노테이션을 붙이면 redirect가 실행되지 않습니다.
-    // @ResponseStatus(HttpStatus.CREATED)
-    public String createReview(
-        @Valid RequestReviewFormDto requestReviewFormDto
-    ) {
-        log.info(requestReviewFormDto.toString());
-        reviewService.createReview(requestReviewFormDto);
-        return "redirect:/my/reviews";
-    }
+	@PostMapping("/post")
+	// redirect 시 ResponseStatus 어노테이션을 붙이면 redirect가 실행되지 않습니다.
+	// @ResponseStatus(HttpStatus.CREATED)
+	public String createReview(
+		@Valid RequestReviewFormDto requestReviewFormDto
+	) {
+		reviewService.createReview(requestReviewFormDto);
+		return "redirect:/my/reviews";
+	}
 
 }
