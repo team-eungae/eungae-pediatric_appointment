@@ -2,7 +2,7 @@
 .search-container {
     display: flex;
     align-items: center;
-    width: 90%;
+    width: 85%;
     border: 4px solid #326EB3;
     border-radius: 20px;
     padding: 5px;
@@ -31,10 +31,14 @@
 .main-buttons {
     text-align: center;
     margin: 40px 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .main-button {
-    background-color: #326EB3;
+    background-color: #326eb3;
     color: white;
     border: none;
     padding: 15px;
@@ -42,11 +46,16 @@
     text-decoration: none;
     display: inline-block;
     font-size: 50px;
-    margin: 0 20px;
+    margin: 8px 10px;
     cursor: pointer;
     border-radius: 20px;
     width: 150px;
     height: 150px;
+}
+.btn-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .main-button__text{
@@ -54,4 +63,41 @@
     margin-top: 10px;
 }
 
+.map {
+    width: 320px;
+    height: 150px;
+}
 
+.commu {
+    width: 150px;
+    height: 70px;
+}
+
+.noti {
+    width: 150px;
+    height: 70px;
+}
+
+p{
+    font-weight: 500;
+}
+
+.main-star {
+    font-size: 50px;
+}
+
+.main-banner {
+    width: 320px;
+    height: 90px;
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 40px;
+    background-color: white;
+    color: #326eb3;
+    border: 2px solid;
+}
+
+.banner-text{
+    font-size: 16px;
+    margin-top: 10px;
+}
