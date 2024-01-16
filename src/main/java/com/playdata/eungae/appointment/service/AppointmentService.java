@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,7 +51,7 @@ public class AppointmentService {
 	private final ReviewRepository reviewRepository;
 
 	@Transactional(readOnly = true)
-	public Optional<List<Children>> getMyChildren(String email) {
+	public List<Children> getMyChildren(String email) {
 		Member member = memberRepository.findByEmail(email).get();
 		return childrenRepository.findAllByMemberMemberSeq(member.getMemberSeq());
 	}
@@ -79,11 +77,17 @@ public class AppointmentService {
 	@Transactional
 	public void saveAppointment(AppointmentRequestDto requestDto, String email) {
 
-		// 이부분 Exception 처리가 필요한 것 같습니다.
-		Hospital hospital = hospitalRepository.findById(requestDto.getHospitalSeq()).get();
-		Doctor doctor = doctorRepository.findById(requestDto.getDoctorSeq()).get();
-		Children children = childrenRepository.findById(requestDto.getChildrenSeq()).get();
-		Member member = memberRepository.findByEmail(email).get();
+		Hospital hospital = hospitalRepository.findById(requestDto.getHospitalSeq())
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found Hospital. hospitalSeq = {%d}".formatted(requestDto.getHospitalSeq())));
+		Doctor doctor = doctorRepository.findById(requestDto.getDoctorSeq())
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found Doctor. doctorSeq = {%d}".formatted(requestDto.getDoctorSeq())));
+		Children children = childrenRepository.findById(requestDto.getChildrenSeq())
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found ChildrenSeq. childrenSeq = {%d}".formatted(requestDto.getChildrenSeq())));
+		Member member = memberRepository.findByEmail(email)
+			.orElseThrow(() -> new IllegalStateException("Can not found Member. memberEmail = {%s}".formatted(email)));
 
 		Appointment appointment = AppointmentRequestDto.toEntity(requestDto, hospital, children, doctor, member);
 
@@ -103,8 +107,10 @@ public class AppointmentService {
 
 	@Transactional(readOnly = true)
 	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
-		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.DIAGNOSIS)
-			.orElseThrow(() -> new IllegalStateException("Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq,
+				AppointmentStatus.DIAGNOSIS)
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
 		return ResponseDetailMedicalHistoryDto.toDto(appointment);
 	}
 
@@ -126,7 +132,6 @@ public class AppointmentService {
 			.collect(Collectors.toList());
 
 	}
-
 
 	// 병원 운영 시간
 
@@ -153,24 +158,22 @@ public class AppointmentService {
 
 		LocalDate localDate = convertStringToLocalDate(appointmentDate);
 
-		for (; !convertOpenHour.isAfter(convertCloseHour); convertOpenHour = convertOpenHour.plusMinutes(30)) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
 
-			if (!convertOpenHour.isBefore(convertLunchStartHour)
-				&& convertOpenHour.isBefore(convertLunchEndHour)) {
-				continue;
+		while (!convertOpenHour.isAfter(convertCloseHour)) {
+			if (!isDuringLunch(convertOpenHour, convertLunchStartHour, convertLunchEndHour)) {
+				String convertLocalTimeToString = convertOpenHour.format(formatter);
+				int currentAppointmentCount = getAppointmentCount(hospitalSeq, localDate, convertLocalTimeToString,
+					doctorSeq);
+				int doctorTreatmentPossibleCount = getDoctorTreatmentPossibleCount(doctorSeq);
+
+				if (doctorTreatmentPossibleCount > currentAppointmentCount) {
+					hospitalDutyTimeList.add(convertOpenHour);
+				}
 			}
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
-			String convertLocalTimeToString = convertOpenHour.format(formatter);
-
-			int currentAppointmentCount = appointmentRepository.findAllWithHospital(hospitalSeq, localDate,
-				convertLocalTimeToString, doctorSeq).size();
-
-			Integer doctorTreatmentPossibleCount = getDoctorTreatmentPossibleCount(doctorSeq);
-
-			if (doctorTreatmentPossibleCount > currentAppointmentCount) {
-				hospitalDutyTimeList.add(convertOpenHour);
-			}
+			convertOpenHour = convertOpenHour.plusMinutes(30);
 		}
+
 		return hospitalDutyTimeList;
 	}
 
@@ -234,7 +237,7 @@ public class AppointmentService {
 	public boolean getChildrenAppointmentTime(Long childrenSeq, String appointmentDate) {
 
 		Map<String, String> childrenAppointments = new HashMap<>();
-		
+
 		Children children = childrenRepository.findById(childrenSeq)
 			.orElseThrow(() -> new NoSuchElementException("Can not found children"));
 
@@ -242,13 +245,12 @@ public class AppointmentService {
 
 		if (appointmentList.isEmpty()) {
 			return false;
-		} else {
-			return children.getAppointmentList()
-				.stream()
-				.anyMatch((appointment -> appointment.getStatus() == AppointmentStatus.APPOINTMENT
-					&& appointment.getAppointmentDate()
-					.isEqual(convertStringToLocalDate(appointmentDate))));
 		}
+		return children.getAppointmentList()
+			.stream()
+			.anyMatch((appointment -> appointment.getStatus() == AppointmentStatus.APPOINTMENT
+				&& appointment.getAppointmentDate()
+				.isEqual(convertStringToLocalDate(appointmentDate))));
 	}
 
 	// DB에 있는 운영시간을 String -> LocalTime 변환
@@ -278,5 +280,13 @@ public class AppointmentService {
 		if (appointment.getStatus() != AppointmentStatus.DIAGNOSIS) {
 			throw new IllegalStateException("appointment is not diagnosed");
 		}
+	}
+
+	private boolean isDuringLunch(LocalTime time, LocalTime lunchStart, LocalTime lunchEnd) {
+		return !time.isBefore(lunchStart) && time.isBefore(lunchEnd);
+	}
+
+	private int getAppointmentCount(Long hospitalSeq, LocalDate localDate, String time, Long doctorSeq) {
+		return appointmentRepository.findAllWithHospital(hospitalSeq, localDate, time, doctorSeq).size();
 	}
 }

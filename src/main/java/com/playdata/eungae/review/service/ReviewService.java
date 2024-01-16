@@ -21,7 +21,9 @@ import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
@@ -70,10 +72,6 @@ public class ReviewService {
 	@Transactional(readOnly = true)
 	public List<ResponseReviewDto> findReviewsByHospitalSeq(Long hospitalSeq) {
 		List<Review> reviews = reviewRepository.findAllByHospitalHospitalSeq(hospitalSeq);
-
-		if (reviews.isEmpty()) {
-			throw new NoSuchElementException("Can not found Review, hospitalSeq = {%d}".formatted(hospitalSeq));
-		}
 
 		return reviews.stream()
 			.map(ResponseReviewDto::toDto)
