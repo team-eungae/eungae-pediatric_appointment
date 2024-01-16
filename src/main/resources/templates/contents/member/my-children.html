@@ -22,7 +22,7 @@
         <button class="children-closed-btn btn-sm align-self-start" onclick="showDeleteButton(this)">
             <i class="fa-solid fa-gear"></i>
         </button>
-        <form th:action="@{/children/{id}(id=${child.childrenSeq})}" method="post" style="display:none;">
+        <form th:action="@{/my/children/{id}(id=${child.childrenSeq})}" th:method="delete" style="display:none;">
             <input type="hidden" name="_method" value="delete" />
             <button type="submit" class="btn btn-danger">삭제</button>
         </form>

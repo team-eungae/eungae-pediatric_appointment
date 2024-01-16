@@ -34,11 +34,21 @@ public class CommunityBoardService {
 		return communityBoard.getCommunityBoardSeq();
 	}
 	@Transactional
+	public void updateCommunityBoard(Long communityBoardSeq, CommunityBoardDto communityBoardDto) {
+		CommunityBoard communityBoard = communityBoardRepository.findById(communityBoardSeq)
+			.orElseThrow(() -> new IllegalStateException("해당 게시글이 존재하지 않습니다: " + communityBoardSeq));
+
+		communityBoard.setTitle(communityBoardDto.getTitle());
+		communityBoard.setContent(communityBoardDto.getContent());
+	}
+
+		@Transactional
 	public void deleteCommunityBoard(Long communityBoardSeq) {
 		CommunityBoard communityBoard = communityBoardRepository.findById(communityBoardSeq)
 			.orElseThrow(() -> new IllegalArgumentException("Invalid board ID"));
 		communityBoardRepository.delete(communityBoard);
 	}
+
 	@Transactional(readOnly = true)
 	public List<CommunityBoardDto> getAllCommunityBoards() {
 		return communityBoardRepository.findAll().stream()
@@ -52,4 +62,5 @@ public class CommunityBoardService {
 			.orElseThrow(() -> new IllegalArgumentException("Invalid board ID"));
 		return CommunityBoardDto.toDto(communityBoard);
 	}
+
 }

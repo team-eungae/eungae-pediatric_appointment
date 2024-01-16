@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.playdata.eungae.article.domain.CommunityBoard;
-import com.playdata.eungae.member.domain.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
