@@ -48,12 +48,12 @@ var yCoordinate = document.getElementById("hospital_y").getAttribute("value");
 var container = document.getElementById('map');
 var options = {
     // center: new kakao.maps.LatLng(33.450701, 126.570667),
-    center: new kakao.maps.LatLng(xCoordinate, yCoordinate),
+    center: new kakao.maps.LatLng(yCoordinate, xCoordinate),
     level: 3
 };
 var map = new kakao.maps.Map(container, options);
 
-var markerPosition  = new kakao.maps.LatLng(xCoordinate, yCoordinate);
+var markerPosition  = new kakao.maps.LatLng(yCoordinate, xCoordinate);
 
 var basicImageSize = new kakao.maps.Size(30, 42);
 // 마커 이미지를 생성합니다

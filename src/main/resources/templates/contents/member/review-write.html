@@ -6,20 +6,20 @@
     <link rel="stylesheet" href="/css/review-write.css">
     <title>리뷰 작성 - 응애 | 소아과 예약</title>
 </th:block>
-<main  layout:fragment="content">
+<main layout:fragment="content">
     <div class="review-write-header">
         리뷰 작성하기
         <hr/>
     </div>
     <div class="review-write-body">
-        <form th:action="@{/review/post}" method="post" th:object="${requestReviewFormDto}" enctype="multipart/form-data">
-            <input type="hidden" name="appointmentSeq" th:value="${appointmentSeq}" class="write-button">
+        <form th:action="@{/review/post}" method="post" th:object="${requestReviewFormDto}">
+            <input type="hidden" name="appointmentSeq" th:value="${appointmentSeq}">
             <input type="submit" class="write-button">
-            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요">
-            <textarea id ="content" name="content" placeholder="내용을 입력해주세요"></textarea>
+            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요" required>
+            <textarea id="content" name="content" placeholder="내용을 입력해주세요" required></textarea>
             <hr/>
             <div class="star-rating space-x-4">
-                <input type="radio" id="5-stars" name="starRating" value="5"/>
+                <input type="radio" id="5-stars" name="starRating" value="5" checked/>
                 <label for="5-stars" class="star pr-4">★</label>
                 <input type="radio" id="4-stars" name="starRating" value="4"/>
                 <label for="4-stars" class="star">★</label>

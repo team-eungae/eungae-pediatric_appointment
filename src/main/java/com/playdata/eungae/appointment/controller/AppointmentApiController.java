@@ -8,6 +8,10 @@ import com.playdata.eungae.appointment.dto.VisitedChangeStatusDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
 import com.playdata.eungae.appointment.dto.RequestAppointmentDeleteDto;
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
@@ -22,6 +26,17 @@ import lombok.extern.slf4j.Slf4j;
 public class AppointmentApiController {
 
 	private final AppointmentService appointmentService;
+
+	@PostMapping("/{hospitalSeq}/appointments")
+	@ResponseStatus(HttpStatus.CREATED)
+	public String saveAppointment(
+		@RequestBody AppointmentRequestDto appointmentRequestDto,
+		@AuthenticationPrincipal UserDetails member
+	) {
+		String email = member.getUsername();
+		appointmentService.saveAppointment(appointmentRequestDto, email);
+		return "success";
+	}
 
 	@GetMapping("/appointment/time")
 	@ResponseStatus(HttpStatus.OK)
