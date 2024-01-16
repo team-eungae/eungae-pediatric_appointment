@@ -50,7 +50,7 @@ public class AppointmentViewController {
 		HospitalViewResponseDto hospital = hospitalService.findHospitalById(hospitalSeq);
 
 		String email = member.getUsername();
-		List<Children> myChildren = appointmentService.getMyChildren(email).get();
+		List<Children> myChildren = appointmentService.getMyChildren(email);
 
 		List<DoctorResponseDto> doctors = appointmentService.getDoctors(hospitalSeq);
 
