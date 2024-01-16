@@ -2,8 +2,8 @@ main {
     margin-top: 6rem;
 }
 .hospital-image {
-    width: 7rem;
-    height: 7rem;
+    width: 6.5rem;
+    height: 6.5rem;
     margin-right: 5%;
 }
 .hospital-info {
@@ -12,6 +12,7 @@ main {
 }
 .hospital-name {
     font-weight: bold;
+    font-size: 20px;
     color: #333; !important;
 }
 .regular-hospital-title {
