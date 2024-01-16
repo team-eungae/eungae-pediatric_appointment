@@ -83,6 +83,40 @@ $('input[name=doctorSeq], input[name=childrenSeq], input[name=appointmentDate]')
     }
 });
 
+const summitBtn = () => {
+    let childrenSeq = $('input[name=childrenSeq]:checked').val();
+    let doctorSeq = $('input[name=doctorSeq]:checked').val();
+    let appointmentHHMM = $('input[name=appointmentHHMM]:checked').val();
+    let note = $('textarea[name=note]').val();
+    let value = document.getElementById('date').value;
+
+    if (childrenSeq && doctorSeq && appointmentHHMM && note && value) {
+        $.ajax({
+            type: 'POST',
+            url: `/api/${hospitalSeq}/appointments`,
+            contentType: 'application/json;charset=UTF-8',
+            data: JSON.stringify({
+                appointmentDate: value,
+                appointmentHHMM: appointmentHHMM,
+                hospitalSeq: hospitalSeq,
+                childrenSeq: childrenSeq,
+                doctorSeq: doctorSeq,
+                note: note
+            }),
+            success: function (data) {
+                alert("예약이 완료되었습니다.")
+                window.location.href = `/hospital/${hospitalSeq}`;
+            }, error: function (e) {
+                console.log(e)
+                alert("경고");
+            }
+        })
+    } else {
+        alert("입력하신 정보를 다시한번 확인해주십시오.")
+    }
+
+}
+
 $('input[name=date]').change(function (e) {
     let timeList = $('#time-list');
     timeList.empty();
