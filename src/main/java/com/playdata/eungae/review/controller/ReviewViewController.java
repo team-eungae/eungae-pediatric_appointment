@@ -25,7 +25,7 @@ public class ReviewViewController {
 	private final AppointmentService appointmentService;
 
 	@GetMapping("/post")
-	public String reviewWrite(
+	public String writeReview(
 		Model model,
 		@RequestParam Long appointmentSeq
 	) {
