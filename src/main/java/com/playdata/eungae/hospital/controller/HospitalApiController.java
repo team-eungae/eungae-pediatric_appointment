@@ -73,7 +73,7 @@ public class HospitalApiController {
 
 	@GetMapping("/search")
 	@ResponseStatus(HttpStatus.OK)
-	public List<HospitalSearchResponseDto> getAllByKeyword(
+	public List<HospitalSearchResponseDto> getAllHospitalSearchResponseDtoByKeyword(
 		@RequestParam
 		@NotBlank(message = "Keyword can not contain blank")
 		@Size(min = 2, message = "Keyword can not be less than two letters") String keyword) {
