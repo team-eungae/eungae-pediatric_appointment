@@ -10,15 +10,12 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import com.playdata.eungae.appointment.dto.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.appointment.domain.AppointmentStatus;
-import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
-import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
-import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
-import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.doctor.dto.DoctorResponseDto;
@@ -123,6 +120,7 @@ public class AppointmentService {
 			pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt")
 		);
 */
+    
 		List<Appointment> appointments = appointmentRepository.findAllByMemberEmail(memberEmail);
 
 		// 유효한 예약과 취소된 예약을 조회
@@ -130,7 +128,6 @@ public class AppointmentService {
 			.map(ResponseAppointmentDto::toDto)
 			.filter((responseAppointmentDto) -> responseAppointmentDto.getStatus() != AppointmentStatus.DIAGNOSIS)
 			.collect(Collectors.toList());
-
 	}
 
 	// 병원 운영 시간
@@ -288,5 +285,17 @@ public class AppointmentService {
 
 	private int getAppointmentCount(Long hospitalSeq, LocalDate localDate, String time, Long doctorSeq) {
 		return appointmentRepository.findAllWithHospital(hospitalSeq, localDate, time, doctorSeq).size();
-	}
+	}    
+
+    @Transactional
+    public VisitedChangeStatusDto changeAppointmentStatus(Long appointmentSeq) {
+
+        Appointment appointment = appointmentRepository.findById(appointmentSeq)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Cannot find Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+
+         appointment.setStatus(AppointmentStatus.DIAGNOSIS);
+
+         return VisitedChangeStatusDto.toDto(appointment);
+    }
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <header th:fragment="hospital-navbar"
+            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                <img class="hospital-logo" src="/img/logo4.png" alt="EUNGAE LOGO">
+            </a>
+        </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li class="nav-item"><a href="#" class="nav-link px-2">병원 정보 수정</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2">Features</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2">Pricing</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2">FAQs</a></li>
+            <li class="nav-item"><a href="#" class="nav-link px-2">About</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end">
+            <button type="button" class="btn btn-outline-dark me-2">로그아웃</button>
+        </div>
+    </header>
+</body>
+</html>

@@ -12,12 +12,13 @@ import lombok.Data;
 @Builder
 public class ResponseFavoritesHospitalDto {
 
-	// 병원 대표사진 가져와야함
 	private Long hospitalSeq;
 	private String hospitalName;
 	private String hospitalAddress;
 	private String averageRating;
 	private Long totalReview;
+	private int starCount;
+	private String hospitalThumbnail;
 
 	public static ResponseFavoritesHospitalDto toDto(FavoritesHospital favoritesHospital) {
 
@@ -36,6 +37,9 @@ public class ResponseFavoritesHospitalDto {
 			.hospitalAddress(favoritesHospital.getHospital().getAddress())
 			.averageRating(formattedAverageRating)
 			.totalReview((long)reviews.size())
+			.starCount(Integer.parseInt(formattedAverageRating.substring(0, 1)))
+			.hospitalThumbnail(favoritesHospital.getHospital().getHospitalImageList().isEmpty() ?
+				null : favoritesHospital.getHospital().getHospitalImageList().get(0).getStoreFileName())
 			.build();
 	}
 

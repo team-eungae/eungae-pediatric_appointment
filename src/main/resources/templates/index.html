@@ -22,8 +22,32 @@
             <p class="main-button__text"><a th:href="@{/my/appointments}">내 예약 확인하기</a></p>
         </button>
         <button class="main-button" onclick="location.href='/map'">
+            <i class="fa-solid fa-star fa-lg main-star"></i>
+            <p class="main-button__text"><a th:href="@{/my/hospitals}">단골병원</a></p>
+        </button>
+        <button class="main-button map" onclick="location.href='/map'">
             <i class="fa-solid fa-map-location-dot"></i>
             <p class="main-button__text"><a th:href="@{/map}">주변 병원 찾기</a></p>
+        </button>
+        <button class="main-button" onclick="location.href='/my/appointments'">
+            <i class="fa-solid fa-stethoscope fa-lg"></i>
+            <p class="main-button__text"><a th:href="@{/my/records}">진료내역</a></p>
+        </button>
+        <div class="btn-container">
+            <button class="main-button commu" onclick="location.href='/my/appointments'">
+                <p class="main-button__text"><a th:href="@{/articles}">커뮤니티 <i
+                        class="fa-solid fa-chevron-right"></i></a></p>
+            </button>
+            <button class="main-button noti" onclick="location.href='/map'">
+                <p class="main-button__text"><a th:href="@{/notice}">공지사항 <i
+                        class="fa-solid fa-chevron-right"></i></a></p>
+            </button>
+        </div>
+        <button class="main-button main-banner">
+            <p class="banner-text">
+                급하게 소아과 예약이 필요할 땐 ?<br/>
+                <strong>응애</strong>
+            </p>
         </button>
     </div>
 </main>

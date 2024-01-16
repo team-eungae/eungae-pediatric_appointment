@@ -15,12 +15,17 @@
     <div th:unless="${#lists.size(favoritesHospitalDtos) == 0} ">
         <div th:each="favoritesHospitalDto : ${favoritesHospitalDtos}">
             <div class="hospital-info" >
-                <img class="hospital-image" src="/img/hospital.jpeg" />
+                <img th:if="${favoritesHospitalDto.hospitalThumbnail eq null}" class="hospital-image" th:src="@{/img/logo1-2.png}" />
+                <img th:unless="${favoritesHospitalDto.hospitalThumbnail eq null}"  class="hospital-image" th:src="@{/images/}+${favoritesHospitalDto.hospitalThumbnail}" />
                 <div>
                     <a th:href="@{|/hospital/${favoritesHospitalDto.hospitalSeq}|}" th:text="${favoritesHospitalDto.hospitalName}" class="hospital-name">아이원병원</a>
-                    <p class="location">480m • 광명 소하동</p>
-                    <p class="closed">진료 중 • 22:00에 진료 종료</p>
-                    <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+                    <p class="location" th:text="${favoritesHospitalDto.hospitalAddress}">광명 소하동</p>
+                    <br/>
+                    <span class="review" th:text="${favoritesHospitalDto.averageRating}">5.0</span>
+                        <i th:each="num : ${#numbers.sequence(1, favoritesHospitalDto.starCount)}" class="fa-solid fa-star"  style="color: #ffd500;"></i>
+                        <i th:if="${favoritesHospitalDto.starCount != 5}"
+                           th:each="num : ${#numbers.sequence(1,5- favoritesHospitalDto.starCount)}" class="fa-regular fa-star" style="color: #ffd500;"></i>
+                    (<span th:text="${favoritesHospitalDto.totalReview}"></span>)
                 </div>
             </div>
             <hr />
