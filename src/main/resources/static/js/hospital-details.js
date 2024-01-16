@@ -101,11 +101,8 @@ $(document).ready(function () {
         url: '/api/my/hospital?hospitalSeq=' + hospitalSeq,
         contentType: 'application/json',
         success: function (data) {
-            liked = data;
-            liked ?
-                $("#likeButton").html('<i class="fa-solid fa-star"></i>')
-                :
-                $("#likeButton").html('<i class="fa-regular fa-star"></i>');
+            let likeButtonClassName = data ? "fa-solid" :  "fa-regular";
+            $("#likeButton").html(`<i class="${likeButtonClassName} fa-star"></i>`);
         }
     })
 
