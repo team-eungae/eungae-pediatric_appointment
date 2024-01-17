@@ -63,6 +63,8 @@ if (navigator.geolocation){
             "latitude": latitude
         },success:function(hospitalList){
             console.log(hospitalList);
+            var moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude,hospitalList[0].longitude);
+            map.setCenter(moveLatLon);
             hospitalList.forEach((hospital,index)=>{
                 position = {
                     title:hospital.name,
@@ -149,7 +151,7 @@ searchForm.addEventListener("submit",onSearch);
 let mapContainer = document.getElementById('map'), // 지도를 표시할 div
     mapOption = {
         center: new kakao.maps.LatLng(latitude, longitude), // 지도의 중심좌표
-        level: 6 // 지도의 확대 레벨
+        level: 5 // 지도의 확대 레벨
     };
 
 // 지도를 생성합니다
@@ -188,6 +190,9 @@ function addMarker(position, markerImage) {
     marker.setMap(map);
     // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
     kakao.maps.event.addListener(marker, 'click', function() {
+        overlays.forEach((overlay) => {
+            overlay.setMap(null);
+        })
         content = '<div id="wrap" class="wrap">' +
             '    <div class="info">' +
             '        <div class="title">' +
@@ -214,10 +219,6 @@ function addMarker(position, markerImage) {
             map: map,
             position: marker.getPosition()
         });
-        // 이전에 표시된 오버레이를 삭제합니다
-        overlays.forEach((overlay) => {
-            overlay.setMap(null);
-        })
 
         overlay.setMap(map);
         overlays.push(overlay);

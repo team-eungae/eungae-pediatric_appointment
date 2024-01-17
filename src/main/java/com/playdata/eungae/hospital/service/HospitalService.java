@@ -1,5 +1,6 @@
 package com.playdata.eungae.hospital.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -48,6 +49,10 @@ public class HospitalService {
 				hospital ->
 					calculateDistance(latitude, longitude, hospital.getYCoordinate(), hospital.getXCoordinate())
 						< MAX_DISTANCE_KM)
+			.sorted(
+				Comparator.comparing(
+					hospital ->
+						calculateDistance(latitude, longitude, hospital.getYCoordinate(), hospital.getXCoordinate())))
 			.map(HospitalSearchResponseDto::toDto).toList();
 		if (nearbyHospitalList.isEmpty()) {
 			throw new NoSuchElementException("There's no hospital nearby");
