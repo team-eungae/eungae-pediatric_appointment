@@ -20,7 +20,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
-#      ddl-auto: none
+    #      ddl-auto: none
     defer-datasource-initialization: true
     properties:
       hibernate:
@@ -43,7 +43,7 @@ logging:
         type:
           descriptor:
             sql: trace
-            
+
 file:
   upload:
     path: ${IMAGES}
@@ -51,4 +51,4 @@ file:
 api:
   open-data:
     key: TNyXX5JCECUkYJvAg8BoOgdg80rqWkkhwO%2FYsR5kzKI4QxvVcKZVCgN7oiRPSU2LRuL8ldb%2B5mmtnBhStGnXYg%3D%3D
-    url: http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlMdcncFullDown
+    url: http://apis.data.go.kr/B552657/HsptlAsembySearchService/getHsptlBassInfoInqire
