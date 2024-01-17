@@ -45,13 +45,4 @@ public class HospitalViewController {
 	}
 
 
-	@GetMapping("/main")
-	public String hospitalMain(){
-		return "hospital-contents/hospital-admin";
-	}
-
-	@GetMapping("/doctor/form")
-	public String hospitalDoctorForm(){
-		return "hospital-contents/hospital-admin-doctor-form";
-	}
 }
