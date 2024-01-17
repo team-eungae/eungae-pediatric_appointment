@@ -251,11 +251,12 @@ public class AppointmentService {
 	}
 
 	// DB에 있는 운영시간을 String -> LocalTime 변환
-	private LocalTime convertStringToLocalTime(String HHMM) {
+	private LocalTime convertStringToLocalTime(String hourMinute) {
+		// hourMinute는 HHMM의 형식입니다. 10시 30분이라면 1030
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmm");
 
-		return LocalTime.parse(HHMM, formatter);
+		return LocalTime.parse(hourMinute, formatter);
 	}
 
 	// DB에 있는 운영시간을 String -> LocalTime 변환
