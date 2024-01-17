@@ -60,14 +60,17 @@ public class HospitalService {
 		return nearbyHospitalList;
 	}
 
+	@Transactional(readOnly = true)
 	public List<HospitalSearchResponseDto> findAllByKeyword(String keyword) {
 		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keyword);
+		List<HospitalSearchResponseDto> hospitalSearchResponseDtos = hospitalsByKeyword.stream()
+			.sorted(Comparator.comparing(hospital -> hospital.getReviews().size()))
+			.map(HospitalSearchResponseDto::toDto)
+			.toList();
 		if (hospitalsByKeyword.isEmpty()) {
 			throw new IllegalArgumentException("Unable to find hospital with keyword{%s}".formatted(keyword));
 		}
-		return hospitalsByKeyword.stream()
-			.map(HospitalSearchResponseDto::toDto)
-			.toList();
+		return hospitalSearchResponseDtos;
 	}
 
 	private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {

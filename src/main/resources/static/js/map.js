@@ -128,6 +128,8 @@ const onSearch = (event) => {
             overlays.length=0;
             index=0;
             console.log(hospitalList);
+            var moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude,hospitalList[0].longitude);
+            map.setCenter(moveLatLon);
             hospitalList.forEach((hospital,index) => {
                 position = {
                     title:hospital.name,
