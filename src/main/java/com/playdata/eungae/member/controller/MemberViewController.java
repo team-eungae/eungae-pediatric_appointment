@@ -148,7 +148,7 @@ public class MemberViewController {
         return "redirect:/my/children/list";
     }
 
-    @DeleteMapping("/children/{id}")
+    @PostMapping("/children/{id}")
     public String deleteChild(@PathVariable Long id) {
         childrenService.deleteChild(id);
         
