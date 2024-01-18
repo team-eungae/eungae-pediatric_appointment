@@ -1,0 +1,123 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;200;300;400;500;600;700;800;900&display=swap');
+main {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+}
+
+.hospital-update-title {
+    text-align: center;
+    padding: 0 1.5rem;
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 1.8rem;
+    vertical-align: middle;
+}
+
+.hospital-update {
+    margin-bottom: 2rem;
+}
+
+.hospital-update-content {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hospital-profile-image {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column-reverse;
+}
+
+.hospital-update-sub__title {
+    font-size: 1.1rem;
+    text-align: center;
+    box-sizing: border-box;
+    display: inline-block;
+    color: #333;
+    vertical-align: middle;
+}
+
+.hospital-update__input > input {
+    border: solid 1px #ccc;
+    width: 80%;
+    border-radius: 6px;
+    display: inline-block;
+    height: 3rem;
+    padding-left: 0.5rem;
+}
+
+.find-btn {
+    width: 90%;
+    border-radius: 6px;
+    display: inline-block;
+    height: 3rem;
+}
+
+.save {
+    background: #326eb3;
+    color: white;
+    border: none;
+    width: 120px;
+    font-size: 18px;
+    padding: 0.5rem;
+    border-radius: 11px;
+    display: inline-block;
+}
+
+#wrap {
+    display: none;
+    border: 1px solid;
+    width: 57.5%;
+    height: 300px;
+    margin-left: 26.5%;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+#zip-code-find__button {
+    width: 30%;
+    align-items: center;
+    display: inline-block;
+}
+
+.insert {
+    padding: 20px 30px;
+    display: block;
+    width: 80%;
+    height: 40vh;
+    border: 1px solid #ccc;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    border-radius: 6px;
+}
+.insert .file-list {
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #b0b0b0;
+    padding: 10px;
+    border-radius: 6px;
+    margin: 10px 0;
+}
+.insert .file-list .filebox p {
+    font-size: 14px;
+    margin-top: 10px;
+    display: inline-block;
+}
+.insert .file-list .filebox .delete i {
+    color: #0d0f36;
+    margin-left: 5px;
+}
+
+.insert .file-list .filebox img {
+    width: 130px;
+    height: 75px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    padding: 5px;
+    border: 2px solid #b0b0b0;
+}

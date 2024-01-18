@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+<th:block layout:fragment="custom_header">
+    <link rel="stylesheet" href="/css/community-write.css">
+    <title>글 수정하기 - 응애 | 소아과 예약</title>
+</th:block>
+<main layout:fragment="content">
+    <div class="post-write-header">
+        수정하기
+        <hr/>
+    </div>
+    <div class="post-write-body">
+        <form th:action="@{/articles/update/{communityBoardSeq}(communityBoardSeq=${post.communityBoardSeq})}"
+              method="post" enctype="multipart/form-data">
+            <input type="submit" class="write-button">
+            <input type="text" id="title" name="title" th:value="${post.title}"/>
+            <textarea id="content" name="content" th:text="${post.content}"></textarea>
+            <input type="hidden" name="communityBoardSeq" th:value="${post.communityBoardSeq}" />
+            <hr/>
+<!--            <label for="post-image"><i class="far fa-image"></i> 이미지 추가</label>-->
+<!--            <input type="file" id="post-image" name="image" multiple>-->
+<!--            <p>-->
+<!--                <span id="filename"></span>-->
+<!--            </p>-->
+        </form>
+    </div>
+</main>
+</html>

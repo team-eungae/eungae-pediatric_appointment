@@ -1,4 +1,3 @@
-
 //현재 날짜의 해당하는 요일의 정보를 처음에 보여주기
 var todayTime = document.getElementById("today-time");
 var todayDayOfWeek = document.getElementById("today-day");
@@ -8,8 +7,8 @@ todayDayOfWeek.innerHTML = getKoreanDayOfWeek();
 function getTodayDutyHour() {
     const sysdate = new Date();
     var dayOfWeek = sysdate.getDay();  //일월~토 0~6
-    console.log("dutyTime"+dayOfWeek);
-    return document.getElementById("dutyTime"+dayOfWeek).innerHTML;
+    console.log("dutyTime" + dayOfWeek);
+    return document.getElementById("dutyTime" + dayOfWeek).innerHTML;
 }
 
 function getKoreanDayOfWeek() {
@@ -40,6 +39,7 @@ function showClinic() {
     const row = document.getElementById('schedule');
     row.style.display = '';
 }
+
 var imageSrc = "/img/eungaemarker.png";
 
 var xCoordinate = document.getElementById("hospital_x").getAttribute("value");
@@ -53,7 +53,7 @@ var options = {
 };
 var map = new kakao.maps.Map(container, options);
 
-var markerPosition  = new kakao.maps.LatLng(yCoordinate, xCoordinate);
+var markerPosition = new kakao.maps.LatLng(yCoordinate, xCoordinate);
 
 var basicImageSize = new kakao.maps.Size(30, 42);
 // 마커 이미지를 생성합니다
@@ -64,6 +64,8 @@ var marker = new kakao.maps.Marker({
     position: markerPosition,
     image: mainImageSrc
 });
+
+let liked;
 
 // 마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);
@@ -94,37 +96,38 @@ $(document).ready(function () {
 // 찜하기 버튼의 클릭 이벤트 처리
 $(document).ready(function () {
     const hospitalSeq = $("#hospitalSeq").val()
-    let liked = true;
 
     $.ajax({
         type: 'GET',
         url: '/api/my/hospital?hospitalSeq=' + hospitalSeq,
         contentType: 'application/json',
         success: function (data) {
-            let likeButtonClassName = data ? "fa-solid" :  "fa-regular";
+            liked = data;
+            let likeButtonClassName = data ? "fa-solid" : "fa-regular";
             $("#likeButton").html(`<i class="${likeButtonClassName} fa-star"></i>`);
         }
     })
+});
 
-  $("#likeButton").click(function () {
+$("#likeButton").click(function () {
+    const hospitalSeq = $("#hospitalSeq").val()
 
-      $.ajax({
-          type: 'PATCH',
-          url: '/api/my/hospital?hospitalSeq=' + hospitalSeq,
-          contentType: 'application/json',
-          success: function (data) {
-              liked = !liked; // 상태 토글 (찜하기 누를 때마다 상태 변경)
-              if (liked) {
-                  // 찜하기 상태일 때 아이콘과 텍스트 변경
-                  $("#likeButton").html('<i class="fa-solid fa-star"></i>');
-              } else {
-                  // 찜하기 해제 상태일 때 아이콘과 텍스트 변경
-                  $("#likeButton").html('<i class="fa-regular fa-star"></i>');
-              }
-          },
-          error: function () {
-              alert("즐겨찾기 추가에 실패했습니다.");
-          }
-      })
-  });
+    $.ajax({
+        type: 'PATCH',
+        url: '/api/my/hospital?hospitalSeq=' + hospitalSeq,
+        contentType: 'application/json',
+        success: function (data) {
+            liked = !liked; // 상태 토글 (찜하기 누를 때마다 상태 변경)
+            if (liked) {
+                // 찜하기 상태일 때 아이콘과 텍스트 변경
+                $("#likeButton").html('<i class="fa-solid fa-star"></i>');
+            } else {
+                // 찜하기 해제 상태일 때 아이콘과 텍스트 변경
+                $("#likeButton").html('<i class="fa-regular fa-star"></i>');
+            }
+        },
+        error: function () {
+            alert("즐겨찾기 추가에 실패했습니다.");
+        }
+    })
 });

@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class MemberService implements UserDetailsService {
+public class MemberService{
 
     private final MemberRepository memberRepository;
     private final HospitalRepository hospitalRepository;
@@ -96,22 +96,6 @@ public class MemberService implements UserDetailsService {
     public Member savedMember(Member member) {
         validateDuplicateMemberEmail(member);
         return memberRepository.save(member);
-    }
-
-
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        Optional<Member> member = memberRepository.findByEmail(email);
-
-        if (member.isEmpty()) {
-            throw new UsernameNotFoundException(email);
-        }
-
-        return User.builder()
-                .username(member.get().getEmail())
-                .password(member.get().getPassword())
-                .build();
     }
 
     private MemberAndHospitalEntity getMemberAndHospital(String memberEmail, Long hospitalSeq) {

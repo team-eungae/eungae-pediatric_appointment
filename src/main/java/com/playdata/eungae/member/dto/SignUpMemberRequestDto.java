@@ -45,11 +45,20 @@ public class SignUpMemberRequestDto {
 			.email(signUpMemberRequestDto.getEmail())
 			.password(password)
 			.name(signUpMemberRequestDto.getName())
-			.phoneNumber(signUpMemberRequestDto.getPhoneNumber())
-			.birthDate(signUpMemberRequestDto.getBirthDate())
+			.phoneNumber(formattedPhoneNumber(signUpMemberRequestDto.getPhoneNumber()))
+			.birthDate(formattedBirthDate(signUpMemberRequestDto.getBirthDate()))
 			.address(signUpMemberRequestDto.getAddress())
 			.addressDetail(signUpMemberRequestDto.getAddressDetail())
 			.zipCode(signUpMemberRequestDto.getZipCode())
 			.build();
 	}
+
+	private static String formattedPhoneNumber(String phoneNumber) {
+		return phoneNumber.substring(0, 3) + "-" + phoneNumber.substring(3, 7) + "-" + phoneNumber.substring(7);
+	}
+
+	private static String formattedBirthDate(String birthDate) {
+		return birthDate.substring(0, 4) + "-" + birthDate.substring(4, 6) + "-" + birthDate.substring(6);
+	}
+
 }

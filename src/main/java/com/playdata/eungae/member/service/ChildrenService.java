@@ -39,7 +39,7 @@ public class ChildrenService {
 		childrenRepository.save(children);
 
 		// 전체 자녀 목록 반환
-		return getAllChildren();
+		return getAllChildrenByMemberSeq(member.getMemberSeq());
 	}
 
 	private File convertToFile(MultipartFile multipartFile) throws IOException {
@@ -65,13 +65,12 @@ public class ChildrenService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<ChildrenDto> getAllChildren() {
-		return childrenRepository.findAll().stream()
-			.map(children -> {
-				ChildrenDto dto = ChildrenDto.toDto(children);
-				dto.setBirthDate(formatDate(dto.getBirthDate()));
-				return dto;
-			})
+	public List<ChildrenDto> getAllChildrenByMemberSeq(long memberSeq) {
+		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
+			.orElseThrow(() -> new IllegalStateException("자녀 정보를 찾을 수 없습니다."))
+			.stream()
+			.map(ChildrenDto::toDto)
 			.collect(Collectors.toList());
 	}
+
 }

@@ -43,15 +43,4 @@ public class HospitalViewController {
 		model.addAttribute("hospitalImages", hospitalImages);
 		return "contents/hospital/hospital-details";
 	}
-
-
-	@GetMapping("/main")
-	public String hospitalMain(){
-		return "hospital-contents/hospital-admin";
-	}
-
-	@GetMapping("/doctor/form")
-	public String hospitalDoctorForm(){
-		return "hospital-contents/hospital-admin-doctor-form";
-	}
 }
