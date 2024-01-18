@@ -1,10 +1,13 @@
 function toggleDeleteButton(element) {
     var deleteForm = element.nextElementSibling;
-    if (deleteForm.style.display === "none") {
-        deleteForm.style.display = "block";
-    } else {
-        deleteForm.style.display = "none";
-    }
+    var editForm = deleteForm.nextElementSibling;
+    deleteForm.style.display = deleteForm.style.display === 'none' ? 'block' : 'none';
+    editForm.style.display = editForm.style.display === 'none' ? 'block' : 'none';
+    // if (deleteForm.style.display === "none") {
+    //     deleteForm.style.display = "block";
+    // } else {
+    //     deleteForm.style.display = "none";
+    // }
 }
 
 // AJAX를 통한 게시글 삭제 함수
