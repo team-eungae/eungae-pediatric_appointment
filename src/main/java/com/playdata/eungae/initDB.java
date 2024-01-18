@@ -134,7 +134,7 @@ public class initDB {
 
 	private static Hospital getHospital() {
 		return Hospital.builder()
-			.hospitalId("test2")
+			.hospitalId("test1")
 			.password(encoder.encode("aA12345!"))
 			.name("새움소아과")
 			.notice("15세 이상 오지 마세요.")
