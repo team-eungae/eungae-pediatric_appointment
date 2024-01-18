@@ -18,6 +18,7 @@
                 <li class="post-writer-items post-writter-nickname" th:text="'작성자 - ' + ${post.memberSeq}">작성자</li>
                 <li class="post-writer-items"> | </li>
                 <li class="post-writer-items post-written-date" th:text="'작성일 - ' + ${post.getFormattedDate()}">작성일</li>
+                <a th:href="@{/articles/{communityBoardSeq}/form(communityBoardSeq=${post.communityBoardSeq})}" class="btn btn-primary">수정하기</a>
             </ul>
         </div>
         <div class="post-details-title">

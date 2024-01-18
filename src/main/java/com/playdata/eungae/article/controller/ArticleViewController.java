@@ -18,6 +18,7 @@ public class ArticleViewController {
 
 	private final CommunityBoardService communityBoardService;
 
+
 	@Autowired
 	public ArticleViewController(CommunityBoardService communityBoardService) {
 		this.communityBoardService = communityBoardService;
@@ -47,12 +48,19 @@ public class ArticleViewController {
 		return "contents/community/community-post-details";
 	}
 
-	@GetMapping("/articles/{article-seq}/form")
-	public String editArticleForm(@PathVariable("article-seq") Long id, Model model) {
-		model.addAttribute("post", communityBoardService.getCommunityBoardById(id));
-		return "contents/community/community-write";
+	@GetMapping("/articles/{communityBoardSeq}/form")
+	public String editArticleForm(@PathVariable Long communityBoardSeq, Model model) {
+		model.addAttribute("post", communityBoardService.getCommunityBoardById(communityBoardSeq));
+		return "contents/community/community-edit";
 	}
 
+	@PostMapping("/articles/update/{communityBoardSeq}")
+	public String updateArticle(@PathVariable Long communityBoardSeq,
+		@ModelAttribute CommunityBoardDto communityBoardDto,
+		Authentication authentication) {
+		communityBoardService.updateCommunityBoard(communityBoardSeq, communityBoardDto);
+		return "redirect:/articles";
+	}
 	@PostMapping("/articles/delete/{communityBoardSeq}")
 	public String deleteArticle(@PathVariable Long communityBoardSeq) {
 		communityBoardService.deleteCommunityBoard(communityBoardSeq);

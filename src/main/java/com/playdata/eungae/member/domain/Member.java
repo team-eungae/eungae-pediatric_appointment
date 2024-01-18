@@ -57,7 +57,6 @@ public class Member extends BaseEntity implements UserDetails {
     @Column(nullable = false)
     private String address;
 
-    @Column(nullable = false)
     private String addressDetail;
 
     @Column(nullable = false)

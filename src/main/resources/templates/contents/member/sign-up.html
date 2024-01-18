@@ -22,10 +22,10 @@
         <input type="text" th:field="*{name}" placeholder="보호자의 성함을 기입해주세요." required>
 
         <label th:for="phoneNumber">전화번호</label>
-        <input type="text" th:field="*{phoneNumber}" placeholder="숫자만 입력해주세요. ex) 01012345678" required>
+        <input type="tel" pattern="[0-9]{3}[0-9]{4}[0-9]{4}" th:field="*{phoneNumber}" placeholder="숫자만 입력해주세요. ex) 01012345678" required>
 
         <label th:for="birthDate">생년월일</label>
-        <input type="text" th:field="*{birthDate}" placeholder="숫자만 입력해주세요. ex) 19991213" required>
+        <input type="text" pattern="[0-9]{8}" th:field="*{birthDate}" placeholder="숫자만 입력해주세요. ex) 19991213" required>
 
         <label th:for="email">이메일</label>
         <input type="email" th:field="*{email}" placeholder="example@eungae.com" required>

@@ -66,7 +66,8 @@ $('input[name=doctorSeq], input[name=childrenSeq], input[name=appointmentDate]')
                 console.log(timeTable)
                 if (data[1] === true) {
                     alert("해당 날짜에 이미 예약이 존재합니다.")
-                    return
+                    let timeList = $('#time-list');
+                    timeList.empty();
                 } else {
                     let timeList = $('#time-list');
                     timeList.empty();
@@ -75,11 +76,9 @@ $('input[name=doctorSeq], input[name=childrenSeq], input[name=appointmentDate]')
                     }
                 }
             }, error: function () {
-                alert("경고");
+                alert("서버 통신에 실패했습니다.");
             }
         })
-    } else {
-        return
     }
 });
 
@@ -107,8 +106,7 @@ const summitBtn = () => {
                 alert("예약이 완료되었습니다.")
                 window.location.href = `/hospital/${hospitalSeq}`;
             }, error: function (e) {
-                console.log(e)
-                alert("경고");
+                alert("서버 통신에 실패했습니다.");
             }
         })
     } else {

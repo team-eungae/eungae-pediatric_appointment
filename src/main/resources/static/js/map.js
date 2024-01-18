@@ -214,6 +214,10 @@ function addMarker(position, markerImage) {
             map: map,
             position: marker.getPosition()
         });
+        // 이전에 표시된 오버레이를 삭제합니다
+        overlays.forEach((overlay) => {
+            overlay.setMap(null);
+        })
 
         overlay.setMap(map);
         overlays.push(overlay);

@@ -35,7 +35,7 @@ public class AdminService {
 	String url;
 
 	public void savePublicHospitalData() {
-		for (int i = 1; i <= 1; i++) { //원래는 761
+		for (int i = 1; i <= 770; i++) { //원래는 761
 			try {
 				String finalUrl = url + "?serviceKey=" + apiKey + "&pageNo=" + i + "&numOfRows=100";
 
@@ -48,60 +48,62 @@ public class AdminService {
 				NodeList nodeList = doc.getElementsByTagName("item");
 
 				for (int itemIndex = 0; itemIndex < nodeList.getLength(); itemIndex++) {
+
 					Node node = nodeList.item(itemIndex);
 
 					Element element = (Element)node;
 
-					String monOpen = getTagValue("dutyTime1s", element);
-					String monClose = getTagValue("dutyTime1c", element);
-					String tueOpen = getTagValue("dutyTime2s", element);
-					String tueClose = getTagValue("dutyTime2c", element);
-					String wedOpen = getTagValue("dutyTime3s", element);
-					String wedClose = getTagValue("dutyTime3c", element);
-					String thuOpen = getTagValue("dutyTime4s", element);
-					String thuClose = getTagValue("dutyTime4c", element);
-					String friOpen = getTagValue("dutyTime5s", element);
-					String friClose = getTagValue("dutyTime5c", element);
-					String satOpen = getTagValue("dutyTime6s", element);
-					String satClose = getTagValue("dutyTime6c", element);
-					String sunOpen = getTagValue("dutyTime6s", element); // 일요일은 공공데이터에서 제공하지 않음 그래서 토요일 것으로 대체
-					String sunClose = getTagValue("dutyTime6c", element);
+					if (getTagValue("dgidIdName", element).contains("소아")) {
+						String monOpen = getTagValue("dutyTime1s", element);
+						String monClose = getTagValue("dutyTime1c", element);
+						String tueOpen = getTagValue("dutyTime2s", element);
+						String tueClose = getTagValue("dutyTime2c", element);
+						String wedOpen = getTagValue("dutyTime3s", element);
+						String wedClose = getTagValue("dutyTime3c", element);
+						String thuOpen = getTagValue("dutyTime4s", element);
+						String thuClose = getTagValue("dutyTime4c", element);
+						String friOpen = getTagValue("dutyTime5s", element);
+						String friClose = getTagValue("dutyTime5c", element);
+						String satOpen = getTagValue("dutyTime5s", element);
+						String satClose = getTagValue("dutyTime5c", element);
+						String sunOpen = getTagValue("dutyTime2s", element); // 일요일은 공공데이터에서 제공하지 않음 그래서 토요일 것으로 대체
+						String sunClose = getTagValue("dutyTime2c", element);
 
+						HospitalSchedule hospitalSchedule = HospitalSchedule.builder()
+							.lunchHour("1200")
+							.lunchEndHour("1300")
+							.monOpen(monOpen == null ? "0900" : monOpen)
+							.monClose(monClose == null ? "1800" : monClose)
+							.tueOpen(tueOpen == null ? "0900" : tueOpen)
+							.tueClose(tueClose == null ? "1800" : tueClose)
+							.wedOpen(wedOpen == null ? "0900" : wedOpen)
+							.wedClose(wedClose == null ? "1800" : wedClose)
+							.thuOpen(thuOpen == null ? "0900" : thuOpen)
+							.thuClose(thuClose == null ? "1800" : thuClose)
+							.friOpen(friOpen == null ? "0900" : friOpen)
+							.friClose(friClose == null ? "1800" : friClose)
+							.satOpen(satOpen == null ? "0900" : satOpen)
+							.satClose(satClose == null ? "1800" : satClose)
+							.sunOpen(sunOpen == null ? "0900" : sunOpen)
+							.sunClose(sunClose == null ? "1800" : sunClose)
+							.build();
 
-					HospitalSchedule hospitalSchedule = HospitalSchedule.builder()
-						.lunchHour("1200")
-						.lunchEndHour("1300")
-						.monOpen(monOpen == null ? "0900" : monOpen)
-						.monClose(monClose == null ? "1800" : monClose)
-						.tueOpen(tueOpen == null ? "0900" : tueOpen)
-						.tueClose(tueClose == null ? "1800" : tueClose)
-						.wedOpen(wedOpen == null ? "0900" : wedOpen)
-						.wedClose(wedClose == null ? "1800" : wedClose)
-						.thuOpen(thuOpen == null ? "0900" : thuOpen)
-						.thuClose(thuClose == null ? "1800" : thuClose)
-						.friOpen(friOpen == null ? "0900" : friOpen)
-						.friClose(friClose == null ? "1800" : friClose)
-						.satOpen(satOpen == null ? "0900" : satOpen)
-						.satClose(satClose == null ? "1800" : satClose)
-						.sunOpen(sunOpen == null ? "0900" : sunOpen)
-						.sunClose(sunClose == null ? "1800" : sunClose)
-						.build();
+						hospitalScheduleRepository.save(hospitalSchedule);
 
-					hospitalScheduleRepository.save(hospitalSchedule);
+						Hospital hospitalBuilder = Hospital.builder()
+							.hospitalId("test1")
+							.password("1234")
+							.name(getTagValue("dutyName", element))
+							.deposit(1000)
+							.xCoordinate(Double.parseDouble(getTagValue("wgs84Lon", element)))
+							.yCoordinate(Double.parseDouble(getTagValue("wgs84Lat", element)))
+							.address(getTagValue("dutyAddr", element))
+							.contact(getTagValue("dutyTel1", element))
+							.hospitalSchedule(hospitalSchedule)
+							.build();
 
-					Hospital hospitalBuilder = Hospital.builder()
-						.hospitalId("test1")
-						.password("1234")
-						.name(getTagValue("dutyName", element))
-						.deposit(1000)
-						.xCoordinate(Double.parseDouble(getTagValue("wgs84Lon", element)))
-						.yCoordinate(Double.parseDouble(getTagValue("wgs84Lat", element)))
-						.address(getTagValue("dutyAddr", element))
-						.contact(getTagValue("dutyTel1", element))
-						.hospitalSchedule(hospitalSchedule)
-						.build();
-
-					hospitalRepository.save(hospitalBuilder);
+						hospitalRepository.save(hospitalBuilder);
+					}
 				}
 
 			} catch (Exception e) {
