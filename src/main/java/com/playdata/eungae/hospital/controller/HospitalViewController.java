@@ -54,4 +54,9 @@ public class HospitalViewController {
 	public String hospitalDoctorForm(){
 		return "hospital-contents/hospital-admin-doctor-form";
 	}
+
+	@GetMapping("/profile/form")
+	public String hospitalUpdateForm(){
+		return "hospital-contents/hospital-update";
+	}
 }
