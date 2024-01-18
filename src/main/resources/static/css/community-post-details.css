@@ -57,3 +57,7 @@ ul {
     display: inline;
     margin-right: 3vw;
 }
+.btn {
+    float: right;
+    margin: 3px;
+}

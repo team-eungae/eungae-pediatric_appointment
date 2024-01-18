@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mobile_layout}">
 <th:block layout:fragment="custom_header">
+
     <link rel="stylesheet" href="/css/community-post-details.css">
     <title>커뮤니티보드 상세 - 응애 | 소아과 예약</title>
 </th:block>
@@ -18,7 +19,12 @@
                 <li class="post-writer-items post-writter-nickname" th:text="'작성자 - ' + ${post.memberSeq}">작성자</li>
                 <li class="post-writer-items"> | </li>
                 <li class="post-writer-items post-written-date" th:text="'작성일 - ' + ${post.getFormattedDate()}">작성일</li>
-                <a th:href="@{/articles/{communityBoardSeq}/form(communityBoardSeq=${post.communityBoardSeq})}" class="btn btn-primary">수정하기</a>
+                <th:block th:if="${post.isOwner}">
+                    <form th:action="@{/articles/delete/{communityBoardSeq}(communityBoardSeq=${post.communityBoardSeq})}" method="post">
+                        <button type="submit" class="btn btn-outline-danger">삭제하기</button>
+                    </form>
+                    <a th:href="@{/articles/{communityBoardSeq}/form(communityBoardSeq=${post.communityBoardSeq})}" class="btn btn-outline-primary">수정하기</a>
+                </th:block>
             </ul>
         </div>
         <div class="post-details-title">
@@ -38,6 +44,7 @@
         </div>
         <hr/>
     </div>
+    <script src="/js/community-post-details.js"></script>
 </main>
 </body>
 </html>
