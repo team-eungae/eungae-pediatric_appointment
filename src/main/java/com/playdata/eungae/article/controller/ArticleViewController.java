@@ -1,9 +1,9 @@
 package com.playdata.eungae.article.controller;
 
+import java.io.IOException;
+
 import com.playdata.eungae.article.dto.CommunityBoardDto;
 import com.playdata.eungae.article.service.CommunityBoardService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,15 +13,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Controller
 @RequiredArgsConstructor
 public class ArticleViewController {
 
-	private final CommunityBoardService communityBoardService;
+    private final CommunityBoardService communityBoardService;
 
 	@GetMapping("/articles")
 	public String listArticles(
@@ -84,6 +87,7 @@ public class ArticleViewController {
 		communityBoardService.updateCommunityBoard(communityBoardDto.getCommunityBoardSeq(), communityBoardDto, userDetails.getUsername());
 		return "redirect:/articles";
 	}
+  
 	@PostMapping("/articles/delete/{communityBoardSeq}")
 	public String deleteArticle(
 		@PathVariable Long communityBoardSeq,

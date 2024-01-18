@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.doctor.service.DoctorService;
 import com.playdata.eungae.hospital.dto.HospitalImageResponseDto;
+import com.playdata.eungae.hospital.dto.HospitalSearchResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
 import com.playdata.eungae.hospital.service.HospitalImageService;
 import com.playdata.eungae.hospital.service.HospitalService;
@@ -25,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class HospitalViewController {
+  
 	private final HospitalService hospitalService;
 	private final HospitalImageService hospitalImageService;
 	private final DoctorService doctorService;
@@ -42,5 +44,12 @@ public class HospitalViewController {
 		model.addAttribute("reviewList", reviews);
 		model.addAttribute("hospitalImages", hospitalImages);
 		return "contents/hospital/hospital-details";
+	}
+
+	@GetMapping("/map/search")
+	public String searchHospital(String keyword, Model model) {
+		List<HospitalSearchResponseDto> hospitalList = hospitalService.findAllByKeyword(keyword);
+		model.addAttribute("hospitalList", hospitalList);
+		return "contents/hospital/search-hospital";
 	}
 }

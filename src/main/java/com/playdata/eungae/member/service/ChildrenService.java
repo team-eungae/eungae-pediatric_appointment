@@ -27,9 +27,13 @@ public class ChildrenService {
 
 	private final ChildrenRepository childrenRepository;
 	private final MemberRepository memberRepository;
+  
 	@Transactional
-	public List<ChildrenDto> createChildren(ChildrenRequestDto childrenRequestDto, ResultFileStore resultFileStore, String email) throws IOException {
-
+	public List<ChildrenDto> createChildren(
+    ChildrenRequestDto childrenRequestDto,
+    ResultFileStore resultFileStore,
+    String email) throws IOException {
+    
 		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalStateException("해당 이메일의 사용자가 존재하지 않습니다: " + email));
 

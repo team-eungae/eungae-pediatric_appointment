@@ -1,8 +1,9 @@
 package com.playdata.eungae;
 
-import java.io.File;
 import java.time.LocalDate;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +22,9 @@ import com.playdata.eungae.review.domain.Review;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Component
+@Transactional
 @RequiredArgsConstructor
 public class initDB {
 
@@ -129,9 +130,12 @@ public class initDB {
 			.build();
 	}
 
+	static PasswordEncoder encoder = new BCryptPasswordEncoder();
+
 	private static Hospital getHospital() {
 		return Hospital.builder()
-			.password("testpassword")
+			.hospitalId("test1")
+			.password(encoder.encode("aA12345!"))
 			.name("새움소아과")
 			.notice("15세 이상 오지 마세요.")
 			.deposit(1000)
@@ -238,14 +242,14 @@ public class initDB {
 			.build();
 	}
 
-		private static Doctor getDoctor (Hospital hospital){
-			return Doctor.builder()
-				.name("김우진")
-				.hospital(hospital)
-				.treatmentPossible(3)
-				.doctorProfileImage("doctor.jpeg")
-				.build();
-		}
+	private static Doctor getDoctor(Hospital hospital) {
+		return Doctor.builder()
+			.name("김우진")
+			.hospital(hospital)
+			.treatmentPossible(3)
+			.doctorProfileImage("doctor.jpeg")
+			.build();
+	}
 
 	private static HospitalImage getHospitalImage(Hospital hospital) {
 		return HospitalImage.builder()
