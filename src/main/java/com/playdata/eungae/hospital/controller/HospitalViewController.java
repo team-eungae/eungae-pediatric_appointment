@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 public class HospitalViewController {
+  
 	private final HospitalService hospitalService;
 	private final HospitalImageService hospitalImageService;
 	private final DoctorService doctorService;
@@ -43,16 +44,6 @@ public class HospitalViewController {
 		model.addAttribute("reviewList", reviews);
 		model.addAttribute("hospitalImages", hospitalImages);
 		return "contents/hospital/hospital-details";
-	}
-
-	@GetMapping("/main")
-	public String hospitalMain() {
-		return "hospital-contents/hospital-admin";
-	}
-
-	@GetMapping("/doctor/form")
-	public String hospitalDoctorForm() {
-		return "hospital-contents/hospital-admin-doctor-form";
 	}
 
 	@GetMapping("/map/search")

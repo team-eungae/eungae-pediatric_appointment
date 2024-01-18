@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
+
 import org.hibernate.annotations.DynamicInsert;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,99 +34,88 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "member")
 @Entity
-public class Member extends BaseEntity implements UserDetails {
+public class Member extends BaseEntity {
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Id
-    private Long memberSeq;
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Id
+	private Long memberSeq;
 
-    @Column(nullable = false, unique = true, updatable = false)
-    private String email;
+	@Column(nullable = false, unique = true, updatable = false)
+	private String email;
 
-    @Column(nullable = false)
-    private String password;
+	@Column(nullable = false)
+	private String password;
 
-    @Column(nullable = false, length = 20)
-    private String name;
+	@Column(nullable = false, length = 20)
+	private String name;
 
-    @Column(nullable = false, length = 15)
-    private String phoneNumber;
+	@Column(nullable = false, length = 15)
+	private String phoneNumber;
 
-    @Column(nullable = false)
-    private String birthDate;
+	@Column(nullable = false)
+	private String birthDate;
 
-    @Column(nullable = false)
-    private String address;
+	@Column(nullable = false)
+	private String address;
 
-    @Column(nullable = false)
-    private String addressDetail;
+	private String addressDetail;
 
-    @Column(nullable = false)
-    private String zipCode;
+	@Column(nullable = false)
+	private String zipCode;
 
-    private Integer xCoordinate;
+	private Integer xCoordinate;
 
-    private Integer yCoordinate;
+	private Integer yCoordinate;
 
-    @Column(columnDefinition = "varchar(5) default '0'")
-    private boolean kakaoCheck;
-  
-	  @Builder.Default
-	  @OneToMany(mappedBy = "member")
-	  private List<Children> children = new ArrayList<>();
+	@Column(columnDefinition = "varchar(5) default '0'")
+	private boolean kakaoCheck;
 
-	  @Builder.Default
-	  @OneToMany(mappedBy = "member")
-	  private List<Appointment> appointments = new ArrayList<>();
-  
-    @Builder.Default
-    @OneToMany(mappedBy = "member")
-    private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
+	private List<Children> children = new ArrayList<>();
 
-    public void updateMemberDetails(MemberUpdateRequestDto updateRequestDto) {
-        this.name = updateRequestDto.getName();
-        this.phoneNumber = updateRequestDto.getPhoneNumber();
-        this.address = updateRequestDto.getAddress();
-        this.addressDetail = updateRequestDto.getAddressDetail();
-        this.zipCode = updateRequestDto.getZipCode();
-    }
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
+	private List<Appointment> appointments = new ArrayList<>();
+
+	@Builder.Default
+	@OneToMany(mappedBy = "member")
+	private List<FavoritesHospital> favoritesHospitals = new ArrayList<>();
+
+	public void updateMemberDetails(MemberUpdateRequestDto updateRequestDto) {
+		this.name = updateRequestDto.getName();
+		this.phoneNumber = updateRequestDto.getPhoneNumber();
+		this.address = updateRequestDto.getAddress();
+		this.addressDetail = updateRequestDto.getAddressDetail();
+		this.zipCode = updateRequestDto.getZipCode();
+	}
 
 	public void addChildren(Children children) {
 		this.children.add(children);
 	}
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+	// @Override
+	// public Collection<? extends GrantedAuthority> getAuthorities() {
+	//     return null;
+	// }
+	//
+	// @Override
+	// public boolean isAccountNonExpired() {
+	//     return true;
+	// }
+	//
+	// @Override
+	// public boolean isAccountNonLocked() {
+	//     return true;
+	// }
+	//
+	// @Override
+	// public boolean isCredentialsNonExpired() {
+	//     return true;
+	// }
+	//
+	// @Override
+	// public boolean isEnabled() {
+	//     return true;
+	// }
 }

@@ -1,5 +1,6 @@
 package com.playdata.eungae.member.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -7,17 +8,27 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
 import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
+import com.playdata.eungae.file.FileStore;
+import com.playdata.eungae.file.ResultFileStore;
+import com.playdata.eungae.member.domain.Member;
+import com.playdata.eungae.member.dto.ChildrenDto;
+import com.playdata.eungae.member.dto.ChildrenRequestDto;
 import com.playdata.eungae.member.dto.MemberFindResponseDto;
 import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
 import com.playdata.eungae.member.dto.ResponseFavoritesHospitalDto;
+import com.playdata.eungae.member.repository.MemberRepository;
+import com.playdata.eungae.member.service.ChildrenService;
 import com.playdata.eungae.member.service.MemberService;
 import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.service.ReviewService;
@@ -35,6 +46,10 @@ public class MemberViewController {
     private final MemberService memberService;
     private final AppointmentService appointmentService;
     private final ReviewService reviewService;
+    private final ChildrenService childrenService;
+    private final FileStore fileStore;
+    private final MemberRepository memberRepository;
+
 
     @GetMapping("/records")
     public String medicalRecordList(
@@ -51,8 +66,7 @@ public class MemberViewController {
     @GetMapping("/records/{appointmentSeq}")
     public String medicalRecordsDetails(
         Model model,
-        // 유효성 검사 추가
-        @Valid @PathVariable Long appointmentSeq
+        @PathVariable Long appointmentSeq
     ) {
         ResponseDetailMedicalHistoryDto myMedicalRecordDetail = appointmentService.getMyMedicalRecordDetail(appointmentSeq);
         model.addAttribute("myMedicalRecordDetail", myMedicalRecordDetail);
@@ -104,13 +118,40 @@ public class MemberViewController {
         return "contents/member/regular-hospital";
     }
 
-    @GetMapping("/children")
-    public String myChildren() {
+    @GetMapping("/children/list")
+    public String getAllChildren(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        Member member = memberRepository.findByEmail(userDetails.getUsername())
+            .orElseThrow(() -> new IllegalStateException("사용자 정보를 찾을 수 없습니다."));
+        List<ChildrenDto> childrenList = childrenService.getAllChildrenByMemberSeq(member.getMemberSeq());
+        model.addAttribute("childrenList", childrenList);
         return "contents/member/my-children";
     }
 
     @GetMapping("/children/form")
-    public String addMyChildren() {
+    public String addChildrenForm(Model model) {
+        model.addAttribute("childrenDto", new ChildrenDto());
+
         return "contents/member/my-children-add";
+
     }
+
+    @PostMapping("/children/form")
+    public String createChild(ChildrenRequestDto childrenRequestDto,
+        MultipartFile profileImage,
+        @AuthenticationPrincipal UserDetails member) throws IOException {
+        ResultFileStore resultFileStore;
+        resultFileStore = fileStore.storeFile(profileImage);
+        String email = member.getUsername();
+        childrenService.createChildren(childrenRequestDto, resultFileStore, email);
+
+        return "redirect:/my/children/list";
+    }
+
+    @PostMapping("/children/{id}")
+    public String deleteChild(@PathVariable Long id) {
+        childrenService.deleteChild(id);
+        
+        return "redirect:/my/children/list"; // 자녀 목록 페이지로 리디렉션
+    }
+
 }

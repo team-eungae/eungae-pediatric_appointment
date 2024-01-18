@@ -1,9 +1,10 @@
 package com.playdata.eungae.article.controller;
 
+import java.io.IOException;
+
 import com.playdata.eungae.article.dto.CommunityBoardDto;
 import com.playdata.eungae.article.service.CommunityBoardService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,51 +12,64 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Controller
 public class ArticleViewController {
 
-	private final CommunityBoardService communityBoardService;
+    private final CommunityBoardService communityBoardService;
 
-	@Autowired
-	public ArticleViewController(CommunityBoardService communityBoardService) {
-		this.communityBoardService = communityBoardService;
-	}
+    @GetMapping("/articles")
+    public String listArticles(@AuthenticationPrincipal UserDetails userDetails,
+                               Model model) {
+        model.addAttribute("posts", communityBoardService.getAllCommunityBoards(userDetails.getUsername()));
+        return "contents/community/community-list";
+    }
 
-	@GetMapping("/articles")
-	public String listArticles(Model model) {
-		model.addAttribute("posts", communityBoardService.getAllCommunityBoards());
-		return "contents/community/community-list";
-	}
+    @GetMapping("/articles/post")
+    public String showArticleForm(Model model) {
 
-	@GetMapping("/articles/post")
-	public String showArticleForm(Model model) {
+        return "contents/community/community-write";
+    }
 
-		return "contents/community/community-write";
-	}
+    @PostMapping("/articles/post")
+    public String postArticle(@ModelAttribute CommunityBoardDto communityBoardDto,
+                              @AuthenticationPrincipal UserDetails userDetails) {
+        communityBoardService.createCommunityBoard(communityBoardDto, userDetails.getUsername());
+        return "redirect:/articles";
+    }
 
-	@PostMapping("/articles/post")
-	public String postArticle(@ModelAttribute CommunityBoardDto communityBoardDto, Authentication authentication) {
-		String email = ((UserDetails) authentication.getPrincipal()).getUsername();
-		communityBoardService.createCommunityBoard(communityBoardDto, email);
-		return "redirect:/articles";
-	}
-	@GetMapping("/articles/{article-seq}")
-	public String viewArticle(@PathVariable("article-seq") Long id, Model model) {
-		model.addAttribute("post", communityBoardService.getCommunityBoardById(id));
-		return "contents/community/community-post-details";
-	}
+    @GetMapping("/articles/{article-seq}")
+    public String viewArticle(@PathVariable("article-seq") Long id,
+                              @AuthenticationPrincipal UserDetails userDetails,
+                              Model model) {
+        model.addAttribute("post", communityBoardService.getCommunityBoardById(id, userDetails.getUsername()));
+        return "contents/community/community-post-details";
+    }
 
-	@GetMapping("/articles/{article-seq}/form")
-	public String editArticleForm(@PathVariable("article-seq") Long id, Model model) {
-		model.addAttribute("post", communityBoardService.getCommunityBoardById(id));
-		return "contents/community/community-write";
-	}
+    @GetMapping("/articles/{communityBoardSeq}/form")
+    public String editArticleForm(@PathVariable Long communityBoardSeq,
+                                  @AuthenticationPrincipal UserDetails userDetails,
+                                  Model model) {
+        model.addAttribute("post", communityBoardService.getCommunityBoardById(communityBoardSeq, userDetails.getUsername()));
+        return "contents/community/community-edit";
+    }
 
-	@PostMapping("/articles/delete/{communityBoardSeq}")
-	public String deleteArticle(@PathVariable Long communityBoardSeq) {
-		communityBoardService.deleteCommunityBoard(communityBoardSeq);
-		return "redirect:/articles";
-	}
+    @PostMapping("/articles/update/{communityBoardSeq}")
+    public String updateArticle(@PathVariable Long communityBoardSeq,
+                                @ModelAttribute CommunityBoardDto communityBoardDto,
+                                @AuthenticationPrincipal UserDetails userDetails) {
+        communityBoardService.updateCommunityBoard(communityBoardSeq, communityBoardDto, userDetails.getUsername());
+        return "redirect:/articles";
+    }
+
+    @PostMapping("/articles/delete/{communityBoardSeq}")
+    public String deleteArticle(@PathVariable Long communityBoardSeq,
+                                @AuthenticationPrincipal UserDetails userDetails) {
+        communityBoardService.deleteCommunityBoard(communityBoardSeq, userDetails.getUsername());
+        return "redirect:/articles";
+    }
 }

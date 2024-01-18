@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.playdata.eungae.article.domain.CommunityBoard;
-import com.playdata.eungae.member.domain.Member;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,19 +22,21 @@ public class CommunityBoardDto {
 	private String title;
 	private String content;
 	private LocalDateTime createdDate;
-	private String date;
-	private String thumbnailImageUrl;
+	private String memberEmail;
+	private boolean isOwner;
 
-
-	public static CommunityBoardDto toDto(CommunityBoard entity) {
+	public static CommunityBoardDto toDto(CommunityBoard entity, String currentUserEmail) {
 		return CommunityBoardDto.builder()
 			.communityBoardSeq(entity.getCommunityBoardSeq())
-			.memberSeq(entity.getMember().getMemberSeq()) // Member 객체에서 ID 추출
+			.memberSeq(entity.getMember().getMemberSeq())
 			.title(entity.getTitle())
 			.content(entity.getContent())
 			.createdDate(entity.getCreatedAt())
+			.memberEmail(entity.getMember().getEmail())
+			.isOwner(entity.getMember().getEmail().equals(currentUserEmail)) // 소유자 여부 설정
 			.build();
 	}
+
 	public String getFormattedDate() {
 		return this.createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
 	}

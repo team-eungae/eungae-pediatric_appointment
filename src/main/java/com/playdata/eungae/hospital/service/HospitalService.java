@@ -1,5 +1,7 @@
 package com.playdata.eungae.hospital.service;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -10,6 +12,7 @@ import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.dto.HospitalRegisterRequestDto;
 import com.playdata.eungae.hospital.dto.HospitalSearchResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
+import com.playdata.eungae.hospital.dto.KeywordSearchRequestDto;
 import com.playdata.eungae.hospital.repository.HospitalRepository;
 import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
 
@@ -38,6 +41,7 @@ public class HospitalService {
 		return HospitalViewResponseDto.toDto(hospital);
 	}
 
+  @Transactional(readOnly = true)
 	public List<HospitalSearchResponseDto> findAllNearbyHospital(double longitude, double latitude) {
 		List<Hospital> hospitalList = hospitalRepository.findAll();
 		List<HospitalSearchResponseDto> nearbyHospitalList = hospitalList.stream()
@@ -45,6 +49,10 @@ public class HospitalService {
 				hospital ->
 					calculateDistance(latitude, longitude, hospital.getYCoordinate(), hospital.getXCoordinate())
 						< MAX_DISTANCE_KM)
+			.sorted(
+				Comparator.comparing(
+					hospital ->
+						calculateDistance(latitude, longitude, hospital.getYCoordinate(), hospital.getXCoordinate())))
 			.map(HospitalSearchResponseDto::toDto).toList();
 		if (nearbyHospitalList.isEmpty()) {
 			throw new NoSuchElementException("There's no hospital nearby");
@@ -59,6 +67,29 @@ public class HospitalService {
 		return hospitalsByKeyword.stream()
 			.map(HospitalSearchResponseDto::toDto)
 			.toList();
+}
+
+ @Transactional(readOnly = true)
+	public List<HospitalSearchResponseDto> getAllHospitalByKeyword(KeywordSearchRequestDto keywordDto) {
+		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keywordDto.getKeyword());
+		List<HospitalSearchResponseDto> hospitalSearchResults;
+		// 위치정보가 있으면 거리순으로 정렬
+		if (keywordDto.hasLocationInfo()) {
+			hospitalSearchResults = hospitalsByKeyword.stream()
+				.sorted(
+					Comparator.comparing(
+						hospital ->
+							calculateDistance(
+								keywordDto.getLatitude(), keywordDto.getLongitude(),
+								hospital.getYCoordinate(), hospital.getXCoordinate())))
+				.map(HospitalSearchResponseDto::toDto)
+				.toList();
+		} else {
+			hospitalSearchResults = hospitalsByKeyword.stream()
+				.map(HospitalSearchResponseDto::toDto)
+				.toList();
+		}
+		return hospitalSearchResults;
 	}
 
 	private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
