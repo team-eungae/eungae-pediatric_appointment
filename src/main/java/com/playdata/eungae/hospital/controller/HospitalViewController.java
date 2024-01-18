@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.doctor.service.DoctorService;
 import com.playdata.eungae.hospital.dto.HospitalImageResponseDto;
+import com.playdata.eungae.hospital.dto.HospitalSearchResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
 import com.playdata.eungae.hospital.service.HospitalImageService;
 import com.playdata.eungae.hospital.service.HospitalService;
@@ -44,14 +45,20 @@ public class HospitalViewController {
 		return "contents/hospital/hospital-details";
 	}
 
-
 	@GetMapping("/main")
-	public String hospitalMain(){
+	public String hospitalMain() {
 		return "hospital-contents/hospital-admin";
 	}
 
 	@GetMapping("/doctor/form")
-	public String hospitalDoctorForm(){
+	public String hospitalDoctorForm() {
 		return "hospital-contents/hospital-admin-doctor-form";
+	}
+
+	@GetMapping("/map/search")
+	public String searchHospital(String keyword, Model model) {
+		List<HospitalSearchResponseDto> hospitalList = hospitalService.findAllByKeyword(keyword);
+		model.addAttribute("hospitalList", hospitalList);
+		return "contents/hospital/search-hospital";
 	}
 }

@@ -2,10 +2,7 @@ package com.playdata.eungae.hospital.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,11 +52,10 @@ public class HospitalService {
 		return nearbyHospitalList;
 	}
 
+	@Transactional(readOnly = true)
 	public List<HospitalSearchResponseDto> findAllByKeyword(String keyword) {
 		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keyword);
-		if (hospitalsByKeyword.isEmpty()) {
-			throw new IllegalArgumentException("Unable to find hospital with keyword{%s}".formatted(keyword));
-		}
+
 		return hospitalsByKeyword.stream()
 			.map(HospitalSearchResponseDto::toDto)
 			.toList();

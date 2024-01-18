@@ -3,47 +3,48 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mobile_layout}">
 <th:block layout:fragment="custom_header">
-    <link rel="stylesheet" href="/css/search-hospital.css" />
+    <link rel="stylesheet" href="/css/search-hospital.css"/>
     <title>병원 검색 - 응애 | 소아과 예약</title>
 </th:block>
 <body>
 <main layout:fragment="content">
-    <form class="search-form">
+    <form class="search-form" th:action="@{/hospital/map/search}" method="get">
         <div class="search-container">
-            <input type="text" placeholder="찾고 싶은 병원을 검색하세요." class="search-input">
+            <input type="text" placeholder="찾고 싶은 병원을 검색하세요." class="search-input" name="keyword">
             <button type="submit" class="search-button">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
         </div>
     </form>
-    <hr class="hr" />
-    <div class="hospital-info">
-        <img class="hospital-image" src="/img/hospital.jpeg" />
-        <div>
-            <a th:href="@{/hospital}" class="hospital-name">아이원병원</a>
-            <p class="location">480m • 광명 소하동</p>
-            <p class="closed">진료 중 • 22:00에 진료 종료</p>
-            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+    <hr class="hr"/>
+    <div id="search-result">
+        <div class="hospital-list" th:unless="${#lists.size(hospitalList) == 0}">
+            <div th:each="hospital: ${hospitalList}">
+                <div class="hospital-info">
+                    <img th:if="${hospital.hospitalThumbnail eq null}" class="hospital-image"
+                         th:src="@{/img/logo1-2.png}"/>
+                    <img th:unless="${hospital.hospitalThumbnail eq null}" class="hospital-image"
+                         th:src="@{/images/}+${hospital.hospitalThumbnail}"/>
+                    <div>
+                        <a th:href="@{|/hospital/${hospital.hospitalSeq}|}" th:text="${hospital.name}"
+                           class="hospital-name">아이원병원</a>
+                        <p class="location" th:text="${hospital.address}">광명 소하동</p>
+                        <br/>
+                        <span class="review" th:text="${hospital.averageRating}">5.0</span>
+                        <i th:unless="${hospital.totalReview == 0}"
+                           th:each="num : ${#numbers.sequence(1, hospital.starCount)}" class="fa-solid fa-star"
+                           style="color: #ffd500;"></i>
+                        <i th:if="${hospital.starCount != 5}"
+                           th:each="num : ${#numbers.sequence(1,5- hospital.starCount)}" class="fa-regular fa-star"
+                           style="color: #ffd500;"></i>
+                        (<span th:text="${hospital.totalReview}"></span>)
+                    </div>
+                </div>
+                <hr/>
+            </div>
         </div>
-    </div>
-    <hr />
-    <div class="hospital-info">
-        <img class="hospital-image" src="/img/hospital.jpeg" />
-        <div>
-            <a th:href="@{/hospital}" class="hospital-name">아이원병원</a>
-            <p class="location">480m • 광명 소하동</p>
-            <p class="closed">진료 중 • 22:00에 진료 종료</p>
-            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
-        </div>
-    </div>
-    <hr />
-    <div class="hospital-info">
-        <img class="hospital-image" src="/img/hospital.jpeg" />
-        <div>
-            <a  th:href="@{/hospital}" class="hospital-name">아이원병원</a>
-            <p class="location">480m • 광명 소하동</p>
-            <p class="closed">진료 중 • 22:00에 진료 종료</p>
-            <p class="review">5.0 ⭐⭐⭐⭐⭐(13)</p>
+        <div class="hospital-list" th:if="${#lists.size(hospitalList) == 0}">
+            <div style="margin-left: 2rem">병원 검색 결과가 없습니다.</div>
         </div>
     </div>
 </main>
