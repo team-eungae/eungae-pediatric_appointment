@@ -63,7 +63,7 @@ if (navigator.geolocation){
             "latitude": latitude
         },success:function(hospitalList){
             console.log(hospitalList);
-            var moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude,hospitalList[0].longitude);
+            moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude,hospitalList[0].longitude);
             map.setCenter(moveLatLon);
             hospitalList.forEach((hospital,index)=>{
                 position = {
@@ -133,7 +133,7 @@ const onSearch = (event) => {
             overlays.length=0;
             index=0;
             console.log(hospitalList);
-            var moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude,hospitalList[0].longitude);
+            moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude,hospitalList[0].longitude);
             map.setCenter(moveLatLon);
             hospitalList.forEach((hospital,index) => {
                 position = {
