@@ -21,7 +21,7 @@
     <h2 class="children-add-form-text">진료 받을 자녀의 정보를 입력해주세요.</h2>
 
     <div class="children-add-form-container">
-        <form action="/my/children/form" method="post" enctype="multipart/form-data" class="children-add-form">
+        <form th:action="@{/my/children/form}" th:object="${childrenRequestDto}" method="post" enctype="multipart/form-data" class="children-add-form">
             <div class="image-container">
                 <div class="children-add-form__img">
                     <div class="image-preview" onclick="selectImage()">
@@ -33,15 +33,18 @@
             </div>
             <div class=" form-fields">
                 <label for="name">이름</label>
-                <input type="text" id="name" name="name" placeholder="자녀의 이름을 기입해주세요." required>
+                <input id="name" type="text" th:field="*{name}" placeholder="자녀의 이름을 기입해주세요." required>
+                <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
                 <label for="birthday">생년월일</label>
-                <input type="text" id="birthday" name="birthDate" placeholder="숫자만 입력해주세요. ex) 20180302" required>
+                <input id="birthday" type="text" th:field="*{birthDate}" placeholder="숫자만 입력해주세요. ex) 20180302" required>
+                <p th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}" class="fieldError">Incorrect data</p>
                 <label for="gender">성별</label>
-                <select id="gender" name="gender" required>
+                <select id="gender" th:field="*{gender}" required>
                     <option value="">성별을 선택해주세요</option>
                     <option value="Male">남자</option>
                     <option value="Female">여자</option>
                 </select>
+                <p th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="fieldError">Incorrect data</p>
                 <button type="submit" class="children-add-form-container-button">등록하기</button>
                 <button type="button" class="collapsible"><input type="checkbox">자녀 대리 접수 동의</button>
                 <div class="content">

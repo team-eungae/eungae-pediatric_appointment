@@ -23,7 +23,7 @@ public class CommunityBoardService {
 	private final MemberRepository memberRepository;
 
 	@Transactional
-	public Long createCommunityBoard(CommunityBoardDto communityBoardDto, String email) {
+	public void createCommunityBoard(CommunityBoardDto communityBoardDto, String email) {
 		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalStateException("Email does not exist: " + email));
 
@@ -34,7 +34,6 @@ public class CommunityBoardService {
 			.build();
 
 		communityBoardRepository.save(communityBoard);
-		return communityBoard.getCommunityBoardSeq();
 	}
 
 	@Transactional(readOnly = true)
@@ -71,7 +70,7 @@ public class CommunityBoardService {
 
 	@Transactional(readOnly = true)
 	public List<CommunityBoardDto> getAllCommunityBoards(String currentUserEmail) {
-		return communityBoardRepository.findAll().stream()
+		return communityBoardRepository.findAllWithMember().stream()
 			.map(board -> CommunityBoardDto.toDto(board, currentUserEmail))
 			.collect(Collectors.toList());
 	}

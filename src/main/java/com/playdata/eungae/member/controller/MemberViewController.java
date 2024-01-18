@@ -5,10 +5,9 @@ import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -119,7 +118,10 @@ public class MemberViewController {
     }
 
     @GetMapping("/children/list")
-    public String getAllChildren(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    public String getAllChildren(
+        Model model,
+        @AuthenticationPrincipal UserDetails userDetails
+    ) {
         Member member = memberRepository.findByEmail(userDetails.getUsername())
             .orElseThrow(() -> new IllegalStateException("사용자 정보를 찾을 수 없습니다."));
         List<ChildrenDto> childrenList = childrenService.getAllChildrenByMemberSeq(member.getMemberSeq());
@@ -129,16 +131,20 @@ public class MemberViewController {
 
     @GetMapping("/children/form")
     public String addChildrenForm(Model model) {
-        model.addAttribute("childrenDto", new ChildrenDto());
-
+        model.addAttribute("childrenRequestDto", new ChildrenRequestDto());
         return "contents/member/my-children-add";
-
     }
 
     @PostMapping("/children/form")
-    public String createChild(ChildrenRequestDto childrenRequestDto,
+    public String createChild(
+        @Valid ChildrenRequestDto childrenRequestDto,
+        BindingResult bindingResult,
         MultipartFile profileImage,
-        @AuthenticationPrincipal UserDetails member) throws IOException {
+        @AuthenticationPrincipal UserDetails member
+    ) throws IOException {
+        if (bindingResult.hasErrors()) {
+            return "contents/member/my-children-add";
+        }
         ResultFileStore resultFileStore;
         resultFileStore = fileStore.storeFile(profileImage);
         String email = member.getUsername();

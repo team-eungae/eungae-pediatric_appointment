@@ -27,16 +27,21 @@ public class ChildrenService {
 
 	private final ChildrenRepository childrenRepository;
 	private final MemberRepository memberRepository;
+  
 	@Transactional
-	public List<ChildrenDto> createChildren(ChildrenRequestDto childrenRequestDto, ResultFileStore resultFileStore, String email) throws IOException {
-
+	public List<ChildrenDto> createChildren(
+    ChildrenRequestDto childrenRequestDto,
+    ResultFileStore resultFileStore,
+    String email) throws IOException {
+    
 		Member member = memberRepository.findByEmail(email)
-			.orElseThrow(() -> new IllegalStateException("Invalid email: " + email));
+			.orElseThrow(() -> new IllegalStateException("해당 이메일의 사용자가 존재하지 않습니다: " + email));
 
 		Children children = ChildrenRequestDto.toEntity(childrenRequestDto, resultFileStore.getStoreFileName());
 		children.setMember(member);
 		childrenRepository.save(children);
-		
+
+		// 전체 자녀 목록 반환
 		return getAllChildrenByMemberSeq(member.getMemberSeq());
 	}
 
@@ -56,10 +61,9 @@ public class ChildrenService {
 		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
 			.stream()
 			.map(ChildrenDto::toDto)
-			.map(dto -> {
+			.peek(dto -> {
 				String formattedDate = formatDate(dto.getBirthDate());
 				dto.setBirthDate(formattedDate);
-				return dto;
 			})
 			.collect(Collectors.toList());
 	}

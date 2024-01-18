@@ -5,6 +5,7 @@ import java.time.format.DateTimeFormatter;
 
 import com.playdata.eungae.article.domain.CommunityBoard;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,10 +20,13 @@ import lombok.NoArgsConstructor;
 public class CommunityBoardDto {
 	private Long communityBoardSeq;
 	private Long memberSeq;
+	@NotBlank(message = "제목입력은 필수입니다.")
 	private String title;
+	@NotBlank(message = "내용입력은 필수입니다.")
 	private String content;
 	private LocalDateTime createdDate;
 	private String memberEmail;
+	private String memberName;
 	private boolean isOwner;
 
 	public static CommunityBoardDto toDto(CommunityBoard entity, String currentUserEmail) {
@@ -33,6 +37,7 @@ public class CommunityBoardDto {
 			.content(entity.getContent())
 			.createdDate(entity.getCreatedAt())
 			.memberEmail(entity.getMember().getEmail())
+			.memberName(entity.getMember().getName())
 			.isOwner(entity.getMember().getEmail().equals(currentUserEmail)) // 소유자 여부 설정
 			.build();
 	}
