@@ -115,8 +115,13 @@ const onSearch = (event) => {
         url: "api/hospital/search",
         type: "GET",
         data: {
-            "keyword": keyword
-        }, success:function(hospitalList) {
+            "keyword": keyword,
+            "longitude": longitude,
+            "latitude": latitude
+        },
+        dataType: "json",
+        contentType: 'application/json',
+        success:function(hospitalList) {
             // ajax 요청 성공시 마커와 오버레이 배열을 초기화 합니다
             markers.forEach((marker) => {
                 marker.setMap(null);
