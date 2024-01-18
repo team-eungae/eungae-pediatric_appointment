@@ -61,7 +61,8 @@ public class HospitalApiController {
 
 	@GetMapping("/search")
 	@ResponseStatus(HttpStatus.OK)
-	public List<HospitalSearchResponseDto> getAllHospitalByKeyword(@ModelAttribute @Valid KeywordSearchRequestDto keywordSearchRequestDto) {
+	public List<HospitalSearchResponseDto> getAllHospitalByKeyword(
+		@ModelAttribute @Valid KeywordSearchRequestDto keywordSearchRequestDto) {
 		return hospitalService.getAllHospitalByKeyword(keywordSearchRequestDto);
 	}
 }

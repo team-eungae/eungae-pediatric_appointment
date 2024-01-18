@@ -59,18 +59,17 @@ public class HospitalService {
 		return nearbyHospitalList;
 	}
 
-	public List<HospitalSearchResponseDto> getAllHospitalByKeyword(KeywordSearchRequestDto keywordSearchRequestDto) {
-		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keywordSearchRequestDto.getKeyword());
+	public List<HospitalSearchResponseDto> getAllHospitalByKeyword(KeywordSearchRequestDto keywordDto) {
+		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keywordDto.getKeyword());
 		List<HospitalSearchResponseDto> hospitalSearchResults;
 		// 위치정보가 있으면 거리순으로 정렬
-		if (keywordSearchRequestDto.hasLocationInfo()) {
+		if (keywordDto.hasLocationInfo()) {
 			hospitalSearchResults = hospitalsByKeyword.stream()
 				.sorted(
 					Comparator.comparing(
 						hospital ->
 							calculateDistance(
-								keywordSearchRequestDto.getLatitude(),
-								keywordSearchRequestDto.getLongitude(),
+								keywordDto.getLatitude(), keywordDto.getLongitude(),
 								hospital.getYCoordinate(), hospital.getXCoordinate())))
 				.map(HospitalSearchResponseDto::toDto)
 				.toList();
