@@ -63,8 +63,6 @@ if (navigator.geolocation){
             "latitude": latitude
         },success:function(hospitalList){
             console.log(hospitalList);
-            moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude,hospitalList[0].longitude);
-            map.setCenter(moveLatLon);
             hospitalList.forEach((hospital,index)=>{
                 position = {
                     title:hospital.name,
