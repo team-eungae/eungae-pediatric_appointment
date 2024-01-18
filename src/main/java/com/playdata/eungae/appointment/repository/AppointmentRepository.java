@@ -29,13 +29,15 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch a.hospital h"
 		+ " where a.hospital.hospitalSeq = :hospitalSeq"
 		+ " and a.appointmentDate = :appointmentDate"
-    + " and a.appointmentHHMM = :appointmentHHMM"
+		+ " and a.appointmentHHMM = :appointmentHHMM"
 		+ " and a.status = 'APPOINTMENT'"
 		+ " and a. doctor.doctorSeq = :doctorSeq")
-	List<Appointment> findAllWithHospital(@Param("hospitalSeq") Long hospitalSeq,
-                                        @Param("appointmentDate") LocalDate appointmentDate,
-                                        @Param("appointmentHHMM") String formatTime,
-                                        @Param("doctorSeq") Long doctorSeq);
+	List<Appointment> findAllWithHospital(
+		@Param("hospitalSeq") Long hospitalSeq,
+		@Param("appointmentDate") LocalDate appointmentDate,
+		@Param("appointmentHHMM") String formatTime,
+		@Param("doctorSeq") Long doctorSeq
+	);
 
 	@Query("select a"
 		+ " from Appointment a"
@@ -55,6 +57,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " where a.appointmentSeq = :appointmentSeq"
 		+ " and a.status = :status")
 	Optional<Appointment> findByAppointmentSeq(@Param("appointmentSeq") Long appointmentSeq,
-                                             @Param("status") AppointmentStatus appointmentStatus);
-  
+		@Param("status") AppointmentStatus appointmentStatus);
+
 }
