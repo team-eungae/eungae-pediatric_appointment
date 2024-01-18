@@ -28,7 +28,7 @@ public class MemberApiController {
 
     @GetMapping("/hospital")
     @ResponseStatus(HttpStatus.OK)
-    public boolean checkHospitalInFavorites(
+    public boolean isHospitalInFavorites(
         @AuthenticationPrincipal UserDetails principal,
         @RequestParam("hospitalSeq") Long hospitalSeq
     ) {

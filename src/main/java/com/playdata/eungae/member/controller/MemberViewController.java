@@ -66,8 +66,7 @@ public class MemberViewController {
     @GetMapping("/records/{appointmentSeq}")
     public String medicalRecordsDetails(
         Model model,
-        // 유효성 검사 추가
-        @Valid @PathVariable Long appointmentSeq
+        @PathVariable Long appointmentSeq
     ) {
         ResponseDetailMedicalHistoryDto myMedicalRecordDetail = appointmentService.getMyMedicalRecordDetail(appointmentSeq);
         model.addAttribute("myMedicalRecordDetail", myMedicalRecordDetail);
