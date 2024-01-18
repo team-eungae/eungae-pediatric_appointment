@@ -67,7 +67,6 @@ public class ChildrenService {
 	@Transactional(readOnly = true)
 	public List<ChildrenDto> getAllChildrenByMemberSeq(long memberSeq) {
 		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
-			.orElseThrow(() -> new IllegalStateException("자녀 정보를 찾을 수 없습니다."))
 			.stream()
 			.map(ChildrenDto::toDto)
 			.collect(Collectors.toList());
