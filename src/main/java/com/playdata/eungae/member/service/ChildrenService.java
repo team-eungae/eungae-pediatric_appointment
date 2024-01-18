@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.playdata.eungae.file.FileStore;
 import com.playdata.eungae.file.ResultFileStore;
 import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
@@ -53,6 +52,18 @@ public class ChildrenService {
 		childrenRepository.deleteById(id);
 	}
 
+	@Transactional(readOnly = true)
+	public List<ChildrenDto> getAllChildrenByMemberSeq(long memberSeq) {
+		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
+			.stream()
+			.map(ChildrenDto::toDto)
+			.peek(dto -> {
+				String formattedDate = formatDate(dto.getBirthDate());
+				dto.setBirthDate(formattedDate);
+			})
+			.collect(Collectors.toList());
+	}
+
 	private String formatDate(String dateStr) {
 		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -63,14 +74,4 @@ public class ChildrenService {
 			return dateStr;
 		}
 	}
-
-	@Transactional(readOnly = true)
-	public List<ChildrenDto> getAllChildrenByMemberSeq(long memberSeq) {
-		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
-			.orElseThrow(() -> new IllegalStateException("자녀 정보를 찾을 수 없습니다."))
-			.stream()
-			.map(ChildrenDto::toDto)
-			.collect(Collectors.toList());
-	}
-
 }

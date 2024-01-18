@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Builder
@@ -29,24 +30,16 @@ public class CommunityBoard extends BaseEntity {
 	@GeneratedValue
 	private Long communityBoardSeq;
 
+	@Setter
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_seq")
 	private Member member;
 
+	@Setter
 	@Column(nullable = false)
 	private String title;
 
+	@Setter
 	@Column(nullable = false)
 	private String content;
-
-
-
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
-	public void setTitle(String title) { this.title = title;
-	}
-	public void setContent(String content) { this.content = content;
-	}
 }

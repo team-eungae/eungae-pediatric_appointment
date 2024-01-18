@@ -12,18 +12,19 @@
         <hr/>
     </div>
     <div class="post-write-body">
-        <form th:action="@{/articles/update/{communityBoardSeq}(communityBoardSeq=${post.communityBoardSeq})}"
-              method="post" enctype="multipart/form-data">
+
+        <form th:action="@{/articles/update}" th:object="${communityBoardDto}" method="post" enctype="multipart/form-data">
             <input type="submit" class="write-button">
-            <input type="text" id="title" name="title" th:value="${post.title}"/>
-            <textarea id="content" name="content" th:text="${post.content}"></textarea>
-            <input type="hidden" name="communityBoardSeq" th:value="${post.communityBoardSeq}" />
+            <input type="text" th:field="*{title}" th:if="${communityBoardDto.title}" th:value="${communityBoardDto.title}" placeholder="제목을 입력해주세요"/>
+            <input type="text" th:field="*{title}" th:unless="${communityBoardDto.title}" placeholder="제목을 입력해주세요"/>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
             <hr/>
-<!--            <label for="post-image"><i class="far fa-image"></i> 이미지 추가</label>-->
-<!--            <input type="file" id="post-image" name="image" multiple>-->
-<!--            <p>-->
-<!--                <span id="filename"></span>-->
-<!--            </p>-->
+            <textarea th:field="*{content}" th:if="${communityBoardDto.content}" th:text="${communityBoardDto.content}" placeholder="내용을 입력해주세요"></textarea>
+            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
+            <textarea th:field="*{content}" th:unless="${communityBoardDto.content}" placeholder="내용을 입력해주세요"></textarea>
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError">Incorrect data</p>
+            <input type="hidden" th:field="*{communityBoardSeq}" th:value="${communityBoardDto.communityBoardSeq}" />
+            <hr/>
         </form>
     </div>
 </main>
