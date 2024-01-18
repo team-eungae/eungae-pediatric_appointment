@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.playdata.eungae.file.FileStore;
 import com.playdata.eungae.file.ResultFileStore;
 import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
@@ -32,13 +31,12 @@ public class ChildrenService {
 	public List<ChildrenDto> createChildren(ChildrenRequestDto childrenRequestDto, ResultFileStore resultFileStore, String email) throws IOException {
 
 		Member member = memberRepository.findByEmail(email)
-			.orElseThrow(() -> new IllegalStateException("해당 이메일의 사용자가 존재하지 않습니다: " + email));
+			.orElseThrow(() -> new IllegalStateException("Invalid email: " + email));
 
 		Children children = ChildrenRequestDto.toEntity(childrenRequestDto, resultFileStore.getStoreFileName());
 		children.setMember(member);
 		childrenRepository.save(children);
-
-		// 전체 자녀 목록 반환
+		
 		return getAllChildrenByMemberSeq(member.getMemberSeq());
 	}
 
@@ -53,6 +51,19 @@ public class ChildrenService {
 		childrenRepository.deleteById(id);
 	}
 
+	@Transactional(readOnly = true)
+	public List<ChildrenDto> getAllChildrenByMemberSeq(long memberSeq) {
+		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
+			.stream()
+			.map(ChildrenDto::toDto)
+			.map(dto -> {
+				String formattedDate = formatDate(dto.getBirthDate());
+				dto.setBirthDate(formattedDate);
+				return dto;
+			})
+			.collect(Collectors.toList());
+	}
+
 	private String formatDate(String dateStr) {
 		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -63,14 +74,4 @@ public class ChildrenService {
 			return dateStr;
 		}
 	}
-
-	@Transactional(readOnly = true)
-	public List<ChildrenDto> getAllChildrenByMemberSeq(long memberSeq) {
-		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
-			.orElseThrow(() -> new IllegalStateException("자녀 정보를 찾을 수 없습니다."))
-			.stream()
-			.map(ChildrenDto::toDto)
-			.collect(Collectors.toList());
-	}
-
 }
