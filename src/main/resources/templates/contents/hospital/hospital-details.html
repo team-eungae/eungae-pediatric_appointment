@@ -23,7 +23,7 @@
             <div>
                 <input type="hidden" id="hospitalSeq" th:value="${hospital.hospitalSeq}">
                 <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i>
-                    <span th:text="${hospital.address}+${hospital.addressDetail}">병원 주소</span>
+                    <span th:text="${hospital.address}">병원 주소</span>
                     <button id="likeButton" class="btn"><i class="fa-regular fa-star"></i></button>
                 </div>
                 <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i>
@@ -143,7 +143,7 @@
                 <span id="hospital_x" th:value="${hospital.xCoordinate}" hidden="hidden"></span>
                 <span id="hospital_y" th:value="${hospital.yCoordinate}" hidden="hidden"></span>
                 <div class="hospital-address-text"><i class="far fa-map"></i><span
-                        th:text="${hospital.address}+' '+${hospital.addressDetail}"></span></div>
+                        th:text="${hospital.address}"></span></div>
             </div>
             <div id="map"></div>
         </div>
@@ -194,7 +194,8 @@
                                 <i th:each="num : ${#numbers.sequence(1,review.starRating)}" class="fa-solid fa-star"
                                    style="color: #ffd500;"></i>
                                 <i th:if="${review.starRating} != 5 "
-                                   th:each="num : ${#numbers.sequence(1,5 -review.starRating)}" class="fa-regular fa-star"
+                                   th:each="num : ${#numbers.sequence(1,5 -review.starRating)}"
+                                   class="fa-regular fa-star"
                                    style="color: #ffd500;"></i>
                             </div>
                             <div class="review-content" th:text="${review.content}">선생님이 친절해요 갈 때마다 꼼꼼히 봐주세요</div>
