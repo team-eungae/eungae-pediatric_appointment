@@ -41,7 +41,7 @@ public class HospitalService {
 		return HospitalViewResponseDto.toDto(hospital);
 	}
 
-	public List<HospitalSearchResponseDto> findAllNearbyHospital(double longitude, double latitude) {
+	public List<HospitalSearchResponseDto> getHospitalsNearby(double longitude, double latitude) {
 		List<Hospital> hospitalList = hospitalRepository.findAll();
 		List<HospitalSearchResponseDto> nearbyHospitalList = hospitalList.stream()
 			.filter(
@@ -59,7 +59,7 @@ public class HospitalService {
 		return nearbyHospitalList;
 	}
 
-	public List<HospitalSearchResponseDto> getAllHospitalByKeyword(KeywordSearchRequestDto keywordDto) {
+	public List<HospitalSearchResponseDto> getHospitalsBy(KeywordSearchRequestDto keywordDto) {
 		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keywordDto.getKeyword());
 		List<HospitalSearchResponseDto> hospitalSearchResults;
 		// 위치정보가 있으면 거리순으로 정렬

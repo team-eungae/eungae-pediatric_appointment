@@ -54,14 +54,14 @@ public class HospitalApiController {
 
 	@GetMapping("/around")
 	@ResponseStatus(HttpStatus.OK)
-	public List<HospitalSearchResponseDto> getAllNearbyHospital(double longitude, double latitude) {
-		return hospitalService.findAllNearbyHospital(longitude, latitude);
+	public List<HospitalSearchResponseDto> getHospitalsNearby(double longitude, double latitude) {
+		return hospitalService.getHospitalsNearby(longitude, latitude);
 	}
 
 	@GetMapping("/search")
 	@ResponseStatus(HttpStatus.OK)
-	public List<HospitalSearchResponseDto> getAllHospitalByKeyword(
-		@ModelAttribute @Valid KeywordSearchRequestDto keywordSearchRequestDto) {
-		return hospitalService.getAllHospitalByKeyword(keywordSearchRequestDto);
+	public List<HospitalSearchResponseDto> getHospitalsByKeyword(
+		@ModelAttribute @Valid KeywordSearchRequestDto keywordDto) {
+		return hospitalService.getHospitalsBy(keywordDto);
 	}
 }
