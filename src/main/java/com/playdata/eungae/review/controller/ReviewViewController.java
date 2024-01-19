@@ -2,6 +2,7 @@ package com.playdata.eungae.review.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,16 +31,21 @@ public class ReviewViewController {
 		@RequestParam Long appointmentSeq
 	) {
 		appointmentService.checkAppointmentStatus(appointmentSeq);
-		model.addAttribute("appointmentSeq", appointmentSeq);
+		model.addAttribute("requestAppointmentSeq", appointmentSeq);
+		model.addAttribute("requestReviewFormDto", new RequestReviewFormDto());
 		return "contents/member/review-write";
 	}
 
 	@PostMapping("/post")
-	// redirect 시 ResponseStatus 어노테이션을 붙이면 redirect가 실행되지 않습니다.
-	// @ResponseStatus(HttpStatus.CREATED)
 	public String createReview(
-		@Valid RequestReviewFormDto requestReviewFormDto
+		Model model,
+		@Valid RequestReviewFormDto requestReviewFormDto,
+		BindingResult bindingResult
 	) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("requestAppointmentSeq", requestReviewFormDto.getAppointmentSeq());
+			return "contents/member/review-write";
+		}
 		reviewService.createReview(requestReviewFormDto);
 		return "redirect:/my/reviews";
 	}

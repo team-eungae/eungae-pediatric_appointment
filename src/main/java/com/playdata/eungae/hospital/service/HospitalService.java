@@ -41,6 +41,8 @@ public class HospitalService {
 		return HospitalViewResponseDto.toDto(hospital);
 	}
 
+
+  @Transactional(readOnly = true)
 	public List<HospitalSearchResponseDto> getHospitalsNearby(double longitude, double latitude) {
 		List<Hospital> hospitalList = hospitalRepository.findAll();
 		List<HospitalSearchResponseDto> nearbyHospitalList = hospitalList.stream()
@@ -59,6 +61,8 @@ public class HospitalService {
 		return nearbyHospitalList;
 	}
 
+
+ @Transactional(readOnly = true)
 	public List<HospitalSearchResponseDto> getHospitalsBy(KeywordSearchRequestDto keywordDto) {
 		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keywordDto.getKeyword());
 		List<HospitalSearchResponseDto> hospitalSearchResults;

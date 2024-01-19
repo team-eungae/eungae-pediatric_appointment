@@ -2,11 +2,8 @@ package com.playdata.eungae.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -16,7 +13,7 @@ import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import com.playdata.eungae.member.service.MemberService;
+import com.playdata.eungae.security.MemberUserDetailsService;
 
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +22,13 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
-
-	private final MemberService memberService;
+	private final MemberUserDetailsService memberUserDetailsService;
 
 	// 시큐리티 비활성화
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().
-			requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
+		return (web) -> web.ignoring()
+			.requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
 			.requestMatchers(new AntPathRequestMatcher("/img/**"))
 			.requestMatchers(new AntPathRequestMatcher("/css/**"))
 			.requestMatchers(new AntPathRequestMatcher("/js/**"))
@@ -50,8 +46,8 @@ public class WebSecurityConfig {
 				.requestMatchers(new MvcRequestMatcher(introspector, "/login")).permitAll()
 				.requestMatchers(new MvcRequestMatcher(introspector, "/signup")).permitAll()
 				.requestMatchers(new MvcRequestMatcher(introspector, "/map")).permitAll()
-				// .anyRequest().authenticated())
-				.anyRequest().permitAll())
+				.anyRequest().permitAll()
+			)
 			.formLogin(login -> login
 				.loginPage("/login")
 				.loginProcessingUrl("/login-proc")
@@ -63,10 +59,6 @@ public class WebSecurityConfig {
 				.logoutUrl("/logout")
 				.logoutSuccessUrl("/"));
 		return http.build();
-	}
-
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(memberService).passwordEncoder(bCryptPasswordEncoder());
 	}
 
 	@Bean

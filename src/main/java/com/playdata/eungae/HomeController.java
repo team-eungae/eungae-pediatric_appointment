@@ -68,14 +68,7 @@ public class HomeController {
 
 	@GetMapping("/map")
 	public String findHospital() {
-
 		return "contents/hospital/find-hospital";
-	}
-
-	@GetMapping("/map/search")
-	public String searchHospital(String keyword) {
-		log.info(keyword);
-		return "contents/hospital/search-hospital";
 	}
 
 }

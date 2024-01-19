@@ -12,16 +12,14 @@
         <hr/>
     </div>
     <div class="post-write-body">
-        <form action="/articles/post" method="post" enctype="multipart/form-data">
+        <form th:action="@{/articles/post}" method="post" th:object="${communityBoardDto}" enctype="multipart/form-data">
             <input type="submit" class="write-button">
-            <input type="text" id="title" name="title" placeholder="제목을 입력해주세요">
-            <textarea id="content" name="content" placeholder="내용을 입력해주세요"></textarea>
+            <input type="text" th:field="*{title}" placeholder="제목을 입력해주세요">
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError">Incorrect data</p>
             <hr/>
-            <label for="post-image"><i class="far fa-image"></i> 이미지 추가</label>
-            <input type="file" id="post-image" name="image" multiple>
-            <p>
-                <span id="filename"></span>
-            </p>
+            <textarea  th:field="*{content}" placeholder="내용을 입력해주세요"></textarea>
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError">Incorrect data</p>
+            <hr/>
         </form>
     </div>
 </main>

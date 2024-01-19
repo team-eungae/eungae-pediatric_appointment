@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.playdata.eungae.file.FileStore;
 import com.playdata.eungae.file.ResultFileStore;
 import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
@@ -28,9 +27,13 @@ public class ChildrenService {
 
 	private final ChildrenRepository childrenRepository;
 	private final MemberRepository memberRepository;
+  
 	@Transactional
-	public List<ChildrenDto> createChildren(ChildrenRequestDto childrenRequestDto, ResultFileStore resultFileStore, String email) throws IOException {
-
+	public List<ChildrenDto> createChildren(
+    ChildrenRequestDto childrenRequestDto,
+    ResultFileStore resultFileStore,
+    String email) throws IOException {
+    
 		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalStateException("해당 이메일의 사용자가 존재하지 않습니다: " + email));
 
@@ -39,7 +42,7 @@ public class ChildrenService {
 		childrenRepository.save(children);
 
 		// 전체 자녀 목록 반환
-		return getAllChildren();
+		return getAllChildrenByMemberSeq(member.getMemberSeq());
 	}
 
 	private File convertToFile(MultipartFile multipartFile) throws IOException {
@@ -53,6 +56,18 @@ public class ChildrenService {
 		childrenRepository.deleteById(id);
 	}
 
+	@Transactional(readOnly = true)
+	public List<ChildrenDto> getAllChildrenByMemberSeq(long memberSeq) {
+		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
+			.stream()
+			.map(ChildrenDto::toDto)
+			.peek(dto -> {
+				String formattedDate = formatDate(dto.getBirthDate());
+				dto.setBirthDate(formattedDate);
+			})
+			.collect(Collectors.toList());
+	}
+
 	private String formatDate(String dateStr) {
 		SimpleDateFormat inputFormat = new SimpleDateFormat("yyyyMMdd");
 		SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일");
@@ -62,16 +77,5 @@ public class ChildrenService {
 		} catch (ParseException e) {
 			return dateStr;
 		}
-	}
-
-	@Transactional(readOnly = true)
-	public List<ChildrenDto> getAllChildren() {
-		return childrenRepository.findAll().stream()
-			.map(children -> {
-				ChildrenDto dto = ChildrenDto.toDto(children);
-				dto.setBirthDate(formatDate(dto.getBirthDate()));
-				return dto;
-			})
-			.collect(Collectors.toList());
 	}
 }

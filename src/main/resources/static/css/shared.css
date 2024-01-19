@@ -13,6 +13,11 @@ p {
     margin-bottom: 0;
 }
 
+.fieldError {
+    color: red;
+}
+
+
 main {
     min-height: calc(100vh - 3.5rem - 8rem);
     margin-top: 3.5rem;

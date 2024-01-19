@@ -28,16 +28,10 @@
             </div>
             <div class="written-records">
                 <ul class="written-list">
-                    <p class="post-author" th:text="${post.memberSeq}">작성자</p>
+                    <p class="post-author" th:text="${post.memberName}">작성자</p>
                     <p class="post-date" th:text="${post.getFormattedDate()}">작성일</p>
                 </ul>
-                <button class="article-closed-btn btn-sm align-self-start" onclick="toggleDeleteButton(this)">
-                    <i class="fa-solid fa-gear"></i>
-                </button>
-                <form th:action="@{/articles/delete/{communityBoardSeq}(communityBoardSeq=${post.communityBoardSeq})}" method="post" style="display: none;" class="delete-form">
-                    <input type="hidden" name="_method" th:value="${post.communityBoardSeq}" />
-                    <button type="submit" class="btn btn-danger">삭제</button>
-                </form>
+
             </div>
             <hr/>
         </div>
@@ -45,7 +39,6 @@
 
         <div class="post-bottom"></div>
     </div>
-    <script src="/js/community-list.js"></script>
 </main>
 </body>
 </html>

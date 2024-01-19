@@ -1,0 +1,51 @@
+body {
+    font-family: "Noto Sans KR";
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+.header {
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+.footer {
+    background-color: #326eb3;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+.header img,
+.footer img {
+    width: 50px;
+    height: auto;
+}
+.content {
+    margin-top: 100px;
+    padding: 20px;
+    text-align: center;
+    min-height: calc(80vh - 15px);
+}
+.form-control {
+    width: 25%;
+    margin-left: 37%;
+    margin-top: 30px;
+    border-radius: 8px;
+}
+button {
+    background-color: #326eb3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+    font-size: 16px;
+}
+.extra-actions a {
+    color: #326eb3;
+}
