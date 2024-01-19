@@ -98,8 +98,9 @@ hr {
     color: #ffffff;
 }
 .doctor-img{
-    width: 35vw;
-    border-radius: 70px;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 8rem;
 }
 
 .appointment-children input[type="radio"] {
