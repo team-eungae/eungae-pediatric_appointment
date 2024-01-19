@@ -1,7 +1,9 @@
 package com.playdata.eungae.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -22,5 +24,10 @@ public class SpringConfig implements WebMvcConfigurer {
 
 		// /images/로 시작하는 요청이 오면, C:/upload/ 와 연결
 		registry.addResourceHandler(webPath).addResourceLocations(resourcePath);
+	}
+
+	@Bean
+	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+		return new HiddenHttpMethodFilter();
 	}
 }

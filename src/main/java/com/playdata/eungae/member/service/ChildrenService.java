@@ -1,7 +1,5 @@
 package com.playdata.eungae.member.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -9,7 +7,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.playdata.eungae.file.ResultFileStore;
 import com.playdata.eungae.member.domain.Children;
@@ -29,10 +26,11 @@ public class ChildrenService {
 	private final MemberRepository memberRepository;
   
 	@Transactional
-	public List<ChildrenDto> createChildren(
+	public void createChildren(
     ChildrenRequestDto childrenRequestDto,
     ResultFileStore resultFileStore,
-    String email) throws IOException {
+    String email
+	) {
     
 		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalStateException("해당 이메일의 사용자가 존재하지 않습니다: " + email));
@@ -40,15 +38,6 @@ public class ChildrenService {
 		Children children = ChildrenRequestDto.toEntity(childrenRequestDto, resultFileStore.getStoreFileName());
 		children.setMember(member);
 		childrenRepository.save(children);
-
-		// 전체 자녀 목록 반환
-		return getAllChildrenByMemberSeq(member.getMemberSeq());
-	}
-
-	private File convertToFile(MultipartFile multipartFile) throws IOException {
-		File convFile = new File(multipartFile.getOriginalFilename());
-		multipartFile.transferTo(convFile);
-		return convFile;
 	}
 
 	@Transactional
@@ -78,4 +67,5 @@ public class ChildrenService {
 			return dateStr;
 		}
 	}
+
 }

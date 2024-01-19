@@ -8,12 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
-
 import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
 import com.playdata.eungae.hospital.service.HospitalService;
@@ -35,8 +32,8 @@ public class AppointmentViewController {
 	public String getAppointmentForm(
 		@PathVariable Long hospitalSeq,
 		Model model,
-		@AuthenticationPrincipal UserDetails member) {
-
+		@AuthenticationPrincipal UserDetails member
+	) {
 		HospitalViewResponseDto hospital = hospitalService.findHospitalById(hospitalSeq);
 
 		String email = member.getUsername();
