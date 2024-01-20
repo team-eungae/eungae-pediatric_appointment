@@ -12,9 +12,10 @@
     <h2 class="login-title">로그인</h2>
     <div class="login-social">
         <span class="login-social__title">내 주변 소아과를 가장 빠르게 예약하는 방법</span>
-        <button class="login-social__button">
+        <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=425f0a3e76e15e895c982fc0502bf8b8&redirect_uri=http://localhost:8090/auth/kakao"
+           class="login-social__button">
             <img class="login-social__image" src="../img/kakao_login.png" alt="카카오로그인">
-        </button>
+        </a>
     </div>
 
     <form role="form" method="post" action="/login-proc" class="login-form">
