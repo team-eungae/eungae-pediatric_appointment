@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import com.playdata.eungae.appointment.dto.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ import com.playdata.eungae.hospital.repository.HospitalRepository;
 import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
 import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
+import com.playdata.eungae.member.dto.ChildrenDto;
 import com.playdata.eungae.member.repository.ChildrenRepository;
 import com.playdata.eungae.member.repository.MemberRepository;
 import com.playdata.eungae.review.repository.ReviewRepository;
@@ -48,9 +50,13 @@ public class AppointmentService {
 	private final ReviewRepository reviewRepository;
 
 	@Transactional(readOnly = true)
-	public List<Children> getMyChildren(String email) {
+	public List<ChildrenDto> getMyChildren(String email) {
 		Member member = memberRepository.findByEmail(email).get();
-		return childrenRepository.findAllByMemberMemberSeq(member.getMemberSeq());
+		List<Children> children = childrenRepository.findAllByMemberMemberSeq(member.getMemberSeq());
+
+		return children.stream()
+			.map(ChildrenDto::toDto)
+			.toList();
 	}
 
 	@Transactional(readOnly = true)
@@ -120,7 +126,7 @@ public class AppointmentService {
 			pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt")
 		);
 */
-    
+
 		List<Appointment> appointments = appointmentRepository.findAllByMemberEmail(memberEmail);
 
 		// 유효한 예약과 취소된 예약을 조회
@@ -286,17 +292,17 @@ public class AppointmentService {
 
 	private int getAppointmentCount(Long hospitalSeq, LocalDate localDate, String time, Long doctorSeq) {
 		return appointmentRepository.findAllWithHospital(hospitalSeq, localDate, time, doctorSeq).size();
-	}    
+	}
 
-    @Transactional
-    public VisitedChangeStatusDto changeAppointmentStatus(Long appointmentSeq) {
+	@Transactional
+	public VisitedChangeStatusDto changeAppointmentStatus(Long appointmentSeq) {
 
-        Appointment appointment = appointmentRepository.findById(appointmentSeq)
-                .orElseThrow(() -> new IllegalStateException(
-                        "Cannot find Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+		Appointment appointment = appointmentRepository.findById(appointmentSeq)
+			.orElseThrow(() -> new IllegalStateException(
+				"Cannot find Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
 
-         appointment.setStatus(AppointmentStatus.DIAGNOSIS);
+		appointment.setStatus(AppointmentStatus.DIAGNOSIS);
 
-         return VisitedChangeStatusDto.toDto(appointment);
-    }
+		return VisitedChangeStatusDto.toDto(appointment);
+	}
 }
