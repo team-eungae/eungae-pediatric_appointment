@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
+
 	private final MemberUserDetailsService memberUserDetailsService;
 
 	// 시큐리티 비활성화
