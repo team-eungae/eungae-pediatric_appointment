@@ -13,6 +13,7 @@ import com.playdata.eungae.doctor.service.DoctorService;
 import com.playdata.eungae.hospital.dto.HospitalImageResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalSearchResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
+import com.playdata.eungae.hospital.dto.KeywordSearchRequestDto;
 import com.playdata.eungae.hospital.service.HospitalImageService;
 import com.playdata.eungae.hospital.service.HospitalService;
 import com.playdata.eungae.review.dto.ResponseReviewDto;
@@ -47,8 +48,8 @@ public class HospitalViewController {
 	}
 
 	@GetMapping("/map/search")
-	public String searchHospital(String keyword, Model model) {
-		List<HospitalSearchResponseDto> hospitalList = hospitalService.findAllByKeyword(keyword);
+	public String searchHospital(KeywordSearchRequestDto keyword, Model model) {
+		List<HospitalSearchResponseDto> hospitalList = hospitalService.getHospitalsBy(keyword);
 		model.addAttribute("hospitalList", hospitalList);
 		return "contents/hospital/search-hospital";
 	}
