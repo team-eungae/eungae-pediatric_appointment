@@ -60,7 +60,7 @@ public class ArticleViewController {
 		return "contents/community/community-post-details";
 	}
 
-	@GetMapping("/articles/{communityBoardSeq}/form")
+	@GetMapping("/articles/form/{communityBoardSeq}")
 	public String editArticleForm(
 		@PathVariable Long communityBoardSeq,
 		@AuthenticationPrincipal UserDetails userDetails,
