@@ -35,7 +35,7 @@ public class AdminService {
 	String url;
 
 	public void savePublicHospitalData() {
-		for (int i = 1; i <= 770; i++) { //원래는 761
+		for (int i = 1; i <= 1; i++) { //원래는 761
 			try {
 				String finalUrl = url + "?serviceKey=" + apiKey + "&pageNo=" + i + "&numOfRows=100";
 

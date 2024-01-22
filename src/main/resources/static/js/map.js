@@ -68,7 +68,6 @@ if (navigator.geolocation){
                     title:hospital.name,
                     latlng: new kakao.maps.LatLng(hospital.latitude,hospital.longitude),
                     address:hospital.address,
-                    addressDetail:hospital.addressDetail,
                     hospitalSeq:hospital.hospitalSeq,
                     contact:hospital.contact
                 }
@@ -138,7 +137,6 @@ const onSearch = (event) => {
                     title:hospital.name,
                     latlng: new kakao.maps.LatLng(hospital.latitude,hospital.longitude),
                     address:hospital.address,
-                    addressDetail:hospital.addressDetail,
                     hospitalSeq:hospital.hospitalSeq,
                     contact:hospital.contact
                 }
@@ -202,16 +200,16 @@ function addMarker(position, markerImage) {
             '    <div class="info">' +
             '        <div class="title">' +
             position.title +
-            '            <div class="close" onclick="closeOverlay('+index+')" title="닫기"></div>' +
+            '            <div class="close" onclick="closeOverlay(' + index + ')" title="닫기"></div>' +
             '        </div>' +
             '        <div class="body">' +
             '            <div class="img">' +
             '                <img src="/img/logo1.png" width="73" height="70">' +
             '           </div>' +
             '            <div class="desc">' +
-            '                <div class="ellipsis">'+position.address+' '+position.addressDetail+'</div>' +
-            '                <div class="jibun ellipsis">'+position.contact+'</div>' +
-            '                <div><a href="/hospital/'+position.hospitalSeq+'" class="link">예약</a></div>' +
+            '                <div class="ellipsis">' + position.address + '</div>' +
+            '                <div class="jibun ellipsis">' + position.contact + '</div>' +
+            '                <div><a href="/hospital/' + position.hospitalSeq + '" class="link">예약</a></div>' +
             '            </div>' +
             '        </div>' +
             '    </div>' +
@@ -282,17 +280,3 @@ function addBasicMarker (position, markerImage) {
 const closeOverlay = (index) => {
     overlays[index].setMap(null);
 }
-
-// kakao.maps.event.addListener(map, 'dragend', function() {
-//     // markers.forEach(
-//     // 		marker => marker.setMap(null)
-//     // )
-//     // 지도 중심좌표를 얻어옵니다
-//     var latlng = map.getCenter();
-
-//     var message = '변경된 지도 중심좌표는 ' + latlng.getLat() + ' 이고, ';
-//     message += '경도는 ' + latlng.getLng() + ' 입니다';
-//     console.log(message);
-//     // var resultDiv = document.getElementById('result');
-//     // resultDiv.innerHTML = message;
-// })

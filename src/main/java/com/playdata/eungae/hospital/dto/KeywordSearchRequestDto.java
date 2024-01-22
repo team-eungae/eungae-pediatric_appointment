@@ -13,6 +13,6 @@ public class KeywordSearchRequestDto {
 	private Double latitude;
 
 	public boolean hasLocationInfo() {
-		return !(getLatitude() == null | getLongitude() == null);
+		return !(getLatitude() == null || getLongitude() == null);
 	}
 }

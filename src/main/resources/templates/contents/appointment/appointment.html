@@ -42,7 +42,8 @@
                             의사</strong></div>
                         <div id="menu2" class="content">
                             <div class="appointment-doctor-wrapper" th:each="doctor:${doctors}">
-                                <img src="/img/doctor.jpeg" class="doctor-img">
+                                <img th:if="${doctor.doctorProfileImage eq null}" class="doctor-img" th:src="@{/img/doctor.jpeg}" alt="Basic Doctor Image"/>
+                                <img th:unless="${doctor.doctorProfileImage eq null}" class="doctor-img" th:src="@{/images/} + ${doctor.doctorProfileImage}" alt="Doctor Image"/>
                                 <label class="appointment-doctor">
                                     <input type="radio" name="doctorSeq" th:value="${doctor.doctorSeq}">
                                     <span th:text="${doctor.name}">의사 이름</span>

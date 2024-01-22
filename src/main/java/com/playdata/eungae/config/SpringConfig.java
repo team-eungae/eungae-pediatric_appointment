@@ -20,7 +20,8 @@ public class SpringConfig implements WebMvcConfigurer {
 		String webPath = "/images/**";
 
 		// 실제로 자원이 저장된 로컬 경로
-		String resourcePath ="file:///" + photoAdd;
+		// String resourcePath ="file:///" + photoAdd;
+		String resourcePath = photoAdd;
 
 		// /images/로 시작하는 요청이 오면, C:/upload/ 와 연결
 		registry.addResourceHandler(webPath).addResourceLocations(resourcePath);
