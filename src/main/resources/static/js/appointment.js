@@ -118,7 +118,7 @@ const requestPay = (responsePaymentDto) => {
         buyer_tel: phoneNumber,
         buyer_addr: address + " " + addressDetail,
         buyer_postcode:zipcode,
-        m_redirect_url: `/hospital/${hospitalSeq}`
+        m_redirect_url: `http://localhost:8090/hospital/${hospitalSeq}`
     }, function (rsp) { // callback
         //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
         alert(rsp)
