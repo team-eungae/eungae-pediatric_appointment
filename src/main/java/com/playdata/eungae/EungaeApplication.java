@@ -14,8 +14,4 @@ public class EungaeApplication {
 		SpringApplication.run(EungaeApplication.class, args);
 	}
 
-	@Bean
-	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-		return new HiddenHttpMethodFilter();
-	}
 }

@@ -38,14 +38,18 @@ public class CommunityBoardService {
 
 	@Transactional(readOnly = true)
 	public CommunityBoardDto getCommunityBoardById(Long id, String currentUserEmail) {
-		CommunityBoard communityBoard = communityBoardRepository.findById(id)
+		CommunityBoard communityBoard = communityBoardRepository.findByIdWithMember(id)
 			.orElseThrow(() -> new IllegalArgumentException("Invalid board ID"));
 		return CommunityBoardDto.toDto(communityBoard, currentUserEmail);
 	}
 
 	@Transactional
-	public void updateCommunityBoard(Long communityBoardSeq, CommunityBoardDto communityBoardDto, String userEmail) {
-		CommunityBoard communityBoard = communityBoardRepository.findById(communityBoardSeq)
+	public void updateCommunityBoard(
+		Long communityBoardSeq,
+		CommunityBoardDto communityBoardDto,
+		String userEmail
+	) {
+		CommunityBoard communityBoard = communityBoardRepository.findByIdWithMember(communityBoardSeq)
 			.orElseThrow(() -> new IllegalStateException("Article does not exist: " + communityBoardSeq));
 
 		if (!communityBoard.getMember().getEmail().equals(userEmail)) {
@@ -58,7 +62,7 @@ public class CommunityBoardService {
 
 	@Transactional
 	public void deleteCommunityBoard(Long communityBoardSeq, String userEmail) {
-		CommunityBoard communityBoard = communityBoardRepository.findById(communityBoardSeq)
+		CommunityBoard communityBoard = communityBoardRepository.findByIdWithMember(communityBoardSeq)
 			.orElseThrow(() -> new IllegalArgumentException("Invalid board ID"));
 
 		if (!communityBoard.getMember().getEmail().equals(userEmail)) {
@@ -69,8 +73,9 @@ public class CommunityBoardService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<CommunityBoardDto> getAllCommunityBoards(String currentUserEmail) {
-		return communityBoardRepository.findAllWithMember().stream()
+	public List<CommunityBoardDto> getCommunityBoards(String currentUserEmail) {
+		return communityBoardRepository.findAllWithMember()
+			.stream()
 			.map(board -> CommunityBoardDto.toDto(board, currentUserEmail))
 			.collect(Collectors.toList());
 	}
@@ -80,5 +85,4 @@ public class CommunityBoardService {
 		multipartFile.transferTo(convFile);
 		return convFile;
 	}
-
 }

@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class DoctorService {
+
     private final DoctorRepository doctorRepository;
-    private final HospitalRepository hospitalRepository;
 
     @Transactional(readOnly = true)
     public List<DoctorResponseDto> findDoctorsByHospitalSeq(Long hospitalSeq) {
@@ -29,35 +29,5 @@ public class DoctorService {
 				.map(DoctorResponseDto::toDto)
 				.collect(Collectors.toList());
 	}
-
-    @Transactional
-    public void createDoctor(DoctorRegisterRequestDto doctorRegisterRequestDto, String hospitalId) {
-        Doctor doctor = doctorRegisterRequestDto.toEntity(doctorRegisterRequestDto);
-
-		Hospital hospital = hospitalRepository.findByHospitalId(hospitalId)
-				.orElseThrow(
-						() -> new NoSuchElementException("Hospital not found by hospitalId = {%s}".formatted(hospitalId)));
-
-        doctor.setHospital(hospital);
-
-        doctorRepository.save(doctor);
-    }
-
-	@Transactional
-	public void deleteDoctor(Long doctorSeq) {
-		Doctor doctor = doctorRepository.findById(doctorSeq)
-				.orElseThrow(() -> new NoSuchElementException(
-						"Doctor not found by doctorSeq = {%s}".formatted(doctorSeq)));
-
-		doctor.deleted();
-	}
-
-    @Transactional(readOnly = true)
-    public DoctorResponseDto getDoctor(Long doctorSeq) {
-        Doctor doctor = doctorRepository.findById(doctorSeq)
-                .orElseThrow(() -> new NoSuchElementException("Doctor not found by doctor ID = {%s}".formatted(doctorSeq)));
-
-        return DoctorResponseDto.toDto(doctor);
-    }
 
 }

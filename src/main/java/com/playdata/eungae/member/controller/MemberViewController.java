@@ -1,6 +1,5 @@
 package com.playdata.eungae.member.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -141,7 +140,7 @@ public class MemberViewController {
         BindingResult bindingResult,
         MultipartFile profileImage,
         @AuthenticationPrincipal UserDetails member
-    ) throws IOException {
+    ) {
         if (bindingResult.hasErrors()) {
             return "contents/member/my-children-add";
         }
@@ -156,7 +155,6 @@ public class MemberViewController {
     @PostMapping("/children/{id}")
     public String deleteChild(@PathVariable Long id) {
         childrenService.deleteChild(id);
-        
         return "redirect:/my/children/list"; // 자녀 목록 페이지로 리디렉션
     }
 

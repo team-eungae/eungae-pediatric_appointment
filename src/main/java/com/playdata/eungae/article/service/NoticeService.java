@@ -28,9 +28,9 @@ public class NoticeService {
     @Transactional(readOnly = true)
     public List<NoticeResponseDto> findByNoticeList() {
         List<Notice> notices = noticeRepository.findAll();
-        List<NoticeResponseDto> noticeList = notices.stream().map(NoticeResponseDto::toDto)
-                .collect(Collectors.toList());
-        return noticeList;
+		return notices.stream()
+            .map(NoticeResponseDto::toDto)
+            .collect(Collectors.toList());
     }
 
 }

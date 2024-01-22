@@ -1,6 +1,5 @@
 package com.playdata.eungae.hospital.service;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -37,7 +36,6 @@ public class HospitalService {
 	public HospitalViewResponseDto findHospitalById(Long hospitalSeq) {
 		Hospital hospital = hospitalRepository.findById(hospitalSeq)
 			.orElseThrow(() -> new NoSuchElementException("Hospital not found"));
-
 		return HospitalViewResponseDto.toDto(hospital);
 	}
 

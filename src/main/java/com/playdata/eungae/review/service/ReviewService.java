@@ -1,8 +1,6 @@
 package com.playdata.eungae.review.service;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -28,9 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ReviewService {
 
+	private final int PAGE_SIZE = 20;
 	private final ReviewRepository reviewRepository;
 	private final AppointmentRepository appointmentRepository;
-	private final int PAGE_SIZE = 20;
 
 	@Transactional
 	public void createReview(RequestReviewFormDto requestReviewFormDto) {
@@ -55,8 +53,7 @@ public class ReviewService {
 	public void removeReview(long reviewSeq) {
 		Review review = reviewRepository.findById(reviewSeq)
 			.orElseThrow(() -> new IllegalStateException("Can not found Review, reviewSeq = {%d}".formatted(reviewSeq)));
-		// 리뷰의 논리적 삭제 컬럼을 Y로 바꿔주는 로직을 짜야한다
-		review.remove();
+		review.deleted();
 	}
 
 	@Transactional(readOnly = true)
