@@ -4,16 +4,22 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.playdata.eungae.appointment.dto.VisitedChangeStatusDto;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
 import com.playdata.eungae.appointment.dto.RequestAppointmentDeleteDto;
-import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
+import com.playdata.eungae.appointment.dto.VisitedChangeStatusDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
 
 import lombok.RequiredArgsConstructor;
@@ -60,8 +66,8 @@ public class AppointmentApiController {
 
 	@PatchMapping("/my/appointments")
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseAppointmentDto deleteAppointment(@RequestBody RequestAppointmentDeleteDto requestAppointmentDeleteDto) {
-		return appointmentService.deleteAppointment(requestAppointmentDeleteDto.getAppointmentSeq());
+	public void deleteAppointment(@RequestBody RequestAppointmentDeleteDto requestAppointmentDeleteDto) {
+		appointmentService.deleteAppointment(requestAppointmentDeleteDto.getAppointmentSeq());
 	}
 
 	@PatchMapping("/hospital/appointments/{appointment-seq}/visited")

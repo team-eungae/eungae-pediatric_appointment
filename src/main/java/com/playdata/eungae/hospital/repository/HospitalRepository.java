@@ -19,5 +19,4 @@ public interface HospitalRepository extends JpaRepository<Hospital, Long> {
 	List<Hospital> findAllByKeyword(@Param("keyword") String keyword);
 	
 	Optional<Hospital> findByHospitalId(String hospitalId);
-  
 }

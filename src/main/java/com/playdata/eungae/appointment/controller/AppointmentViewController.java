@@ -32,8 +32,8 @@ public class AppointmentViewController {
 	public String getAppointmentForm(
 		@PathVariable Long hospitalSeq,
 		Model model,
-		@AuthenticationPrincipal UserDetails member) {
-
+		@AuthenticationPrincipal UserDetails member
+	) {
 		HospitalViewResponseDto hospital = hospitalService.findHospitalById(hospitalSeq);
 
 		String email = member.getUsername();

@@ -16,7 +16,6 @@ import com.playdata.eungae.article.service.CommunityBoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Controller
 public class ArticleViewController {
 
@@ -27,7 +26,7 @@ public class ArticleViewController {
 		Model model,
 		@AuthenticationPrincipal UserDetails userDetails
 	) {
-		model.addAttribute("posts", communityBoardService.getAllCommunityBoards(userDetails.getUsername()));
+		model.addAttribute("posts", communityBoardService.getCommunityBoards(userDetails.getUsername()));
 		return "contents/community/community-list";
 	}
 

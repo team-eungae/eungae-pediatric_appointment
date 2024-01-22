@@ -68,13 +68,11 @@ public class AppointmentService {
 	}
 
 	@Transactional
-	public ResponseAppointmentDto deleteAppointment(Long appointmentSeq) {
+	public void deleteAppointment(Long appointmentSeq) {
 		Appointment appointment = appointmentRepository.findById(appointmentSeq)
 			.orElseThrow(() -> new IllegalStateException(
 				"Can not found appointment, appointmentSeq = {%d}".formatted(appointmentSeq)));
 		appointment.setStatus(AppointmentStatus.CANCEL);
-		return ResponseAppointmentDto.toDto(appointment);
-
 	}
 
 	@Transactional
@@ -272,7 +270,8 @@ public class AppointmentService {
 
 	private Integer getDoctorTreatmentPossibleCount(Long doctorSeq) {
 		return doctorRepository.findById(doctorSeq)
-			.get()
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found doctor. doctorSeq = {%d}".formatted(doctorSeq)))
 			.getTreatmentPossible();
 	}
 
