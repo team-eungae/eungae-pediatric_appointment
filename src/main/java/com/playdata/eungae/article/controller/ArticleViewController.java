@@ -16,6 +16,7 @@ import com.playdata.eungae.article.service.CommunityBoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Controller
 public class ArticleViewController {
 

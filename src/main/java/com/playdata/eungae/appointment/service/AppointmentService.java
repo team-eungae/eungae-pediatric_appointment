@@ -78,7 +78,7 @@ public class AppointmentService {
 	}
 
 	@Transactional
-	public void saveAppointment(AppointmentRequestDto requestDto, String email) {
+	public ResponsePaymentDto saveAppointment(AppointmentRequestDto requestDto, String email) {
 
 		Hospital hospital = hospitalRepository.findById(requestDto.getHospitalSeq())
 			.orElseThrow(() -> new IllegalStateException(
@@ -95,6 +95,8 @@ public class AppointmentService {
 		Appointment appointment = AppointmentRequestDto.toEntity(requestDto, hospital, children, doctor, member);
 
 		appointmentRepository.save(appointment);
+
+		return ResponsePaymentDto.toDto(appointment);
 	}
 
 	@Transactional(readOnly = true)
@@ -304,5 +306,9 @@ public class AppointmentService {
 		appointment.setStatus(AppointmentStatus.DIAGNOSIS);
 
 		return VisitedChangeStatusDto.toDto(appointment);
+	}
+
+	public void cancelPayment(Long appointmentSeq) {
+		appointmentRepository.deleteById(appointmentSeq);
 	}
 }

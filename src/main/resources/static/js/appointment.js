@@ -4,6 +4,7 @@ document.getElementById('date').value = sysdate.toISOString().substring(0, 10);
 //선택가능한 최소날짜 설정
 document.getElementById('date').min = sysdate.toISOString().substring(0, 10);
 
+
 //선택가능한 최대날짜 설정 다음달 말일까지
 var year = sysdate.getFullYear() + 1;
 var month = sysdate.getMonth() % 11 + 1;
@@ -82,6 +83,64 @@ $('input[name=doctorSeq], input[name=childrenSeq], input[name=appointmentDate]')
     }
 });
 
+const requestPay = (responsePaymentDto) => {
+
+    const {
+        appointmentSeq,
+        deposit,
+        email,
+        name,
+        phoneNumber,
+        address,
+        addressDetail,
+        zipcode,
+    } = responsePaymentDto;
+
+    console.log(appointmentSeq)
+    console.log(deposit)
+    console.log(email)
+    console.log(name)
+    console.log(phoneNumber)
+    console.log(address)
+    console.log(addressDetail)
+    console.log(zipcode)
+
+    IMP.init('imp04202356') // 예: 'imp00000000a'
+    IMP.request_pay({
+        // pg: "kakaopay.TC0ONETIME",
+        pg: "tosspay.tosstest",
+        pay_method: "card",
+        merchant_uid: appointmentSeq,   // 주문번호
+        name: "appointment",
+        amount: deposit,                         // 숫자 타입
+        buyer_email: email,
+        buyer_name: name,
+        buyer_tel: phoneNumber,
+        buyer_addr: address + " " + addressDetail,
+        buyer_postcode:zipcode,
+        m_redirect_url: `/hospital/${hospitalSeq}`
+    }, function (rsp) { // callback
+        //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
+        alert(rsp)
+        if (rsp.success) {
+            alert("예약이 완료되었습니다.")
+        } else {
+            console.log(rsp)
+            $.ajax({
+                type: 'DELETE',
+                url: `/api/appointments/${appointmentSeq}`,
+                contentType: 'application/json;charset=UTF-8',
+                success: function () {
+                    alert("예약금 결제에 실패했습니다.");
+                }
+            })
+            alert("결제 실패")
+
+        }
+    });
+}
+
+
 const summitBtn = () => {
     let childrenSeq = $('input[name=childrenSeq]:checked').val();
     let doctorSeq = $('input[name=doctorSeq]:checked').val();
@@ -94,6 +153,7 @@ const summitBtn = () => {
             type: 'POST',
             url: `/api/${hospitalSeq}/appointments`,
             contentType: 'application/json;charset=UTF-8',
+            dataType: "json",
             data: JSON.stringify({
                 appointmentDate: value,
                 appointmentHHMM: appointmentHHMM,
@@ -102,9 +162,10 @@ const summitBtn = () => {
                 doctorSeq: doctorSeq,
                 note: note
             }),
-            success: function (data) {
-                alert("예약이 완료되었습니다.")
-                window.location.href = `/hospital/${hospitalSeq}`;
+            success: function (responsePaymentDto) {
+                alert("예약금 결제 페이지로 이동합니다.")
+                console.log(responsePaymentDto)
+                requestPay(responsePaymentDto)
             }, error: function (e) {
                 alert("서버 통신에 실패했습니다.");
             }
