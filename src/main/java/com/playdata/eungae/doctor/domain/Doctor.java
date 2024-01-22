@@ -5,7 +5,6 @@ import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.hospital.domain.Hospital;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 @Builder
@@ -28,8 +27,10 @@ public class Doctor extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @ColumnDefault("'1'")
-    private String status;
+    @Setter
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
+    private DoctorStatus status = DoctorStatus.OFF;
 
     @Column(nullable = false)
     private int treatmentPossible;
