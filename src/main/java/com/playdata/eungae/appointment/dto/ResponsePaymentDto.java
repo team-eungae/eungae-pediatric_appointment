@@ -5,6 +5,8 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class ResponsePaymentDto {
@@ -17,6 +19,7 @@ public class ResponsePaymentDto {
 	private String address;
 	private String addressDetail;
 	private String zipcode;
+	private LocalDateTime createdAt;
 
 	public static ResponsePaymentDto toDto(Appointment appointment) {
 		return ResponsePaymentDto.builder()
@@ -28,6 +31,7 @@ public class ResponsePaymentDto {
 			.address(appointment.getMember().getAddress())
 			.addressDetail(appointment.getMember().getAddressDetail())
 			.zipcode(appointment.getMember().getZipCode())
+			.createdAt(appointment.getCreatedAt())
 			.build();
 	}
 }

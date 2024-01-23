@@ -94,23 +94,15 @@ const requestPay = (responsePaymentDto) => {
         address,
         addressDetail,
         zipcode,
+        createAt
     } = responsePaymentDto;
-
-    console.log(appointmentSeq)
-    console.log(deposit)
-    console.log(email)
-    console.log(name)
-    console.log(phoneNumber)
-    console.log(address)
-    console.log(addressDetail)
-    console.log(zipcode)
 
     IMP.init('imp04202356') // 예: 'imp00000000a'
     IMP.request_pay({
         // pg: "kakaopay.TC0ONETIME",
         pg: "tosspay.tosstest",
         pay_method: "card",
-        merchant_uid: appointmentSeq,   // 주문번호
+        merchant_uid: createAt,   // 주문번호
         name: "appointment",
         amount: deposit,                         // 숫자 타입
         buyer_email: email,
@@ -120,8 +112,6 @@ const requestPay = (responsePaymentDto) => {
         buyer_postcode:zipcode,
         m_redirect_url: `http://localhost:8090/hospital/${hospitalSeq}`
     }, function (rsp) { // callback
-        //rsp.imp_uid 값으로 결제 단건조회 API를 호출하여 결제결과를 판단합니다.
-        alert(rsp)
         if (rsp.success) {
             alert("예약이 완료되었습니다.")
         } else {
@@ -164,7 +154,6 @@ const summitBtn = () => {
             }),
             success: function (responsePaymentDto) {
                 alert("예약금 결제 페이지로 이동합니다.")
-                console.log(responsePaymentDto)
                 requestPay(responsePaymentDto)
             }, error: function (e) {
                 alert("서버 통신에 실패했습니다.");
