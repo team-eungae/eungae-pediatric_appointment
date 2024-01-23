@@ -15,11 +15,4 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class DoctorViewController {
 	private final DoctorService doctorService;
-
-	@GetMapping("/doctors/{doctorSeq}")
-	public String deleteHospitalDoctor(@PathVariable Long doctorSeq) {
-		doctorService.deleteDoctor(doctorSeq);
-
-		return "redirect:/hospital/doctors/form";
-	}
 }
