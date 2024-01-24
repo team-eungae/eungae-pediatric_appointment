@@ -3,6 +3,7 @@ package com.playdata.eungae.doctor.dto;
 
 import com.playdata.eungae.doctor.domain.Doctor;
 
+import com.playdata.eungae.doctor.domain.DoctorStatus;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +12,7 @@ import lombok.Data;
 public class DoctorResponseDto {
 	private Long doctorSeq;
 	private String name;
-	private String status;
+	private DoctorStatus status;
 	private int treatmentPossible;
 	private String doctorProfileImage;
 

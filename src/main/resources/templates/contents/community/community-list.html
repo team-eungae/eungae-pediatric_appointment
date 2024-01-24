@@ -15,15 +15,11 @@
         <hr/>
     </div>
     <div class="community-body">
-        <!-- 반복되는 게시글 부분 -->
         <div class="community-post" th:each="post : ${posts}">
             <div class="row">
-                <div class="col-9">
+                <div class="col-12">
                     <a th:href="@{/articles/{articleSeq}(articleSeq=${post.communityBoardSeq})}" th:text="${post.title}">제목</a>
                     <p class="post-contents" th:text="${post.content}">내용</p>
-                </div>
-                <div class="col-3">
-                   <!-- <img th:src="${post.thumbnailImageUrl}" class="thumbnail-image"/> -->
                 </div>
             </div>
             <div class="written-records">
@@ -35,7 +31,6 @@
             </div>
             <hr/>
         </div>
-        <!-- 게시글 끝 -->
 
         <div class="post-bottom"></div>
     </div>

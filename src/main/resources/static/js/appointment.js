@@ -1,18 +1,26 @@
 //날짜 입력창 기본 값으로 현재 날짜 설정
 const sysdate = new Date();
-document.getElementById('date').value = sysdate.toISOString().substring(0, 10);
-//선택가능한 최소날짜 설정
-document.getElementById('date').min = sysdate.toISOString().substring(0, 10);
-
-//선택가능한 최대날짜 설정 다음달 말일까지
-var year = sysdate.getFullYear() + 1;
-var month = sysdate.getMonth() % 11 + 1;
+var year = sysdate.getFullYear();
+var month = (sysdate.getMonth() + 1) % 12;
+var nextmonth = (sysdate.getMonth() + 2) % 12;
+var dd = sysdate.getDate();
 
 if (month < 10) {
     month = "0" + month;
 }
 
-const nextmonthdate = new Date(year, month, 1);
+if (nextmonth < 10) {
+    nextmonth = "0" + nextmonth;
+}else{
+    year += 1;
+}
+//기본 날짜 오늘날짜 설정
+document.getElementById('date').value = year+"-"+month+"-"+dd;
+//선택가능한 최소날짜 설정
+document.getElementById('date').min = year+"-"+month+"-"+dd;
+
+//선택가능한 최대날짜 설정 다음달 말일까지
+const nextmonthdate = new Date(year, nextmonth, 1);
 document.getElementById('date').max = nextmonthdate.toISOString().substring(0, 10);
 
 
