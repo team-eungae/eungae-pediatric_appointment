@@ -20,12 +20,12 @@ import lombok.RequiredArgsConstructor;
 @Controller
 public class ArticleViewController {
 
-    private final CommunityBoardService communityBoardService;
+	private final CommunityBoardService communityBoardService;
 
 	@GetMapping("/articles")
 	public String listArticles(
-		Model model,
-		@AuthenticationPrincipal UserDetails userDetails
+			Model model,
+			@AuthenticationPrincipal UserDetails userDetails
 	) {
 		model.addAttribute("posts", communityBoardService.getCommunityBoards(userDetails.getUsername()));
 		return "contents/community/community-list";
@@ -39,9 +39,9 @@ public class ArticleViewController {
 
 	@PostMapping("/articles/post")
 	public String postArticle(
-		@AuthenticationPrincipal UserDetails userDetails,
-		@Valid @ModelAttribute CommunityBoardDto communityBoardDto,
-		BindingResult bindingResult
+			@AuthenticationPrincipal UserDetails userDetails,
+			@Valid @ModelAttribute CommunityBoardDto communityBoardDto,
+			BindingResult bindingResult
 	) {
 		if (bindingResult.hasErrors()) {
 			return "contents/community/community-write";
@@ -52,19 +52,19 @@ public class ArticleViewController {
 
 	@GetMapping("/articles/{article-seq}")
 	public String viewArticle(
-		@PathVariable("article-seq") Long id,
-		Model model,
-		@AuthenticationPrincipal UserDetails userDetails
+			@PathVariable("article-seq") Long id,
+			Model model,
+			@AuthenticationPrincipal UserDetails userDetails
 	) {
 		model.addAttribute("post", communityBoardService.getCommunityBoardById(id, userDetails.getUsername()));
 		return "contents/community/community-post-details";
 	}
 
-	@GetMapping("/articles/{communityBoardSeq}/form")
+	@GetMapping("/articles/form/{communityBoardSeq}")
 	public String editArticleForm(
-		@PathVariable Long communityBoardSeq,
-		@AuthenticationPrincipal UserDetails userDetails,
-		Model model
+			@PathVariable Long communityBoardSeq,
+			@AuthenticationPrincipal UserDetails userDetails,
+			Model model
 	) {
 		CommunityBoardDto communityBoardDto = communityBoardService.getCommunityBoardById(communityBoardSeq, userDetails.getUsername());
 		model.addAttribute("communityBoardDto", communityBoardDto);
@@ -73,9 +73,9 @@ public class ArticleViewController {
 
 	@PostMapping("/articles/update")
 	public String updateArticle(
-		@AuthenticationPrincipal UserDetails userDetails,
-		@Valid @ModelAttribute CommunityBoardDto communityBoardDto,
-		BindingResult bindingResult
+			@AuthenticationPrincipal UserDetails userDetails,
+			@Valid @ModelAttribute CommunityBoardDto communityBoardDto,
+			BindingResult bindingResult
 	) {
 		if (bindingResult.hasErrors()) {
 			return "contents/community/community-edit";
@@ -83,11 +83,11 @@ public class ArticleViewController {
 		communityBoardService.updateCommunityBoard(communityBoardDto.getCommunityBoardSeq(), communityBoardDto, userDetails.getUsername());
 		return "redirect:/articles";
 	}
-  
+
 	@PostMapping("/articles/delete/{communityBoardSeq}")
 	public String deleteArticle(
-		@PathVariable Long communityBoardSeq,
-		@AuthenticationPrincipal UserDetails userDetails
+			@PathVariable Long communityBoardSeq,
+			@AuthenticationPrincipal UserDetails userDetails
 	) {
 		communityBoardService.deleteCommunityBoard(communityBoardSeq, userDetails.getUsername());
 		return "redirect:/articles";

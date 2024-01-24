@@ -10,22 +10,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class MemberFindResponseDto {
+public class MemberInfoResponseDto {
     private Long memberSeq;
     private String email;    //이메일
     private String name;
     private String phoneNumber;
     private String address;
     private String addressDetail;
+    private String zipCode;
 
-    //빌더
-    public static MemberFindResponseDto toDto(Member member) {
-        return MemberFindResponseDto.builder()
+    public static MemberInfoResponseDto toDto(Member member) {
+        return MemberInfoResponseDto.builder()
+                .memberSeq(member.getMemberSeq())
                 .email(member.getEmail())
                 .name(member.getName())
                 .phoneNumber(member.getPhoneNumber())
                 .address(member.getAddress())
                 .addressDetail(member.getAddressDetail())
+                .zipCode(member.getZipCode())
                 .build();
     }
+
 }

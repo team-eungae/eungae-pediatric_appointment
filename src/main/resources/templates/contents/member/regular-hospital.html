@@ -22,9 +22,12 @@
                     <p class="location" th:text="${favoritesHospitalDto.hospitalAddress}">광명 소하동</p>
                     <br/>
                     <span class="review" th:text="${favoritesHospitalDto.averageRating}">5.0</span>
-                        <i th:each="num : ${#numbers.sequence(1, favoritesHospitalDto.starCount)}" class="fa-solid fa-star"  style="color: #ffd500;"></i>
-                        <i th:if="${favoritesHospitalDto.starCount != 5}"
-                           th:each="num : ${#numbers.sequence(1,5- favoritesHospitalDto.starCount)}" class="fa-regular fa-star" style="color: #ffd500;"></i>
+                    <i th:unless="${favoritesHospitalDto.totalReview == 0}"
+                       th:each="num : ${#numbers.sequence(1, favoritesHospitalDto.starCount)}" class="fa-solid fa-star"
+                       style="color: #ffd500;"></i>
+                    <i th:if="${favoritesHospitalDto.starCount != 5}"
+                       th:each="num : ${#numbers.sequence(1,5- favoritesHospitalDto.starCount)}" class="fa-regular fa-star"
+                       style="color: #ffd500;"></i>
                     (<span th:text="${favoritesHospitalDto.totalReview}"></span>)
                 </div>
             </div>

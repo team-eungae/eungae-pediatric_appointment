@@ -23,7 +23,7 @@
                     <form th:action="@{/articles/delete/{communityBoardSeq}(communityBoardSeq=${post.communityBoardSeq})}" method="post">
                         <button type="submit" class="btn btn-outline-danger">삭제하기</button>
                     </form>
-                    <a th:href="@{/articles/{communityBoardSeq}/form(communityBoardSeq=${post.communityBoardSeq})}" class="btn btn-outline-primary">수정하기</a>
+                    <a th:href="@{/articles/form/{communityBoardSeq}(communityBoardSeq=${post.communityBoardSeq})}" class="btn btn-outline-primary">수정하기</a>
                 </th:block>
             </ul>
         </div>
@@ -32,15 +32,6 @@
         </div>
         <div class="post-details-contents">
             <p th:text="${post.content}"></p>
-        </div>
-        <div class="post-details-images">
-          <!--  <div class="img-place">
-                <img src="https://i.namu.wiki/i/5dbYIx9wSf1tIJGRb5NO8-fgK5YWOCMJA2Q-cEpsOOOFPlxhyqAUhhV5Cm87Pnanhb5-TpoXKFs9P2AZDGjFUQ.webp"/>
-            </div>
-            <div class="img-place">
-                <img src="https://cdn.huffingtonpost.kr/news/photo/201609/36700_71074.jpeg"/>
-            </div>
-            -->
         </div>
         <hr/>
     </div>

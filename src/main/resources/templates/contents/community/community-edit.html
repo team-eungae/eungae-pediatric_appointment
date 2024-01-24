@@ -17,12 +17,10 @@
             <input type="submit" class="write-button">
             <input type="text" th:field="*{title}" th:if="${communityBoardDto.title}" th:value="${communityBoardDto.title}" placeholder="제목을 입력해주세요"/>
             <input type="text" th:field="*{title}" th:unless="${communityBoardDto.title}" placeholder="제목을 입력해주세요"/>
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError">Incorrect title</p>
             <hr/>
             <textarea th:field="*{content}" th:if="${communityBoardDto.content}" th:text="${communityBoardDto.content}" placeholder="내용을 입력해주세요"></textarea>
-            <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
-            <textarea th:field="*{content}" th:unless="${communityBoardDto.content}" placeholder="내용을 입력해주세요"></textarea>
-            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError">Incorrect data</p>
+            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="fieldError">Incorrect content</p>
             <input type="hidden" th:field="*{communityBoardSeq}" th:value="${communityBoardDto.communityBoardSeq}" />
             <hr/>
         </form>

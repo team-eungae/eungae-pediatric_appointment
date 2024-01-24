@@ -4,10 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +15,8 @@ import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.dto.ResponseFavoritesHospitalDto;
 import com.playdata.eungae.member.repository.FavoritesHospitalRepository;
 
-import com.playdata.eungae.member.dto.MemberFindResponseDto;
 import com.playdata.eungae.member.dto.MemberUpdateRequestDto;
-import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+import com.playdata.eungae.member.dto.MemberInfoResponseDto;
 
 import com.playdata.eungae.member.repository.MemberRepository;
 
@@ -31,32 +26,29 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 @Slf4j
 @Service
-public class MemberService{
+public class MemberService {
 
     private final MemberRepository memberRepository;
     private final HospitalRepository hospitalRepository;
     private final FavoritesHospitalRepository favoritesHospitalRepository;
 
     @Transactional
-    public MemberUpdateResponseDto updateMemberInfo(String email, MemberUpdateRequestDto updateRequestDto) {
+    public MemberInfoResponseDto updateMemberInfo(String email, MemberUpdateRequestDto updateRequestDto) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalStateException("No member found for the email provided. email = {%s}".formatted(email)));
-        member.updateMemberDetails(updateRequestDto);
-        return MemberUpdateResponseDto.toDto(memberRepository.save(member));
+        member.updateMemberDetails(updateRequestDto.getName(),
+                updateRequestDto.getPhoneNumber(),
+                updateRequestDto.getAddress(),
+                updateRequestDto.getAddressDetail(),
+                updateRequestDto.getZipCode());
+        return MemberInfoResponseDto.toDto(memberRepository.save(member));
     }
 
     @Transactional(readOnly = true)
-    public MemberFindResponseDto findMemberByEmail(String email) {
+    public MemberInfoResponseDto getMemberByEmail(String email) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
-        return MemberFindResponseDto.toDto(member);
-    }
-
-    @Transactional(readOnly = true)
-    public MemberUpdateResponseDto updateMemberByEmail(String email) {
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("The provided ID does not exist."));
-        return MemberUpdateResponseDto.toDto(member);
+        return MemberInfoResponseDto.toDto(member);
     }
 
     @Transactional(readOnly = true)
@@ -64,8 +56,8 @@ public class MemberService{
         List<FavoritesHospital> favoritesHospitals = favoritesHospitalRepository.getFavoritesHospitalListByUserEmail(userEmail);
 
         return favoritesHospitals.stream()
-            .map(ResponseFavoritesHospitalDto::toDto)
-            .collect(Collectors.toList());
+                .map(ResponseFavoritesHospitalDto::toDto)
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -78,18 +70,18 @@ public class MemberService{
     public void changeFavoriteStatus(Long hospitalSeq, String userEmail) {
 
         favoritesHospitalRepository.getFavoritesHospitalByUserEmail(userEmail, hospitalSeq)
-            .ifPresentOrElse(
-                favoritesHospital -> {
-                    MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(userEmail, hospitalSeq);
-                    FavoritesHospital favoritesHospitalResult = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
-                    saveEntities(favoritesHospitalResult, memberAndHospitalEntity);
-                },
-                () -> {
-                    MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(userEmail, hospitalSeq);
-                    FavoritesHospital favoritesHospitalResult = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
-                    saveEntities(favoritesHospitalResult, memberAndHospitalEntity);
-                }
-            );
+                .ifPresentOrElse(
+                        favoritesHospital -> {
+                            MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(userEmail, hospitalSeq);
+                            FavoritesHospital favoritesHospitalResult = removeFavoritesHospital(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+                            saveEntities(favoritesHospitalResult, memberAndHospitalEntity);
+                        },
+                        () -> {
+                            MemberAndHospitalEntity memberAndHospitalEntity = getMemberAndHospital(userEmail, hospitalSeq);
+                            FavoritesHospital favoritesHospitalResult = settingRelation(memberAndHospitalEntity.member, memberAndHospitalEntity.hospital);
+                            saveEntities(favoritesHospitalResult, memberAndHospitalEntity);
+                        }
+                );
     }
 
     @Transactional
@@ -101,10 +93,10 @@ public class MemberService{
     private MemberAndHospitalEntity getMemberAndHospital(String memberEmail, Long hospitalSeq) {
 
         Member member = memberRepository.findByEmail(memberEmail)
-            .orElseThrow(() -> new IllegalStateException("No member found for the email provided. email = {%s}".formatted(memberEmail)));
+                .orElseThrow(() -> new IllegalStateException("No member found for the email provided. email = {%s}".formatted(memberEmail)));
 
         Hospital hospital = hospitalRepository.findById(hospitalSeq)
-            .orElseThrow(() -> new IllegalStateException("Can not found hospital. hospitalSeq = {%d}".formatted(hospitalSeq)));
+                .orElseThrow(() -> new IllegalStateException("Can not found hospital. hospitalSeq = {%d}".formatted(hospitalSeq)));
 
         return new MemberAndHospitalEntity(member, hospital);
     }
