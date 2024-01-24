@@ -22,8 +22,7 @@ import com.playdata.eungae.file.ResultFileStore;
 import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.dto.ChildrenDto;
 import com.playdata.eungae.member.dto.ChildrenRequestDto;
-import com.playdata.eungae.member.dto.MemberFindResponseDto;
-import com.playdata.eungae.member.dto.MemberUpdateResponseDto;
+import com.playdata.eungae.member.dto.MemberInfoResponseDto;
 import com.playdata.eungae.member.dto.ResponseFavoritesHospitalDto;
 import com.playdata.eungae.member.repository.MemberRepository;
 import com.playdata.eungae.member.service.ChildrenService;
@@ -51,9 +50,9 @@ public class MemberViewController {
 
     @GetMapping("/records")
     public String medicalRecordList(
-        Model model,
-        @AuthenticationPrincipal UserDetails principal
-        // @PathVariable int page,
+            Model model,
+            @AuthenticationPrincipal UserDetails principal
+            // @PathVariable int page,
     ) {
         List<ResponseMedicalHistoryDto> myMedicalRecords = appointmentService.getMyMedicalRecords(principal.getUsername());
 
@@ -63,8 +62,8 @@ public class MemberViewController {
 
     @GetMapping("/records/{appointmentSeq}")
     public String medicalRecordsDetails(
-        Model model,
-        @PathVariable Long appointmentSeq
+            Model model,
+            @PathVariable Long appointmentSeq
     ) {
         ResponseDetailMedicalHistoryDto myMedicalRecordDetail = appointmentService.getMyMedicalRecordDetail(appointmentSeq);
         model.addAttribute("myMedicalRecordDetail", myMedicalRecordDetail);
@@ -74,22 +73,22 @@ public class MemberViewController {
 
     @GetMapping("/profile")
     public String myPage(@AuthenticationPrincipal UserDetails principal, Model model) {
-        MemberFindResponseDto memberFindResponseDto = memberService.findMemberByEmail(principal.getUsername());
-        model.addAttribute("member", memberFindResponseDto);
+        MemberInfoResponseDto memberInfoResponseDto = memberService.getMemberByEmail(principal.getUsername());
+        model.addAttribute("member", memberInfoResponseDto);
         return "contents/member/my-page";
     }
 
     @GetMapping("/profile/form")
     public String updateProfile(@AuthenticationPrincipal UserDetails principal, Model model) {
-        MemberUpdateResponseDto MemberUpdateResponseDto = memberService.updateMemberByEmail(principal.getUsername());
-        model.addAttribute("member", MemberUpdateResponseDto);
+        MemberInfoResponseDto memberInfoResponseDto = memberService.getMemberByEmail(principal.getUsername());
+        model.addAttribute("member", memberInfoResponseDto);
         return "contents/member/my-page-form";
     }
 
     @GetMapping("/reviews")
     public String myReviewList(
-        @AuthenticationPrincipal UserDetails principal,
-        Model model
+            @AuthenticationPrincipal UserDetails principal,
+            Model model
     ) {
         List<ResponseReviewDto> responseReviewDtos = reviewService.findReviewsByMemberEmail(principal.getUsername());
         model.addAttribute("responseReviewDtos", responseReviewDtos);
@@ -98,8 +97,8 @@ public class MemberViewController {
 
     @GetMapping("/appointments")
     public String getMyReservationList(
-        @AuthenticationPrincipal UserDetails principal,
-        Model model
+            @AuthenticationPrincipal UserDetails principal,
+            Model model
     ) {
         List<ResponseAppointmentDto> responseAppointmentDtos = appointmentService.getAppointmentListByMemberEmail(principal.getUsername());
         model.addAttribute("responseAppointmentDtos", responseAppointmentDtos);
@@ -108,8 +107,8 @@ public class MemberViewController {
 
     @GetMapping("/hospitals")
     public String findFavorites(
-        Model model,
-        @AuthenticationPrincipal UserDetails principal
+            Model model,
+            @AuthenticationPrincipal UserDetails principal
     ) {
         List<ResponseFavoritesHospitalDto> responseFavoritesHospitalDtos = memberService.getFavoritesByMemberEmail(principal.getUsername());
         model.addAttribute("favoritesHospitalDtos", responseFavoritesHospitalDtos);
@@ -118,11 +117,11 @@ public class MemberViewController {
 
     @GetMapping("/children/list")
     public String getAllChildren(
-        Model model,
-        @AuthenticationPrincipal UserDetails userDetails
+            Model model,
+            @AuthenticationPrincipal UserDetails userDetails
     ) {
         Member member = memberRepository.findByEmail(userDetails.getUsername())
-            .orElseThrow(() -> new IllegalStateException("사용자 정보를 찾을 수 없습니다."));
+                .orElseThrow(() -> new IllegalStateException("사용자 정보를 찾을 수 없습니다."));
         List<ChildrenDto> childrenList = childrenService.getAllChildrenByMemberSeq(member.getMemberSeq());
         model.addAttribute("childrenList", childrenList);
         return "contents/member/my-children";
@@ -136,10 +135,10 @@ public class MemberViewController {
 
     @PostMapping("/children/form")
     public String createChild(
-        @Valid ChildrenRequestDto childrenRequestDto,
-        BindingResult bindingResult,
-        MultipartFile profileImage,
-        @AuthenticationPrincipal UserDetails member
+            @Valid ChildrenRequestDto childrenRequestDto,
+            BindingResult bindingResult,
+            MultipartFile profileImage,
+            @AuthenticationPrincipal UserDetails member
     ) {
         if (bindingResult.hasErrors()) {
             return "contents/member/my-children-add";
