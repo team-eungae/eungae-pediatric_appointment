@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.playdata.eungae.appointment.service.AppointmentService;
 import com.playdata.eungae.doctor.dto.DoctorResponseDto;
@@ -46,5 +47,21 @@ public class AppointmentViewController {
 		model.addAttribute("doctors", doctors);
 
 		return "contents/appointment/appointment";
+	}
+
+	@GetMapping("/appointment/test/{appointmentSeq}/{hospitalSeq}")
+	public String paymentTest(
+		@PathVariable Long appointmentSeq,
+		@PathVariable Long hospitalSeq,
+		@RequestParam String imp_uid,
+		@RequestParam(required = false) Boolean imp_success,
+		@RequestParam(required = false) Boolean error_code,
+		@RequestParam(required = false) String error_msg
+	) {
+		if (imp_success) {
+			return "redirect:/hospital/" + hospitalSeq;
+		}
+		appointmentService.deleteAppointment(appointmentSeq);
+		return "redirect:/hospital/" + hospitalSeq;
 	}
 }

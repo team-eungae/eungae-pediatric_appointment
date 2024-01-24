@@ -1,5 +1,6 @@
 //날짜 입력창 기본 값으로 현재 날짜 설정
 const sysdate = new Date();
+
 var year = sysdate.getFullYear();
 var month = (sysdate.getMonth() + 1) % 12;
 var nextmonth = (sysdate.getMonth() + 2) % 12;
@@ -90,6 +91,40 @@ $('input[name=doctorSeq], input[name=childrenSeq], input[name=appointmentDate]')
     }
 });
 
+const requestPay = (responsePaymentDto) => {
+
+    const {
+        appointmentSeq,
+        deposit,
+        email,
+        name,
+        phoneNumber,
+        address,
+        addressDetail,
+        zipcode,
+        createAt
+    } = responsePaymentDto;
+
+    IMP.init('imp04202356') // 예: 'imp00000000a'
+    IMP.request_pay({
+        // pg: "kakaopay.TC0ONETIME",
+        pg: "tosspay.tosstest",
+        pay_method: "card",
+        merchant_uid: createAt,   // 주문번호
+        name: "appointment",
+        amount: deposit,                         // 숫자 타입
+        buyer_email: email,
+        buyer_name: name,
+        buyer_tel: phoneNumber,
+        buyer_addr: address + " " + addressDetail,
+        buyer_postcode:zipcode,
+        m_redirect_url: `http://localhost:8090/hospital/appointment/test/${appointmentSeq}/${hospitalSeq}`
+    }, function (response) {
+        console.log(response)
+    });
+}
+
+
 const summitBtn = () => {
     let childrenSeq = $('input[name=childrenSeq]:checked').val();
     let doctorSeq = $('input[name=doctorSeq]:checked').val();
@@ -102,6 +137,7 @@ const summitBtn = () => {
             type: 'POST',
             url: `/api/${hospitalSeq}/appointments`,
             contentType: 'application/json;charset=UTF-8',
+            dataType: "json",
             data: JSON.stringify({
                 appointmentDate: value,
                 appointmentHHMM: appointmentHHMM,
@@ -110,9 +146,9 @@ const summitBtn = () => {
                 doctorSeq: doctorSeq,
                 note: note
             }),
-            success: function (data) {
-                alert("예약이 완료되었습니다.")
-                window.location.href = `/hospital/${hospitalSeq}`;
+            success: function (responsePaymentDto) {
+                alert("예약금 결제 페이지로 이동합니다.")
+                requestPay(responsePaymentDto)
             }, error: function (e) {
                 alert("서버 통신에 실패했습니다.");
             }
