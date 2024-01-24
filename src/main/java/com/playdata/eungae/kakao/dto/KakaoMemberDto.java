@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class KakaoMemberDto {
-
+	private Long kakaoMemberId;
 	private String email;
 	private String name;
 	private String phoneNumber;
-	private String birthDay;
-	private String birthYear;
+	private String birthDate;
 }

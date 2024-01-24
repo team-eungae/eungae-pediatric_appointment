@@ -1,14 +1,18 @@
 package com.playdata.eungae.kakao.service;
 
-import java.util.Optional;
+import java.io.IOException;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.http.client.reactive.ClientHttpResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,20 +33,24 @@ public class KakaoService {
 
 	private final OauthKakaoRepository oauthKakaoRepository;
 
-	public void kakaoMemberDto(String code) throws JsonProcessingException {
+	public OauthKakaoDto kakaoLogin(String code) throws JsonProcessingException {
+		OauthKakaoDto token = getAccessToken(code);
+		KakaoMemberDto kakaoMemberInfo = getKakaoMemberInfo(token.getAccessToken());
 
-		// getKakaoMemberInfo(accessToken);
+		OauthKakaoDto oauthKakaoDto = saveKakaoOAuth(token, kakaoMemberInfo, code);
+
+		return oauthKakaoDto;
 	}
 
-	private KakaoMemberDto getKakaoMemberInfo(String accessToken) throws JsonProcessingException {
+	public KakaoMemberDto getKakaoMemberInfo(String accessToken) throws JsonProcessingException {
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + accessToken);
 		headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
 		// HTTP 요청 보내기
 		HttpEntity<MultiValueMap<String, String>> kakaoUserInfoRequest = new HttpEntity<>(headers);
-		RestTemplate rt = new RestTemplate();
-		ResponseEntity<String> response = rt.exchange(
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.exchange(
 			"https://kapi.kakao.com/v2/user/me",
 			HttpMethod.POST,
 			kakaoUserInfoRequest,
@@ -54,30 +62,36 @@ public class KakaoService {
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(responseBody);
 
-		Long id = jsonNode.get("id").asLong();
+		Long kakaoMemberId = jsonNode.get("id").asLong();
 		String email = jsonNode.get("kakao_account").get("email").asText();
 		String nickname = jsonNode.get("properties").get("nickname").asText();
+		String birthDate = jsonNode.get("kakao_account").get("birthyear").asText() +
+			jsonNode.get("kakao_account").get("birthday").asText();
+		String phoneNumber = jsonNode.get("kakao_account").get("phone_number").asText();
 
-		log.info("id : {}", id);
-		log.info("email : {}", email);
-		log.info("nickname : {}", nickname);
 		return KakaoMemberDto.builder()
-			.email(jsonNode.get("kakao_account").get("email").asText())
-			.name(jsonNode.get("properties").get("nickname").asText())
-			.birthYear(jsonNode.get("kakao_account").get("birthYear").asText())
-			.birthDay(jsonNode.get("kakao_account").get("birthday").asText())
-			.phoneNumber(jsonNode.get("kakao_account").get("phone_number").asText())
+			.kakaoMemberId(kakaoMemberId)
+			.email(email)
+			.name(nickname)
+			.birthDate(birthDate)
+			.phoneNumber(phoneNumber)
 			.build();
 	}
 
-	// private String saveKakaoOAuth(Long kakaoMemberId) {
-	// 	OauthKakao byKakaoMemberId = oauthKakaoRepository.findByKakaoMemberId(kakaoMemberId).get();
-	//
-	// 	if (byKakaoMemberId != null) {
-	// 		byKakaoMemberId.setAccessToken();
-	// 	}
-	//
-	// }
+	private OauthKakaoDto saveKakaoOAuth(OauthKakaoDto oauthKakaoDto, KakaoMemberDto kakaoMemberDto, String code)
+		throws JsonProcessingException {
+		OauthKakao oauthKakao =
+			oauthKakaoRepository.findByKakaoMemberId(kakaoMemberDto.getKakaoMemberId()).orElse(null);
+
+		if (oauthKakao != null) {
+			oauthKakao.setAccessToken(getAccessToken(code).getAccessToken());
+			oauthKakao.setRefreshToken(getAccessToken(code).getRefreshToken());
+		}
+
+		oauthKakaoRepository.save(OauthKakaoDto.toEntity(oauthKakaoDto, kakaoMemberDto));
+
+		return oauthKakaoDto;
+	}
 
 	private OauthKakaoDto getAccessToken(String code) throws JsonProcessingException {
 		// HTTP Header 생성
@@ -93,26 +107,21 @@ public class KakaoService {
 
 		// HTTP 요청 보내기
 		HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest = new HttpEntity<>(body, headers);
-		RestTemplate rt = new RestTemplate();
-		ResponseEntity<String> response = rt.exchange(
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response = restTemplate.exchange(
 			"https://kauth.kakao.com/oauth/token",
 			HttpMethod.POST,
 			kakaoTokenRequest,
 			String.class
 		);
 
+
 		// HTTP 응답 (JSON) -> 액세스 토큰 파싱
 		String responseBody = response.getBody();
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode jsonNode = objectMapper.readTree(responseBody);
-		log.info("****** access_token : {}", jsonNode.get("access_token").asText());
-		log.info("****** expires_in : {}", jsonNode.get("expires_in").asText());
-		log.info("****** refresh_token : {}", jsonNode.get("refresh_token").asText());
-
-		String accessToken = jsonNode.get("access_token").asText();
 
 		// 카카오 고유번호를 받아오기. https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api#get-token-info
-
 
 		// 데이터베이스에 유저의 고유번호,엑세스토큰,만료시간,리프레시토큰,만료시간,회원가입 여부
 
