@@ -3,7 +3,6 @@ package com.playdata.eungae.appointment.dto;
 import java.time.LocalDate;
 
 import com.playdata.eungae.appointment.domain.Appointment;
-import com.playdata.eungae.appointment.domain.AppointmentStatus;
 
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +20,7 @@ public class ResponseMedicalHistoryDto {
 	private String note;
 	private Long reviewSeq;
 
-	public static ResponseMedicalHistoryDto toDto(Appointment appointment){
+	public static ResponseMedicalHistoryDto toDto(Appointment appointment) {
 		return ResponseMedicalHistoryDto.builder()
 			.reviewSeq(appointment.getReviewSeq())
 			.appointmentSeq(appointment.getAppointmentSeq())

@@ -85,6 +85,4 @@ public class AppointmentApiController {
 	public void deleteAppointment(@PathVariable("appointmentSeq") Long appointmentSeq) {
 		appointmentService.cancelPayment(appointmentSeq);
 	}
-
-
 }
