@@ -19,6 +19,7 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.appointment.domain.AppointmentStatus;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.doctor.domain.Doctor;
+import com.playdata.eungae.doctor.domain.DoctorStatus;
 import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.doctor.repository.DoctorRepository;
 import com.playdata.eungae.hospital.domain.Hospital;
@@ -61,20 +62,18 @@ public class AppointmentService {
 
 	@Transactional(readOnly = true)
 	public List<DoctorResponseDto> getDoctors(Long hospitalSeq) {
-		return doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq)
+		return doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq, DoctorStatus.ON)
 			.stream()
 			.map(DoctorResponseDto::toDto)
 			.collect(Collectors.toList());
 	}
 
 	@Transactional
-	public ResponseAppointmentDto deleteAppointment(Long appointmentSeq) {
+	public void deleteAppointment(Long appointmentSeq) {
 		Appointment appointment = appointmentRepository.findById(appointmentSeq)
 			.orElseThrow(() -> new IllegalStateException(
 				"Can not found appointment, appointmentSeq = {%d}".formatted(appointmentSeq)));
 		appointment.setStatus(AppointmentStatus.CANCEL);
-		return ResponseAppointmentDto.toDto(appointment);
-
 	}
 
 	@Transactional
