@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
+import com.playdata.eungae.appointment.dto.PaymentResultDto;
 import com.playdata.eungae.appointment.dto.RequestAppointmentDeleteDto;
+import com.playdata.eungae.appointment.dto.ResponsePaymentDto;
 import com.playdata.eungae.appointment.dto.VisitedChangeStatusDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
 
@@ -35,13 +38,12 @@ public class AppointmentApiController {
 
 	@PostMapping("/{hospitalSeq}/appointments")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String saveAppointment(
+	public ResponsePaymentDto saveAppointment(
 		@RequestBody AppointmentRequestDto appointmentRequestDto,
 		@AuthenticationPrincipal UserDetails member
 	) {
 		String email = member.getUsername();
-		appointmentService.saveAppointment(appointmentRequestDto, email);
-		return "success";
+		return appointmentService.saveAppointment(appointmentRequestDto, email);
 	}
 
 	@GetMapping("/appointment/time")
@@ -77,5 +79,12 @@ public class AppointmentApiController {
 	) {
 		return  appointmentService.changeAppointmentStatus(appointmentSeq);
 	}
+
+	@DeleteMapping("/appointments/{appointmentSeq}")
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteAppointment(@PathVariable("appointmentSeq") Long appointmentSeq) {
+		appointmentService.cancelPayment(appointmentSeq);
+	}
+
 
 }

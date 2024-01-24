@@ -40,14 +40,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AppointmentService {
 
-    private static final int PAGE_SIZE = 20;
-    private final HospitalRepository hospitalRepository;
-    private final HospitalScheduleRepository hospitalScheduleRepository;
-    private final DoctorRepository doctorRepository;
-    private final AppointmentRepository appointmentRepository;
-    private final MemberRepository memberRepository;
-    private final ChildrenRepository childrenRepository;
-    private final ReviewRepository reviewRepository;
+	private static final int PAGE_SIZE = 20;
+	private final HospitalRepository hospitalRepository;
+	private final HospitalScheduleRepository hospitalScheduleRepository;
+	private final DoctorRepository doctorRepository;
+	private final AppointmentRepository appointmentRepository;
+	private final MemberRepository memberRepository;
+	private final ChildrenRepository childrenRepository;
+	private final ReviewRepository reviewRepository;
 
     @Transactional(readOnly = true)
     public List<ChildrenDto> getMyChildren(String email) {
@@ -117,16 +117,12 @@ public class AppointmentService {
         return ResponseDetailMedicalHistoryDto.toDto(appointment);
     }
 
+	public void cancelPayment(Long appointmentSeq) {
+		appointmentRepository.deleteById(appointmentSeq);
+	}
+  
     @Transactional(readOnly = true)
     public List<ResponseAppointmentDto> getAppointmentListByMemberEmail(/*int pageNumber,*/ String memberEmail) {
-
-/*
-		고도화 작업하며 pageable 기능 추가할것
-		Pageable pageConfig = PageRequest.of(
-			pageNumber, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt")
-		);
-*/
-
         List<Appointment> appointments = appointmentRepository.findAllByMemberEmail(memberEmail);
 
         // 유효한 예약과 취소된 예약을 조회
@@ -137,7 +133,6 @@ public class AppointmentService {
     }
 
     // 병원 운영 시간
-
     @Transactional(readOnly = true)
     public List<LocalTime> createAppointmentPossibleTime
             (String appointmentDate,
