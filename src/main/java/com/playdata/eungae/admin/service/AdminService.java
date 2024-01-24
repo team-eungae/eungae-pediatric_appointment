@@ -1,7 +1,6 @@
 package com.playdata.eungae.admin.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -146,7 +145,7 @@ public class AdminService {
 			hashOperations.put("hospital", hospitalDto.getHospitalSeq().toString(),
 				objectMapper.writeValueAsString(hospitalDto));
 		} catch (JsonProcessingException e) {
-			log.error("--- {} ---", e.getMessage());
+			log.info(e.getMessage());
 			throw new RuntimeException(e);
 		}
 	}

@@ -20,7 +20,6 @@ import com.playdata.eungae.hospital.dto.KeywordSearchRequestDto;
 import com.playdata.eungae.hospital.repository.HospitalRepository;
 import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -122,7 +121,6 @@ public class HospitalService {
 				hospitalList.add(objectMapper.readValue(hospitalValue, HospitalSearchResponseDto.class));
 			}
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
 			return List.of();
 		}
 		return hospitalList;
