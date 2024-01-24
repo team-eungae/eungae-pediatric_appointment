@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.playdata.eungae.admin.service.AdminService;
+import com.playdata.eungae.hospital.service.HospitalRedisService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,4 +21,10 @@ public class AdminController {
 	public void savePublicHospitalData() {
 		adminService.savePublicHospitalData();
 	}
+
+	@GetMapping("/redis-insert/hospital")
+	public void saveHospitalsToRedis() {
+		adminService.saveAllHospitalsToRedis();
+	}
+
 }
