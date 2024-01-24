@@ -25,6 +25,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 		+ " join fetch r.member"
 		+ " join fetch r.hospital"
 		+ " where r.hospital.hospitalSeq = :hospitalSeq"
+		+ " and r.deleteYN != 'Y'"
 		+ " order by r.reviewSeq desc ")
 	List<Review> findAllByHospitalHospitalSeq(@Param("hospitalSeq") Long hospitalSeq);
 
@@ -32,6 +33,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 		+ " join fetch r.member"
 		+ " join fetch r.hospital"
 		+ " where r.member.email = :email"
+		+ " and r.deleteYN != 'Y'"
 		+ " order by r.reviewSeq desc ")
 	List<Review> findReviewsByMemberEmail(@Param("email") String memberEmail);
 }
