@@ -110,23 +110,9 @@ const requestPay = (responsePaymentDto) => {
         buyer_tel: phoneNumber,
         buyer_addr: address + " " + addressDetail,
         buyer_postcode:zipcode,
-        m_redirect_url: `http://localhost:8090/hospital/${hospitalSeq}`
-    }, function (rsp) { // callback
-        if (rsp.success) {
-            alert("예약이 완료되었습니다.")
-        } else {
-            console.log(rsp)
-            $.ajax({
-                type: 'DELETE',
-                url: `/api/appointments/${appointmentSeq}`,
-                contentType: 'application/json;charset=UTF-8',
-                success: function () {
-                    alert("예약금 결제에 실패했습니다.");
-                }
-            })
-            alert("결제 실패")
-
-        }
+        m_redirect_url: `http://localhost:8090/hospital/appointment/test/${appointmentSeq}/${hospitalSeq}`
+    }, function (response) {
+        console.log(response)
     });
 }
 

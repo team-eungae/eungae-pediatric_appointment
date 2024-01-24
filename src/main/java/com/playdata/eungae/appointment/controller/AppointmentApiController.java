@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
+import com.playdata.eungae.appointment.dto.PaymentResultDto;
 import com.playdata.eungae.appointment.dto.RequestAppointmentDeleteDto;
 import com.playdata.eungae.appointment.dto.ResponsePaymentDto;
 import com.playdata.eungae.appointment.dto.VisitedChangeStatusDto;
@@ -84,7 +85,6 @@ public class AppointmentApiController {
 	public void deleteAppointment(@PathVariable("appointmentSeq") Long appointmentSeq) {
 		appointmentService.cancelPayment(appointmentSeq);
 	}
-
 
 
 }
