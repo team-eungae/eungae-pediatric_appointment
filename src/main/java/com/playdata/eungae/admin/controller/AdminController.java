@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.playdata.eungae.admin.service.AdminService;
-import com.playdata.eungae.hospital.service.HospitalRedisService;
 
 import lombok.RequiredArgsConstructor;
 
