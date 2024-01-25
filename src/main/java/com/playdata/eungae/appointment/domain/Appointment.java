@@ -1,11 +1,9 @@
 package com.playdata.eungae.appointment.domain;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.playdata.eungae.base.BaseEntity;
@@ -13,7 +11,6 @@ import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.member.domain.Children;
 import com.playdata.eungae.member.domain.Member;
-import com.playdata.eungae.review.domain.Review;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +23,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

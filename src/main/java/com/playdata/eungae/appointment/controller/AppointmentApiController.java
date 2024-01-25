@@ -79,5 +79,4 @@ public class AppointmentApiController {
 	) {
 		return  appointmentService.changeAppointmentStatus(appointmentSeq);
 	}
-
 }
