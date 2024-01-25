@@ -79,10 +79,4 @@ public class AppointmentApiController {
 	) {
 		return  appointmentService.changeAppointmentStatus(appointmentSeq);
 	}
-
-	@DeleteMapping("/appointments/{appointmentSeq}")
-	@ResponseStatus(HttpStatus.OK)
-	public void deleteAppointment(@PathVariable("appointmentSeq") Long appointmentSeq) {
-		appointmentService.cancelPayment(appointmentSeq);
-	}
 }

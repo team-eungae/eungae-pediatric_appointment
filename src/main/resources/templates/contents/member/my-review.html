@@ -16,7 +16,7 @@
         <div class="review">
             <p class="hospital-name">
                 <a th:href="@{|/hospital/${responseReviewDto.hospitalSeq}|}" th:text="${responseReviewDto.hospitalName}">플러스소아청소년과의원</a>
-                <button class="review-delete-button">삭제</button>
+                <button th:onclick="|location.href='@{/my/records/reviews/{review_seq}(review_seq=${responseReviewDto.reviewSeq})}'|" class="review-delete-button">삭제</button>
             </p>
 
             <div class="review-rate">

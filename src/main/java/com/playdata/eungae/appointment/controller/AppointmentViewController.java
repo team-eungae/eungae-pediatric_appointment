@@ -61,7 +61,7 @@ public class AppointmentViewController {
 		if (imp_success) {
 			return "redirect:/hospital/" + hospitalSeq;
 		}
-		appointmentService.deleteAppointment(appointmentSeq);
+		appointmentService.cancelPayment(appointmentSeq);
 		return "redirect:/hospital/" + hospitalSeq;
 	}
 }

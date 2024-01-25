@@ -2,6 +2,7 @@ package com.playdata.eungae.member.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
@@ -109,8 +111,7 @@ public class MemberViewController {
     public String findFavorites(
             Model model,
             @AuthenticationPrincipal UserDetails principal
-    ) {
-        List<ResponseFavoritesHospitalDto> responseFavoritesHospitalDtos = memberService.getFavoritesByMemberEmail(principal.getUsername());
+    ) { List<ResponseFavoritesHospitalDto> responseFavoritesHospitalDtos = memberService.getFavoritesByMemberEmail(principal.getUsername());
         model.addAttribute("favoritesHospitalDtos", responseFavoritesHospitalDtos);
         return "contents/member/regular-hospital";
     }
@@ -156,5 +157,14 @@ public class MemberViewController {
         childrenService.deleteChild(id);
         return "redirect:/my/children/list"; // 자녀 목록 페이지로 리디렉션
     }
+
+    @GetMapping("/records/reviews/{review_seq}")
+    public String removeReview(@PathVariable("review_seq") long reviewSeq) {
+        System.out.println("===================================================================");
+        reviewService.removeReview(reviewSeq);
+        System.out.println("===================================================================");
+        return "redirect:/my/reviews";
+    }
+
 
 }
