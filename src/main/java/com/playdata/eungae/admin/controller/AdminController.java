@@ -20,4 +20,10 @@ public class AdminController {
 	public void savePublicHospitalData() {
 		adminService.savePublicHospitalData();
 	}
+
+	@GetMapping("/redis-insert/hospital")
+	public void saveHospitalsToRedis() {
+		adminService.saveAllHospitalsToRedis();
+	}
+
 }
