@@ -209,7 +209,7 @@ function addMarker(position, markerImage) {
             '            <div class="desc">' +
             '                <div class="ellipsis">' + position.address + '</div>' +
             '                <div class="jibun ellipsis">' + position.contact + '</div>' +
-            '                <div><a href="/hospital/' + position.hospitalSeq + '" class="link">예약</a></div>' +
+            '                <div><a href="/hospital/' + position.hospitalSeq + '" class="link">예약 하러가기</a></div>' +
             '            </div>' +
             '        </div>' +
             '    </div>' +

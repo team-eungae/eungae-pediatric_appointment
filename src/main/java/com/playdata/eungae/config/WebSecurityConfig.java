@@ -38,8 +38,8 @@ public class WebSecurityConfig {
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector)
-		throws Exception {
+	public SecurityFilterChain filterChain(HttpSecurity http, HandlerMappingIntrospector introspector) throws
+		Exception {
 		http.csrf(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests(authorizationRequests -> authorizationRequests
 				.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
