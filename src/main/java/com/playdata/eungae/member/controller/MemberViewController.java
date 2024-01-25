@@ -160,11 +160,8 @@ public class MemberViewController {
 
     @GetMapping("/records/reviews/{review_seq}")
     public String removeReview(@PathVariable("review_seq") long reviewSeq) {
-        System.out.println("===================================================================");
         reviewService.removeReview(reviewSeq);
-        System.out.println("===================================================================");
         return "redirect:/my/reviews";
     }
-
 
 }

@@ -1,0 +1,19 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 수직 정렬을 위해 추가 */
+    justify-content: center; /* 수평 정렬을 위해 추가 */
+    height: 80vh; /* 화면 전체 높이를 차지하도록 설정 */
+}
+
+.result-success {
+    color: #326eb3;
+}
+
+.result-fail {
+    color: orangered;
+}
+
+.result-info {
+    margin-bottom: 10px;
+}
