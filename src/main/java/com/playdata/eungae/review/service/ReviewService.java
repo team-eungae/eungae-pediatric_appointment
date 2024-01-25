@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ReviewService {
 
-	private final int PAGE_SIZE = 20;
+	private static final int PAGE_SIZE = 20;
 	private final ReviewRepository reviewRepository;
 	private final AppointmentRepository appointmentRepository;
 
