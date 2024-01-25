@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.playdata.eungae.appointment.dto.PaymentResultDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
 import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
@@ -49,19 +50,20 @@ public class AppointmentViewController {
 		return "contents/appointment/appointment";
 	}
 
-	@GetMapping("/appointment/test/{appointmentSeq}/{hospitalSeq}")
+	@GetMapping("/appointment/payment/{appointmentSeq}/{hospitalSeq}")
 	public String paymentTest(
 		@PathVariable Long appointmentSeq,
 		@PathVariable Long hospitalSeq,
-		@RequestParam String imp_uid,
 		@RequestParam(required = false) Boolean imp_success,
-		@RequestParam(required = false) Boolean error_code,
-		@RequestParam(required = false) String error_msg
+		@RequestParam(required = false) String error_msg,
+		Model model
 	) {
-		if (imp_success) {
-			return "redirect:/hospital/" + hospitalSeq;
+		if(!imp_success) {
+			appointmentService.cancelPayment(appointmentSeq);
 		}
-		appointmentService.cancelPayment(appointmentSeq);
-		return "redirect:/hospital/" + hospitalSeq;
+		PaymentResultDto paymentResultDto = PaymentResultDto.createDto(hospitalSeq, imp_success, error_msg);
+		model.addAttribute("paymentResultDto", paymentResultDto);
+		return "contents/appointment/payment-result";
 	}
+
 }
