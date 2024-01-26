@@ -21,8 +21,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 	@Query("select a from Appointment a"
 		+ " join fetch a.hospital"
 		+ " join fetch a.member"
-		+ " where a.appointmentSeq = :appointmentSeq")
-	Optional<Appointment> findByIdWhitHospital(@Param("appointmentSeq") long appointmentSeq);
+		+ " where a.appointmentSeq = :appointmentSeq"
+		+ " and a.deleteYN = 'N'")
+	Optional<Appointment> findByIdWithHospitalWithMember(@Param("appointmentSeq") long appointmentSeq);
 
 	@Query("select a"
 		+ " from Appointment a"
@@ -31,7 +32,8 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " and a.appointmentDate = :appointmentDate"
 		+ " and a.appointmentHHMM = :appointmentHHMM"
 		+ " and a.status = 'APPOINTMENT'"
-		+ " and a. doctor.doctorSeq = :doctorSeq")
+		+ " and a. doctor.doctorSeq = :doctorSeq"
+		+ " and a.deleteYN = 'N'")
 	List<Appointment> findAllWithHospital(
 		@Param("hospitalSeq") Long hospitalSeq,
 		@Param("appointmentDate") LocalDate appointmentDate,
@@ -46,6 +48,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch a.doctor "
 		+ " join fetch a.children "
 		+ " where a.member.email = :memberEmail"
+		+ " and a.deleteYN = 'N'"
 		+ " order by a.appointmentSeq desc ")
 	List<Appointment> findAllByMemberEmail(@Param("memberEmail") String memberEmail);
 
@@ -55,6 +58,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch a.doctor "
 		+ " join fetch a.children "
 		+ " where a.appointmentSeq = :appointmentSeq"
+		+ " and a.deleteYN = 'N'"
 		+ " and a.status = :status")
 	Optional<Appointment> findByAppointmentSeq(@Param("appointmentSeq") Long appointmentSeq,
 		@Param("status") AppointmentStatus appointmentStatus);

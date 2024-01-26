@@ -15,6 +15,7 @@ public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
 	@Query("select d from Doctor d"
 		+ " where d.hospital.hospitalSeq = :hospitalSeq"
-		+ " and d.status = :doctorStatus")
+		+ " and d.status = :doctorStatus"
+		+ " and d.deleteYN = 'N'")
 	List<Doctor> findAllByHospitalHospitalSeq(@Param("hospitalSeq") Long hospitalSeq, @Param("doctorStatus") DoctorStatus doctorStatus);
 }

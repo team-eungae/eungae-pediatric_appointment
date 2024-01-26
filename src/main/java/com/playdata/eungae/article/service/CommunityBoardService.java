@@ -37,8 +37,8 @@ public class CommunityBoardService {
 	}
 
 	@Transactional(readOnly = true)
-	public CommunityBoardDto getCommunityBoardById(Long id, String currentUserEmail) {
-		CommunityBoard communityBoard = communityBoardRepository.findByIdWithMember(id)
+	public CommunityBoardDto getCommunityBoardById(Long communityBoardSeq, String currentUserEmail) {
+		CommunityBoard communityBoard = communityBoardRepository.findByIdWithMember(communityBoardSeq)
 			.orElseThrow(() -> new IllegalArgumentException("Invalid board ID"));
 		return CommunityBoardDto.toDto(communityBoard, currentUserEmail);
 	}
@@ -69,7 +69,7 @@ public class CommunityBoardService {
 			throw new IllegalStateException("You have no authority to modify.");
 		}
 
-		communityBoardRepository.delete(communityBoard);
+		communityBoard.deleted();
 	}
 
 	@Transactional(readOnly = true)
@@ -80,9 +80,4 @@ public class CommunityBoardService {
 			.collect(Collectors.toList());
 	}
 
-	private File convertToFile(MultipartFile multipartFile) throws IOException {
-		File convFile = new File(multipartFile.getOriginalFilename());
-		multipartFile.transferTo(convFile);
-		return convFile;
-	}
 }
