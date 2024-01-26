@@ -1,5 +1,7 @@
 package com.playdata.eungae.admin.service;
 
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
