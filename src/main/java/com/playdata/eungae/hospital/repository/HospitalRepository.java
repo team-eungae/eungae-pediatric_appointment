@@ -15,8 +15,13 @@ import com.playdata.eungae.hospital.domain.Hospital;
 public interface HospitalRepository extends JpaRepository<Hospital, Long> {
 	@Query("select h"
 		+ " from Hospital h"
-		+ " where h.name like %:keyword% or h.address like %:keyword%")
+		+ " where h.name like %:keyword% or h.address like %:keyword%"
+		+ "	and h.deleteYN = 'N'")
 	List<Hospital> findAllByKeyword(@Param("keyword") String keyword);
-	
-	Optional<Hospital> findByHospitalId(String hospitalId);
+
+	@Query("select h"
+		+ " from Hospital h"
+		+ "	where h.hospitalSeq = :hospitalSeq"
+		+ " and h.deleteYN = 'N'")
+	Optional<Hospital> findByHospitalSeq(@Param("hospitalSeq") Long hospitalSeq);
 }

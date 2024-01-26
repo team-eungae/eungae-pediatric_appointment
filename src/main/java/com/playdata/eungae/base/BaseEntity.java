@@ -28,9 +28,9 @@ public abstract class BaseEntity {
 	private LocalDateTime modifiedAt;
 
 	@ColumnDefault("'N'")
-	private char deleteYN;
+	private String deleteYN = "N";
 
 	public void deleted() {
-		this.deleteYN = 'Y';
+		this.deleteYN = "Y";
 	}
 }

@@ -1,6 +1,7 @@
 package com.playdata.eungae.member.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,6 +15,11 @@ public interface ChildrenRepository extends JpaRepository<Children, Long> {
 
 	@Query("select c from Children c"
 		+ " where c.member.memberSeq = :memberSeq"
-		+ " and c.deleteYN != 'Y'")
+		+ " and c.deleteYN = 'N'")
 	List<Children> findAllByMemberMemberSeq(@Param("memberSeq") long MemberSeq);
+
+	@Query("select c from Children c"
+		+ " where c.childrenSeq = :childrenSeq"
+		+ " and c.deleteYN = 'N'")
+	Optional<Children> findBychildrenSeq(@Param("childrenSeq") Long childrenSeq);
 }

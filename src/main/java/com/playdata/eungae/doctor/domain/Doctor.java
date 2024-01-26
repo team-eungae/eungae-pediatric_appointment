@@ -3,6 +3,8 @@ package com.playdata.eungae.doctor.domain;
 
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.hospital.domain.Hospital;
+import com.playdata.eungae.hospital.domain.HospitalImage;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;

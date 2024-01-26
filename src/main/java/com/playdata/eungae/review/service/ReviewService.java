@@ -33,7 +33,7 @@ public class ReviewService {
 	@Transactional
 	public void createReview(RequestReviewFormDto requestReviewFormDto) {
 
-		Appointment appointment = appointmentRepository.findByIdWhitHospital(requestReviewFormDto.getAppointmentSeq())
+		Appointment appointment = appointmentRepository.findByIdWithHospitalWithMember(requestReviewFormDto.getAppointmentSeq())
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment, appointmentSeq = {%d}"
 				.formatted(requestReviewFormDto.getAppointmentSeq())));
 
@@ -51,7 +51,7 @@ public class ReviewService {
 
 	@Transactional
 	public void removeReview(long reviewSeq) {
-		Review review = reviewRepository.findById(reviewSeq)
+		Review review = reviewRepository.findByReviewSeq(reviewSeq)
 			.orElseThrow(() -> new IllegalStateException("Can not found Review, reviewSeq = {%d}".formatted(reviewSeq)));
 		review.deleted();
 	}
