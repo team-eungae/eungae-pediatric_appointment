@@ -16,11 +16,13 @@ public interface CommunityBoardRepository extends JpaRepository<CommunityBoard, 
 
 	@Query("select c from CommunityBoard c"
 		+ " join fetch c.member"
+		+ " where c.deleteYN = 'N'"
 		+ " order by c.communityBoardSeq desc ")
 	List<CommunityBoard> findAllWithMember();
 
 	@Query("select c from CommunityBoard c"
 		+ " join fetch c.member"
-		+ " where c.member.memberSeq = :id")
-	Optional<CommunityBoard> findByIdWithMember(@Param("id") Long id);
+		+ " where c.communityBoardSeq = :communityBoardSeq"
+		+ " and c.deleteYN = 'N'")
+	Optional<CommunityBoard> findByIdWithMember(@Param("communityBoardSeq") Long communityBoardSeq);
 }

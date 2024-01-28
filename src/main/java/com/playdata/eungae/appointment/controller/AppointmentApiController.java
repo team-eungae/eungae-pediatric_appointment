@@ -3,6 +3,7 @@ package com.playdata.eungae.appointment.controller;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -60,7 +61,9 @@ public class AppointmentApiController {
 			appointmentDayOfWeek, doctorSeq, hospitalSeq, childrenSeq);
 		boolean childrenAppointmentStatus = appointmentService.getChildrenAppointmentTime(childrenSeq,
 			appointmentDate);
-		result.add(appointmentPossibleTime);
+		result.add(appointmentPossibleTime.stream()
+			.map(LocalTime::toString)
+			.collect(Collectors.toList()));
 		result.add(childrenAppointmentStatus);
 		return result;
 
@@ -78,11 +81,5 @@ public class AppointmentApiController {
 			@PathVariable Long appointmentSeq
 	) {
 		return  appointmentService.changeAppointmentStatus(appointmentSeq);
-	}
-
-	@DeleteMapping("/appointments/{appointmentSeq}")
-	@ResponseStatus(HttpStatus.OK)
-	public void deleteAppointment(@PathVariable("appointmentSeq") Long appointmentSeq) {
-		appointmentService.cancelPayment(appointmentSeq);
 	}
 }

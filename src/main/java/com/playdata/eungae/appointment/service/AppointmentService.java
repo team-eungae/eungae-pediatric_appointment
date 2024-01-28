@@ -10,15 +10,20 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import com.playdata.eungae.appointment.dto.*;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.appointment.domain.AppointmentStatus;
+import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
+import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
+import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
+import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
+import com.playdata.eungae.appointment.dto.ResponsePaymentDto;
+import com.playdata.eungae.appointment.dto.VisitedChangeStatusDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.doctor.domain.Doctor;
+import com.playdata.eungae.doctor.domain.DoctorStatus;
 import com.playdata.eungae.doctor.dto.DoctorResponseDto;
 import com.playdata.eungae.doctor.repository.DoctorRepository;
 import com.playdata.eungae.hospital.domain.Hospital;
@@ -30,7 +35,6 @@ import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.dto.ChildrenDto;
 import com.playdata.eungae.member.repository.ChildrenRepository;
 import com.playdata.eungae.member.repository.MemberRepository;
-import com.playdata.eungae.review.repository.ReviewRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +51,6 @@ public class AppointmentService {
 	private final AppointmentRepository appointmentRepository;
 	private final MemberRepository memberRepository;
 	private final ChildrenRepository childrenRepository;
-	private final ReviewRepository reviewRepository;
 
 	@Transactional(readOnly = true)
 	public List<ChildrenDto> getMyChildren(String email) {
@@ -61,20 +64,18 @@ public class AppointmentService {
 
 	@Transactional(readOnly = true)
 	public List<DoctorResponseDto> getDoctors(Long hospitalSeq) {
-		return doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq)
+		return doctorRepository.findAllByHospitalHospitalSeq(hospitalSeq, DoctorStatus.ON)
 			.stream()
 			.map(DoctorResponseDto::toDto)
 			.collect(Collectors.toList());
 	}
 
 	@Transactional
-	public ResponseAppointmentDto deleteAppointment(Long appointmentSeq) {
+	public void deleteAppointment(Long appointmentSeq) {
 		Appointment appointment = appointmentRepository.findById(appointmentSeq)
 			.orElseThrow(() -> new IllegalStateException(
 				"Can not found appointment, appointmentSeq = {%d}".formatted(appointmentSeq)));
 		appointment.setStatus(AppointmentStatus.CANCEL);
-		return ResponseAppointmentDto.toDto(appointment);
-
 	}
 
 	@Transactional

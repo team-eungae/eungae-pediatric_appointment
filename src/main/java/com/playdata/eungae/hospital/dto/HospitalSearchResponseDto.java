@@ -5,11 +5,15 @@ import java.util.List;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.review.domain.Review;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class HospitalSearchResponseDto {
 	private Long hospitalSeq;
 	private String name;

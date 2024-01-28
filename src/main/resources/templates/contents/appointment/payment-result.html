@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http//www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mobile_layout}">
+
+<th:block layout:fragment="custom_header">
+    <title>예약 - 응애 | 소아과 예약</title>
+    <link rel="stylesheet" href="/css/payment-result.css">
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+</th:block>
+
+<body>
+<main layout:fragment="content">
+    <div class="main-container" th:if="${paymentResultDto.paymentResult == true}">
+        <h3 class="result-success">결제 완료</h3>
+        <p class="result-info">예약이 성공적으로 완료되었습니다.</p>
+        <button class="btn btn-primary" th:onclick="|location.href='@{/my/appointments}'|">내 예약목록 확인하기</button>
+    </div>
+    <div class="main-container" th:if="${paymentResultDto.paymentResult == false}">
+        <h3 class="result-fail">결제 실패</h3>
+        <p class="result-info" th:text="${paymentResultDto.paymentResultInfo}">왜안됐징</p>
+        <button class="btn btn-primary" th:onclick="|location.href='@{/hospital/{hospitalSeq}(hospitalSeq=${paymentResultDto.hospitalSeq})}'|">병원으로 돌아가기</button>
+    </div>
+</main>
+<div layout:fragment="custom_js">
+<!--    <script src="/js/appointment.js"></script>-->
+</div>
+</body>
+</html>

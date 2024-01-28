@@ -26,14 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ReviewService {
 
-	private final int PAGE_SIZE = 20;
+	private static final int PAGE_SIZE = 20;
 	private final ReviewRepository reviewRepository;
 	private final AppointmentRepository appointmentRepository;
 
 	@Transactional
 	public void createReview(RequestReviewFormDto requestReviewFormDto) {
 
-		Appointment appointment = appointmentRepository.findByIdWhitHospital(requestReviewFormDto.getAppointmentSeq())
+		Appointment appointment = appointmentRepository.findByIdWithHospitalWithMember(requestReviewFormDto.getAppointmentSeq())
 			.orElseThrow(() -> new IllegalStateException("Can not found Appointment, appointmentSeq = {%d}"
 				.formatted(requestReviewFormDto.getAppointmentSeq())));
 
@@ -51,7 +51,7 @@ public class ReviewService {
 
 	@Transactional
 	public void removeReview(long reviewSeq) {
-		Review review = reviewRepository.findById(reviewSeq)
+		Review review = reviewRepository.findByReviewSeq(reviewSeq)
 			.orElseThrow(() -> new IllegalStateException("Can not found Review, reviewSeq = {%d}".formatted(reviewSeq)));
 		review.deleted();
 	}

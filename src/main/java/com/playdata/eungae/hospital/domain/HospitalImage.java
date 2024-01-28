@@ -1,5 +1,7 @@
 package com.playdata.eungae.hospital.domain;
 
+import org.hibernate.annotations.Where;
+
 import com.playdata.eungae.base.BaseEntity;
 
 import jakarta.persistence.Column;
@@ -21,6 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Builder
+@Where(clause = "deleteYN = 'N'")
 @Table(name = "hospital_image")
 @Entity
 public class HospitalImage extends BaseEntity {

@@ -118,9 +118,7 @@ const requestPay = (responsePaymentDto) => {
         buyer_tel: phoneNumber,
         buyer_addr: address + " " + addressDetail,
         buyer_postcode:zipcode,
-        m_redirect_url: `http://localhost:8090/hospital/appointment/test/${appointmentSeq}/${hospitalSeq}`
-    }, function (response) {
-        console.log(response)
+        m_redirect_url: `http://localhost:8090/hospital/appointment/payment/${appointmentSeq}/${hospitalSeq}`
     });
 }
 

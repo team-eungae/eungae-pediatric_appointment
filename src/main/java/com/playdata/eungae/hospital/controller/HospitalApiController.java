@@ -41,17 +41,6 @@ public class HospitalApiController {
 		return "hospital created successfully";
 	}
 
-	@PostMapping("/image")
-	@ResponseStatus(HttpStatus.CREATED)
-	public String createHospitalImages(MultipartFile file, Long hospitalSeq) {
-		ResultFileStore resultFileStore;
-		resultFileStore = fileStore.storeFile(file);
-
-		hospitalImageService.saveHospitalImage(resultFileStore, hospitalSeq);
-
-		return "hospital Image created successfully";
-	}
-
 	@GetMapping("/around")
 	@ResponseStatus(HttpStatus.OK)
 	public List<HospitalSearchResponseDto> getHospitalsNearby(double longitude, double latitude) {

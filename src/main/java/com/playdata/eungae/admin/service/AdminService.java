@@ -1,17 +1,25 @@
 package com.playdata.eungae.admin.service;
 
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
+import com.playdata.eungae.hospital.dto.HospitalSearchResponseDto;
 import com.playdata.eungae.hospital.repository.HospitalRepository;
 import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
 
@@ -25,6 +33,9 @@ public class AdminService {
 
 	private final HospitalRepository hospitalRepository;
 	private final HospitalScheduleRepository hospitalScheduleRepository;
+	private final RedisTemplate<String, String> redisTemplate;
+	private final ObjectMapper objectMapper;
+	private final HashOperations<String, String, String> hashOperations; // key, subKey, value 순서
 
 	@Value("${api.open-data.key}")
 	String apiKey;
@@ -121,4 +132,22 @@ public class AdminService {
 			return null;
 		}
 	}
+
+	@Transactional(readOnly = true)
+	public void saveAllHospitalsToRedis() {
+		List<HospitalSearchResponseDto> allHospitals = hospitalRepository.findAll()
+			.stream().map(HospitalSearchResponseDto::toDto).toList();
+		allHospitals.forEach(this::putHospitalToHash);
+	}
+
+	private void putHospitalToHash(HospitalSearchResponseDto hospitalDto) {
+		try {
+			hashOperations.put("hospital", hospitalDto.getHospitalSeq().toString(),
+				objectMapper.writeValueAsString(hospitalDto));
+		} catch (JsonProcessingException e) {
+			log.info(e.getMessage());
+			throw new RuntimeException(e);
+		}
+	}
+
 }
