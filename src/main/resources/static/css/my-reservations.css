@@ -1,3 +1,11 @@
+body {
+    color: #333333;
+}
+
+hr {
+    margin-top: 0.5rem;
+}
+
 .my-reservaions-header {
     margin-top: 10vh;
     margin-left: 5vw;
@@ -14,13 +22,13 @@
 }
 
 .my-reservations {
-    border: 1vw dashed #99B7D9;
-    border-radius: 5vw;
-    margin-bottom: 5vh;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 2vh;
 }
 
 .hospital-name {
-    margin: 5vw;
+    margin: 10px 10px 10px 10px;
     font-size: 1.2rem;
     font-weight: 550;
 }
@@ -32,24 +40,42 @@
 
 .button-place {
     text-align: center;
-    margin-bottom: 2vh;
+    margin: 2vh 0px;
 }
 
-.hospital-details {
-    background-color: #99B7D9;
+.appointment-list {
+    margin-left: 20px;
+}
+
+.appointment-list__box {
+    margin-bottom: 5px;
+}
+
+.appointment-list__item {
+    font-size: 15px;
+    color: #adadad;
+}
+
+.appointment-list__value {
+    font-size: 17px;
+}
+
+a.hospital-details {
+    background-color: #326EB3;
     border: 0;
-    border-radius: 3vw;
+    border-radius: 6px;
     padding-left: 4vw;
     padding-right: 4vw;
     padding-top: 1%;
     padding-bottom: 1%;
     margin-right: 20vw;
+    color: white;
 }
 
 .reservation-cancel {
     background-color: #326EB3;
     border: 0;
-    border-radius: 3vw;
+    border-radius: 6px;
     padding-left: 4vw;
     padding-right: 4vw;
     padding-top: 1%;
@@ -60,7 +86,7 @@
 .canceled-reservation {
     background-color: #e4606d;
     border: 0;
-    border-radius: 3vw;
+    border-radius: 6px;
     padding-left: 4vw;
     padding-right: 4vw;
     padding-top: 1%;

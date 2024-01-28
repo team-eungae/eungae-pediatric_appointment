@@ -39,8 +39,8 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
-    #          ddl-auto: none
+      #      ddl-auto: create
+      ddl-auto: none
     defer-datasource-initialization: true
     properties:
       hibernate:
