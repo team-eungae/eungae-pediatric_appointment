@@ -61,7 +61,7 @@ public class AppointmentViewController {
 		if(!imp_success) {
 			appointmentService.cancelPayment(appointmentSeq);
 		}
-		PaymentResultDto paymentResultDto = PaymentResultDto.createDto(hospitalSeq, imp_success, error_msg);
+		PaymentResultDto paymentResultDto = PaymentResultDto.create(hospitalSeq, imp_success, error_msg);
 		model.addAttribute("paymentResultDto", paymentResultDto);
 		return "contents/appointment/payment-result";
 	}
