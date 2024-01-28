@@ -29,6 +29,7 @@ import com.playdata.eungae.member.service.ChildrenService;
 import com.playdata.eungae.member.service.MemberService;
 import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.service.ReviewService;
+import com.playdata.eungae.security.MemberUserDetails;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -72,7 +73,7 @@ public class MemberViewController {
 
 
     @GetMapping("/profile")
-    public String myPage(@AuthenticationPrincipal UserDetails principal, Model model) {
+    public String myPage(@AuthenticationPrincipal MemberUserDetails principal, Model model) {
         MemberInfoResponseDto memberInfoResponseDto = memberService.getMemberByEmail(principal.getUsername());
         model.addAttribute("member", memberInfoResponseDto);
         return "contents/member/my-page";

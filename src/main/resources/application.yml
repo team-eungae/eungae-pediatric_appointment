@@ -7,11 +7,12 @@ spring:
       client:
         registration:
           kakao:
-            client-id:
-            client-secret:
+            client-id: 0180d0e4a5af2d2dc8bb4f5aa715e58d
+            client-secret: IB5ksRJYYQvnsLCV5YOdaf5bmqdRnXqJ
             authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
-            client-authentication-method: POST
+            redirect-uri: "http://localhost:8090/login/oauth2/code/kakao"
+            client-authentication-method: client_secret_post
+            client-name: kakao
         provider:
           kakao:
             authorization-uri: https://kauth.kakao.com/oauth/authorize
@@ -39,8 +40,8 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
-    #          ddl-auto: none
+#            ddl-auto: create
+      ddl-auto: none
     defer-datasource-initialization: true
     properties:
       hibernate:
