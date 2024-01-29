@@ -20,7 +20,6 @@ import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
 import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.ResponsePaymentDto;
-import com.playdata.eungae.appointment.dto.VisitedChangeStatusDto;
 import com.playdata.eungae.appointment.repository.AppointmentRepository;
 import com.playdata.eungae.doctor.domain.Doctor;
 import com.playdata.eungae.doctor.domain.DoctorStatus;
@@ -109,8 +108,7 @@ public class AppointmentService {
 
 	@Transactional(readOnly = true)
 	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
-		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq,
-				AppointmentStatus.DIAGNOSIS)
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq)
 			.orElseThrow(() -> new IllegalStateException(
 				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
 		return ResponseDetailMedicalHistoryDto.toDto(appointment);
@@ -304,15 +302,4 @@ public class AppointmentService {
 		return appointmentRepository.findAllWithHospital(hospitalSeq, localDate, time, doctorSeq).size();
 	}
 
-	@Transactional
-	public VisitedChangeStatusDto changeAppointmentStatus(Long appointmentSeq) {
-
-		Appointment appointment = appointmentRepository.findById(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException(
-				"Cannot find Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
-
-		appointment.setStatus(AppointmentStatus.DIAGNOSIS);
-
-		return VisitedChangeStatusDto.toDto(appointment);
-	}
 }

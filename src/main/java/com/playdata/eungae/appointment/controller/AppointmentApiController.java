@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.playdata.eungae.appointment.dto.AppointmentRequestDto;
 import com.playdata.eungae.appointment.dto.RequestAppointmentDeleteDto;
 import com.playdata.eungae.appointment.dto.ResponsePaymentDto;
-import com.playdata.eungae.appointment.dto.VisitedChangeStatusDto;
 import com.playdata.eungae.appointment.service.AppointmentService;
 
 import lombok.RequiredArgsConstructor;
@@ -59,11 +57,13 @@ public class AppointmentApiController {
 		List<Object> result = new ArrayList<>();
 		List<LocalTime> appointmentPossibleTime = appointmentService.createAppointmentPossibleTime(appointmentDate,
 			appointmentDayOfWeek, doctorSeq, hospitalSeq, childrenSeq);
-		boolean childrenAppointmentStatus = appointmentService.getChildrenAppointmentTime(childrenSeq,
-			appointmentDate);
+
+		boolean childrenAppointmentStatus = appointmentService.getChildrenAppointmentTime(childrenSeq, appointmentDate);
+
 		result.add(appointmentPossibleTime.stream()
 			.map(LocalTime::toString)
 			.collect(Collectors.toList()));
+
 		result.add(childrenAppointmentStatus);
 		return result;
 
@@ -75,11 +75,4 @@ public class AppointmentApiController {
 		appointmentService.deleteAppointment(requestAppointmentDeleteDto.getAppointmentSeq());
 	}
 
-	@PatchMapping("/hospital/appointments/{appointment-seq}/visited")
-	@ResponseStatus(HttpStatus.OK)
-	public VisitedChangeStatusDto checkVisitedAppointment(
-			@PathVariable Long appointmentSeq
-	) {
-		return  appointmentService.changeAppointmentStatus(appointmentSeq);
-	}
 }

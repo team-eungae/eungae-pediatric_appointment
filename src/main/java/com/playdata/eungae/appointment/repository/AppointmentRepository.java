@@ -15,9 +15,6 @@ import com.playdata.eungae.appointment.domain.AppointmentStatus;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-	// 내 진료기록 전체 조회
-	List<Appointment> findAllByMemberMemberSeqAndStatus(Long memberSeq, String status);
-
 	@Query("select a from Appointment a"
 		+ " join fetch a.hospital"
 		+ " join fetch a.member"
@@ -58,9 +55,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch a.doctor "
 		+ " join fetch a.children "
 		+ " where a.appointmentSeq = :appointmentSeq"
-		+ " and a.deleteYN = 'N'"
-		+ " and a.status = :status")
-	Optional<Appointment> findByAppointmentSeq(@Param("appointmentSeq") Long appointmentSeq,
-		@Param("status") AppointmentStatus appointmentStatus);
+		+ " and a.deleteYN = 'N'")
+	Optional<Appointment> findByAppointmentSeq(@Param("appointmentSeq") Long appointmentSeq);
 
 }
