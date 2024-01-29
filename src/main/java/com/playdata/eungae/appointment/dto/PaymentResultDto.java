@@ -1,9 +1,5 @@
 package com.playdata.eungae.appointment.dto;
 
-import java.time.LocalDate;
-
-import com.playdata.eungae.appointment.domain.Appointment;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,7 +13,7 @@ public class PaymentResultDto {
 
 	private String paymentResultInfo;
 
-	public static PaymentResultDto createDto(Long hospitalSeq, boolean paymentResult, String paymentResultInfo) {
+	public static PaymentResultDto create(Long hospitalSeq, boolean paymentResult, String paymentResultInfo) {
 		return PaymentResultDto.builder()
 			.hospitalSeq(hospitalSeq)
 			.paymentResult(paymentResult)

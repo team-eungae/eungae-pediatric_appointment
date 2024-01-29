@@ -60,78 +60,141 @@
             <table id="schedule" style="display: none;">
                 <tr>
                     <td class="day">월요일</td>
-                    <td class="time">
+                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                        <td class="time">
                         <span id="dutyTime1"
                               th:text="${hospital.hospitalSchedule.monOpen}+' - '+${hospital.hospitalSchedule.monClose}"></span>
-                    </td>
-                    <td class="lunch-time">
-                        (점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
-                    </td>
+                        </td>
+                        <td class="lunch-time">
+                            (점심 <span
+                                th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        </td>
+                    </div>
+                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                        <td class="time">
+                        <span id="dutyTime1">
+                            휴업
+                        </span>
+                        </td>
+                    </div>
                 </tr>
                 <tr>
                     <td class="day">화요일</td>
-                    <td class="time">
+                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                        <td class="time">
                         <span id="dutyTime2"
                               th:text="${hospital.hospitalSchedule.tueOpen}+' - '+${hospital.hospitalSchedule.tueClose}"></span>
-                    </td>
-                    <td class="lunch-time">
-                        (점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
-                    </td>
+                        </td>
+                        <td class="lunch-time">
+                            (점심 <span
+                                th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        </td>
+                    </div>
+                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                        <td class="time">
+                        <span id="dutyTime2">
+                            휴업
+                        </span>
+                        </td>
+                    </div>
                 </tr>
                 <tr>
                     <td class="day">수요일</td>
-                    <td class="time">
+                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                        <td class="time">
                         <span id="dutyTime3"
                               th:text="${hospital.hospitalSchedule.wedOpen}+' - '+${hospital.hospitalSchedule.wedClose}"></span>
-                    </td>
-                    <td class="lunch-time">
-                        (점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
-                    </td>
+                        </td>
+                        <td class="lunch-time">
+                            (점심 <span
+                                th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        </td>
+                    </div>
+                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                        <td class="time">
+                        <span id="dutyTime3">
+                            휴업
+                        </span>
+                        </td>
+                    </div>
                 </tr>
                 <tr>
                     <td class="day">목요일</td>
-                    <td class="time">
+                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                        <td class="time">
                         <span id="dutyTime4"
                               th:text="${hospital.hospitalSchedule.thuOpen}+' - '+${hospital.hospitalSchedule.thuClose}"></span>
-                    </td>
-                    <td class="lunch-time">
-                        (점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
-                    </td>
+                        </td>
+                        <td class="lunch-time">
+                            (점심 <span
+                                th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        </td>
+                    </div>
+                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                        <td class="time">
+                        <span id="dutyTime4">
+                            휴업
+                        </span>
+                        </td>
+                    </div>
                 </tr>
                 <tr>
                     <td class="day">금요일</td>
-                    <td class="time">
+                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                        <td class="time">
                         <span id="dutyTime5"
                               th:text="${hospital.hospitalSchedule.friOpen}+' - '+${hospital.hospitalSchedule.friClose}"></span>
-                    </td>
-                    <td class="lunch-time">
-                        (점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
-                    </td>
+                        </td>
+                        <td class="lunch-time">
+                            (점심 <span
+                                th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        </td>
+                    </div>
+                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                        <td class="time">
+                        <span id="dutyTime5">
+                            휴업
+                        </span>
+                        </td>
+                    </div>
                 </tr>
                 <tr>
                     <td class="day">토요일</td>
-                    <td class="time">
+                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                        <td class="time">
                         <span id="dutyTime6"
                               th:text="${hospital.hospitalSchedule.satOpen}+' - '+${hospital.hospitalSchedule.satClose}"></span>
-                    </td>
-                    <td class="lunch-time">
-                        (점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
-                    </td>
+                        </td>
+                        <td class="lunch-time">
+                            (점심 <span
+                                th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        </td>
+                    </div>
+                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                        <td class="time">
+                        <span id="dutyTime6">
+                            휴업
+                        </span>
+                        </td>
+                    </div>
                 </tr>
                 <tr>
                     <td class="day">일요일</td>
-                    <td class="time"><span id="dutyTime0"
-                                           th:text="${hospital.hospitalSchedule.sunOpen}+' - '+${hospital.hospitalSchedule.sunClose}"></span>
-                    </td>
-                    <td class="lunch-time">(점심 <span
-                            th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
-                    </td>
+                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                        <td class="time"><span id="dutyTime0"
+                                               th:text="${hospital.hospitalSchedule.sunOpen}+' - '+${hospital.hospitalSchedule.sunClose}"></span>
+                        </td>
+                        <td class="lunch-time">(점심 <span
+                                th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
+                        </td>
+                    </div>
+                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                        <td class="time">
+                        <span id="dutyTime0">
+                            휴업
+                        </span>
+                        </td>
+                    </div>
                 </tr>
             </table>
         </div>
