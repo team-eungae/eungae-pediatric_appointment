@@ -31,23 +31,29 @@ public class MemberOAuthUserService extends DefaultOAuth2UserService {
 		if (provider.equals("kakao")) {
 			oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
 		}
-		String email = oAuth2UserInfo.getEmail();
-		Member member = memberRepository.findByEmail(email).orElse(null);
+
+		String email = oAuth2UserInfo != null ? oAuth2UserInfo.getEmail() : null;
+		Member member = email != null ? memberRepository.findByEmail(email).orElse(null) : null;
 
 		if (member == null) {
-			 member = Member.builder()
-				.name(oAuth2UserInfo.getName())
+			member = Member.builder()
+				.name(oAuth2UserInfo != null ? oAuth2UserInfo.getName() : null)
 				.email(email)
 				.provider(provider)
-				.providerId(oAuth2UserInfo.getProviderId())
+				.providerId(oAuth2UserInfo != null ? oAuth2UserInfo.getProviderId() : null)
 				.address("정보를 입력해 주세요.")
 				.zipCode("정보를 입력해 주세요.")
 				.password(UUID.randomUUID().toString())
 				.birthDate("정보를 입력해 주세요.")
-				.phoneNumber("정보를 입력해 주세요.").build();
+				.phoneNumber("정보를 입력해 주세요.")
+				.build();
 
-			memberRepository.save(member);
+			// 이메일이 null이 아닐 때만 저장
+			if (email != null) {
+				memberRepository.save(member);
+			}
 		}
+
 
 		return new MemberUserDetails(member, oAuth2UserInfo.getAttributes());
 	}
