@@ -23,6 +23,11 @@ public class HomeController {
 	private final MemberService memberService;
 	private final PasswordEncoder passwordEncoder;
 
+	@GetMapping("/success")
+	public String kakaoSuccess() {
+		return "success";
+	}
+
 	@GetMapping("/")
 	public String index() {
 		return "index";
