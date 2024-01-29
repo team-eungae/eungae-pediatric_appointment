@@ -146,6 +146,12 @@ hr {
     background-color: #326EB3;
     color: #ffffff;
 }
+
+.detail-info__title {
+    font-size: 15px;
+    color: #a4a3a3;
+}
+
 .appointment-symptom{
     margin-top: 1rem;
     width: 320px;
