@@ -1,10 +1,7 @@
 package com.playdata.eungae.hospital.dto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
-import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.review.domain.Review;
 
@@ -12,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @Builder
