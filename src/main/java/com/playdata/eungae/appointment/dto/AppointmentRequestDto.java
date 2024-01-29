@@ -1,6 +1,7 @@
 package com.playdata.eungae.appointment.dto;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.appointment.domain.AppointmentStatus;
@@ -14,7 +15,7 @@ import lombok.Data;
 @Data
 public class AppointmentRequestDto {
 
-	private LocalDate appointmentDate;
+	private String appointmentDate;
 
 	private String appointmentHHMM;
 
@@ -38,7 +39,7 @@ public class AppointmentRequestDto {
 			.doctor(doctor)
 			.children(children)
 			.member(member)
-			.appointmentDate(appointmentRequestDto.getAppointmentDate())
+			.appointmentDate(LocalDate.parse(appointmentRequestDto.getAppointmentDate(), DateTimeFormatter.ISO_DATE))
 			.appointmentHHMM(appointmentRequestDto.getAppointmentHHMM().replace(":", ""))
 			.note(appointmentRequestDto.getNote())
 			.build();
