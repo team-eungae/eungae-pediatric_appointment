@@ -42,7 +42,7 @@ public class SecurityConfig {
 				.loginProcessingUrl("/login-proc")
 				.usernameParameter("email")
 				.passwordParameter("password")
-				.defaultSuccessUrl("/")
+				.defaultSuccessUrl("/", true)
 				.failureUrl("/login/error"))
 			.oauth2Login(oauth -> oauth
 				.loginPage("/login")
@@ -69,6 +69,7 @@ public class SecurityConfig {
 			.requestMatchers(new AntPathRequestMatcher("/js/**"))
 			.requestMatchers(new AntPathRequestMatcher("/img/**"))
 			.requestMatchers(new AntPathRequestMatcher("/lib/**"))
+			.requestMatchers(new AntPathRequestMatcher(("/error")))
 			.requestMatchers(new AntPathRequestMatcher("/h2-console/**")));
 	}
 }
