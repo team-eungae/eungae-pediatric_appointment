@@ -4,7 +4,6 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.member.domain.Member;
-import com.playdata.eungae.review.dto.RequestReviewFormDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,7 +54,4 @@ public class Review extends BaseEntity {
 	@Column(nullable = false)
 	private String content;
 
-	public void remove() {
-		// 리뷰의 deleteYN 값을 변경해줘야 한다
-	}
 }

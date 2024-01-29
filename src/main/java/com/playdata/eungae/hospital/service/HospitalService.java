@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.playdata.eungae.hospital.domain.Hospital;
-import com.playdata.eungae.hospital.dto.HospitalRegisterRequestDto;
 import com.playdata.eungae.hospital.dto.HospitalSearchResponseDto;
 import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
 import com.playdata.eungae.hospital.dto.KeywordSearchRequestDto;
@@ -34,13 +33,6 @@ public class HospitalService {
 	private final RedisTemplate<String, String> redisTemplate;
 	private final ObjectMapper objectMapper;
 	private final HashOperations<String, String, String> hashOperations; // key, subKey, value 순서
-
-	@Transactional
-	public void saveHospital(HospitalRegisterRequestDto dto) {
-		Hospital entity = HospitalRegisterRequestDto.toEntity(dto);
-		hospitalRepository.save(entity);
-		hospitalScheduleRepository.save(entity.getHospitalSchedule());
-	}
 
 	@Transactional(readOnly = true)
 	public HospitalViewResponseDto findHospitalById(Long hospitalSeq) {
