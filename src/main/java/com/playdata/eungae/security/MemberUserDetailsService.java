@@ -13,9 +13,10 @@ import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class MemberUserDetailsService implements UserDetailsService {
+
 	private final MemberRepository memberRepository;
 
 	@Override
@@ -27,10 +28,6 @@ public class MemberUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException(email);
 		}
 
-		return User.builder()
-			.username(member.get().getEmail())
-			.password(member.get().getPassword())
-			.build();
+		return new MemberUserDetails(member.get());
 	}
-
 }
