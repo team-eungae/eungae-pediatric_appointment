@@ -89,6 +89,8 @@ public class HospitalService {
 
 	@Transactional(readOnly = true)
 	public List<HospitalSearchResponseDto> getHospitalsBy(KeywordSearchRequestDto keywordDto) {
+		LocalDateTime now = LocalDateTime.now();
+		LocalDate currentDate = LocalDate.parse(now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		List<Hospital> hospitalsByKeyword = hospitalRepository.findAllByKeyword(keywordDto.getKeyword());
 		List<HospitalSearchResponseDto> hospitalSearchResults;
 		// 위치정보가 있으면 거리순으로 정렬
@@ -101,11 +103,19 @@ public class HospitalService {
 								keywordDto.getLatitude(), keywordDto.getLongitude(),
 								hospital.getYCoordinate(), hospital.getXCoordinate())))
 				.map(HospitalSearchResponseDto::toDto)
-				.toList();
+				.peek(hospital -> {
+					hospital
+						.setCurrentWaitingCount(
+							getCurrentAppointmentCount(hospital.getHospitalSeq(), now, currentDate));
+				}).toList();
 		} else {
 			hospitalSearchResults = hospitalsByKeyword.stream()
 				.map(HospitalSearchResponseDto::toDto)
-				.toList();
+				.peek(hospital -> {
+					hospital
+						.setCurrentWaitingCount(
+							getCurrentAppointmentCount(hospital.getHospitalSeq(), now, currentDate));
+				}).toList();
 		}
 		return hospitalSearchResults;
 	}

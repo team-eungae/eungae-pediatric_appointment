@@ -69,7 +69,8 @@ if (navigator.geolocation){
                     latlng: new kakao.maps.LatLng(hospital.latitude,hospital.longitude),
                     address:hospital.address,
                     hospitalSeq:hospital.hospitalSeq,
-                    contact:hospital.contact
+                    contact:hospital.contact,
+                    currWait:hospital.currentWaitingCount
                 }
                 positions[index]=position;
                 console.log(index);
@@ -138,7 +139,8 @@ const onSearch = (event) => {
                     latlng: new kakao.maps.LatLng(hospital.latitude,hospital.longitude),
                     address:hospital.address,
                     hospitalSeq:hospital.hospitalSeq,
-                    contact:hospital.contact
+                    contact:hospital.contact,
+                    currWait:hospital.currentWaitingCount
                 }
                 positions[index]=position;
                 addMarker(positions[index],markerImage);
@@ -199,12 +201,12 @@ function addMarker(position, markerImage) {
         content = '<div id="wrap" class="wrap">' +
             '    <div class="info">' +
             '        <div class="title">' +
-            position.title +
+            position.title + ' (현재 대기자수: ' + position.currWait + ')' +
             '            <div class="close" onclick="closeOverlay(' + index + ')" title="닫기"></div>' +
             '        </div>' +
             '        <div class="body">' +
             '            <div class="img">' +
-            '                <img src="/img/logo1.png" width="73" height="70">' +
+            '                <img src="/img/logo1.png" width="90" height="80">' +
             '           </div>' +
             '            <div class="desc">' +
             '                <div class="ellipsis">' + position.address + '</div>' +
