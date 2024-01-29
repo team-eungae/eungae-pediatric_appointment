@@ -26,6 +26,8 @@ import com.playdata.eungae.hospital.repository.HospitalScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 @Slf4j
