@@ -30,7 +30,7 @@ public class initDB {
 
 	private final InitService initService;
 
-	@PostConstruct
+	// @PostConstruct
 	public void init() {
 		// 이곳에 정의한 메소드를 추가해주시면 됩니다.
 		initService.dbInitMember();
