@@ -1,9 +1,7 @@
 package com.playdata.eungae.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -11,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SpringConfig implements WebMvcConfigurer {
 
 	@Value("${file.upload.path}")
-	String photoAdd;
+	String photoUploadPath;
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -20,15 +18,9 @@ public class SpringConfig implements WebMvcConfigurer {
 		String webPath = "/images/**";
 
 		// 실제로 자원이 저장된 로컬 경로
-		// String resourcePath ="file:///" + photoAdd;
-		String resourcePath = photoAdd;
+		String resourcePath = "file:///" + photoUploadPath;
 
-		// /images/로 시작하는 요청이 오면, C:/upload/ 와 연결
+		// /images/로 시작하는 요청이 오면, 로컬 경로와 연결
 		registry.addResourceHandler(webPath).addResourceLocations(resourcePath);
-	}
-
-	@Bean
-	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-		return new HiddenHttpMethodFilter();
 	}
 }
