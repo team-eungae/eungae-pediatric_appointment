@@ -20,6 +20,7 @@
                 <img class="hospital-img" src="/img/logo2.png" alt="병원 대표 이미지">
                 <div class="detail-info">
                     <strong><p th:text="${hospital.name}">병준병준병원</p></strong>
+                    <span class="detail-info__title">예약금 - </span><span th:text="${#numbers.formatDecimal(hospital.deposit, 0, 'COMMA', 0, 'POINT')}+ '원'"></span>
                 </div>
                 <div class="appointment-date-view" id="appointment-date-view"></div>
             </div>
