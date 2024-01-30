@@ -201,7 +201,7 @@ function addMarker(position, markerImage) {
         content = '<div id="wrap" class="wrap">' +
             '    <div class="info">' +
             '        <div class="title">' +
-            position.title + ' (현재 대기자수: ' + position.currWait + ')' +
+            position.title +
             '            <div class="close" onclick="closeOverlay(' + index + ')" title="닫기"></div>' +
             '        </div>' +
             '        <div class="body">' +
@@ -212,6 +212,7 @@ function addMarker(position, markerImage) {
             '                <div class="ellipsis">' + position.address + '</div>' +
             '                <div class="jibun ellipsis">' + position.contact + '</div>' +
             '                <div><a href="/hospital/' + position.hospitalSeq + '" class="link">예약하러 가기</a></div>' +
+            '                <div class="current-waiting">현재 대기 인원: ' + position.currWait + '</div>' +
             '            </div>' +
             '        </div>' +
             '    </div>' +
