@@ -27,9 +27,9 @@ public class HospitalSearchResponseDto {
 	private int totalReview;
 	private int starCount;
 	private String hospitalThumbnail;
+	private int currentWaitingCount;
 
 	public static HospitalSearchResponseDto toDto(Hospital entity) {
-
 		List<Review> reviews = entity.getReviews();
 
 		double averageRating = reviews.stream()
@@ -51,6 +51,7 @@ public class HospitalSearchResponseDto {
 			.starCount((int)averageRating)
 			.hospitalThumbnail(entity.getHospitalImageList().isEmpty() ?
 				null : entity.getHospitalImageList().get(0).getStoreFileName())
+			.currentWaitingCount(0)
 			.build();
 	}
 }

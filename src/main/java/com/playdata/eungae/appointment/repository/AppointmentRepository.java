@@ -38,6 +38,17 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		@Param("doctorSeq") Long doctorSeq
 	);
 
+	@Query("select count(*) from Appointment a"
+		+ " join a.hospital h"
+		+ " where a.hospital.hospitalSeq = :hospitalSeq"
+		+ " and a.appointmentDate = :appointmentDate"
+		+ " and a.appointmentHHMM = :appointmentHHMM"
+		+ " and a.status = 'APPOINTMENT'")
+	Long getAppointmentCount (
+		@Param("hospitalSeq") Long hospitalSeq,
+		@Param("appointmentDate") LocalDate appointmentDate,
+		@Param("appointmentHHMM") String appointmentHHMM);
+
 	@Query("select a"
 		+ " from Appointment a"
 		+ " join fetch a.member"
