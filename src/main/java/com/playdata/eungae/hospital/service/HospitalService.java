@@ -141,38 +141,40 @@ public class HospitalService {
 	}
 
 	private int getCurrentAppointmentCount(Long hospitalSeq, LocalDateTime now, LocalDate currentDate) {
+		String[] searchString = new String[2];
+		int[] dayAddNumber = {0, 0};
+
 		int hour = now.getHour();
 		int minute = now.getMinute();
-		String[] searchString = new String[2];
+
 		int result = 0;
+
+		searchString[0] = hour + "30";
+		searchString[1] = (hour + 1) + "00";
+
 		if (minute >= 30) {
-			hour++;
-			if (hour != 24) {
-				searchString[0] = hour + "00";
-				searchString[1] = hour + "30";
-				result += appointmentRepository.getAppointmentCount(hospitalSeq, currentDate, searchString[0]);
-				result += appointmentRepository.getAppointmentCount(hospitalSeq, currentDate, searchString[1]);
-			} else {
-				searchString[0] = "0000";
-				searchString[1] = "0030";
-				result += appointmentRepository
-					.getAppointmentCount(hospitalSeq, currentDate.plusDays(1), searchString[0]);
-				result += appointmentRepository
-					.getAppointmentCount(hospitalSeq, currentDate.plusDays(1), searchString[1]);
-			}
-		} else {
-			searchString[0] = hour + "30";
-			result += appointmentRepository.getAppointmentCount(hospitalSeq, currentDate, searchString[0]);
-			hour++;
-			if (hour != 24) {
-				searchString[1] = hour + "00";
-				result += appointmentRepository.getAppointmentCount(hospitalSeq, currentDate, searchString[1]);
-			} else {
-				searchString[1] = "0000";
-				result += appointmentRepository
-					.getAppointmentCount(hospitalSeq, currentDate.plusDays(1), searchString[1]);
-			}
+			searchString[0] = (hour + 1) + "00";
+			searchString[1] = (hour + 1) + "30";
 		}
+
+		searchString[0] = searchString[0].length() == 3 ? "0" + searchString[0] : searchString[0];
+		searchString[1] = searchString[1].length() == 3 ? "0" + searchString[1] : searchString[1];
+
+		if (hour == 23 && minute >= 30) {
+			searchString[0] = "0000";
+			searchString[1] = "0030";
+			dayAddNumber[0] = 1;
+			dayAddNumber[1] = 1;
+		} else if (hour == 23) {
+			searchString[0] = "2330";
+			searchString[1] = "0000";
+			dayAddNumber[1] = 1;
+		}
+
+		result += appointmentRepository
+			.getAppointmentCount(hospitalSeq, currentDate.plusDays(dayAddNumber[0]), searchString[0]);
+		result += appointmentRepository
+			.getAppointmentCount(hospitalSeq, currentDate.plusDays(dayAddNumber[1]), searchString[1]);
 		return result;
 	}
 }
