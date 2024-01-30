@@ -15,7 +15,6 @@ public class AdminController {
 
 	private final AdminService adminService;
 
-	// @PostMapping("/open-api/hospital")
 	@GetMapping("/open-api/hospital")
 	public void savePublicHospitalData() {
 		adminService.savePublicHospitalData();

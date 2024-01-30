@@ -31,7 +31,7 @@ public class initDB {
 
 	private final InitService initService;
 
-	// @PostConstruct
+	@PostConstruct
 	public void init() {
 		// 이곳에 정의한 메소드를 추가해주시면 됩니다.
 		initService.dbInitMember();
@@ -145,8 +145,6 @@ public class initDB {
 			.yCoordinate(37.4729951)
 			.xCoordinate(126.8976605)
 			.address("서울 금천구 시흥대로 139길 8")
-			.addressDetail("본관")
-			.businessRegistration("test")
 			.hospitalSchedule(getHospitalSchedule())
 			.build();
 	}
@@ -183,8 +181,6 @@ public class initDB {
 			.xCoordinate(37.47190170505455)
 			.yCoordinate(126.89769223068006)
 			.address("서울 금천구 시흥대로 130길 8")
-			.addressDetail("별관")
-			.businessRegistration("test")
 			.hospitalSchedule(getHospitalSchedule2())
 			.build();
 	}

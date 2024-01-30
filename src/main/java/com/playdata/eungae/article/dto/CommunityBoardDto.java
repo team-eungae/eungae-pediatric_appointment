@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.playdata.eungae.article.domain.CommunityBoard;
+import com.playdata.eungae.member.domain.Member;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,14 @@ public class CommunityBoardDto {
 			.memberEmail(entity.getMember().getEmail())
 			.memberName(entity.getMember().getName())
 			.isOwner(entity.getMember().getEmail().equals(currentUserEmail)) // 소유자 여부 설정
+			.build();
+	}
+
+	public static CommunityBoard toEntity(CommunityBoardDto communityBoardDto, Member member) {
+		return CommunityBoard.builder()
+			.member(member)
+			.title(communityBoardDto.getTitle())
+			.content(communityBoardDto.getContent())
 			.build();
 	}
 

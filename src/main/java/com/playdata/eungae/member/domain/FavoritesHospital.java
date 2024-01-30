@@ -1,9 +1,5 @@
 package com.playdata.eungae.member.domain;
 
-import java.util.List;
-
-import org.hibernate.annotations.Struct;
-
 import com.playdata.eungae.hospital.domain.Hospital;
 
 import jakarta.persistence.Entity;
@@ -30,7 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @Builder
 public class FavoritesHospital {
 
-	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long favoritesHospitalSeq;
 
 	@Setter

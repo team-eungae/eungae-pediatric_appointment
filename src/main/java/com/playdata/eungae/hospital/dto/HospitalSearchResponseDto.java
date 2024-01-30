@@ -21,7 +21,6 @@ public class HospitalSearchResponseDto {
 	private int deposit; //예약금
 	private String contact; //연락처
 	private String address;
-	private String addressDetail;
 	private double longitude;
 	private double latitude;
 	private double averageRating;
@@ -45,7 +44,6 @@ public class HospitalSearchResponseDto {
 			.deposit(entity.getDeposit())
 			.contact(entity.getContact())
 			.address(entity.getAddress())
-			.addressDetail(entity.getAddressDetail())
 			.longitude(entity.getXCoordinate())
 			.latitude(entity.getYCoordinate())
 			.averageRating(Math.round(averageRating))
