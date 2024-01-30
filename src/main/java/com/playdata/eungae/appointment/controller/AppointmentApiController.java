@@ -74,5 +74,5 @@ public class AppointmentApiController {
 	public void deleteAppointment(@RequestBody RequestAppointmentDeleteDto requestAppointmentDeleteDto) {
 		appointmentService.deleteAppointment(requestAppointmentDeleteDto.getAppointmentSeq());
 	}
-
 }
+

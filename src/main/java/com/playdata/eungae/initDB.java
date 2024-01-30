@@ -11,6 +11,7 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import com.playdata.eungae.appointment.domain.AppointmentStatus;
 import com.playdata.eungae.article.domain.Notice;
 import com.playdata.eungae.doctor.domain.Doctor;
+import com.playdata.eungae.doctor.domain.DoctorStatus;
 import com.playdata.eungae.hospital.domain.Hospital;
 import com.playdata.eungae.hospital.domain.HospitalImage;
 import com.playdata.eungae.hospital.domain.HospitalSchedule;
@@ -243,7 +244,7 @@ public class initDB {
 			.name("김우진")
 			.hospital(hospital)
 			.treatmentPossible(3)
-			.doctorProfileImage("doctor.jpeg")
+			.status(DoctorStatus.ON)
 			.build();
 	}
 

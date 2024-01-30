@@ -4,6 +4,7 @@ main {
 .hospital-image {
     width: 6.5rem;
     height: 6.5rem;
+    border-radius: 7px;
     margin-right: 5%;
 }
 .hospital-info {
