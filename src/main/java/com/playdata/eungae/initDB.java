@@ -47,9 +47,9 @@ public class initDB {
 
         public void dbInitMember() {
             Children children = Children.builder()
-                    .name("전병준")
-                    .birthDate("20000523")
-                    .gender("여자")
+                    .name("전지아")
+                    .birthDate("20140523")
+                    .gender("Female")
                     .build();
 
             Member member = getMember("test5@gmail.com");
@@ -103,9 +103,9 @@ public class initDB {
 
     private static Children getChildren(Member member) {
         return Children.builder()
-                .name("김수용")
+                .name("전우주")
                 .birthDate("20230105")
-                .gender("남자")
+                .gender("Male")
                 .profileImage("/img/default-children-2.png")
                 .member(member)
                 .build();
@@ -150,8 +150,6 @@ public class initDB {
                 .yCoordinate(37.4729951)
                 .xCoordinate(126.8976605)
                 .address("서울 금천구 시흥대로 139길 8")
-                .addressDetail("본관")
-                .businessRegistration("test")
                 .hospitalSchedule(getHospitalSchedule())
                 .build();
     }
@@ -188,8 +186,6 @@ public class initDB {
                 .xCoordinate(37.47190170505455)
                 .yCoordinate(126.89769223068006)
                 .address("서울 금천구 시흥대로 130길 8")
-                .addressDetail("별관")
-                .businessRegistration("test")
                 .hospitalSchedule(getHospitalSchedule2())
                 .build();
     }
