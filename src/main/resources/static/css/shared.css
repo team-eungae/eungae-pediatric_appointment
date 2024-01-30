@@ -66,7 +66,7 @@ main {
 }
 
 .toggle-button__bar {
-    width: 80%;
+    width: 150%;
     height: 0.2rem;
     background: #333;
     display: block;

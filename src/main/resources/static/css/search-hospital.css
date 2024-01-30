@@ -34,6 +34,7 @@ main {
     width: 7rem;
     height: 7rem;
     margin-right: 5%;
+    border-radius: 7px;
 }
 .hospital-info {
     display: flex;
