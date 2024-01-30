@@ -75,6 +75,7 @@ public class Appointment extends BaseEntity {
 	private AppointmentStatus status;
 
 	@Setter
+	@Builder.Default
 	@Enumerated(EnumType.STRING)
 	private AppointmentSort sort = AppointmentSort.EUNGAE;
 

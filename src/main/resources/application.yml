@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 80
 
 spring:
   security:
@@ -33,15 +33,15 @@ spring:
 
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@127.0.0.1:1521:xe
+    url: jdbc:oracle:thin:@eungae.cr66ouc0ef4w.ap-northeast-2.rds.amazonaws.com:1521:eungae
     username: eungae
-    password: eungae
+    password: eungae12345!
 
   jpa:
     show-sql: true
     hibernate:
-#            ddl-auto: create
-      ddl-auto: none
+      ddl-auto: create
+    #      ddl-auto: none
     defer-datasource-initialization: true
     properties:
       hibernate:
