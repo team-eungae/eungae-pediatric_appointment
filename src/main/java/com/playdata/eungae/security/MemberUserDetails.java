@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.playdata.eungae.member.domain.Member;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service

@@ -74,6 +74,10 @@ public class Appointment extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private AppointmentStatus status;
 
+	@Setter
+	@Enumerated(EnumType.STRING)
+	private AppointmentSort sort = AppointmentSort.EUNGAE;
+
 	@Column
 	private String note;
 
