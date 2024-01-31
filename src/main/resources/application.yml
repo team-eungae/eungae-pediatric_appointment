@@ -10,7 +10,7 @@ spring:
             client-id: 0180d0e4a5af2d2dc8bb4f5aa715e58d
             client-secret: IB5ksRJYYQvnsLCV5YOdaf5bmqdRnXqJ
             authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:8090/login/oauth2/code/kakao"
+            redirect-uri: "http://eungae.com/login/oauth2/code/kakao"
             client-authentication-method: client_secret_post
             client-name: kakao
         provider:
@@ -54,11 +54,12 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
-      location: /home/ubuntu
-  redis:
-    host: localhost
-    port: 6379
-    password: eungae
+      location: /home/ubuntu/eungaeimage/
+  data:
+    redis:
+      host: 13.125.173.172
+      port: 6379
+      password: eungae
 logging:
   level:
     org:
@@ -70,7 +71,7 @@ logging:
 
 file:
   upload:
-    path: ${IMAGES}
+    path: /home/ubuntu
 
 api:
   open-data:

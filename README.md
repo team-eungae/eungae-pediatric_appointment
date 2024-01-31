@@ -91,6 +91,12 @@
 <img width="600px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/4ae6d55d-be08-4d55-9dd4-378f59df34c2'  alt="Skills"/>
 </div>
 
+## 📃 ERD
+
+<div align="center">
+<img width="600px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/6c48c8bd-9f77-44ff-a531-8c153a46b636'  alt="Skills"/>
+</div>
+
 ## 🏆 Ground Rules
 
 <div align="center">
