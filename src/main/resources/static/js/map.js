@@ -133,7 +133,6 @@ const onSearch = (event) => {
             markers.forEach((marker) => {
                 marker.setMap(null);
             });
-            marker.length = 0;
             overlays.forEach((overlay) => {
                 overlay.setMap(null);
             })
