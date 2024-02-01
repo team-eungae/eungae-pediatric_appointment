@@ -28,7 +28,7 @@
     </td>
     <td align="center" width="120px">
       <a href="https://github.com/ghktndyd" target="_blank">
-        <img src="https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/a97d97dd-5955-432c-b4f4-f772977a13b0" alt="김수용 프로필" />
+        <img src="https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/dc334503-4ae8-4afb-8931-002544ff8cec" alt="김수용 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
