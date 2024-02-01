@@ -19,7 +19,6 @@ let position = {};
 
 // 마커를 담을 배열입니다
 let markers = [];
-// let marker;
 
 // 오버레이들을 담을 배열입니다
 let overlays = [];
@@ -62,33 +61,37 @@ if (navigator.geolocation) {
             "longitude": longitude,
             "latitude": latitude
         }, success: function (hospitalList) {
-            hospitalList.forEach((hospital, index) => {
-                if(hospital.hospitalId == null){
-                    position = {
-                        title: hospital.name,
-                        latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
-                        address: hospital.address,
-                        contact: hospital.contact
-                    }
-                    positions[index] = position;
-                    addBasicMarker(positions[index], basicMarkerImage);
+            if(hospitalList.length == 0){
+                alert("주변 병원을 찾을 수 없습니다.")
+            }else {
+                hospitalList.forEach((hospital, index) => {
+                    if (hospital.hospitalId == null) {
+                        position = {
+                            title: hospital.name,
+                            latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
+                            address: hospital.address,
+                            contact: hospital.contact
+                        }
+                        positions[index] = position;
+                        addBasicMarker(positions[index], basicMarkerImage);
 
-                }else{
-                    position = {
-                        title: hospital.name,
-                        latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
-                        address: hospital.address,
-                        hospitalSeq: hospital.hospitalSeq,
-                        contact: hospital.contact,
-                        currWait: hospital.currentWaitingCount,
-                        hospitalThumbnail: hospital.hospitalThumbnail
+                    } else {
+                        position = {
+                            title: hospital.name,
+                            latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
+                            address: hospital.address,
+                            hospitalSeq: hospital.hospitalSeq,
+                            contact: hospital.contact,
+                            currWait: hospital.currentWaitingCount,
+                            hospitalThumbnail: hospital.hospitalThumbnail
+                        }
+                        positions[index] = position;
+                        addMarker(positions[index], markerImage);
                     }
-                    positions[index] = position;
-                    addMarker(positions[index], markerImage);
-                }
-            });
+                });
+            }
         }, error: function () {
-            alert("주변 병원검색중 오류가 발생하였습니다.");
+            alert("주변 병원 검색 중 오류가 발생하였습니다.");
         }
     })
 } else {
@@ -133,41 +136,46 @@ const onSearch = (event) => {
             markers.forEach((marker) => {
                 marker.setMap(null);
             });
-            marker.length = 0;
+            markers.length = 0;
             overlays.forEach((overlay) => {
                 overlay.setMap(null);
             })
             overlays.length = 0;
             index = 0;
-            moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude, hospitalList[0].longitude);
-            map.setCenter(moveLatLon);
-            hospitalList.forEach((hospital, index) => {
-                if(hospital.hospitalId == null){
-                    position = {
-                        title: hospital.name,
-                        latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
-                        address: hospital.address,
-                        contact: hospital.contact
-                    }
-                    positions[index] = position;
-                    addBasicMarker(positions[index], basicMarkerImage);
+            if(hospitalList.length == 0){
+                alert("병원 검색 결과를 찾을 수 없습니다.")
+            }else{
+                moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude, hospitalList[0].longitude);
+                map.setCenter(moveLatLon);
+                
+                hospitalList.forEach((hospital, index) => {
+                    if(hospital.hospitalId == null){
+                        position = {
+                            title: hospital.name,
+                            latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
+                            address: hospital.address,
+                            contact: hospital.contact
+                        }
+                        positions[index] = position;
+                        addBasicMarker(positions[index], basicMarkerImage);
 
-                }else{
-                    position = {
-                        title: hospital.name,
-                        latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
-                        address: hospital.address,
-                        hospitalSeq: hospital.hospitalSeq,
-                        contact: hospital.contact,
-                        currWait: hospital.currentWaitingCount,
-                        hospitalThumbnail: hospital.hospitalThumbnail
+                    }else{
+                        position = {
+                            title: hospital.name,
+                            latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
+                            address: hospital.address,
+                            hospitalSeq: hospital.hospitalSeq,
+                            contact: hospital.contact,
+                            currWait: hospital.currentWaitingCount,
+                            hospitalThumbnail: hospital.hospitalThumbnail
+                        }
+                        positions[index] = position;
+                        addMarker(positions[index], markerImage);
                     }
-                    positions[index] = position;
-                    addMarker(positions[index], markerImage);
-                }
-            });
+                });
+            }
         }, error: function () {
-            alert("키워드 검색 중 오류가 발생하였습니다. 다른 키원드로 검색해주세요");
+            alert("키워드 검색 중 오류가 발생하였습니다. 다른 키워드로 검색해주세요");
         }
     })
 }
