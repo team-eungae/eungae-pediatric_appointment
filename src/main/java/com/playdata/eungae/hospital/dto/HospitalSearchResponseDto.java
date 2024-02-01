@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class HospitalSearchResponseDto {
 	private Long hospitalSeq;
 	private String name;
+	private String hospitalId;
 	private String notice;
 	private int deposit; //예약금
 	private String contact; //연락처
@@ -40,6 +41,7 @@ public class HospitalSearchResponseDto {
 		return HospitalSearchResponseDto.builder()
 			.hospitalSeq(entity.getHospitalSeq())
 			.name(entity.getName())
+			.hospitalId(entity.getHospitalId())
 			.notice(entity.getNotice())
 			.deposit(entity.getDeposit())
 			.contact(entity.getContact())

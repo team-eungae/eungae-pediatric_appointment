@@ -63,18 +63,29 @@ if (navigator.geolocation) {
             "latitude": latitude
         }, success: function (hospitalList) {
             hospitalList.forEach((hospital, index) => {
-                position = {
-                    title: hospital.name,
-                    latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
-                    address: hospital.address,
-                    hospitalSeq: hospital.hospitalSeq,
-                    contact: hospital.contact,
-                    currWait: hospital.currentWaitingCount,
-                    hospitalThumbnail: hospital.hospitalThumbnail
-                }
-                positions[index] = position;
-                addMarker(positions[index], markerImage);
+                if(hospital.hospitalId == null){
+                    position = {
+                        title: hospital.name,
+                        latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
+                        address: hospital.address,
+                        contact: hospital.contact
+                    }
+                    positions[index] = position;
+                    addBasicMarker(positions[index], basicMarkerImage);
 
+                }else{
+                    position = {
+                        title: hospital.name,
+                        latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
+                        address: hospital.address,
+                        hospitalSeq: hospital.hospitalSeq,
+                        contact: hospital.contact,
+                        currWait: hospital.currentWaitingCount,
+                        hospitalThumbnail: hospital.hospitalThumbnail
+                    }
+                    positions[index] = position;
+                    addMarker(positions[index], markerImage);
+                }
             });
         }, error: function () {
             alert("주변 병원검색중 오류가 발생하였습니다.");
@@ -131,17 +142,29 @@ const onSearch = (event) => {
             moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude, hospitalList[0].longitude);
             map.setCenter(moveLatLon);
             hospitalList.forEach((hospital, index) => {
-                position = {
-                    title: hospital.name,
-                    latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
-                    address: hospital.address,
-                    hospitalSeq: hospital.hospitalSeq,
-                    contact: hospital.contact,
-                    currWait: hospital.currentWaitingCount,
-                    hospitalThumbnail: hospital.hospitalThumbnail
+                if(hospital.hospitalId == null){
+                    position = {
+                        title: hospital.name,
+                        latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
+                        address: hospital.address,
+                        contact: hospital.contact
+                    }
+                    positions[index] = position;
+                    addBasicMarker(positions[index], basicMarkerImage);
+
+                }else{
+                    position = {
+                        title: hospital.name,
+                        latlng: new kakao.maps.LatLng(hospital.latitude, hospital.longitude),
+                        address: hospital.address,
+                        hospitalSeq: hospital.hospitalSeq,
+                        contact: hospital.contact,
+                        currWait: hospital.currentWaitingCount,
+                        hospitalThumbnail: hospital.hospitalThumbnail
+                    }
+                    positions[index] = position;
+                    addMarker(positions[index], markerImage);
                 }
-                positions[index] = position;
-                addMarker(positions[index], markerImage);
             });
         }, error: function () {
             alert("키워드 검색 중 오류가 발생하였습니다. 다른 키원드로 검색해주세요");
@@ -160,22 +183,6 @@ let mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 생성합니다
 var map = new kakao.maps.Map(mapContainer, mapOption);
 
-//응애 서비스를 이용하지 않는 병원 마커
-let basicPositions = [
-    {
-        title: '플러스소아청소년과의원',
-        latlng: new kakao.maps.LatLng(37.4684898, 126.8968135),
-        address: '서울특별시 금천구 독산제1동 시흥대로 391',
-        contact: '02-3286-5008'
-    }
-];
-
-//응애 서비스를 이용하지 않는 병원 마커 생성 - 먼저 생성해야 뒤로 가려짐
-for (let i = 0; i < basicPositions.length; i++) {
-    // 마커 이미지를 생성합니다
-    addBasicMarker(basicPositions[i], basicMarkerImage);
-}
-
 // 오버레이 정의
 var overlay = new kakao.maps.CustomOverlay({
     map: map
@@ -184,7 +191,7 @@ var overlay = new kakao.maps.CustomOverlay({
 // 마커를 생성하고 지도위에 표시하는 함수입니다
 function addMarker(position, markerImage) {
 
-    var marker = new kakao.maps.Marker({
+    let marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: position.latlng, // 마커를 표시할 위치
         title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
@@ -220,7 +227,7 @@ function addMarker(position, markerImage) {
             </div>`;
         // 마커 위에 커스텀오버레이를 표시합니다
         // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-        overlay = new kakao.maps.CustomOverlay({
+        let overlay = new kakao.maps.CustomOverlay({
             content: content,
             map: map,
             position: marker.getPosition()
@@ -236,7 +243,7 @@ function addMarker(position, markerImage) {
 }
 
 function addBasicMarker(position, markerImage) {
-    marker = new kakao.maps.Marker({
+    let marker = new kakao.maps.Marker({
         map: map, // 마커를 표시할 지도
         position: position.latlng, // 마커를 표시할 위치
         title: position.title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
@@ -246,6 +253,9 @@ function addBasicMarker(position, markerImage) {
     marker.setMap(map);
     // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
     kakao.maps.event.addListener(marker, 'click', function () {
+        overlays.forEach((overlay) => {
+            overlay.setMap(null);
+        })
         content = `<div id="wrap" class="wrap">
                 <div class="info">
                     <div class="title">
@@ -267,7 +277,7 @@ function addBasicMarker(position, markerImage) {
             </div>`;
         // 마커 위에 커스텀오버레이를 표시합니다
         // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-        overlay = new kakao.maps.CustomOverlay({
+        let overlay = new kakao.maps.CustomOverlay({
             content: content,
             map: map,
             position: marker.getPosition()

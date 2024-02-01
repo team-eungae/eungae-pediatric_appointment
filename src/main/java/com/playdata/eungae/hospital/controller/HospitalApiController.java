@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.playdata.eungae.file.FileStore;
 import com.playdata.eungae.hospital.dto.HospitalSearchResponseDto;
 import com.playdata.eungae.hospital.dto.KeywordSearchRequestDto;
-import com.playdata.eungae.hospital.service.HospitalImageService;
 import com.playdata.eungae.hospital.service.HospitalService;
 
 import jakarta.validation.Valid;
@@ -23,8 +21,6 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/hospital")
 public class HospitalApiController {
 	private final HospitalService hospitalService;
-	private final HospitalImageService hospitalImageService;
-	private final FileStore fileStore;
 
 	@GetMapping("/around")
 	@ResponseStatus(HttpStatus.OK)

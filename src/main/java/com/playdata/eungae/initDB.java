@@ -63,7 +63,9 @@ public class initDB {
             em.persist(member);
 
             Hospital hospital = getHospital();
+            Hospital hospital2 = getHospital2();
             em.persist(hospital);
+            em.persist(hospital2);
 
             Doctor doctor1 = getDoctor(hospital);
             Doctor doctor2 = getDoctor(hospital);
@@ -146,13 +148,13 @@ public class initDB {
                 .notice("15세 이상 오지 마세요.")
                 .deposit(1000)
                 .contact("1577-7015")
-                .address("test")
                 .yCoordinate(37.4729951)
                 .xCoordinate(126.8976605)
                 .address("서울 금천구 시흥대로 139길 8")
                 .hospitalSchedule(getHospitalSchedule())
                 .build();
     }
+
 
     private static HospitalSchedule getHospitalSchedule() {
         return HospitalSchedule.builder()
@@ -177,16 +179,13 @@ public class initDB {
 
     private static Hospital getHospital2() {
         return Hospital.builder()
-                .password("testpassword2")
-                .name("새움소아과 별관")
+                .name("플러스소아청소년과의원")
                 .notice("그냥 오지 마세요.")
                 .deposit(10000)
-                .contact("1577-7015123")
-                .address("test2")
-                .xCoordinate(37.47190170505455)
-                .yCoordinate(126.89769223068006)
-                .address("서울 금천구 시흥대로 130길 8")
-                .hospitalSchedule(getHospitalSchedule2())
+                .contact("02-3286-5008")
+                .yCoordinate(37.4684898)
+                .xCoordinate(126.8968135)
+                .address("서울특별시 금천구 독산제1동 시흥대로 391")
                 .build();
     }
 
@@ -250,7 +249,7 @@ public class initDB {
                 .name("김우진")
                 .hospital(hospital)
                 .treatmentPossible(3)
-                .doctorProfileImage("doctor.jpeg")
+                .status(DoctorStatus.ON)
                 .build();
     }
 
