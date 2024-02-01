@@ -70,7 +70,6 @@ public class Hospital extends BaseEntity {
 	@Builder.Default
 	private List<Appointment> appointments = new ArrayList<>();
 
-	@Column(nullable = false)
 	private String password;
 
 	@Column(nullable = false)

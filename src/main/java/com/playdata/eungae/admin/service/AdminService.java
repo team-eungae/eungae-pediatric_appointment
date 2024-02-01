@@ -46,7 +46,7 @@ public class AdminService {
 	String url;
 
 	public void savePublicHospitalData() {
-		for (int i = 1; i <= 1; i++) { //원래는 761
+		for (int i = 1; i <= 50; i++) { //원래는 761
 			try {
 				String finalUrl = url + "?serviceKey=" + apiKey + "&pageNo=" + i + "&numOfRows=100";
 
@@ -101,19 +101,33 @@ public class AdminService {
 
 						hospitalScheduleRepository.save(hospitalSchedule);
 
-						Hospital hospitalBuilder = Hospital.builder()
-							.hospitalId("test1")
-							.password("1234")
-							.name(getTagValue("dutyName", element))
-							.deposit(1000)
-							.xCoordinate(Double.parseDouble(getTagValue("wgs84Lon", element)))
-							.yCoordinate(Double.parseDouble(getTagValue("wgs84Lat", element)))
-							.address(getTagValue("dutyAddr", element))
-							.contact(getTagValue("dutyTel1", element))
-							.hospitalSchedule(hospitalSchedule)
-							.build();
+						if (itemIndex % 5 == 0) {
+							Hospital hospitalBuilder = Hospital.builder()
+								.hospitalId("test1")
+								.password("1234")
+								.name(getTagValue("dutyName", element))
+								.deposit(1000)
+								.xCoordinate(Double.parseDouble(getTagValue("wgs84Lon", element)))
+								.yCoordinate(Double.parseDouble(getTagValue("wgs84Lat", element)))
+								.address(getTagValue("dutyAddr", element))
+								.contact(getTagValue("dutyTel1", element))
+								.hospitalSchedule(hospitalSchedule)
+								.build();
 
-						hospitalRepository.save(hospitalBuilder);
+							hospitalRepository.save(hospitalBuilder);
+						}else{
+							Hospital hospitalBuilder = Hospital.builder()
+								.name(getTagValue("dutyName", element))
+								.deposit(1000)
+								.xCoordinate(Double.parseDouble(getTagValue("wgs84Lon", element)))
+								.yCoordinate(Double.parseDouble(getTagValue("wgs84Lat", element)))
+								.address(getTagValue("dutyAddr", element))
+								.contact(getTagValue("dutyTel1", element))
+								.build();
+
+							hospitalRepository.save(hospitalBuilder);
+						}
+
 					}
 				}
 
