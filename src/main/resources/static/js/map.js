@@ -62,7 +62,7 @@ if (navigator.geolocation) {
             "latitude": latitude
         }, success: function (hospitalList) {
             if(hospitalList.length == 0){
-                alert("주변 병원을 찾을 수 없습니다.")
+                alert("주변 병원을 찾을 수 없습니다.");
             }else {
                 hospitalList.forEach((hospital, index) => {
                     if (hospital.hospitalId == null) {
@@ -136,14 +136,16 @@ const onSearch = (event) => {
             markers.forEach((marker) => {
                 marker.setMap(null);
             });
+
             markers.length = 0;
+          
             overlays.forEach((overlay) => {
                 overlay.setMap(null);
             })
             overlays.length = 0;
             index = 0;
             if(hospitalList.length == 0){
-                alert("병원 검색 결과를 찾을 수 없습니다.")
+                alert("병원 검색 결과를 찾을 수 없습니다.");
             }else{
                 moveLatLon = new kakao.maps.LatLng(hospitalList[0].latitude, hospitalList[0].longitude);
                 map.setCenter(moveLatLon);
