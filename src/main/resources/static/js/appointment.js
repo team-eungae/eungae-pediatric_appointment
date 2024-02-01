@@ -6,6 +6,10 @@ var month = (sysdate.getMonth() + 1) % 12;
 var nextmonth = (sysdate.getMonth() + 2) % 12;
 var dd = sysdate.getDate();
 
+if (dd < 10) {
+    dd = "0" + dd;
+}
+
 if (month < 10) {
     month = "0" + month;
 }
