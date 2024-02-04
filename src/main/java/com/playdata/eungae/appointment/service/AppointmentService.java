@@ -148,12 +148,11 @@ public class AppointmentService {
 		message.setFrom("01028395901");
 		message.setTo(appointment.getMember().getPhoneNumber());
 		message.setText(
-				"%s님 예약 완료".formatted(appointment.getMember().getName()) + System.lineSeparator()
-				+ "자녀 이름 : %s".formatted(appointment.getChildren().getName())+ System.lineSeparator()
-				+ "예약 일자 : %s".formatted(appointment.getAppointmentDate())+ System.lineSeparator()
-				+ "예약 시간 : %s".formatted(formatHour(appointment.getAppointmentHHMM()))+ System.lineSeparator()
-				+ "예약 병원 : %s".formatted(appointment.getHospital().getName())+ System.lineSeparator()
-				+ "담당의 : %s".formatted(appointment.getDoctor().getName())
+				"[응애 - 내 주변 소아과를 예약하는 방법]" + System.lineSeparator()
+				+ "자녀명 : %s".formatted(appointment.getChildren().getName())+ System.lineSeparator()
+				+ "진료일 : %s".formatted(appointment.getAppointmentDate())+ " %s".formatted(formatHour(appointment.getAppointmentHHMM())) + System.lineSeparator()
+				+ "주소 : %s".formatted(appointment.getHospital().getAddress())+ System.lineSeparator() + System.lineSeparator()
+				+ "자녀의 빠른 쾌유를 바랍니다~"
 		);
 
 		SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
