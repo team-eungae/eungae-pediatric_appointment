@@ -1,7 +1,14 @@
 package com.playdata.eungae.appointment.controller;
 
-import java.util.List;
-
+import com.playdata.eungae.appointment.dto.PaymentResultDto;
+import com.playdata.eungae.appointment.service.AppointmentService;
+import com.playdata.eungae.doctor.dto.DoctorResponseDto;
+import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
+import com.playdata.eungae.hospital.service.HospitalService;
+import com.playdata.eungae.member.dto.ChildrenDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -11,15 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.playdata.eungae.appointment.dto.PaymentResultDto;
-import com.playdata.eungae.appointment.service.AppointmentService;
-import com.playdata.eungae.doctor.dto.DoctorResponseDto;
-import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
-import com.playdata.eungae.hospital.service.HospitalService;
-import com.playdata.eungae.member.dto.ChildrenDto;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -61,6 +60,7 @@ public class AppointmentViewController {
 		if(!imp_success) {
 			appointmentService.cancelPayment(appointmentSeq);
 		}
+		appointmentService.sendMessage(appointmentSeq);
 		PaymentResultDto paymentResultDto = PaymentResultDto.create(hospitalSeq, imp_success, error_msg);
 		model.addAttribute("paymentResultDto", paymentResultDto);
 		return "contents/appointment/payment-result";

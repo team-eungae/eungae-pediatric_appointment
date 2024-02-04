@@ -10,6 +10,10 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,6 +55,7 @@ public class AppointmentService {
 	private final AppointmentRepository appointmentRepository;
 	private final MemberRepository memberRepository;
 	private final ChildrenRepository childrenRepository;
+	private final DefaultMessageService messageService;
 
 	@Transactional(readOnly = true)
 	public List<ChildrenDto> getMyChildren(String email) {
@@ -129,6 +134,32 @@ public class AppointmentService {
 			.map(ResponseAppointmentDto::toDto)
 			.filter((responseAppointmentDto) -> responseAppointmentDto.getStatus() != AppointmentStatus.DIAGNOSIS)
 			.collect(Collectors.toList());
+	}
+
+	@Transactional(readOnly = true)
+	public void sendMessage(Long appointmentSeq) {
+
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.APPOINTMENT)
+				.orElseThrow(() -> new IllegalStateException(
+						"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+
+		Message message = new Message();
+		// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
+		message.setFrom("01028395901");
+		message.setTo(appointment.getMember().getPhoneNumber());
+		message.setText(
+				"%s님 예약 완료".formatted(appointment.getMember().getName()) + System.lineSeparator()
+				+ "자녀 이름 : %s".formatted(appointment.getChildren().getName())+ System.lineSeparator()
+				+ "예약 일자 : %s".formatted(appointment.getAppointmentDate())+ System.lineSeparator()
+				+ "예약 시간 : %s".formatted(formatHour(appointment.getAppointmentHHMM()))+ System.lineSeparator()
+				+ "예약 병원 : %s".formatted(appointment.getHospital().getName())+ System.lineSeparator()
+				+ "담당의 : %s".formatted(appointment.getDoctor().getName())
+		);
+
+		SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+        assert response != null;
+        log.info(response.toString());
+		// 유효한 예약과 취소된 예약을 조회
 	}
 
 	// 병원 운영 시간
@@ -314,5 +345,9 @@ public class AppointmentService {
 		appointment.setStatus(AppointmentStatus.DIAGNOSIS);
 
 		return VisitedChangeStatusDto.toDto(appointment);
+	}
+
+	private static String formatHour(String data){
+		return data.substring(0,2)+":"+data.substring(2);
 	}
 }

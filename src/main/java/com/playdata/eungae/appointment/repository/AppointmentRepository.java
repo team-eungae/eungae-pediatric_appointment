@@ -57,6 +57,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch a.hospital "
 		+ " join fetch a.doctor "
 		+ " join fetch a.children "
+		+ " join fetch a.member"
 		+ " where a.appointmentSeq = :appointmentSeq"
 		+ " and a.deleteYN = 'N'"
 		+ " and a.status = :status")
