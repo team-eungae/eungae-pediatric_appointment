@@ -153,6 +153,7 @@ public class AdminService {
 	public void saveAllHospitalsToRedis() {
 		List<HospitalSearchResponseDto> allHospitals = hospitalRepository.findAll()
 			.stream().map(HospitalSearchResponseDto::toDto).toList();
+		redisTemplate.delete("hospital");
 		allHospitals.forEach(this::putHospitalToHash);
 	}
 
