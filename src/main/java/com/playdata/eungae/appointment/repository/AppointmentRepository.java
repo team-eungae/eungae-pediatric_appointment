@@ -67,7 +67,9 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 		+ " join fetch a.children "
 		+ " join fetch a.member"
 		+ " where a.appointmentSeq = :appointmentSeq"
+		+ " and a.status = :appointmentStatus"
 		+ " and a.deleteYN = 'N'")
-	Optional<Appointment> findByAppointmentSeq(@Param("appointmentSeq") Long appointmentSeq);
+	Optional<Appointment> findByAppointmentSeq(@Param("appointmentSeq") Long appointmentSeq,
+		@Param("appointmentStatus") AppointmentStatus appointmentStatus);
 
 }

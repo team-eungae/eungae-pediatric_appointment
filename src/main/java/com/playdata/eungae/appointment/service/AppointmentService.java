@@ -113,7 +113,8 @@ public class AppointmentService {
 
 	@Transactional(readOnly = true)
 	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
-		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq)
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq,
+				AppointmentStatus.APPOINTMENT)
 			.orElseThrow(() -> new IllegalStateException(
 				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
 		return ResponseDetailMedicalHistoryDto.toDto(appointment);
@@ -138,15 +139,15 @@ public class AppointmentService {
 	public void sendMessage(Long appointmentSeq) {
 
 		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.APPOINTMENT)
-				.orElseThrow(() -> new IllegalStateException(
-						"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
+			.orElseThrow(() -> new IllegalStateException(
+				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
 
 		Message message = new Message();
 		// 발신번호 및 수신번호는 반드시 01012345678 형태로 입력되어야 합니다.
 		message.setFrom("01028395901");
 		message.setTo(appointment.getMember().getPhoneNumber());
 		message.setText(
-				"[응애 - 내 주변 소아과를 예약하는 방법]" + System.lineSeparator()
+			"[응애 - 내 주변 소아과를 예약하는 방법]" + System.lineSeparator()
 				+ "자녀명 : %s".formatted(appointment.getChildren().getName())+ System.lineSeparator()
 				+ "진료일 : %s".formatted(appointment.getAppointmentDate())+ " %s".formatted(formatHour(appointment.getAppointmentHHMM())) + System.lineSeparator()
 				+ "주소 : %s".formatted(appointment.getHospital().getAddress())+ System.lineSeparator() + System.lineSeparator()
@@ -154,8 +155,8 @@ public class AppointmentService {
 		);
 
 		SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-        assert response != null;
-        log.info(response.toString());
+		assert response != null;
+		log.info(response.toString());
 		// 유효한 예약과 취소된 예약을 조회
 	}
 
@@ -330,18 +331,6 @@ public class AppointmentService {
 
 	private int getAppointmentCount(Long hospitalSeq, LocalDate localDate, String time, Long doctorSeq) {
 		return appointmentRepository.findAllWithHospital(hospitalSeq, localDate, time, doctorSeq).size();
-	}
-
-	@Transactional
-	public VisitedChangeStatusDto changeAppointmentStatus(Long appointmentSeq) {
-
-		Appointment appointment = appointmentRepository.findById(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException(
-				"Cannot find Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
-
-		appointment.setStatus(AppointmentStatus.DIAGNOSIS);
-
-		return VisitedChangeStatusDto.toDto(appointment);
 	}
 
 	private static String formatHour(String data){
