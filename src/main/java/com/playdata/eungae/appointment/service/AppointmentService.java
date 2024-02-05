@@ -113,7 +113,7 @@ public class AppointmentService {
 
 	@Transactional(readOnly = true)
 	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
-		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq)
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq,AppointmentStatus.APPOINTMENT)
 			.orElseThrow(() -> new IllegalStateException(
 				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
 		return ResponseDetailMedicalHistoryDto.toDto(appointment);
@@ -330,18 +330,6 @@ public class AppointmentService {
 
 	private int getAppointmentCount(Long hospitalSeq, LocalDate localDate, String time, Long doctorSeq) {
 		return appointmentRepository.findAllWithHospital(hospitalSeq, localDate, time, doctorSeq).size();
-	}
-
-	@Transactional
-	public VisitedChangeStatusDto changeAppointmentStatus(Long appointmentSeq) {
-
-		Appointment appointment = appointmentRepository.findById(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException(
-				"Cannot find Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
-
-		appointment.setStatus(AppointmentStatus.DIAGNOSIS);
-
-		return VisitedChangeStatusDto.toDto(appointment);
 	}
 
 	private static String formatHour(String data){
