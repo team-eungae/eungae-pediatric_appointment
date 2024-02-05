@@ -38,7 +38,7 @@ main {
     position: absolute;
     top: 0;
     left: 0;
-    width: 350px;
+    width: 450px;
     height: 200px;
     background-size: cover;
     background-position: center;
@@ -91,6 +91,10 @@ main {
 }
 
 .hospital-informations-phone i {
+    padding-right: 3vw;
+}
+
+.hospital-informations-notice i {
     padding-right: 3vw;
 }
 
@@ -291,4 +295,9 @@ main {
 !important;
     height: 7vh;
 !important;
+}
+
+span.hospitla-name {
+    font-size: 1.7em;
+    font-weight: 600;
 }

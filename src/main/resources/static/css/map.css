@@ -225,12 +225,12 @@ body {
     left: 0;
     bottom: 40px;
     width: 288px;
-    height: 132px;
+    height: 156px;
     margin-left: -144px;
     text-align: left;
     overflow: hidden;
     font-size: 12px;
-    line-height: 1.5;
+    line-height: 1.7;
 }
 
 .wrap * {
@@ -240,7 +240,7 @@ body {
 
 .wrap .info {
     width: 286px;
-    height: 120px;
+    height: 145px;
     border-radius: 5px;
     border-bottom: 2px solid #ccc;
     border-right: 1px solid #ccc;
@@ -284,8 +284,7 @@ body {
 
 .info .desc {
     position: relative;
-    margin: 8px 0 0 90px;
-    height: 75px;
+    margin: 6px 0 0 90px;
 }
 
 .desc .ellipsis {
@@ -329,4 +328,9 @@ body {
     background: #5599ff;
     padding: 3px 13px;
     border-radius: 4px;
+}
+
+.current-waiting {
+    font-size: 14px;
+    color: #001127;
 }

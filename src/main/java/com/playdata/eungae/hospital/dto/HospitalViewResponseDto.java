@@ -36,8 +36,6 @@ public class HospitalViewResponseDto {
 			.deposit(entity.getDeposit())
 			.contact(entity.getContact())
 			.address(entity.getAddress())
-			.addressDetail(entity.getAddressDetail())
-			.businessRegistration(entity.getBusinessRegistration())
 			.xCoordinate(entity.getXCoordinate())
 			.yCoordinate(entity.getYCoordinate())
 			.build();

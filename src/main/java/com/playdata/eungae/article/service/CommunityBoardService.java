@@ -1,19 +1,18 @@
 package com.playdata.eungae.article.service;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.playdata.eungae.article.domain.CommunityBoard;
 import com.playdata.eungae.article.dto.CommunityBoardDto;
 import com.playdata.eungae.article.repository.CommunityBoardRepository;
 import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.repository.MemberRepository;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -27,11 +26,7 @@ public class CommunityBoardService {
 		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalStateException("Email does not exist: " + email));
 
-		CommunityBoard communityBoard = CommunityBoard.builder()
-			.member(member)
-			.title(communityBoardDto.getTitle())
-			.content(communityBoardDto.getContent())
-			.build();
+		CommunityBoard communityBoard = CommunityBoardDto.toEntity(communityBoardDto, member);
 
 		communityBoardRepository.save(communityBoard);
 	}

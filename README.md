@@ -1,7 +1,8 @@
 <div align="center">
-<a>
+
 <img width="200px" src="https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/ea71f4f6-d8ba-432a-9df3-02da33a31e94" alt="응애 이동하기"/>
-</a>
+
+[![](https://img.shields.io/badge/-eungae.com-important?style=flat&logo=safari&logoColor=white&labelColor=5599ff&color=5599ff)](http://eungae.com)
 
 # 응애
 
@@ -27,7 +28,7 @@
     </td>
     <td align="center" width="120px">
       <a href="https://github.com/ghktndyd" target="_blank">
-        <img src="https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/a97d97dd-5955-432c-b4f4-f772977a13b0" alt="김수용 프로필" />
+        <img src="https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/dc334503-4ae8-4afb-8931-002544ff8cec" alt="김수용 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
@@ -79,10 +80,33 @@
   </tr>
 </table>
 
+## 💻 Service
+
+### 👶🏻 Eungae Service
+
+<div align='center'>
+
+|                                                           회원 가입                                                                |                                                             자녀 등록                                                          |                                                              소아과 예약하기                                                          |
+|:--------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+| <img src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/142341367/9aeccbfa-f4ec-4cb8-9a1d-a89aa6f9f292' height='400px'> | <img src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/142341367/084c5fa1-7c50-490b-b18a-99466380e69f' height='400px'> | <img src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/142341367/12267048-3609-4d57-9d4e-794afb697387' height='400px'> |
+|                                                      <b>맵에서 소아과 찾기</b>                                                       |                                                      <b>검색창에서 소아과 검색</b>                                                      |                                                      <b>리뷰 작성</b>                                                      |
+| <img src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/142341367/a72d1ae4-22fd-46ea-a48b-b2d9c57cbd9f' height='400px'> | <img src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/142341367/084c5fa1-7c50-490b-b18a-99466380e69f' height='400px'> |<img src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/142341367/56991d72-3ba7-4a48-9088-6915af4ca94c' height='400px'> |
+
+</div>
+<br/>
+
+### 🏥 Hospital Service
+
+|                                                           의사 등록                                                            |                                                          의사 정보 수정                                                          |
+|:--------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------:|
+| <img src='https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/c1be8402-eb73-4013-9d09-8003f2b1a069'> | <img src='https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/fca747ec-27b2-45a4-818e-128f9de04604'> |
+|                                                      <b>예약 목록 조회</b>                                                       |                                                      <b>병원 이미지 수정</b>                                                      |
+| <img src='https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/d62ee0ce-6485-474c-96fa-9f757ecd574a'> | <img src='https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/edf7a145-a944-44a5-bfed-cc28cd823901'> |
+
 ## ⚙️ Infra
 
 <div align="center">
-<img width="600px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/cf783667-18fe-49d4-a585-6c4be5c9f23a'  alt="Infra"/>
+<img width="600px" src='https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/c26f0a79-b211-4d5e-8b48-fca73e11644d'  alt="Infra"/>
 </div>
 
 ## 🛠️ Skills
@@ -90,6 +114,13 @@
 <div align="center">
 <img width="600px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/4ae6d55d-be08-4d55-9dd4-378f59df34c2'  alt="Skills"/>
 </div>
+
+## 📃 ERD
+
+<div align="center">
+<img width="600px" src='https://github.com/team-eungae/eungae-pediatric_appointment/assets/120021021/6c48c8bd-9f77-44ff-a531-8c153a46b636'  alt="Skills"/>
+</div>
+<a href="https://dbdiagram.io/d/%EC%9D%91%EC%95%A0-%EC%86%8C%EC%95%84%EA%B3%BC-%EC%98%88%EC%95%BD-655b077c3be14957875346d0">ERD 자세히 보기</a>
 
 ## 🏆 Ground Rules
 

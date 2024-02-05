@@ -20,16 +20,22 @@
         </div>
 
         <div class="hospital-informations-common">
-            <h3 th:text="${hospital.name}">병원 이름</h3>
+            <div>
+                <span class="hospitla-name" th:text="${hospital.name}">병원 이름</span>
+                <button id="likeButton" class="btn"><i class="fa-regular fa-star"></i></button>
+            </div>
             <hr/>
             <div>
                 <input type="hidden" id="hospitalSeq" th:value="${hospital.hospitalSeq}">
                 <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i>
                     <span th:text="${hospital.address}">병원 주소</span>
-                    <button id="likeButton" class="btn"><i class="fa-regular fa-star"></i></button>
                 </div>
                 <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i>
                     <span th:text="${hospital.contact}">병원 번호</span>
+                </div>
+                <div class="hospital-informations-notice" th:if="${not #strings.isEmpty(hospital.notice)}">
+                    <i class="fa-solid fa-file"></i>
+                    <span th:text="${hospital.notice}">병원 설명</span>
                 </div>
             </div>
         </div>
@@ -293,7 +299,7 @@
 
 <div layout:fragment="custom_js">
     <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=399f802c931e5e59db319cc955db0246"></script>
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=94f24e5f0005b6370e2d84c0ca7c24d7"></script>
     <script th:inline="javascript" src="/js/hospital-details.js"></script>
 </div>
 </body>

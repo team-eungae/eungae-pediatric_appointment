@@ -70,7 +70,6 @@ public class Hospital extends BaseEntity {
 	@Builder.Default
 	private List<Appointment> appointments = new ArrayList<>();
 
-	@Column(nullable = false)
 	private String password;
 
 	@Column(nullable = false)
@@ -87,12 +86,6 @@ public class Hospital extends BaseEntity {
 
 	@Column(nullable = false)
 	private String address;
-
-	// @Column(nullable = false)
-	private String addressDetail;
-
-	// @Column(nullable = false)
-	private String businessRegistration;
 
 	// @Column(nullable = false)
 	private double xCoordinate;
@@ -115,8 +108,6 @@ public class Hospital extends BaseEntity {
 			.contact(contact)
 			.deposit(deposit)
 			.address(address)
-			.addressDetail(addressDetail)
-			.businessRegistration(businessRegistration)
 			.xCoordinate(xCoordinate)
 			.yCoordinate(yCoordinate)
 			.hospitalSchedule(hospitalSchedule)
