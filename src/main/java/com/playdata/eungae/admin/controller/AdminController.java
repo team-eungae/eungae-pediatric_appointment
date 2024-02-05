@@ -18,10 +18,6 @@ public class AdminController {
 	@GetMapping("/open-api/hospital")
 	public void savePublicHospitalData() {
 		adminService.savePublicHospitalData();
-	}
-
-	@GetMapping("/redis-insert/hospital")
-	public void saveHospitalsToRedis() {
 		adminService.saveAllHospitalsToRedis();
 	}
 
