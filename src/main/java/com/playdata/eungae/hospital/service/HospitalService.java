@@ -53,6 +53,7 @@ public class HospitalService {
 		List<HospitalSearchResponseDto> hospitalListFromRedis = getAllHospitalsFromRedis();
 		if (hospitalListFromRedis.isEmpty()) {
 			List<Hospital> hospitalList = hospitalRepository.findAll();
+			System.out.println(hospitalList.get(0).getHospitalSeq()+"---------------------------");
 			return hospitalList.stream()
 				.map(HospitalSearchResponseDto::toDto)
 				.filter(hospital -> isHospitalInMaxDistance(latitude, longitude, hospital))

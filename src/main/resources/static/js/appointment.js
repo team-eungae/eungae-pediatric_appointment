@@ -121,9 +121,9 @@ const requestPay = (responsePaymentDto) => {
         buyer_name: name,
         buyer_tel: phoneNumber,
         buyer_addr: address + " " + addressDetail,
-        buyer_postcode:zipcode,
-        m_redirect_url: `http://localhost:8090/hospital/appointment/payment/${appointmentSeq}/${hospitalSeq}`
-    });
+        buyer_postcode: zipcode,
+        m_redirect_url: `http://localhost:8090/hospital/appointment/payment/${appointmentSeq}/${hospitalSeq}` // 모바일 결제시 리다이렉트될 URL
+    })
 }
 
 
