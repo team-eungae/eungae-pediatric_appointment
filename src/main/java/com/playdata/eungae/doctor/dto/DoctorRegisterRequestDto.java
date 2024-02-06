@@ -1,8 +1,5 @@
 package com.playdata.eungae.doctor.dto;
 
-
-
-
 import org.springframework.web.multipart.MultipartFile;
 
 import com.playdata.eungae.doctor.domain.Doctor;

@@ -10,11 +10,11 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class RedisScheduler {
-	private final AdminService adminService;
+    private final AdminService adminService;
 
-	@Scheduled(cron = "0 0 2 * * ? *")
-	public void updateRedis(){
-		adminService.saveAllHospitalsToRedis();
-	}
+    @Scheduled(cron = "0 0 2 * * ?")
+    public void updateRedis() {
+        adminService.saveAllHospitalsToRedis();
+    }
 
 }

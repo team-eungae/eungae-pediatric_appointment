@@ -18,10 +18,8 @@ import com.playdata.eungae.member.repository.FavoritesHospitalRepository;
 import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RequiredArgsConstructor
-@Slf4j
 @Service
 public class MemberService {
 

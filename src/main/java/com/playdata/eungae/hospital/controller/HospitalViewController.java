@@ -20,12 +20,10 @@ import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/hospital")
 @RequiredArgsConstructor
-@Slf4j
 public class HospitalViewController {
   
 	private final HospitalService hospitalService;

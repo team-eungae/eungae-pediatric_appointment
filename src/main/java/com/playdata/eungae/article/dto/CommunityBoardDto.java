@@ -51,7 +51,4 @@ public class CommunityBoardDto {
 			.build();
 	}
 
-	public String getFormattedDate() {
-		return this.createdDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-	}
 }

@@ -14,12 +14,12 @@ import com.playdata.eungae.member.domain.Children;
 public interface ChildrenRepository extends JpaRepository<Children, Long> {
 
 	@Query("select c from Children c"
-		+ " where c.member.memberSeq = :memberSeq"
+		+ " where c.member.email = :email"
 		+ " and c.deleteYN = 'N'")
-	List<Children> findAllByMemberMemberSeq(@Param("memberSeq") long MemberSeq);
+	List<Children> findAllByMemberEmail(@Param("email") String email);
 
 	@Query("select c from Children c"
 		+ " where c.childrenSeq = :childrenSeq"
 		+ " and c.deleteYN = 'N'")
-	Optional<Children> findBychildrenSeq(@Param("childrenSeq") Long childrenSeq);
+	Optional<Children> findByChildrenSeq(@Param("childrenSeq") Long childrenSeq);
 }

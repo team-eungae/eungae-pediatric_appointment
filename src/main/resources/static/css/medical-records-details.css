@@ -92,12 +92,17 @@ td {
 }
 
 .review-button {
-    margin-left: 38vw;
-    border-radius: 3vh;
-    color: white;
-    border: 0;
     background-color: #326EB3;
-    text-align: center;
-    height: 5vh;
-    width: 27vw;
+    border: 0;
+    border-radius: 6px;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    color: white;
+}
+
+.review-btn {
+    display: flex;
+    justify-content: flex-end;
 }

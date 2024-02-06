@@ -4,7 +4,6 @@ import com.playdata.eungae.article.domain.Notice;
 import com.playdata.eungae.article.dto.NoticeResponseDto;
 import com.playdata.eungae.article.repository.NoticeRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-@Slf4j
 @Service
 public class NoticeService {
 

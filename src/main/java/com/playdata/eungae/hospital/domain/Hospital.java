@@ -87,38 +87,10 @@ public class Hospital extends BaseEntity {
 	@Column(nullable = false)
 	private String address;
 
-	// @Column(nullable = false)
 	private double xCoordinate;
 
-	// @Column(nullable = false)
 	private double yCoordinate;
 
-	public static Hospital buildHospital(HospitalSchedule hospitalSchedule, String password,
-		String name,
-		String notice,
-		int deposit, String contact, String address, String addressDetail, String businessRegistration,
-		double xCoordinate,
-		double yCoordinate) {
-
-		// 빌더로 객체 생성 후 리턴
-		Hospital hospital = Hospital.builder()
-			.password(password)
-			.name(name)
-			.notice(notice)
-			.contact(contact)
-			.deposit(deposit)
-			.address(address)
-			.xCoordinate(xCoordinate)
-			.yCoordinate(yCoordinate)
-			.hospitalSchedule(hospitalSchedule)
-			.build();
-
-		// 연관관계 편의 메서드
-		hospitalSchedule.setHospital(hospital);
-
-		return hospital;
-
-	}
 	//연관관계 편의 메소드
 	public void addDoctor(Doctor doctor) {
 		this.doctorList.add(doctor);

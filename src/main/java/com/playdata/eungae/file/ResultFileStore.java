@@ -14,7 +14,4 @@ public class ResultFileStore {
     private String storeFileName;
     private String originalFileName;
 
-    public String getFullPath() {
-        return folderPath + File.separator + storeFileName;
-    }
 }

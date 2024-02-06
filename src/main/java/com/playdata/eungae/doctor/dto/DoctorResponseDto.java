@@ -1,4 +1,3 @@
-
 package com.playdata.eungae.doctor.dto;
 
 import com.playdata.eungae.doctor.domain.Doctor;

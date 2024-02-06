@@ -7,8 +7,6 @@ import com.playdata.eungae.hospital.dto.HospitalViewResponseDto;
 import com.playdata.eungae.hospital.service.HospitalService;
 import com.playdata.eungae.member.dto.ChildrenDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import net.nurigo.sdk.message.service.DefaultMessageService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -20,50 +18,49 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/hospital")
 @Controller
 public class AppointmentViewController {
 
-	private final AppointmentService appointmentService;
-	private final HospitalService hospitalService;
+    private final AppointmentService appointmentService;
+    private final HospitalService hospitalService;
 
-	@GetMapping("/{hospitalSeq}/appointments")
-	public String getAppointmentForm(
-		@PathVariable Long hospitalSeq,
-		Model model,
-		@AuthenticationPrincipal UserDetails member
-	) {
-		HospitalViewResponseDto hospital = hospitalService.findHospitalById(hospitalSeq);
+    @GetMapping("/{hospitalSeq}/appointments")
+    public String getAppointmentForm(
+            @PathVariable Long hospitalSeq,
+            Model model,
+            @AuthenticationPrincipal UserDetails member
+    ) {
+        HospitalViewResponseDto hospital = hospitalService.findHospitalById(hospitalSeq);
 
-		String email = member.getUsername();
-		List<ChildrenDto> myChildren = appointmentService.getMyChildren(email);
+        String email = member.getUsername();
+        List<ChildrenDto> myChildren = appointmentService.getMyChildren(email);
 
-		List<DoctorResponseDto> doctors = appointmentService.getDoctors(hospitalSeq);
+        List<DoctorResponseDto> doctors = appointmentService.getDoctors(hospitalSeq);
 
-		model.addAttribute("hospital", hospital);
-		model.addAttribute("children", myChildren);
-		model.addAttribute("doctors", doctors);
+        model.addAttribute("hospital", hospital);
+        model.addAttribute("children", myChildren);
+        model.addAttribute("doctors", doctors);
 
-		return "contents/appointment/appointment";
-	}
+        return "contents/appointment/appointment";
+    }
 
-	@GetMapping("/appointment/payment/{appointmentSeq}/{hospitalSeq}")
-	public String paymentTest(
-		@PathVariable Long appointmentSeq,
-		@PathVariable Long hospitalSeq,
-		@RequestParam(required = false) Boolean imp_success,
-		@RequestParam(required = false) String error_msg,
-		Model model
-	) {
-		if(!imp_success) {
-			appointmentService.cancelPayment(appointmentSeq);
-		}
-		appointmentService.sendMessage(appointmentSeq);
-		PaymentResultDto paymentResultDto = PaymentResultDto.create(hospitalSeq, imp_success, error_msg);
-		model.addAttribute("paymentResultDto", paymentResultDto);
-		return "contents/appointment/payment-result";
-	}
+    @GetMapping("/appointment/payment/{appointmentSeq}/{hospitalSeq}")
+    public String paymentTest(
+            @PathVariable Long appointmentSeq,
+            @PathVariable Long hospitalSeq,
+            @RequestParam(required = false) Boolean imp_success,
+            @RequestParam(required = false) String error_msg,
+            Model model
+    ) {
+        if (!imp_success) {
+            appointmentService.cancelPayment(appointmentSeq);
+        }
+        appointmentService.sendMessage(appointmentSeq);
+        PaymentResultDto paymentResultDto = PaymentResultDto.create(hospitalSeq, imp_success, error_msg);
+        model.addAttribute("paymentResultDto", paymentResultDto);
+        return "contents/appointment/payment-result";
+    }
 
 }

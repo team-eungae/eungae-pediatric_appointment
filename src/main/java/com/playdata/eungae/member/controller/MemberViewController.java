@@ -1,20 +1,5 @@
 package com.playdata.eungae.member.controller;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.playdata.eungae.appointment.dto.ResponseAppointmentDto;
 import com.playdata.eungae.appointment.dto.ResponseDetailMedicalHistoryDto;
 import com.playdata.eungae.appointment.dto.ResponseMedicalHistoryDto;
@@ -32,12 +17,21 @@ import com.playdata.eungae.member.service.MemberService;
 import com.playdata.eungae.review.dto.ResponseReviewDto;
 import com.playdata.eungae.review.service.ReviewService;
 import com.playdata.eungae.security.MemberUserDetails;
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
-@Slf4j
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/my")
 @Controller
@@ -55,7 +49,6 @@ public class MemberViewController {
     public String medicalRecordList(
             Model model,
             @AuthenticationPrincipal UserDetails principal
-            // @PathVariable int page,
     ) {
         List<ResponseMedicalHistoryDto> myMedicalRecords = appointmentService.getMyMedicalRecords(principal.getUsername());
 
@@ -72,7 +65,6 @@ public class MemberViewController {
         model.addAttribute("myMedicalRecordDetail", myMedicalRecordDetail);
         return "contents/member/medical-records-details";
     }
-
 
     @GetMapping("/profile")
     public String myPage(@AuthenticationPrincipal MemberUserDetails principal, Model model) {
@@ -122,9 +114,7 @@ public class MemberViewController {
             Model model,
             @AuthenticationPrincipal UserDetails userDetails
     ) {
-        Member member = memberRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new IllegalStateException("사용자 정보를 찾을 수 없습니다."));
-        List<ChildrenDto> childrenList = childrenService.getAllChildrenByMemberSeq(member.getMemberSeq());
+        List<ChildrenDto> childrenList = childrenService.getAllChildrenByMemberEmail(userDetails.getUsername());
         model.addAttribute("childrenList", childrenList);
         return "contents/member/my-children";
     }
@@ -156,7 +146,7 @@ public class MemberViewController {
     @PostMapping("/children/{id}")
     public String deleteChild(@PathVariable Long id) {
         childrenService.deleteChild(id);
-        return "redirect:/my/children/list"; // 자녀 목록 페이지로 리디렉션
+        return "redirect:/my/children/list";
     }
 
     @GetMapping("/records/reviews/{review_seq}")

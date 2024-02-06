@@ -12,9 +12,7 @@ import com.playdata.eungae.member.domain.Member;
 import com.playdata.eungae.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RequiredArgsConstructor
 @Service
 public class MemberOAuthUserService extends DefaultOAuth2UserService {

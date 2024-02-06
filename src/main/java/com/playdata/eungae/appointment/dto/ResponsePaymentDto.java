@@ -5,8 +5,6 @@ import com.playdata.eungae.appointment.domain.Appointment;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 public class ResponsePaymentDto {

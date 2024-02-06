@@ -1,7 +1,5 @@
 package com.playdata.eungae.member.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.playdata.eungae.member.domain.Children;
 
 import lombok.AllArgsConstructor;
