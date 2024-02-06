@@ -54,11 +54,13 @@ public class AppointmentViewController {
             @RequestParam(required = false) String error_msg,
             Model model
     ) {
+        PaymentResultDto paymentResultDto = PaymentResultDto.create(hospitalSeq, imp_success, error_msg);
         if (!imp_success) {
             appointmentService.cancelPayment(appointmentSeq);
+            model.addAttribute("paymentResultDto", paymentResultDto);
+            return "contents/appointment/payment-result";
         }
         appointmentService.sendMessage(appointmentSeq);
-        PaymentResultDto paymentResultDto = PaymentResultDto.create(hospitalSeq, imp_success, error_msg);
         model.addAttribute("paymentResultDto", paymentResultDto);
         return "contents/appointment/payment-result";
     }
