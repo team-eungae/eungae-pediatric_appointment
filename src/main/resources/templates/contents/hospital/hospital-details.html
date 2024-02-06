@@ -79,14 +79,14 @@
                     <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
                         <td class="time">
                         <span id="dutyTime1">
-                            휴업
+                            휴무일
                         </span>
                         </td>
                     </div>
                 </tr>
                 <tr>
                     <td class="day">화요일</td>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.tueOpen} != '00:00' and ${hospital.hospitalSchedule.tueClose} != '00:00'">
                         <td class="time">
                         <span id="dutyTime2"
                               th:text="${hospital.hospitalSchedule.tueOpen}+' - '+${hospital.hospitalSchedule.tueClose}"></span>
@@ -96,17 +96,17 @@
                                 th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                         </td>
                     </div>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.tueOpen} == '00:00' and ${hospital.hospitalSchedule.tueClose} == '00:00'">
                         <td class="time">
                         <span id="dutyTime2">
-                            휴업
+                            휴무일
                         </span>
                         </td>
                     </div>
                 </tr>
                 <tr>
                     <td class="day">수요일</td>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.wedOpen} != '00:00' and ${hospital.hospitalSchedule.wedClose} != '00:00'">
                         <td class="time">
                         <span id="dutyTime3"
                               th:text="${hospital.hospitalSchedule.wedOpen}+' - '+${hospital.hospitalSchedule.wedClose}"></span>
@@ -116,17 +116,17 @@
                                 th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                         </td>
                     </div>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.wedOpen} == '00:00' and ${hospital.hospitalSchedule.wedClose} == '00:00'">
                         <td class="time">
                         <span id="dutyTime3">
-                            휴업
+                            휴무일
                         </span>
                         </td>
                     </div>
                 </tr>
                 <tr>
                     <td class="day">목요일</td>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.thuOpen} != '00:00' and ${hospital.hospitalSchedule.thuClose} != '00:00'">
                         <td class="time">
                         <span id="dutyTime4"
                               th:text="${hospital.hospitalSchedule.thuOpen}+' - '+${hospital.hospitalSchedule.thuClose}"></span>
@@ -136,17 +136,17 @@
                                 th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                         </td>
                     </div>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.thuOpen} == '00:00' and ${hospital.hospitalSchedule.thuClose} == '00:00'">
                         <td class="time">
                         <span id="dutyTime4">
-                            휴업
+                            휴무일
                         </span>
                         </td>
                     </div>
                 </tr>
                 <tr>
                     <td class="day">금요일</td>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.friOpen} != '00:00' and ${hospital.hospitalSchedule.friOpen} != '00:00'">
                         <td class="time">
                         <span id="dutyTime5"
                               th:text="${hospital.hospitalSchedule.friOpen}+' - '+${hospital.hospitalSchedule.friClose}"></span>
@@ -156,17 +156,17 @@
                                 th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                         </td>
                     </div>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.friOpen} == '00:00' and ${hospital.hospitalSchedule.friOpen} == '00:00'">
                         <td class="time">
                         <span id="dutyTime5">
-                            휴업
+                            휴무일
                         </span>
                         </td>
                     </div>
                 </tr>
                 <tr>
                     <td class="day">토요일</td>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.satOpen} != '00:00' and ${hospital.hospitalSchedule.satClose} != '00:00'">
                         <td class="time">
                         <span id="dutyTime6"
                               th:text="${hospital.hospitalSchedule.satOpen}+' - '+${hospital.hospitalSchedule.satClose}"></span>
@@ -176,17 +176,17 @@
                                 th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                         </td>
                     </div>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.satOpen} == '00:00' and ${hospital.hospitalSchedule.satOpen} == '00:00'">
                         <td class="time">
                         <span id="dutyTime6">
-                            휴업
+                            휴무일
                         </span>
                         </td>
                     </div>
                 </tr>
                 <tr>
                     <td class="day">일요일</td>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} != '00:00' and ${hospital.hospitalSchedule.monClose} != '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.sunOpen} != '00:00' and ${hospital.hospitalSchedule.sunClose} != '00:00'">
                         <td class="time"><span id="dutyTime0"
                                                th:text="${hospital.hospitalSchedule.sunOpen}+' - '+${hospital.hospitalSchedule.sunClose}"></span>
                         </td>
@@ -194,10 +194,10 @@
                                 th:text="${hospital.hospitalSchedule.lunchHour}+' - '+${hospital.hospitalSchedule.lunchEndHour}"></span>)
                         </td>
                     </div>
-                    <div th:if="${hospital.hospitalSchedule.monOpen} == '00:00' and ${hospital.hospitalSchedule.monClose} == '00:00'">
+                    <div th:if="${hospital.hospitalSchedule.sunOpen} == '00:00' and ${hospital.hospitalSchedule.sunClose} == '00:00'">
                         <td class="time">
                         <span id="dutyTime0">
-                            휴업
+                            휴무일
                         </span>
                         </td>
                     </div>
