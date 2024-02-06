@@ -33,7 +33,6 @@ public class AppointmentRequestDto {
 		Doctor doctor,
 		Member member) {
 		return Appointment.builder()
-			// 예약 상태 추가
 			.status(AppointmentStatus.APPOINTMENT)
 			.hospital(hospital)
 			.doctor(doctor)

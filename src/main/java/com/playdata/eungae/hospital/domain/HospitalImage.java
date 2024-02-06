@@ -42,7 +42,6 @@ public class HospitalImage extends BaseEntity {
 	@Column(nullable = false)
 	private String storeFileName;
 
-
 	//연관관계 편의 메소드
 	public void setHospital(Hospital hospital) {
 		this.hospital = hospital;

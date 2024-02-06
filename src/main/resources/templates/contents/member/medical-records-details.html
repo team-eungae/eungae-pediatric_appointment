@@ -7,7 +7,7 @@
     <title>내 진료내역 - 응애 | 소아과 예약</title>
 </th:block>
 <body>
-<main  layout:fragment="content" >
+<main layout:fragment="content">
     <div class="medical-records-header">
         <p>진료조회</p>
         <hr/>
@@ -16,7 +16,7 @@
         <div class="card">
             <div class="myrecords">
                 <div class="hospital-name" th:text="${myMedicalRecordDetail.hospitalName}">
-                      삼성에스마디정형외과의원
+                    삼성에스마디정형외과의원
                 </div>
                 <hr/>
                 <table>
@@ -24,18 +24,17 @@
                         <td th:text="|환자 - ${myMedicalRecordDetail.childrenName}|">
                             환자 - 김환자
                         </td>
-                        <td class="middle-line"> | </td>
+                        <td class="middle-line"> |</td>
                         <td th:text="|의사 - ${myMedicalRecordDetail.doctorName}|">
                             의사 - 김의사
                         </td>
-                        <td class="middle-line"> | </td>
+                        <td class="middle-line"> |</td>
                         <td class="treatment-date" th:text="|${myMedicalRecordDetail.appointmentDate}|">
                             1234.56.78
                         </td>
                 </table>
             </div>
             <div class="records-detail" id="detail1">
-                <hr/>
                 <table>
                     <tr>
                         <th>병원명</th>
@@ -51,9 +50,10 @@
                     </tr>
                     <tr>
                         <td class="review-btn-place"></td>
-                        <td>
+                        <td class="review-btn">
                             <th:block th:if="${myMedicalRecordDetail.writeReview == false}">
-                                <button th:onclick="|location.href='@{/review/post(appointmentSeq=${myMedicalRecordDetail.appointmentSeq})}'|" class="review-button">
+                                <button th:onclick="|location.href='@{/review/post(appointmentSeq=${myMedicalRecordDetail.appointmentSeq})}'|"
+                                        class="review-button">
                                     리뷰 쓰기
                                 </button>
                             </th:block>
@@ -70,7 +70,7 @@
     </div>
 </main>
 <div layout:fragment="custom_js">
-<!--    <script src="/js/medical-records.js"></script>-->
+    <!--    <script src="/js/medical-records.js"></script>-->
 </div>
 </body>
 </html>

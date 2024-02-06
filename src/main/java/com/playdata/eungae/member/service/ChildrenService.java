@@ -32,7 +32,6 @@ public class ChildrenService {
 		ResultFileStore resultFileStore,
 		String email
 	) {
-
 		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new IllegalStateException("해당 이메일의 사용자가 존재하지 않습니다: " + email));
 
@@ -43,7 +42,7 @@ public class ChildrenService {
 
 	@Transactional
 	public void deleteChild(Long childrenSeq) {
-		Children children = childrenRepository.findBychildrenSeq(childrenSeq)
+		Children children = childrenRepository.findByChildrenSeq(childrenSeq)
 			.orElseThrow(
 				() -> new NoSuchElementException("Child not found by childrenSeq {%s}".formatted(childrenSeq)));
 
@@ -51,8 +50,8 @@ public class ChildrenService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<ChildrenDto> getAllChildrenByMemberSeq(long memberSeq) {
-		return childrenRepository.findAllByMemberMemberSeq(memberSeq)
+	public List<ChildrenDto> getAllChildrenByMemberEmail(String email) {
+		return childrenRepository.findAllByMemberEmail(email)
 			.stream()
 			.map(ChildrenDto::toDto)
 			.peek(dto -> {

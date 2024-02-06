@@ -1,9 +1,7 @@
-
 package com.playdata.eungae.doctor.domain;
 
 import com.playdata.eungae.base.BaseEntity;
 import com.playdata.eungae.hospital.domain.Hospital;
-import com.playdata.eungae.hospital.domain.HospitalImage;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -48,6 +46,5 @@ public class Doctor extends BaseEntity {
         this.hospital = hospital;
         hospital.addDoctor(this);
     }
-
 
 }

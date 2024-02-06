@@ -12,7 +12,7 @@ public class MessageConfig {
     @Value("${api.key}")
     private String apiKey;
 
-    @Value("${api.secretKey}")
+    @Value("${api.secret-key}")
     private String apiSecretKey;
 
     @Value("${domain}")

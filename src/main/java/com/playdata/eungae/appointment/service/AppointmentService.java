@@ -3,13 +3,11 @@ package com.playdata.eungae.appointment.service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import com.playdata.eungae.review.domain.Review;
+import com.playdata.eungae.review.repository.ReviewRepository;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
@@ -55,11 +53,11 @@ public class AppointmentService {
 	private final MemberRepository memberRepository;
 	private final ChildrenRepository childrenRepository;
 	private final DefaultMessageService messageService;
+	private final ReviewRepository reviewRepository;
 
 	@Transactional(readOnly = true)
 	public List<ChildrenDto> getMyChildren(String email) {
-		Member member = memberRepository.findByEmail(email).get();
-		List<Children> children = childrenRepository.findAllByMemberMemberSeq(member.getMemberSeq());
+		List<Children> children = childrenRepository.findAllByMemberEmail(email);
 
 		return children.stream()
 			.map(ChildrenDto::toDto)
@@ -105,15 +103,16 @@ public class AppointmentService {
 		List<Appointment> myMedicalRecords = appointmentRepository.findAllByMemberEmail(memberEmail);
 
 		// 진료 기록만 조회
-		return myMedicalRecords.stream()
-			.filter((appointment -> appointment.getStatus() == AppointmentStatus.DIAGNOSIS))
-			.map(ResponseMedicalHistoryDto::toDto)
-			.collect(Collectors.toList());
+		List<ResponseMedicalHistoryDto> medicalHistoryDtoList = myMedicalRecords.stream()
+				.filter((appointment -> appointment.getStatus() == AppointmentStatus.DIAGNOSIS))
+				.map(ResponseMedicalHistoryDto::toDto)
+				.collect(Collectors.toList());
+        return medicalHistoryDtoList;
 	}
 
 	@Transactional(readOnly = true)
 	public ResponseDetailMedicalHistoryDto getMyMedicalRecordDetail(Long appointmentSeq) {
-		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq)
+		Appointment appointment = appointmentRepository.findByAppointmentSeq(appointmentSeq, AppointmentStatus.DIAGNOSIS)
 			.orElseThrow(() -> new IllegalStateException(
 				"Can not found Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
 		return ResponseDetailMedicalHistoryDto.toDto(appointment);
@@ -330,18 +329,6 @@ public class AppointmentService {
 
 	private int getAppointmentCount(Long hospitalSeq, LocalDate localDate, String time, Long doctorSeq) {
 		return appointmentRepository.findAllWithHospital(hospitalSeq, localDate, time, doctorSeq).size();
-	}
-
-	@Transactional
-	public VisitedChangeStatusDto changeAppointmentStatus(Long appointmentSeq) {
-
-		Appointment appointment = appointmentRepository.findById(appointmentSeq)
-			.orElseThrow(() -> new IllegalStateException(
-				"Cannot find Appointment. appointmentSeq = {%d}".formatted(appointmentSeq)));
-
-		appointment.setStatus(AppointmentStatus.DIAGNOSIS);
-
-		return VisitedChangeStatusDto.toDto(appointment);
 	}
 
 	private static String formatHour(String data){
