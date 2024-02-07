@@ -30,8 +30,10 @@
                 <div class="hospital-informations-address"><i class="fas fa-map-marker-alt"></i>
                     <span th:text="${hospital.address}">병원 주소</span>
                 </div>
-                <div class="hospital-informations-phone"><i class="fas fa-phone-alt"></i>
-                    <span th:text="${hospital.contact}">병원 번호</span>
+                <div class="hospital-informations-phone">
+                    <i class="fas fa-phone-alt"></i>
+                    <span id="hospital-num" th:text="${hospital.contact}">병원 번호</span>
+                    <span id="paste-btn"><i class="fa-regular fa-copy"></i></span>
                 </div>
                 <div class="hospital-informations-notice" th:if="${not #strings.isEmpty(hospital.notice)}">
                     <i class="fa-solid fa-file"></i>

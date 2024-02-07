@@ -131,3 +131,15 @@ $("#likeButton").click(function () {
         }
     })
 });
+
+$("#paste-btn").on("click", function(){
+    var textVal = $("#hospital-num").text().replace(/\-/g, "").trim();
+    var textarea = document.createElement('textarea');
+    textarea.value = textVal;
+    document.body.appendChild(textarea);
+    textarea.select();
+    textarea.setSelectionRange(0, 9999);
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+    alert("병원 번호가 복사되었습니다.");
+});
