@@ -128,13 +128,9 @@
 <img width="600px" src='https://github.com/ghktndyd/eungae-pediatric_appointment/assets/120021021/16e56466-17b1-4ca5-8dcb-0c7f09cd9b91'  alt="CI/CD"/>
 </div>
 
-
-[//]: # ()
-
-[//]: # (## 🪄 CI/CD)
-
-[//]: # ()
-
-[//]: # (<img width="600px" src='https://github.com/woowacourse-teams/2023-team-by-team/assets/79538610/79f30380-86d9-4cf1-b801-c19b3c866a88'  alt="CI/CD"/>)
-
+<div align="center">
+  <br/>
+  <br/>
+AWS 비용 문제로 서버 배포를 중단합니다.
+</div>
 
